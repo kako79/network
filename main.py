@@ -12,13 +12,15 @@ import networkx as nx
 #from collections import defaultdict
 import datetime
 
+
+
 def get_data_for_patient (patientid, alldata):
     patient_data = alldata[alldata['ptid'] == patientid]
     patient_data['to'] = patient_data['to'].shift(-1)  # shifting the to column up one so that the value from below is in that slot.
-
+    print(patient_data.iloc[0].name)
     # Make a column that has True if the location changed.
     patient_data['transfer'] = patient_data['from'] != patient_data['to']
-    print(patientid)
+    print()
 
 
     patient_data.fillna('discharge', inplace = True)
