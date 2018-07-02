@@ -59,7 +59,7 @@ adminfo.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 admpoint = admpoint.join(adminfo, on='ptid', how='left')
 
 #add on the information from the surgeries dataframe
-surgeriesinfo = surgeriesinfo[['asa_rating', 'STUDY_SUBJECT_DIGEST']]
+surgeriesinfo = surgeriesinfo[['asa_rating_c', 'STUDY_SUBJECT_DIGEST']]
 surgeriesinfo.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 admpoint = admpoint.join(surgeriesinfo, on='ptid', how='left')
 
@@ -98,7 +98,7 @@ print(combined_patient_data)
 # now develop the network based on the transfer data
 
 #weighted edges first
-data_only_transfers = combined_patient_data.loc[combined_patient_data['admAge'] > 20].drop(['depname','evttype','effective_time','adm_hosp', 'dis_hosp', 'specialty', 'admAge', 'asa_rating', 'transfer', 'transfer_time'], axis=1)
+data_only_transfers = combined_patient_data.loc[combined_patient_data['admAge'] > 20].drop(['depname','evttype','effective_time','adm_hosp', 'dis_hosp', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time'], axis=1)
 transfer_counts = data_only_transfers.groupby(['from', 'to']).count().reset_index()
 #transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
 # Get a list of tuples that contain the values from the rows.
