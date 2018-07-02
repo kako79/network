@@ -43,6 +43,7 @@ adminfo = pd.read_csv("ADM_INFO.csv")
 #surgeriesinfo contains details about the surgery
 surgeriesinfo = pd.read_csv("SURGERIES_INFO_red.csv")
 
+print('reading in done')
 
 #add on the information from the other files that is needed in addition to the transfer data in admpoint
 #pick the columns in the secondary files that are actually needed.
@@ -51,12 +52,9 @@ adminfo = adminfo[['adm_hosp', 'dis_hosp', 'specialty', 'admAge', 'STUDY_SUBJECT
 # Set the index of the adminfo dataframe to the value we want to join to.
 adminfo.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 
-# Rename the 'stratum' column to 'grade'.
-#assignments['stratum'].columns = ['grade']
-
-
 # Join the columns in adminfo onto the admpoint dataframe based on patient ID.
 admpoint = admpoint.join(adminfo, on='ptid', how='left')
+print('joining')
 
 #add on the information from the surgeries dataframe
 surgeriesinfo = surgeriesinfo[['asa_rating_c', 'STUDY_SUBJECT_DIGEST']]
@@ -69,6 +67,7 @@ admpoint = admpoint.join(surgeriesinfo, on='ptid', how='left')
 admpoint = admpoint[admpoint.evttype != 'Census'] # removes all census lines
 admpoint = admpoint[admpoint.evttype != 'Patient Update'] # removes all patient update lines
 
+print('deleting columns')
 # Create the actual transfers - currently just a list of start positions.
 # Making the two columns from and two.
 admpoint['from'] = admpoint['depname'] #duplicating the column but to make it the origin of the patient
