@@ -118,9 +118,9 @@ print(nn)
 
 
 #calculate the degree
-degrees = nx.classes.function.degree(G)
+#degrees = nx.classes.function.degree(G)
 #print(degrees)
-histdegrees = nx.classes.function.degree_histogram(G)
+#histdegrees = nx.classes.function.degree_histogram(G)
 #print(histdegrees)
 
 # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
