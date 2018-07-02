@@ -30,17 +30,17 @@ def get_separate_date_time(datetimeentry):
     return separate_date_time
 
 #admpoint contains the transfers of all the patients
-admpoint = pd.read_csv("ADM_POINT_test.csv")
+admpoint = pd.read_csv("ADM_POINT.csv")
 #subADMPOINT = ADMPOINT[['depname','evttime', '']]
 
 # Rename the 'STUDY_SUBJECT_DIGEST' column to 'ptid'.
 admpoint.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
 
 #adminfo contains demographic data for the patients
-adminfo = pd.read_csv("ADM_INFO_test.csv")
+adminfo = pd.read_csv("ADM_INFO.csv")
 
 #surgeriesinfo contains details about the surgery
-surgeriesinfo = pd.read_csv("SURGERIES_INFO_test.csv")
+surgeriesinfo = pd.read_csv("SURGERIES_INFO_red.csv")
 
 
 #add on the information from the other files that is needed in addition to the transfer data in admpoint
