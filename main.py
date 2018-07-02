@@ -39,6 +39,7 @@ admpoint.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=Tru
 #adminfo contains demographic data for the patients
 adminfo = pd.read_csv("ADM_INFO.csv")
 
+
 #surgeriesinfo contains details about the surgery
 surgeriesinfo = pd.read_csv("SURGERIES_INFO_red.csv")
 
