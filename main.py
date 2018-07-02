@@ -76,23 +76,26 @@ admpoint['to'] = admpoint['depname'] # duplicating it into the to column
 
 #loops through all the patient ids to get the data for each one
 list_of_patient_data = [get_data_for_patient(patientid, admpoint) for patientid in admpoint['ptid'].unique()]
+print('lopiing through patient id')
 
 # Combine together all the dataframes.
 def append_dataframes(d1, d2):
     return d1.append(d2)
 combined_patient_data = functools.reduce(append_dataframes, list_of_patient_data)
 
+print('combined the dataframes')
 #separate out the date and time in the transfer data for both effective time (which is the transfer date) and admission date and discharge date.
 
 list_of_separate_transfer_date_time = [get_separate_date_time(combined_date_time) for combined_date_time in combined_patient_data['effective_time']]
 combined_patient_data['transfer_time'] = list_of_separate_transfer_date_time
+print('dates separated')
 
 #list_of_separate_admission_date_time = [get_separate_date_time(combined_date_time) for combined_date_time in combined_patient_data['adm_hosp']]
 #combined_patient_data['admission_time'] = list_of_separate_admission_date_time
 
 #list_of_separate_discharge_date_time = [get_separate_date_time(combined_date_time) for combined_date_time in combined_patient_data['dis_hosp']]
 #combined_patient_data['discharge_time'] = list_of_separate_discharge_date_time
-print(combined_patient_data)
+#print(combined_patient_data)
 
 # now develop the network based on the transfer data
 
