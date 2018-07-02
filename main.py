@@ -18,6 +18,7 @@ def get_data_for_patient (patientid, alldata):
 
     # Make a column that has True if the location changed.
     patient_data['transfer'] = patient_data['from'] != patient_data['to']
+    print('patientid')
 
     patient_data.fillna('discharge', inplace = True)
     #drop the columns where the to and from is the same
@@ -72,7 +73,7 @@ print('deleting columns')
 # Making the two columns from and two.
 admpoint['from'] = admpoint['depname'] #duplicating the column but to make it the origin of the patient
 admpoint['to'] = admpoint['depname'] # duplicating it into the to column
-
+print('duplicated the columns')
 
 #loops through all the patient ids to get the data for each one
 list_of_patient_data = [get_data_for_patient(patientid, admpoint) for patientid in admpoint['ptid'].unique()]
