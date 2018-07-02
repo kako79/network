@@ -18,7 +18,7 @@ def get_data_for_patient (patientid, alldata):
 
     # Make a column that has True if the location changed.
     patient_data['transfer'] = patient_data['from'] != patient_data['to']
-    print('patientid')
+    print(patientid)
 
 
     patient_data.fillna('discharge', inplace = True)
