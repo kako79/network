@@ -1,15 +1,15 @@
 import numpy as np
 import itertools
 import functools
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import pandas as pd
-from mpl_toolkits import mplot3d
-from matplotlib import cm
-from matplotlib import colors
+#from mpl_toolkits import mplot3d
+#from matplotlib import cm
+#from matplotlib import colors
 import networkx as nx
-from collections import Counter
-from itertools import chain
-from collections import defaultdict
+#from collections import Counter
+#from itertools import chain
+#from collections import defaultdict
 import datetime
 
 def get_data_for_patient (patientid, alldata):
