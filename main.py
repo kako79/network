@@ -20,6 +20,7 @@ def get_data_for_patient (patientid, alldata):
     patient_data['transfer'] = patient_data['from'] != patient_data['to']
     print('patientid')
 
+
     patient_data.fillna('discharge', inplace = True)
     #drop the columns where the to and from is the same
     patient_data.drop(patient_data[patient_data['to'] == patient_data['from']].index, axis=0, inplace=True)
