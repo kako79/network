@@ -119,7 +119,7 @@ print(combined_patient_data)
 
 #output the data developed.
 combined_patient_data = combined_patient_data.drop(['adm_hosp', 'dis_hosp', 'extraid'], axis=1)
-pd.combined_patient_data.to_csv('combined_data.csv', header = True, index=False)
+combined_patient_data.pd.to_csv('combined_data.csv', header = True, index=False)
 
 # now develop the network based on the transfer data
 
