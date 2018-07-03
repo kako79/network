@@ -30,7 +30,7 @@ def get_data_for_patient (patientid, alldata):
 
 def get_separate_date_time(datetimeentry):
     #this returns the date in a format where the hours and days can be accessed eg d.year or d.minute
-    separate_date_time = datetime.datetime.strptime(datetimeentry,"%Y/%m/%d %H:%M:%S")
+    separate_date_time = datetime.datetime.strptime(datetimeentry,"%Y-%m-%d %H:%M:%S")
     return separate_date_time
 
 #admpoint contains the transfers of all the patients
