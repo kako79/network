@@ -30,6 +30,7 @@ def get_data_for_patient (patientid, alldata):
 
 def get_separate_date_time(datetimeentry):
     #this returns the date in a format where the hours and days can be accessed eg d.year or d.minute
+
     separate_date_time = datetime.datetime.strptime(datetimeentry,"%Y-%m-%d %H:%M:%S")
     return separate_date_time
 
@@ -112,8 +113,8 @@ print('dates separated')
 list_of_separate_admission_date_time = [get_separate_date_time(combined_date_time) for combined_date_time in combined_patient_data['adm_hosp']]
 combined_patient_data['admission_time'] = list_of_separate_admission_date_time
 
-list_of_separate_discharge_date_time = [get_separate_date_time(combined_date_time) for combined_date_time in combined_patient_data['dis_hosp']]
-combined_patient_data['discharge_time'] = list_of_separate_discharge_date_time
+#list_of_separate_discharge_date_time = [get_separate_date_time(combined_date_time) for combined_date_time in combined_patient_data['dis_hosp']]
+#combined_patient_data['discharge_time'] = list_of_separate_discharge_date_time
 print(combined_patient_data)
 
 #output the data developed.
@@ -123,7 +124,7 @@ pd.combined_patient_data.to_csv('combined_data.csv', header = True, index=False)
 # now develop the network based on the transfer data
 
 #weighted edges first
-data_only_transfers = combined_patient_data.loc[combined_patient_data['admAge'] > 20].drop(['depname','evttype','effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'discharge time', 'admission time'], axis=1)
+data_only_transfers = combined_patient_data.loc[combined_patient_data['admAge'] > 20].drop(['depname','evttype','effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission time'], axis=1)
 transfer_counts = data_only_transfers.groupby(['from', 'to']).count().reset_index()
 #transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
 # Get a list of tuples that contain the values from the rows.
