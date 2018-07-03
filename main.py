@@ -89,13 +89,13 @@ print('duplicated the columns')
 #combined_patient_data = functools.reduce(append_dataframes, list_of_patient_data)
 
 #do the above for all the data together to save time
-admpoint['extraid'] = admpoint['ptid']
-admpoint['extraid'] = admpoint['extraid'].shift(-1)
+admpoint['extraid'] = admpoint['ptid'].shift(-1)
+#admpoint['extraid'] = admpoint['extraid'].shift(-1)
 admpoint['to'] = admpoint['to'].shift(-1)  # shifting the to column up one so that the value from below is in that slot.
 #print(patient_data.iloc[0].name)
 
 #the rows where the patient id changes are discharge rows
-admpoint[admpoint['ptid']!=admpoint['extraid']] = 'discharge'
+admpoint['to'].replace(admpoint[admpoint['ptid']!=admpoint['extraid']], 'discharge')
 
 # Make a column that has True if the location changed
 admpoint['transfer'] = admpoint['from'] != admpoint['to']
@@ -115,9 +115,10 @@ combined_patient_data['admission_time'] = list_of_separate_admission_date_time
 
 #list_of_separate_discharge_date_time = [get_separate_date_time(combined_date_time) for combined_date_time in combined_patient_data['dis_hosp']]
 #combined_patient_data['discharge_time'] = list_of_separate_discharge_date_time
-print(combined_patient_data)
+
 
 #output the data developed.
+print(combined_patient_data)
 combined_patient_data = combined_patient_data.drop(['adm_hosp', 'dis_hosp', 'extraid'], axis=1)
 combined_patient_data.to_csv('combined_data.csv', header = True, index=False)
 
