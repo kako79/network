@@ -124,7 +124,7 @@ combined_patient_data.to_csv('combined_data.csv', header = True, index=False)
 # now develop the network based on the transfer data
 
 #weighted edges first
-data_only_transfers = combined_patient_data.loc[combined_patient_data['admAge'] > 20].drop(['depname','evttype','effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission time'], axis=1)
+data_only_transfers = combined_patient_data.loc[combined_patient_data['admAge'] > 20].drop(['depname','evttype','effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission_time'], axis=1)
 transfer_counts = data_only_transfers.groupby(['from', 'to']).count().reset_index()
 #transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
 # Get a list of tuples that contain the values from the rows.
