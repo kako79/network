@@ -3,6 +3,7 @@ import datetime
 
 
 def get_separate_date_time(datetimeentry):
+    print(datetimeentry)
     if datetimeentry == ' ':
         return datetime.datetime.max
     else:
