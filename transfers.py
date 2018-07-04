@@ -3,7 +3,7 @@ import datetime
 
 
 def get_separate_date_time(datetimeentry):
-    if datetimeentry == '':
+    if datetimeentry == ' ':
         return datetime.datetime.max
     else:
         #this returns the date in a format where the hours and days can be accessed eg d.year or d.minute
