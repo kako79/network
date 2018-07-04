@@ -88,10 +88,10 @@ combined_patient_data = admpoint
 list_of_separate_transfer_date_time = [get_separate_date_time(combined_date_time) for combined_date_time in combined_patient_data['effective_time']]
 combined_patient_data['transfer_time'] = list_of_separate_transfer_date_time
 print('dates separated')
-
+print('admissions')
 list_of_separate_admission_date_time = [get_separate_date_time(combined_date_time) for combined_date_time in combined_patient_data['adm_hosp']]
 combined_patient_data['admission_time'] = list_of_separate_admission_date_time
-
+print('discharges')
 list_of_separate_discharge_date_time = [get_separate_date_time(combined_date_time) for combined_date_time in combined_patient_data['dis_hosp']]
 combined_patient_data['discharge_time'] = list_of_separate_discharge_date_time
 
