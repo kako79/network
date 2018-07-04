@@ -72,7 +72,7 @@ admpoint['to'] = admpoint['to'].shift(-1)  # shifting the to column up one so th
 #print(patient_data.iloc[0].name)
 
 #the rows where the patient id changes are discharge rows
-admpoint['to'].replace(admpoint[admpoint['ptid'] != admpoint['extraid']], 'discharge')
+admpoint.loc[admpoint[admpoint['ptid'] != admpoint['extraid']].index, 'to'] = 'discharge'
 
 # Make a column that has True if the location changed.
 admpoint['transfer'] = admpoint['from'] != admpoint['to']
@@ -91,8 +91,8 @@ print('dates separated')
 list_of_separate_admission_date_time = [get_separate_date_time(combined_date_time) for combined_date_time in combined_patient_data['adm_hosp']]
 combined_patient_data['admission_time'] = list_of_separate_admission_date_time
 
-#list_of_separate_discharge_date_time = [get_separate_date_time(combined_date_time) for combined_date_time in combined_patient_data['dis_hosp']]
-#combined_patient_data['discharge_time'] = list_of_separate_discharge_date_time
+list_of_separate_discharge_date_time = [get_separate_date_time(combined_date_time) for combined_date_time in combined_patient_data['dis_hosp']]
+combined_patient_data['discharge_time'] = list_of_separate_discharge_date_time
 
 
 #output the data developed.
