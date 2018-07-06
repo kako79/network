@@ -26,6 +26,7 @@ def get_data_for_patient (patientid, alldata):
     patient_data.fillna('discharge', inplace = True)
     #drop the columns where the to and from is the same
     patient_data.drop(patient_data[patient_data['to'] == patient_data['from']].index, axis=0, inplace=True)
+
     return patient_data
 #read in the data from a combined csv file
 data= pd.read_csv("combined_data.csv")
@@ -34,7 +35,7 @@ print('reading in done')
 # now develop the network based on the transfer data
 
 #weighted edges first
-data_only_transfers = data.loc[combined_patient_data['admAge'] > 20].drop(['depname','evttype','effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission_time', 'discharge time'], axis=1)
+data_only_transfers = data.loc[data['admAge'] > 20].drop(['depname','evttype','effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission_time', 'discharge time'], axis=1)
 transfer_counts = data_only_transfers.groupby(['from', 'to']).count().reset_index()
 #transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
 # Get a list of tuples that contain the values from the rows.
