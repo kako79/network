@@ -1,7 +1,11 @@
 import numpy as np
 import itertools
 import functools
+
+import matplotlib
+matplotlib.use('agg')
 import matplotlib.pyplot as plt
+
 import pandas as pd
 #from mpl_toolkits import mplot3d
 #from matplotlib import cm
