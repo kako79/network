@@ -35,7 +35,7 @@ print('reading in done')
 # now develop the network based on the transfer data
 
 #weighted edges first
-data_only_transfers = data.loc[data['admAge'] > 18].drop(['depname','evttype','effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission_time', 'discharge_time'], axis=1)
+data_only_transfers = data.loc[data['admAge'] > 18].drop(['depname','evttype', 'effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission_time', 'discharge_time'], axis=1)
 transfer_counts = data_only_transfers.groupby(['from', 'to']).count().reset_index()
 #transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
 # Get a list of tuples that contain the values from the rows.
