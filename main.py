@@ -27,12 +27,9 @@ def get_data_for_patient (patientid, alldata):
     #drop the columns where the to and from is the same
     patient_data.drop(patient_data[patient_data['to'] == patient_data['from']].index, axis=0, inplace=True)
     return patient_data
-
+#read in the data from a combined csv file
 data= pd.read_csv("combined_data.csv")
 print('reading in done')
-
-
-
 
 # now develop the network based on the transfer data
 
@@ -58,13 +55,16 @@ nondiG.add_weighted_edges_from(weighted_edges)
 
 #calculate the degree
 degrees = nx.classes.function.degree(G)
+print('degrees')
 print(degrees)
 histdegrees = nx.classes.function.degree_histogram(G)
+print('histdegrees')
 print(histdegrees)
 
 # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
 incentrality = nx.algorithms.centrality.in_degree_centrality(G)
 outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
+print('in and out centrality')
 print(incentrality)
 print(outcentrality)
 
