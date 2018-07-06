@@ -1,7 +1,7 @@
 import numpy as np
 import itertools
 import functools
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import pandas as pd
 #from mpl_toolkits import mplot3d
 #from matplotlib import cm
@@ -13,21 +13,6 @@ import networkx as nx
 import datetime
 
 
-
-def get_data_for_patient (patientid, alldata):
-    patient_data = alldata[alldata['ptid'] == patientid]
-    patient_data['to'] = patient_data['to'].shift(-1)  # shifting the to column up one so that the value from below is in that slot.
-    print(patient_data.iloc[0].name)
-    # Make a column that has True if the location changed.
-    patient_data['transfer'] = patient_data['from'] != patient_data['to']
-    print(patientid)
-
-
-    patient_data.fillna('discharge', inplace = True)
-    #drop the columns where the to and from is the same
-    patient_data.drop(patient_data[patient_data['to'] == patient_data['from']].index, axis=0, inplace=True)
-
-    return patient_data
 #read in the data from a combined csv file
 data= pd.read_csv("combined_data.csv")
 print('reading in done')
@@ -36,10 +21,12 @@ print('reading in done')
 
 #weighted edges first
 data_only_transfers = data.loc[data['admAge'] > 18].drop(['depname','evttype', 'effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission_time', 'discharge_time'], axis=1)
-transfer_counts = data_only_transfers.groupby(['from', 'to']).count().reset_index()
+transfer_counts = data_only_transfers.groupby(['from', 'to']).count()
+transfer_counts = transfer_counts.reset_index()
 #transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
 # Get a list of tuples that contain the values from the rows.
-weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), transfer_counts.itertuples(index=False, name=None)))
+edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
+weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
 
 G = nx.DiGraph()
 print(weighted_edges)
@@ -89,5 +76,22 @@ print(clustering_average)
 #print(shortest_path)
 
 #flow hiearchy - finds strongly connected components
-#flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
-#print(flow_hierarchy)
+flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
+print('flow hierarchy')
+print(flow_hierarchy)
+
+fig = plt.figure(figsize=(7, 5))
+#nx.set_node_attributes(G,'length_of_stay',los)
+#pos = nx.circular_layout(G)
+#widthedge = [d['weight'] *0.1 for _,_,d in G.edges(data=True)]
+#nx.draw_networkx(G, pos=pos, with_labels=True, font_weight='bold', arrows = False, width= widthedge,  node_size=1300)
+nx.draw_networkx(G)
+#width = [d['weight'] for _,_,d in G.edges(data=True)]
+
+#edge_labels=dict([((u,v,), d['weight'])
+#             for u,v,d in G.edges(data=True)])
+#nx.draw_networkx(G, with_labels=True, font_weight='bold' )
+#nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
+plt.show()
+fig.savefig("allnetworkgraph.png")
+plt.gcf().clear()
