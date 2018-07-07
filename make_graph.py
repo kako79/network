@@ -91,7 +91,7 @@ fig = plt.figure(figsize=(7, 5))
 #pos = nx.circular_layout(G)
 #widthedge = [d['weight'] *0.1 for _,_,d in G.edges(data=True)]
 #nx.draw_networkx(G, pos=pos, with_labels=True, font_weight='bold', arrows = False, width= widthedge,  node_size=1300)
-nx.draw_networkx(G)
+nx.draw_circular(G)
 #width = [d['weight'] for _,_,d in G.edges(data=True)]
 
 #edge_labels=dict([((u,v,), d['weight'])
