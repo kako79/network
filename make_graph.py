@@ -27,7 +27,7 @@ def is_weekend(date):
 
 
 #read in the data from a combined csv file
-data= pd.read_csv("combined_data.csv")
+alldata= pd.read_csv("combined_data.csv")
 print('reading in done')
 
 # now develop the network based on the transfer data
@@ -39,7 +39,7 @@ weekend_admissions = alldata[alldata['is_weekend']]
 
 
 #now make the graph
-specific_data = list_of_weekend_admissions
+specific_data = weekend_admissions
 
 specific_data.loc[admpoint[specific_data['admission_time'] == specific_data['extraid']].index, 'to'] = 'discharge'
 
