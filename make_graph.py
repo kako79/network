@@ -16,11 +16,11 @@ import networkx as nx
 #from collections import defaultdict
 import datetime
 
-def get_weekend_list(alldata):
-    #weekend_admissions = alldata[alldata['admission_time'].get_weekday() == True]
-    weekend_admissions = alldata[alldata['admission_time'].weekday() == '5' or alldata['admission_time'].weekday() == '6']
-    #weekend_admissions = alldata.loc[alldata['admission_time'].get_weekday() == 'Saturday' ]
-    return weekend_admissions
+#def get_weekend_list(alldata):
+#    #weekend_admissions = alldata[alldata['admission_time'].get_weekday() == True]
+#    weekend_admissions = alldata[alldata['admission_time'].weekday() == '5' or alldata['admission_time'].weekday() == '6']
+#    #weekend_admissions = alldata.loc[alldata['admission_time'].get_weekday() == 'Saturday' ]
+#    return weekend_admissions
 
 def is_weekend(date):
     return date.isoweekday() % 7 < 2
