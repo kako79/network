@@ -23,7 +23,16 @@ from datetime import datetime
 #    return weekend_admissions
 
 def is_weekend(date):
-    d = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+    fmt = "%Y-%m-%d %H:%M:%S"
+    try:
+        d = datetime.strptime(date, fmt)
+    except ValueError as v:
+            ulr = len(v.args[0].partition('unconverted data remains: ')[2])
+            if ulr:
+                end_date = datetime.strptime(d[:-ulr], fmt)
+            else:
+                raise v
+    #d = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
     print(d)
     return d.isoweekday() % 7 < 2
 
