@@ -24,6 +24,7 @@ from datetime import datetime
 
 def is_weekend(date):
     d = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+    print(d)
     return d.isoweekday() % 7 < 2
 
 
