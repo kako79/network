@@ -16,6 +16,15 @@ import networkx as nx
 #from collections import defaultdict
 import datetime
 
+def get_weekend_list(alldata):
+    #weekend_admissions = alldata[alldata['admission_time'].get_weekday() == True]
+    weekend_admissions = alldata[alldata['admission_time'].weekday() == '5' or alldata['admission_time'].weekday() == '6']
+    #weekend_admissions = alldata.loc[alldata['admission_time'].get_weekday() == 'Saturday' ]
+    return weekend_admissions
+
+def is_weekend(date):
+    return date.isoweekday() % 7 < 2
+
 
 #read in the data from a combined csv file
 data= pd.read_csv("combined_data.csv")
@@ -23,8 +32,20 @@ print('reading in done')
 
 # now develop the network based on the transfer data
 
+#find all the admission dates on a weekend
+alldata['is_weekend'] = alldata['admission_time'].map(is_weekend)
+weekend_admissions = alldata[alldata['is_weekend']]
+#list_of_weekend_admissions =[get_weekend_list(data) for data in data['admission_time']]
+
+
+#now make the graph
+specific_data = list_of_weekend_admissions
+
+specific_data.loc[admpoint[specific_data['admission_time'] == specific_data['extraid']].index, 'to'] = 'discharge'
+
+
 #weighted edges first
-data_only_transfers = data.loc[data['admAge'] < 18].drop(['depname','evttype', 'effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission_time', 'discharge_time'], axis=1)
+data_only_transfers = specific_data.loc[specific_data['admAge'] < 18].drop(['depname','evttype', 'effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission_time', 'discharge_time'], axis=1)
 transfer_counts = data_only_transfers.groupby(['from', 'to']).count()
 transfer_counts = transfer_counts.reset_index()
 #transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
