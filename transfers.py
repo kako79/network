@@ -47,8 +47,8 @@ admpoint = admpoint.join(surgeriesinfo, on='ptid', how='left')
 
 # Remove event types we don't care about.
 # Event types are: Admission, Transfer Out, Transfer In, Census, Patient Update, Discharge, Hospital Outpatient
-#admpoint = admpoint[admpoint.evttype != 'Census'] # removes all census lines
-#admpoint = admpoint[admpoint.evttype != 'Patient Update'] # removes all patient update lines
+admpoint = admpoint[admpoint.evttype != 'Census'] # removes all census lines
+admpoint = admpoint[admpoint.evttype != 'Patient Update'] # removes all patient update lines
 
 print('deleting columns')
 # Create the actual transfers - currently just a list of start positions.

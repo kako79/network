@@ -14,7 +14,7 @@ import networkx as nx
 #from collections import Counter
 #from itertools import chain
 #from collections import defaultdict
-import datetime
+from datetime import datetime
 
 #def get_weekend_list(alldata):
 #    #weekend_admissions = alldata[alldata['admission_time'].get_weekday() == True]
@@ -23,7 +23,7 @@ import datetime
 #    return weekend_admissions
 
 def is_weekend(date):
-    d = date.datetime
+    d = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
     return d.isoweekday() % 7 < 2
 
 
@@ -42,11 +42,12 @@ weekend_admissions = alldata[alldata['is_weekend']]
 #now make the graph
 specific_data = weekend_admissions
 
-specific_data.loc[admpoint[specific_data['admission_time'] == specific_data['extraid']].index, 'to'] = 'discharge'
-
+#specific_data.loc[admpoint[specific_data['admission_time'] == specific_data['extraid']].index, 'to'] = 'discharge'
 
 #weighted edges first
+#drop the columns that are not needed for the graph, also only adults
 data_only_transfers = specific_data.loc[specific_data['admAge'] > 18].drop(['depname','evttype', 'effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission_time', 'discharge_time'], axis=1)
+# count the number of times a specific transfer appears to get edge weight
 transfer_counts = data_only_transfers.groupby(['from', 'to']).count()
 transfer_counts = transfer_counts.reset_index()
 #transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
