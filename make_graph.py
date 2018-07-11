@@ -59,10 +59,13 @@ specific_data = weekend_admissions
 data_only_transfers = specific_data.loc[specific_data['admAge'] > 18].drop(['depname','evttype', 'effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission_time', 'discharge_time'], axis=1)
 # count the number of times a specific transfer appears to get edge weight
 transfer_counts = data_only_transfers.groupby(['from', 'to']).count()
+#add the old index as a column - int he above the count became the index.
 transfer_counts = transfer_counts.reset_index()
 #transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
 # Get a list of tuples that contain the values from the rows.
 edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
+sum_of_all_transfers = edge_weight_data['ptid'].sum()
+
 edge_weight_data.to_csv('edge_weight_weekend.csv', header=True, index=False)
 
 weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
