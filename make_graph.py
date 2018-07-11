@@ -45,7 +45,7 @@ specific_data.loc[admpoint[specific_data['admission_time'] == specific_data['ext
 
 
 #weighted edges first
-data_only_transfers = specific_data.loc[specific_data['admAge'] < 18].drop(['depname','evttype', 'effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission_time', 'discharge_time'], axis=1)
+data_only_transfers = specific_data.loc[specific_data['admAge'] > 18].drop(['depname','evttype', 'effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission_time', 'discharge_time'], axis=1)
 transfer_counts = data_only_transfers.groupby(['from', 'to']).count()
 transfer_counts = transfer_counts.reset_index()
 #transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
