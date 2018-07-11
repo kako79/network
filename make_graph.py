@@ -23,7 +23,8 @@ import datetime
 #    return weekend_admissions
 
 def is_weekend(date):
-    return date.isoweekday() % 7 < 2
+    d = date.datetime
+    return d.isoweekday() % 7 < 2
 
 
 #read in the data from a combined csv file
