@@ -56,7 +56,7 @@ specific_data = pd.read_csv("combined_data.csv")
 
 #weighted edges first
 #drop the columns that are not needed for the graph, also only adults
-data_only_transfers = specific_data.loc[specific_data['admAge'] > 18].drop(['depname','evttype', 'effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission_time', 'discharge_time'], axis=1)
+data_only_transfers = specific_data.loc[specific_data['admAge'] < 18].drop(['depname','evttype', 'effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission_time', 'discharge_time'], axis=1)
 # count the number of times a specific transfer appears to get edge weight
 transfer_counts = data_only_transfers.groupby(['from', 'to']).count()
 #add the old index as a column - int he above the count became the index.
@@ -66,7 +66,7 @@ transfer_counts = transfer_counts.reset_index()
 edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
 edge_weight_data['ptid'] = edge_weight_data['ptid']/sum_of_all_transfers * 100
-edge_weight_data.to_csv('edge_weight_data.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_weight_data_children.csv', header=True, index=False)
 
 weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
 
@@ -135,5 +135,5 @@ nx.draw_circular(G)
 #nx.draw_networkx(G, with_labels=True, font_weight='bold' )
 #nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
 #plt.show()
-fig.savefig("alladultnetworkgraph.png")
+fig.savefig("allchildrennetworkgraph.png")
 plt.gcf().clear()
