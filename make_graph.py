@@ -51,7 +51,7 @@ weekend_admissions = alldata[alldata['is_weekend']]
 
 #now make the graph
 specific_data = weekend_admissions
-specific_data = pd.read_csv("combined_data.csv")
+#specific_data = pd.read_csv("combined_data.csv")
 #specific_data.loc[admpoint[specific_data['admission_time'] == specific_data['extraid']].index, 'to'] = 'discharge'
 
 #weighted edges first
@@ -66,7 +66,7 @@ transfer_counts = transfer_counts.reset_index()
 edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
 edge_weight_data['ptid'] = edge_weight_data['ptid']/sum_of_all_transfers * 100
-edge_weight_data.to_csv('edge_weight_data_children.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_weight_weekend_children.csv', header=True, index=False)
 
 weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
 
@@ -135,5 +135,5 @@ nx.draw_circular(G)
 #nx.draw_networkx(G, with_labels=True, font_weight='bold' )
 #nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
 #plt.show()
-fig.savefig("allchildrennetworkgraph.png")
+fig.savefig("weekendchildrennetworkgraph.png")
 plt.gcf().clear()
