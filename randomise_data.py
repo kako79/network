@@ -14,7 +14,8 @@ import networkx as nx
 #from collections import Counter
 #from itertools import chain
 #from collections import defaultdict
-from datetime import datetime
+
+import datetime
 
 alldata= pd.read_csv("combined_data.csv")
 
@@ -22,6 +23,9 @@ et = alldata['effective_time'] + datetime.timedelta(days=5)
 dt = alldata['discharge_time'] + datetime.timedelta(days = 5)
 at = alldata['admission_time']+ datetime.timedelta(days = 5)
 tt = alldata['transfer_time']+ datetime.timedelta(days = 5)
+
+#df['column'] = df['column'].map(lambda d: d + datetime.timedelta(days=5))
+
 
 alldata.to_csv('offset_data.csv', header=True, index=False)
 
