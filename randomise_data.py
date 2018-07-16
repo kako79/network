@@ -33,7 +33,7 @@ alldata['effective_time'] = alldata['effective_time'].map(lambda d: d + datetime
 #alldata['discharge_time'] = alldata['discharge_time'].map(lambda d: d + datetime.timedelta(days=5))
 alldata['admission_time'] = alldata['admission_time'].map(lambda d: d + datetime.timedelta(days=5))
 alldata['transfer_time'] = alldata['transfer_time'].map(lambda d: d + datetime.timedelta(days=5))
-alldata = alldata.drop(['specialty'], axis=1)
+alldata = alldata.drop(['specialty', 'discharge_time'], axis=1)
 
 alldata.to_csv('offset_data.csv', header=True, index=False)
 
