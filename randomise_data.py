@@ -19,6 +19,8 @@ import datetime
 
 alldata= pd.read_csv("combined_data.csv")
 
+df['effective_time'] = pd.to_datetime(df['effective_time'], fmt = "%Y-%m-%d %H:%M:%S")
+
 #et = alldata['effective_time'] + datetime.timedelta(days=5)
 #dt = alldata['discharge_time'] + datetime.timedelta(days = 5)
 #at = alldata['admission_time']+ datetime.timedelta(days = 5)
