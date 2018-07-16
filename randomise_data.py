@@ -19,12 +19,12 @@ import datetime
 
 alldata= pd.read_csv("combined_data.csv")
 
-et = alldata['effective_time'] + datetime.timedelta(days=5)
+#et = alldata['effective_time'] + datetime.timedelta(days=5)
 #dt = alldata['discharge_time'] + datetime.timedelta(days = 5)
-at = alldata['admission_time']+ datetime.timedelta(days = 5)
-tt = alldata['transfer_time']+ datetime.timedelta(days = 5)
+#at = alldata['admission_time']+ datetime.timedelta(days = 5)
+#tt = alldata['transfer_time']+ datetime.timedelta(days = 5)
 
-#df['column'] = df['column'].map(lambda d: d + datetime.timedelta(days=5))
+df['effective_time'] = df['effective_time'].map(lambda d: d + datetime.timedelta(days=5))
 
 
 alldata.to_csv('offset_data.csv', header=True, index=False)
