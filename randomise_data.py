@@ -19,14 +19,14 @@ import datetime
 
 alldata= pd.read_csv("combined_data.csv")
 
-df['effective_time'] = pd.to_datetime(df['effective_time'], fmt = "%Y-%m-%d %H:%M:%S")
+alldata['effective_time'] = pd.to_datetime(alldata['effective_time'], fmt = "%Y-%m-%d %H:%M:%S")
 
 #et = alldata['effective_time'] + datetime.timedelta(days=5)
 #dt = alldata['discharge_time'] + datetime.timedelta(days = 5)
 #at = alldata['admission_time']+ datetime.timedelta(days = 5)
 #tt = alldata['transfer_time']+ datetime.timedelta(days = 5)
 
-df['effective_time'] = df['effective_time'].map(lambda d: d + datetime.timedelta(days=5))
+alldata['effective_time'] = alldata['effective_time'].map(lambda d: d + datetime.timedelta(days=5))
 
 
 alldata.to_csv('offset_data.csv', header=True, index=False)
