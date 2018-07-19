@@ -98,5 +98,5 @@ combined_patient_data['discharge_time'] = list_of_separate_discharge_date_time
 
 #output the data developed.
 print(combined_patient_data)
-combined_patient_data = combined_patient_data.drop(['adm_hosp', 'dis_hosp', 'extraid'], axis=1)
+combined_patient_data = combined_patient_data.drop(['adm_hosp', 'dis_hosp'], axis=1)
 combined_patient_data.to_csv('combined_data.csv', header=True, index=False)
