@@ -81,6 +81,9 @@ admpoint['transfer'] = admpoint['from'] != admpoint['to']
 # Drop the rows where the to and from is the same as they are not real transfers.
 admpoint.drop(admpoint[admpoint['to'] == admpoint['from']].index, axis=0, inplace=True)
 
+#drop the rows where information is duplicated
+admpoint.drop(admpoint[admpoint['effective_time'] == admpoint['effective_time'].shift(-1)].index, axis=0, inplace=True)
+
 #renaming the dataframe
 combined_patient_data = admpoint
 
