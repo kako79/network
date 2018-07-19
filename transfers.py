@@ -84,6 +84,7 @@ admpoint.drop(admpoint[admpoint['to'] == admpoint['from']].index, axis=0, inplac
 #drop the rows where information is duplicated
 admpoint.drop(admpoint[admpoint['effective_time'] == admpoint['effective_time'].shift(-1)].index, axis=0, inplace=True)
 
+
 #renaming the dataframe
 combined_patient_data = admpoint
 
