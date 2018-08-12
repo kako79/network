@@ -13,20 +13,62 @@ def get_separate_date_time(datetimeentry):
 
 
 #admpoint contains the transfers of all the patients
-admpoint = pd.read_csv("ADM_POINT.csv")
-#subADMPOINT = ADMPOINT[['depname','evttime', '']]
-
+admpoint = pd.read_csv("ADM_POINT_aug.csv")
+# keep the columns actually needed
+admpoint = admpoint[['STUDY_SUBJECT_DIGEST', 'in_dttm', 'out_dttm', 'adt_department_name', 'adt_room_id', 'adt_bed_id' ]]
+s_length = len(admpoint['in_dttm'])
+admpoint['data_origin'] = np.repeat('adm', s_length, axis=0)
 # Rename the 'STUDY_SUBJECT_DIGEST' column to 'ptid'.
 admpoint.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
 
-#adminfo contains demographic data for the patients
-adminfo = pd.read_csv("ADM_INFO.csv")
+
 
 
 #surgeriesinfo contains details about the surgery
-surgeriesinfo = pd.read_csv("SURGERIES_INFO_red.csv")
+surgeriesinfo = pd.read_csv("SURGERIES_aug.csv")
+encinfo = pd.read_csv("ENC_POINT_aug.csv")
 
 print('reading in done')
+#make the new files into df that look the same so that they can be appended onto admpoint
+
+surg_df= surgeriesinfo[['STUDY_SUBJECT_DIGEST', 'case_start', 'case_end', 'prov_name']]
+s_length = len(surg_df['case_start']) #length of series that needs to be added into the new columns
+surg_df['adt_room_id'] = np.repeat(0, s_length, axis=0)
+surg_df['adt_bed_id'] = np.repeat (0, s_length, axis = 0)
+surg_df['data_origin'] = np.repeat ('surg', s_length, axis = 0)
+surg_df.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
+surg_df.rename(index=str, columns={'case_start': 'in_dttm'}, inplace=True)
+surg_df.rename(index=str, columns={'case_end': 'out_dttm'}, inplace=True)
+surg_df.rename(index=str, columns={'prov_name': 'adt_department_name'}, inplace = True)
+
+enc_df = encinfo[['STUDY_SUBJECT_DIGEST', 'case_start', 'dep_name']]
+s_length = len(enc_df['case_start'])
+enc_df['adt_room_id'] = np.repeat(0,s_length, axis =0)
+enc_df['adt_bed_id'] = np.repeat(0,s_length, axis =0)
+enc_df['case_end'] = np.repeat(0,s_length, axis =0)
+enc_df['data_origin'] = np.repeat ('enc', s_length, axis = 0)
+enc_df.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
+enc_df.rename(index=str, columns={'case_start': 'in_dttm'}, inplace=True)
+enc_df.rename(index=str, columns={'dep_name': 'adt_department_name'}, inplace = True)
+
+
+#make dataframe containing all the information, then sort by patient id
+#convert in_dttm to a datetime object to be able to sort by it later
+full_info = pd.concat([admpoint, enc_df, surg_df], ignore_index=True)
+full_info['in_dttm'] = pd.to_datetime(full_info['in_dttm'])
+
+full_info = full_info.sort_values(by = ['ptid', 'in_dttm'], ascending = [True, True])
+
+
+grouped_point = admpoint.groupby('ptid')
+for ptid,patient_data in grouped_point
+    # now I am in the each patient group
+    # need to order data by date
+
+    patient_data.sort_values(by = 'in_dttm', inplace = True)
+
+#adminfo contains demographic data for the patients
+adminfo = pd.read_csv("ADM_INFO_aug.csv")
 
 #add on the information from the other files that is needed in addition to the transfer data in admpoint
 #pick the columns in the secondary files that are actually needed.
@@ -38,6 +80,7 @@ adminfo.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 # Join the columns in adminfo onto the admpoint dataframe based on patient ID.
 admpoint = admpoint.join(adminfo, on='ptid', how='left')
 print('joining')
+
 
 #add on the information from the surgeries dataframe
 surgeriesinfo = surgeriesinfo[['asa_rating_c', 'STUDY_SUBJECT_DIGEST']]
