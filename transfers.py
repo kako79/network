@@ -34,8 +34,8 @@ print('reading in done')
 
 surg_df= surgeriesinfo[['STUDY_SUBJECT_DIGEST', 'case_start', 'case_end', 'prov_name']]
 s_length = len(surg_df['case_start']) #length of series that needs to be added into the new columns
-surg_df['adt_room_id'] = np.repeat(0, s_length, axis=0)
-surg_df['adt_bed_id'] = np.repeat (0, s_length, axis = 0)
+surg_df['adt_room_id'] = pd.Series(data=np.repeat(0, s_length, axis=0))
+surg_df['adt_bed_id'] = np.repeat (0, s_length, axis=0)
 surg_df['data_origin'] = np.repeat ('surg', s_length, axis = 0)
 surg_df.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
 surg_df.rename(index=str, columns={'case_start': 'in_dttm'}, inplace=True)
