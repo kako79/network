@@ -140,3 +140,4 @@ full_info.to_csv('full_info_all.csv', header=True, index=False)
 #print(combined_patient_data)
 #combined_patient_data = combined_patient_data.drop(['adm_hosp', 'dis_hosp'], axis=1)
 #combined_patient_data.to_csv('combined_data.csv', header=True, index=False)
+
