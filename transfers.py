@@ -50,7 +50,7 @@ enc_df = enc_df[['STUDY_SUBJECT_DIGEST', 'at_time', 'dep_name']]
 s_length = len(enc_df['at_time'])
 #enc_df['adt_room_id'] = np.repeat(0,s_length, axis =0)
 #enc_df['adt_bed_id'] = np.repeat(0,s_length, axis =0)
-enc_df['out_dttm'] = np.repeat(0,s_length, axis =0)
+enc_df['out_dttm'] = np.repeat(1,s_length, axis =0)
 enc_df['data_origin'] = np.repeat ('enc', s_length, axis = 0)
 enc_df.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
 enc_df.rename(index=str, columns={'at_time': 'in_dttm'}, inplace=True)
@@ -61,6 +61,7 @@ enc_df.rename(index=str, columns={'dep_name': 'adt_department_name'}, inplace = 
 #convert in_dttm to a datetime object to be able to sort by it later
 full_info = pd.concat([admpoint, enc_df, surg_df], ignore_index=True)
 full_info['in_dttm'] = pd.to_datetime(full_info['in_dttm'])
+full_info['out_dttm'] = pd.to_datetime(full_info['out_dttm'])
 full_info = full_info.sort_values(by = ['ptid', 'in_dttm'], ascending = [True, True])
 
 #add on the information from the other files that is needed in addition to the transfer data in admpoint
@@ -87,11 +88,37 @@ full_info.to_csv('full_info_all.csv', header=True, index=False)
 #admpoint = admpoint[admpoint.evttype != 'Census'] # removes all census lines
 #admpoint = admpoint[admpoint.evttype != 'Patient Update'] # removes all patient update lines
 
+# need to add in rows when a patient goes back to a ward after an investigation
+#first group the data into individual patients data to be able to figure out any missing rows
+transfers_columns = ['ptid', 'dt_transfer', 'from', 'to', 'los_atlocation','adm_date','dis_date', 'spec', 'age', 'asa']
+df_all_transfers = pd.DataFrame(columns = transfers_columns) # creates new dataframe
+df_pt_transfers = pd.DataFrame(columns = transfers_columns)
+grouped = full_info.groupby('ptid')
+for patientid, group_data in grouped:
+    #find highest time in out_dttm
+    latest_time = 0
+    for i in group_data.index():
+        new_out_time = group_data[i,'out_dttm']
+        if new_out_time > latest_time: #if the out_time is later than the latest time previously found ie this is a appropriate timming
+            latest_time = new_out_time
+            latest_location = group_data[i,'adt_department_name']
+            los = group_data[i,'in_dttm'] - new_out_time
+            df_pt_transfers.append([group_data[i,'ptid'], group_data[i,'out_dttm'], group_data[i,'adt_department_name'], group_data[i+1, 'adt_department_name'], los, group_data[i,'adm_hosp'], group_data[i,'dis_hosp'], group_data[i,'specialty'], group_data[i,'admAge'], group_data[i,'asa_rating_c']])
+        else: # if the out_time is earlier than the latest time ie the patient needs to go back to a previous location
+            to_location = latest_location
+            df_pt_transfers.append([group_data[i,'ptid'], group_data[i,'out_dttm'], group_data[i,'adt_department_name'], to_location, los, group_data[i,'adm_hosp'], group_data[i,'dis_hosp'], group_data[i,'specialty'], group_data[i,'admAge'], group_data[i,'asa_rating_c']])
+    df_all_transfers.append(df_pt_transfers)
+
+
+
+
+
+
 ## Create the actual transfers - currently just a list of start positions.
-## Making the two columns from and two.
-#admpoint['from'] = admpoint['depname'] #duplicating the column but to make it the origin of the patient
-#admpoint['to'] = admpoint['depname'] # duplicating it into the to column
-#print('duplicated the columns')
+## Making the two columns from and to.
+full_info['from'] = full_info['adt_department_name'] #duplicating the column but to make it the origin of the patient
+full_info['to'] = full_info['adt_department_name'] # duplicating it into the to column
+print('duplicated the columns')
 
 ###loops through all the patient ids to get the data for each one
 ##list_of_patient_data = [get_data_for_patient(patientid, admpoint) for patientid in admpoint['ptid'].unique()]
