@@ -44,7 +44,7 @@ surg_df.rename(index=str, columns={'prov_name': 'adt_department_name'}, inplace 
 
 enc_df = encinfo[['STUDY_SUBJECT_DIGEST', 'at_time','enctype', 'dep_name']]
 #replace the empty entries in the department name with the encounter type eg operation.
-empty_indices = encinfo['dep_name'] == 0
+empty_indices = encinfo['dep_name'] == ''
 encinfo.loc[empty_indices, 'dep_name'] = encinfo.loc[empty_indices, 'enctype']
 encinfo = encinfo[['STUDY_SUBJECT_DIGEST', 'at_time', 'dep_name']]
 s_length = len(enc_df['at_time'])
@@ -87,7 +87,6 @@ full_info.to_csv('full_info_all.csv', header=True, index=False)
 #admpoint = admpoint[admpoint.evttype != 'Census'] # removes all census lines
 #admpoint = admpoint[admpoint.evttype != 'Patient Update'] # removes all patient update lines
 
-#print('deleting columns')
 ## Create the actual transfers - currently just a list of start positions.
 ## Making the two columns from and two.
 #admpoint['from'] = admpoint['depname'] #duplicating the column but to make it the origin of the patient
