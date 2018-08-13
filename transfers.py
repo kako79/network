@@ -61,19 +61,15 @@ enc_df.rename(index=str, columns={'dep_name': 'adt_department_name'}, inplace = 
 #convert in_dttm to a datetime object to be able to sort by it later
 full_info = pd.concat([admpoint, enc_df, surg_df], ignore_index=True)
 full_info['in_dttm'] = pd.to_datetime(full_info['in_dttm'])
-
 full_info = full_info.sort_values(by = ['ptid', 'in_dttm'], ascending = [True, True])
 
+#add on the information from the other files that is needed in addition to the transfer data in admpoint
 #adminfo contains demographic data for the patients
 adminfo = pd.read_csv("ADM_INFO_aug.csv")
-
-#add on the information from the other files that is needed in addition to the transfer data in admpoint
 #pick the columns in the secondary files that are actually needed.
 adminfo = adminfo[['adm_hosp', 'dis_hosp', 'specialty', 'admAge', 'STUDY_SUBJECT_DIGEST']]
-
 # Set the index of the adminfo dataframe to the value we want to join to.
 adminfo.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
-
 # Join the columns in adminfo onto the admpoint dataframe based on patient ID.
 full_info = full_info.join(adminfo, on='ptid', how='left')
 print('joining')
@@ -82,7 +78,7 @@ print('joining')
 #add on the information from the surgeries dataframe
 surg_extra = surgeriesinfo[['asa_rating_c', 'STUDY_SUBJECT_DIGEST']]
 surg_extra.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
-admpoint = admpoint.join(surg_extra, on='ptid', how='left')
+full_info = full_info.join(surg_extra, on='ptid', how='left')
 
 full_info.to_csv('full_info_all.csv', header=True, index=False)
 
