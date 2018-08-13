@@ -16,7 +16,7 @@ def get_separate_date_time(datetimeentry):
 #admpoint contains the transfers of all the patients
 admpoint = pd.read_csv("ADM_POINT_aug.csv")
 # keep the columns actually needed
-admpoint = admpoint[['STUDY_SUBJECT_DIGEST', 'in_dttm', 'out_dttm', 'adt_department_name', 'adt_room_id', 'adt_bed_id' ]]
+admpoint = admpoint[['STUDY_SUBJECT_DIGEST', 'in_dttm', 'out_dttm', 'adt_department_name']]
 s_length = len(admpoint['in_dttm'])
 admpoint['data_origin'] = np.repeat('adm', s_length, axis=0)
 # Rename the 'STUDY_SUBJECT_DIGEST' column to 'ptid'.
@@ -34,8 +34,8 @@ print('reading in done')
 
 surg_df= surgeriesinfo[['STUDY_SUBJECT_DIGEST', 'case_start', 'case_end', 'prov_name']]
 s_length = len(surg_df['case_start']) #length of series that needs to be added into the new columns
-surg_df['adt_room_id'] = np.repeat(0, s_length, axis=0)
-surg_df['adt_bed_id'] = np.repeat (0, s_length, axis=0)
+#surg_df['adt_room_id'] = np.repeat(0, s_length, axis=0)
+#surg_df['adt_bed_id'] = np.repeat (0, s_length, axis=0)
 surg_df['data_origin'] = np.repeat ('surg', s_length, axis = 0)
 surg_df.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
 surg_df.rename(index=str, columns={'case_start': 'in_dttm'}, inplace=True)
@@ -47,11 +47,10 @@ enc_df = encinfo[['STUDY_SUBJECT_DIGEST', 'at_time','enctype', 'dep_name']]
 empty_indices = encinfo['dep_name'] == 0
 encinfo.loc[empty_indices, 'dep_name'] = encinfo.loc[empty_indices, 'enctype']
 encinfo = encinfo[['STUDY_SUBJECT_DIGEST', 'at_time', 'dep_name']]
-
 s_length = len(enc_df['at_time'])
-enc_df['adt_room_id'] = np.repeat(0,s_length, axis =0)
-enc_df['adt_bed_id'] = np.repeat(0,s_length, axis =0)
-enc_df['case_end'] = np.repeat(0,s_length, axis =0)
+#enc_df['adt_room_id'] = np.repeat(0,s_length, axis =0)
+#enc_df['adt_bed_id'] = np.repeat(0,s_length, axis =0)
+enc_df['out_dttm'] = np.repeat(0,s_length, axis =0)
 enc_df['data_origin'] = np.repeat ('enc', s_length, axis = 0)
 enc_df.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
 enc_df.rename(index=str, columns={'case_start': 'in_dttm'}, inplace=True)
