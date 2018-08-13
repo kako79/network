@@ -53,7 +53,7 @@ s_length = len(enc_df['at_time'])
 enc_df['out_dttm'] = np.repeat(0,s_length, axis =0)
 enc_df['data_origin'] = np.repeat ('enc', s_length, axis = 0)
 enc_df.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
-enc_df.rename(index=str, columns={'case_start': 'in_dttm'}, inplace=True)
+enc_df.rename(index=str, columns={'at_time': 'in_dttm'}, inplace=True)
 enc_df.rename(index=str, columns={'dep_name': 'adt_department_name'}, inplace = True)
 
 
