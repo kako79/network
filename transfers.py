@@ -45,7 +45,7 @@ surg_df.rename(index=str, columns={'prov_name': 'adt_department_name'}, inplace 
 enc_df = encinfo[['STUDY_SUBJECT_DIGEST', 'at_time','enctype', 'dep_name']]
 #replace the empty entries in the department name with the encounter type eg operation.
 empty_indices = encinfo['dep_name'] == 0
-encinfo.loc[empty_indices, 'dep_name'] = enc.loc[empty_indices, 'enctype']
+encinfo.loc[empty_indices, 'dep_name'] = encinfo.loc[empty_indices, 'enctype']
 encinfo = encinfo[['STUDY_SUBJECT_DIGEST', 'at_time', 'dep_name']]
 
 s_length = len(enc_df['at_time'])
