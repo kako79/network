@@ -48,8 +48,6 @@ empty_indices = enc_df['dep_name'] == ''
 enc_df.loc[empty_indices, 'dep_name'] = enc_df.loc[empty_indices, 'enctype']
 enc_df = enc_df[['STUDY_SUBJECT_DIGEST', 'at_time', 'dep_name']]
 s_length = len(enc_df['at_time'])
-#enc_df['adt_room_id'] = np.repeat(0,s_length, axis =0)
-#enc_df['adt_bed_id'] = np.repeat(0,s_length, axis =0)
 enc_df['out_dttm'] = np.repeat(1,s_length, axis =0)
 enc_df['data_origin'] = np.repeat ('enc', s_length, axis = 0)
 enc_df.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
@@ -74,60 +72,145 @@ adminfo = adminfo[['adm_hosp', 'dis_hosp', 'specialty', 'admAge', 'STUDY_SUBJECT
 adminfo.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 # Join the columns in adminfo onto the admpoint dataframe based on patient ID.
 full_info = full_info.join(adminfo, on='ptid', how='left')
-print('joining')
+print('joining on adminfo')
 
 
 #add on the information from the surgeries dataframe
 surg_extra = surgeriesinfo[['asa_rating_c', 'STUDY_SUBJECT_DIGEST']]
 surg_extra.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 full_info = full_info.join(surg_extra, on='ptid', how='left')
-
 full_info.to_csv('full_info_all.csv', header=True, index=False)
 
+print('full_info created')
 ## Remove event types we don't care about.
 ## Event types are: Admission, Transfer Out, Transfer In, Census, Patient Update, Discharge, Hospital Outpatient
 #admpoint = admpoint[admpoint.evttype != 'Census'] # removes all census lines
 #admpoint = admpoint[admpoint.evttype != 'Patient Update'] # removes all patient update lines
 
-# need to add in rows when a patient goes back to a ward after an investigation
+# need to create the transfers list with added in rows when a patient goes back to a ward after an investigation
 #first group the data into individual patients data to be able to figure out any missing rows
-transfers_columns = ['ptid', 'dt_transfer', 'from', 'to', 'los_atlocation','adm_date','dis_date', 'spec', 'age', 'asa']
-df_all_transfers = pd.DataFrame(columns=transfers_columns) # creates new dataframe
+
 grouped = full_info.groupby('ptid')
-for patientid, group_data in grouped:
-    #find highest time in out_dttm
-    latest_time = 0
-    group_length = len(group_data)
-    for i in range(0, group_length):
-        row = group_data.iloc[i]
-        new_out_time = row['out_dttm']
-        transfer_row = {
-            'ptid': patientid,
-            'dt_transfer': new_out_time,
-            'from': row['adt_department_name'],
-            'adm_date': row['adm_hosp'],
-            'dis_date': row['dis_hosp'],
-            'spec': row['specialty'],
-            'age': row['admAge'],
-            'asa': row['asa_rating_c']
-        }
-        if new_out_time >= latest_time: #if the out_time is later than the latest time previously found ie this is a appropriate timing
-            latest_time = new_out_time
-            latest_location = row['adt_department_name']
-            los = new_out_time - row['in_dttm']
 
-            if i == (group_length - 1):
-                # last row
-                transfer_row['to'] = 'discharge'
-            else:
-                # not last row
-                transfer_row['to'] = group_data.iloc[i + 1]['adt_department_name']
-            transfer_row['los_atlocation'] = los
-        else: # if the out_time is earlier than the latest time ie the patient needs to go back to a previous location
-            transfer_row['to'] = latest_location
-            transfer_row['los_atlocation'] = row['out_dttm'] - row['in_dttm']
+#'ptid', 'transfer_dt', 'from', 'to', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'
+##!!! starting the transfers code
 
-        df_all_transfers.append(transfer_row)
+#making a named tuple to store the current transfer tdata
+location = namedtuple("location", ["name","dt_in","dt_out","dt_adm","dt_dis","spec","age","asa"])
+
+
+def get_transfers_out(ptid, location_stack, current_dt):
+    # In the case of nested locations, this function generates transfers out of those locations to the
+    # top-level location.
+
+    # First check if the patient is still in the most recent location at the specified time.
+    # If this is true then there are no transfers happening.
+    if (len(location_stack) <= 1) or (location_stack[-1].dt_out >= current_dt):
+        return []
+
+    transfer_list = []
+
+    # Pop locations off the stack until we find one that the patient is still in at the current time,
+    # or until there are no more locations left.
+    # We always leave at least one location on the stack because this function does not handle patient discharge.
+    while (len(location_stack) > 1) and (location_stack[-1].dt_out < current_dt):
+        loc = location_stack.pop()
+        next_loc = location_stack[-1]
+        transfer_list.append({'ptid': ptid, 'transfer_dt': loc.dt_out, 'from': loc.name, 'to': next_loc.name, 'dt_adm': loc.dt_adm, 'dt_dis': loc.dt_dis, 'spec': loc.spec, 'age': loc.age, 'asa': loc.asa})
+
+    return transfer_list
+
+
+def get_patient_transfers(ptid, patient_data):
+    # The stack will contain the previous (location, entry_time, exit_time) tuples.
+    location_stack = []
+    transfer_list = []
+
+    for i, row in patient_data.iterrows():
+        loc = row['adt_department_name']
+        dt_in = row['in_dttm']
+        dt_out = row['out_dttm']
+        dt_adm = row['adm_hosp']
+        dt_dis = row['dis_hosp']
+        spec = row['specialty']
+        age = row['admAge']
+        asa = row['asa_rating_c']
+
+        new_loc = location(loc, dt_in, dt_out, dt_adm, dt_dis, spec, age, asa)
+
+        # If the stack is empty then this is the first location for the patient and we won't
+        # be adding any transfers yet.
+        if len(location_stack) == 0:
+            location_stack.append(new_loc)
+        else:
+            # If there are nested locations that the patient is no longer in, we need to transfer out of them.
+            transfer_list += get_transfers_out(ptid, location_stack, new_loc.dt_in)
+
+            current_loc = location_stack[-1]
+
+            # Check if the patient entered the next location after leaving the current location.
+            # If so, this is a normal transfer, and we need to pop the current location off the stack
+            # so it can be replaced by the new location.
+            if new_loc.dt_in >= current_loc.dt_out:
+                # This is a normal transfer.
+                # Pop the previous location off the stack because we've left it.
+                location_stack.pop()
+
+            # The patient is now in the new location so put it on top of the stack.
+            location_stack.append(new_loc)
+
+            # Add a transfer from the previous location to the new location.
+            transfer_list.append(
+                {'ptid': ptid, 'transfer_dt': new_loc.dt_in, 'from': current_loc.name, 'to': new_loc.name, 'dt_adm': new_loc.dt_adm, 'dt_dis': new_loc.dt_dis, 'spec': new_loc.spec, 'age': new_loc.age, 'asa': new_loc.asa})
+
+    # In case we are inside a bunch of nested locations, we now need to transfer the patient out of them.
+    transfer_list += get_transfers_out(ptid, location_stack, datetime.max)
+
+    # Finally we need to discharge the patient.
+    last_loc = location_stack[-1]
+    transfer_list.append({'ptid': ptid, 'transfer_dt': last_loc.dt_out, 'from': last_loc.name, 'to': 'discharge','dt_adm': last_loc.dt_adm, 'dt_dis': last_loc.dt_dis, 'spec': last_loc.spec, 'age': last_loc.age, 'asa': last_loc.asa })
+
+    # Return a DataFrame with the transfers.
+    return pd.DataFrame(columns=['ptid', 'transfer_dt', 'from', 'to', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], data=transfer_list)
+
+
+def get_transfers(location_data: pd.DataFrame):
+    sorted_data = location_data.sort_values(['ptid', 'dt_in'])
+    groups = sorted_data.groupby('ptid')
+    all_transfers = None
+    print(all_transfers)
+    for ptid, group in groups:
+        patient_transfers = get_patient_transfers(ptid, group)
+        if all_transfers is None:
+            all_transfers = patient_transfers
+        else:
+            all_transfers = all_transfers.append(patient_transfers)
+    print(all_transfers)
+    return all_transfers
+
+all_transfers = get_transfers(full_info)
+all_transfers.to_csv('all_transfers_file.csv', header=True, index=False)
+print('transfers file created')
+##!!! finish of creating the transfers file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -135,9 +218,9 @@ for patientid, group_data in grouped:
 
 ## Create the actual transfers - currently just a list of start positions.
 ## Making the two columns from and to.
-full_info['from'] = full_info['adt_department_name'] #duplicating the column but to make it the origin of the patient
-full_info['to'] = full_info['adt_department_name'] # duplicating it into the to column
-print('duplicated the columns')
+#full_info['from'] = full_info['adt_department_name'] #duplicating the column but to make it the origin of the patient
+#full_info['to'] = full_info['adt_department_name'] # duplicating it into the to column
+#print('duplicated the columns')
 
 ###loops through all the patient ids to get the data for each one
 ##list_of_patient_data = [get_data_for_patient(patientid, admpoint) for patientid in admpoint['ptid'].unique()]
