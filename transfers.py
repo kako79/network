@@ -1,5 +1,5 @@
 import pandas as pd
-import datetime
+from datetime import datetime
 import numpy as np
 from collections import deque, namedtuple
 
