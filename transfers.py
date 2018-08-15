@@ -175,7 +175,7 @@ def get_patient_transfers(ptid, patient_data):
 
 
 def get_transfers(location_data: pd.DataFrame):
-    sorted_data = location_data.sort_values(['ptid', 'dt_in'])
+    sorted_data = location_data.sort_values(['ptid', 'in_dttm'])
     groups = sorted_data.groupby('ptid')
     all_transfers = None
     print(all_transfers)
