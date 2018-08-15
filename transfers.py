@@ -119,13 +119,14 @@ def get_transfers_out(ptid, location_stack, current_dt):
         return []
 
     transfer_list = []
-    print(len(location_stack))
-    print(location_stack[-1].dt_out)
-    print(current_dt)
+    #print(len(location_stack))
+    #print(location_stack[-1].dt_out)
+    #print(current_dt)
     # Pop locations off the stack until we find one that the patient is still in at the current time,
     # or until there are no more locations left.
     # We always leave at least one location on the stack because this function does not handle patient discharge.
     while (len(location_stack) > 1) and (location_stack[-1].dt_out < current_dt):
+        print(loc.dt_adm)
         loc = location_stack.pop()
         next_loc = location_stack[-1]
         transfer_list.append({'ptid': ptid, 'transfer_dt': loc.dt_out, 'from': loc.name, 'to': next_loc.name, 'dt_adm': loc.dt_adm, 'dt_dis': loc.dt_dis, 'spec': loc.spec, 'age': loc.age, 'asa': loc.asa})
