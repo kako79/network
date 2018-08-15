@@ -23,8 +23,9 @@ from datetime import datetime
 #    return weekend_admissions
 
 def is_weekend(date):
-    fmt = "%Y-%m-%d %H:%M:%S"
+    fmt = "%d/%m/%Y %H:%M"
     try:
+
         d = datetime.strptime(date, fmt)
     except ValueError as v:
             ulr = len(v.args[0].partition('unconverted data remains: ')[2])
@@ -38,45 +39,50 @@ def is_weekend(date):
 
 
 #read in the data from a combined csv file
-alldata= pd.read_csv("combined_data.csv")
+alldata= pd.read_csv("all_transfers_file.csv")
 print('reading in done')
 
 # now develop the network based on the transfer data
 
 #find all the admission dates on a weekend
-alldata['is_weekend'] = alldata['admission_time'].map(is_weekend)
-weekend_admissions = alldata[alldata['is_weekend']]
+#alldata['dt_adm'] = pd.to_datetime(alldata['dt_adm'], format="%d/%m/%Y")
+#alldata['is_weekend'] = alldata['dt_adm'].map(is_weekend)
+#weekend_admissions = alldata[alldata['is_weekend']]
 #list_of_weekend_admissions =[get_weekend_list(data) for data in data['admission_time']]
 
 
 #now make the graph
-specific_data = weekend_admissions
+specific_data = alldata
+#specific_data = weekend_admissions
 #specific_data = pd.read_csv("combined_data.csv")
 #specific_data.loc[admpoint[specific_data['admission_time'] == specific_data['extraid']].index, 'to'] = 'discharge'
 
 #weighted edges first
 #drop the columns that are not needed for the graph, also only adults
-data_only_transfers = specific_data.loc[specific_data['admAge'] < 18].drop(['depname','evttype', 'effective_time', 'specialty', 'admAge', 'asa_rating_c', 'transfer', 'transfer_time', 'admission_time', 'discharge_time'], axis=1)
+data_only_transfers = specific_data.loc[specific_data['age'] > 18].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+
 # count the number of times a specific transfer appears to get edge weight
 transfer_counts = data_only_transfers.groupby(['from', 'to']).count()
 #add the old index as a column - int he above the count became the index.
 transfer_counts = transfer_counts.reset_index()
-#transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
+transfer_counts = transfer_counts[transfer_counts['ptid'] > 10]
 # Get a list of tuples that contain the values from the rows.
 edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
 edge_weight_data['ptid'] = edge_weight_data['ptid']/sum_of_all_transfers * 100
-edge_weight_data.to_csv('edge_weight_weekend_children.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_weight_adults.csv', header=True, index=False)
 
 weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
 
 G = nx.DiGraph()
-print(weighted_edges)
+#print(weighted_edges)
 G.add_weighted_edges_from(weighted_edges)
 en=G.number_of_edges()
 nn=G.number_of_nodes()
 print(en)
 print(nn)
+
+
 
 #undirected graph of the same data
 nondiG = nx.Graph()

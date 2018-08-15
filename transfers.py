@@ -129,7 +129,8 @@ def get_transfers_out(ptid, location_stack, current_dt):
         loc = location_stack.pop()
         next_loc = location_stack[-1]
         print(loc.dt_adm)
-        transfer_list.append({'ptid': ptid, 'transfer_dt': loc.dt_out, 'from': loc.name, 'to': next_loc.name, 'dt_adm': loc.dt_adm, 'dt_dis': loc.dt_dis, 'spec': loc.spec, 'age': loc.age, 'asa': loc.asa})
+        if loc.name != next_loc.name:
+            transfer_list.append({'ptid': ptid, 'transfer_dt': loc.dt_out, 'from': loc.name, 'to': next_loc.name, 'dt_adm': loc.dt_adm, 'dt_dis': loc.dt_dis, 'spec': loc.spec, 'age': loc.age, 'asa': loc.asa})
 
     return transfer_list
 
@@ -173,8 +174,9 @@ def get_patient_transfers(ptid, patient_data):
             location_stack.append(new_loc)
 
             # Add a transfer from the previous location to the new location.
-            transfer_list.append(
-                {'ptid': ptid, 'transfer_dt': new_loc.dt_in, 'from': current_loc.name, 'to': new_loc.name, 'dt_adm': new_loc.dt_adm, 'dt_dis': new_loc.dt_dis, 'spec': new_loc.spec, 'age': new_loc.age, 'asa': new_loc.asa})
+            if current_loc.name != new_loc.name:
+                transfer_list.append(
+                    {'ptid': ptid, 'transfer_dt': new_loc.dt_in, 'from': current_loc.name, 'to': new_loc.name, 'dt_adm': new_loc.dt_adm, 'dt_dis': new_loc.dt_dis, 'spec': new_loc.spec, 'age': new_loc.age, 'asa': new_loc.asa})
 
     # In case we are inside a bunch of nested locations, we now need to transfer the patient out of them.
     transfer_list += get_transfers_out(ptid, location_stack, datetime.datetime.max)
@@ -211,24 +213,7 @@ print('transfers file created')
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## this is old code - use for reference  only
 ## Create the actual transfers - currently just a list of start positions.
 ## Making the two columns from and to.
 #full_info['from'] = full_info['adt_department_name'] #duplicating the column but to make it the origin of the patient
