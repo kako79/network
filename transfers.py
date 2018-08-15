@@ -63,6 +63,7 @@ full_info = pd.concat([admpoint, enc_df, surg_df], ignore_index=True)
 full_info['in_dttm'] = pd.to_datetime(full_info['in_dttm'])
 full_info['out_dttm'] = pd.to_datetime(full_info['out_dttm'])
 full_info = full_info.sort_values(by = ['ptid', 'in_dttm'], ascending = [True, True])
+full_info.reset_index(drop=True, inplace=True)
 
 #add on the information from the other files that is needed in addition to the transfer data in admpoint
 #adminfo contains demographic data for the patients
@@ -91,24 +92,42 @@ full_info.to_csv('full_info_all.csv', header=True, index=False)
 # need to add in rows when a patient goes back to a ward after an investigation
 #first group the data into individual patients data to be able to figure out any missing rows
 transfers_columns = ['ptid', 'dt_transfer', 'from', 'to', 'los_atlocation','adm_date','dis_date', 'spec', 'age', 'asa']
-df_all_transfers = pd.DataFrame(columns = transfers_columns) # creates new dataframe
-df_pt_transfers = pd.DataFrame(columns = transfers_columns)
+df_all_transfers = pd.DataFrame(columns=transfers_columns) # creates new dataframe
 grouped = full_info.groupby('ptid')
 for patientid, group_data in grouped:
     #find highest time in out_dttm
     latest_time = 0
-    for i in group_data.index():
-        new_out_time = group_data[i,'out_dttm']
-        if new_out_time > latest_time: #if the out_time is later than the latest time previously found ie this is a appropriate timming
+    group_length = len(group_data)
+    for i in range(0, group_length):
+        row = group_data.iloc[i]
+        new_out_time = row['out_dttm']
+        transfer_row = {
+            'ptid': patientid,
+            'dt_transfer': new_out_time,
+            'from': row['adt_department_name'],
+            'adm_date': row['adm_hosp'],
+            'dis_date': row['dis_hosp'],
+            'spec': row['specialty'],
+            'age': row['admAge'],
+            'asa': row['asa_rating_c']
+        }
+        if new_out_time >= latest_time: #if the out_time is later than the latest time previously found ie this is a appropriate timing
             latest_time = new_out_time
-            latest_location = group_data[i,'adt_department_name']
-            los = group_data[i,'in_dttm'] - new_out_time
-            df_pt_transfers.append([group_data[i,'ptid'], group_data[i,'out_dttm'], group_data[i,'adt_department_name'], group_data[i+1, 'adt_department_name'], los, group_data[i,'adm_hosp'], group_data[i,'dis_hosp'], group_data[i,'specialty'], group_data[i,'admAge'], group_data[i,'asa_rating_c']])
-        else: # if the out_time is earlier than the latest time ie the patient needs to go back to a previous location
-            to_location = latest_location
-            df_pt_transfers.append([group_data[i,'ptid'], group_data[i,'out_dttm'], group_data[i,'adt_department_name'], to_location, los, group_data[i,'adm_hosp'], group_data[i,'dis_hosp'], group_data[i,'specialty'], group_data[i,'admAge'], group_data[i,'asa_rating_c']])
-    df_all_transfers.append(df_pt_transfers)
+            latest_location = row['adt_department_name']
+            los = new_out_time - row['in_dttm']
 
+            if i == (group_length - 1):
+                # last row
+                transfer_row['to'] = 'discharge'
+            else:
+                # not last row
+                transfer_row['to'] = group_data.iloc[i + 1]['adt_department_name']
+            transfer_row['los_atlocation'] = los
+        else: # if the out_time is earlier than the latest time ie the patient needs to go back to a previous location
+            transfer_row['to'] = latest_location
+            transfer_row['los_atlocation'] = row['out_dttm'] - row['in_dttm']
+
+        df_all_transfers.append(transfer_row)
 
 
 
