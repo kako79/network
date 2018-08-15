@@ -1,5 +1,5 @@
 import pandas as pd
-from datetime import datetime
+import datetime
 import numpy as np
 from collections import deque, namedtuple
 
@@ -164,7 +164,7 @@ def get_patient_transfers(ptid, patient_data):
                 {'ptid': ptid, 'transfer_dt': new_loc.dt_in, 'from': current_loc.name, 'to': new_loc.name, 'dt_adm': new_loc.dt_adm, 'dt_dis': new_loc.dt_dis, 'spec': new_loc.spec, 'age': new_loc.age, 'asa': new_loc.asa})
 
     # In case we are inside a bunch of nested locations, we now need to transfer the patient out of them.
-    transfer_list += get_transfers_out(ptid, location_stack, datetime.max)
+    transfer_list += get_transfers_out(ptid, location_stack, datetime.datetime.max)
 
     # Finally we need to discharge the patient.
     last_loc = location_stack[-1]
