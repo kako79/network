@@ -81,7 +81,7 @@ surg_extra.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 full_info = full_info.join(surg_extra, on='ptid', how='left')
 
 full_info = full_info[full_info.adt_department_name != ''] # removes all lines where there is no location given
-
+full_info = full_info[full_info.adt_department_name != ' '] # removes all lines where there is no location given
 full_info.to_csv('full_info_all.csv', header=True, index=False)
 
 print('full_info created')
