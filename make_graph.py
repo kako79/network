@@ -39,7 +39,7 @@ def is_weekend(date):
 
 
 #read in the data from a combined csv file
-alldata= pd.read_csv("all_transfers_file.csv")
+alldata= pd.read_csv("trnsfers_categories.csv")
 print('reading in done')
 
 # now develop the network based on the transfer data
