@@ -65,7 +65,7 @@ data_only_transfers = specific_data.loc[specific_data['age'] > 18].drop(['transf
 transfer_counts = data_only_transfers.groupby(['from', 'to']).count()
 #add the old index as a column - int he above the count became the index.
 transfer_counts = transfer_counts.reset_index()
-transfer_counts = transfer_counts[transfer_counts['ptid'] > 10]
+transfer_counts = transfer_counts[transfer_counts['ptid'] > 5]
 # Get a list of tuples that contain the values from the rows.
 edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
