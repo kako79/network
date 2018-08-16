@@ -94,5 +94,5 @@ location_category_map = ward_dictionary
 alltransfers['to_category'] = alltransfers['to_loc'].map(location_category_map)
 alltransfers['from_category'] = alltransfers['from_loc'].map(location_category_map)
 
-all_transfers.to_csv('transfers_categories.csv', header=True, index=False)
+alltransfers.to_csv('transfers_categories.csv', header=True, index=False)
 print('transfer file with categories')
