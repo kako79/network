@@ -90,5 +90,9 @@ ward_dictionary = {'ADD A3 WARD': 'ns ward', 'ADD A4 WARD': 'ns ward',
                    'ADD LVRF':'other','ADD KDABI':'other', 'ADD NSGYFC':'surgical ward', 'ADD PSUD':'other',
                    'ADD BU':'other'}
 
+location_category_map = ward_dictionary
+alltransfers['to_category'] = alltransfers['to_loc'].map(location_category_map)
+alltransfers['from_category'] = alltransfers['from_loc'].map(location_category_map)
 
-
+all_transfers.to_csv('transfers_categories.csv', header=True, index=False)
+print('transfer file with categories')
