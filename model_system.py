@@ -14,7 +14,7 @@ list_to_wards = alltransfers.to_loc.unique()
 list_from_wards.to_csv('list of wards.csv')
 
 
-ward_dictionary = {'ADD '}
+#ward_dictionary = {'ADD '}
 
 
 print(list_wards)
