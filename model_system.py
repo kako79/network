@@ -53,7 +53,7 @@ ward_dictionary = {'ADD A3 WARD': 'ns ward', 'ADD A4 WARD': 'ns ward',
                    'ADD F3 WARD': 'paediatric ward', 'ADD K2 TOE/CARDIOVERSION': 'toe',
                    'ADD M5 WARD': 'surgical ward', 'ADD MAIN THEATRE 08': 'theatre',
                    'ADD MED S-STAY UNIT': 'medical ward', 'ADD N2 WARD': 'medical ward',
-                   'ADD N3 WARD': 'medical ward', 'ADD RT REV': 'treatment',
+                   'ADD N3 WARD': 'medical ward', 'ADD RT REV': 'outpatient',
                    'ADD TRANSPLANT HDU': 'hdu', 'ADD ADDOPTHIMG14': 'outpatient',
                    'ADD BMF': 'other', 'ADD DAY SURGERY UNIT': 'theatre',
                    'ADD MAIN THEATRE 03': 'theatre', 'ADD MAIN THEATRE 05': 'theatre',
@@ -71,12 +71,24 @@ ward_dictionary = {'ADD A3 WARD': 'ns ward', 'ADD A4 WARD': 'ns ward',
                    'CUH EXT FILM': 'radiology', 'ADD PFWON': 'investigation',
                    'ROS MRI SCAN': 'mri', 'VAU WARD': 'research ward',
                    'ADD EAU5 WARD': 'medical ward', 'ADD PPMFU': 'investigation',
-                   'ADD CL8': 'surgical ward', 'ADD OBS US': 'us',
+                   'ADD CL8': 'outpatient', 'ADD OBS US': 'us',
                    'ADD CNPHY': 'physiology', 'ADD AAA': 'other',
-                   'ADD FANREHA': 'rehab', }
-PPMFU
-VAU WARD
-ADD HFT
-ADD AAA
-print(list_wards)
+                   'ADD FANREHA': 'rehab','ADD G2 WARD': 'medical ward',
+                   'ADD OTHOTATY': 'ot', 'ADD STOMA': 'outpatient',
+                   'CUHTAANKGLAU': 'research ward', 'ADD EMEYE': 'outpatient',
+                   'ADD EMMO': 'other', 'ADD EYE UNIT DAYCASES': 'theatre',
+                   'ADD EYE UNIT THEATRE': 'theatre', 'CUH ELY DAY SURG UNIT': 'theatre ely',
+                   'ADD E10 WARD': 'medical ward', 'ROS CYSTOMCS': 'investigation',
+                   'ROS GONC': 'investigation', 'ADD ENTX': 'investigation',
+                   'ADD DIAGVEST':'other','ADD JRM':'other','ADD HFT':'other','ADD LFT':'other',
+                   'ADD NM':'other', 'ADD PDHU':'investigation', 'ADD RBJNEPH': 'other',
+                   'ADD AIADAR': 'other', 'ADD TXM': 'other','ADD LVR':'other', 'ADD WTUOC':'other',
+                   'ADD JODR': 'other','ADD AHNREF':'other','ADD NJAUOC':'other','ADD JMDW':'other',
+                   'ADD ACF': 'other', 'ADD DKNAMD':'other', 'ADD EABC':'other', 'ADD MRDB':'other',
+                   'ADD UDA':'other', 'ADD POADSU': 'surgical ward', 'ADD POAOSDSU':'surgical ward',
+                   'ADD AJCUOCW':'other','ADD SJM':'other','ADD SMBRECON': 'other', 'ADD SRGAMB': 'other',
+                   'ADD LVRF':'other','ADD KDABI':'other', 'ADD NSGYFC':'surgical ward', 'ADD PSUD':'other',
+                   'ADD BU':'other'}
+
+
 
