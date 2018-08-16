@@ -46,9 +46,37 @@ ward_dictionary = {'ADD A3 WARD': 'ns ward', 'ADD A4 WARD': 'ns ward',
                    'ADD K2 WARD': 'medical ward', 'ADD MAIN THEATRE 17': 'theatre',
                    'ADD D5 WARD': 'medical ward', 'ADD D6H WARD': 'medical ward',
                    'ADD D7 WARD': 'surgical ward', 'ADD C7 WARD': 'surgical ward',
-                   'ADD C8 WARD': 'surgical ward', }
-
-'VAU WARD'
+                   'ADD C8 WARD': 'surgical ward',  'ADD EAU4 WARD': 'medical ward',
+                   'ADD F6 WARD': 'medical ward', 'ADD G6 WARD': 'medical ward',
+                   'ADD F5 WARD': 'hdu', 'ADD G5 WARD': 'medical ward',
+                   'ADD F4 WARD': 'medical ward', 'ADD G3 WARD': 'medical ward',
+                   'ADD F3 WARD': 'paediatric ward', 'ADD K2 TOE/CARDIOVERSION': 'toe',
+                   'ADD M5 WARD': 'surgical ward', 'ADD MAIN THEATRE 08': 'theatre',
+                   'ADD MED S-STAY UNIT': 'medical ward', 'ADD N2 WARD': 'medical ward',
+                   'ADD N3 WARD': 'medical ward', 'ADD RT REV': 'treatment',
+                   'ADD TRANSPLANT HDU': 'hdu', 'ADD ADDOPTHIMG14': 'outpatient',
+                   'ADD BMF': 'other', 'ADD DAY SURGERY UNIT': 'theatre',
+                   'ADD MAIN THEATRE 03': 'theatre', 'ADD MAIN THEATRE 05': 'theatre',
+                   'ADD MAIN THEATRE 01': 'theatre', 'ADD MAIN THEATRE 02': 'theatre',
+                   'ADD MAIN THEATRE 09': 'theatre', 'ADD MAIN THEATRE 10': 'theatre',
+                   'ADD MAIN THEATRE 11': 'theatre', 'ADD MAIN THEATRE 12': 'theatre',
+                   'ADD MAIN THEATRE 14': 'theatre', 'ADD MAIN THEATRE 15': 'theatre',
+                   'ADD MAIN THEATRE 18': 'theatre', 'ADD MAIN THEATRE 19': 'theatre',
+                   'ADD MAIN THEATRE 23': 'theatre', 'ADD MAIN THEATRE 21': 'theatre',
+                   'ADD MAIN THEATRE 06': 'theatre', 'ADD MAIN THEATRE 07': 'theatre',
+                   'ADD OIR RECOVERY': 'oir', 'ADD SURG DISCH LOUNGE': 'disch lounge',
+                   'ADD ADREHAB': 'rehab', 'ADD DENTALX': 'dental',
+                   'ADD EMMF': 'other', 'ADD GII': 'medical ward',
+                   'ADD ORTHOP': 'outpatient', 'ADD OTHOTMON': 'ot',
+                   'CUH EXT FILM': 'radiology', 'ADD PFWON': 'investigation',
+                   'ROS MRI SCAN': 'mri', 'VAU WARD': 'research ward',
+                   'ADD EAU5 WARD': 'medical ward', 'ADD PPMFU': 'investigation',
+                   'ADD CL8': 'surgical ward', 'ADD OBS US': 'us',
+                   'ADD CNPHY': 'physiology', 'ADD AAA': 'other',
+                   'ADD FANREHA': 'rehab', }
+PPMFU
+VAU WARD
 ADD HFT
+ADD AAA
 print(list_wards)
 
