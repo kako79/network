@@ -88,7 +88,7 @@ ward_dictionary = {'ADD A3 WARD': 'ns ward', 'ADD A4 WARD': 'ns ward',
                    'ADD UDA':'other', 'ADD POADSU': 'surgical ward', 'ADD POAOSDSU':'surgical ward',
                    'ADD AJCUOCW':'other','ADD SJM':'other','ADD SMBRECON': 'other', 'ADD SRGAMB': 'other',
                    'ADD LVRF':'other','ADD KDABI':'other', 'ADD NSGYFC':'surgical ward', 'ADD PSUD':'other',
-                   'ADD BU':'other'}
+                   'ADD BU':'other', 'POST-DISCHARGE':'post-discharge', 'PRE-ADMISSION':'pread'}
 
 location_category_map = ward_dictionary
 alltransfers['to_category'] = alltransfers['to_loc'].map(location_category_map)
