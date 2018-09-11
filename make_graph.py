@@ -81,8 +81,6 @@ nn=G.number_of_nodes()
 print(en)
 print(nn)
 
-
-
 #undirected graph of the same data
 nondiG = nx.Graph()
 nondiG.add_weighted_edges_from(weighted_edges)
