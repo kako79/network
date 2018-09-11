@@ -39,7 +39,7 @@ def is_weekend(date):
 
 
 #read in the data from a combined csv file
-alldata= pd.read_csv("transfers_categories.csv")
+alldata= pd.read_csv("all_transfers_file.csv")
 print('reading in done')
 
 # now develop the network based on the transfer data
@@ -65,12 +65,11 @@ data_only_transfers = specific_data.loc[specific_data['age'] > 18].drop(['from_l
 transfer_counts = data_only_transfers.groupby(['from_category', 'to_category']).count()
 #add the old index as a column - int he above the count became the index.
 transfer_counts = transfer_counts.reset_index()
-transfer_counts = transfer_counts[transfer_counts['ptid'] > 5]
+transfer_counts = transfer_counts[transfer_counts['ptid'] > 2]
 # Get a list of tuples that contain the values from the rows.
 edge_weight_data = transfer_counts[['from_category', 'to_category', 'ptid']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
 edge_weight_data['ptid'] = edge_weight_data['ptid']/sum_of_all_transfers
-edge_weight_data.to_csv('edge_all16082018.csv', header=True, index=False)
 
 weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
 
