@@ -65,7 +65,7 @@ data_only_transfers = specific_data.loc[specific_data['age'] > 18].drop(['from_l
 transfer_counts = data_only_transfers.groupby(['from_category', 'to_category']).count()
 #add the old index as a column - int he above the count became the index.
 transfer_counts = transfer_counts.reset_index()
-transfer_counts = transfer_counts[transfer_counts['ptid'] > 5]
+transfer_counts = transfer_counts[transfer_counts['ptid'] > 2]
 # Get a list of tuples that contain the values from the rows.
 edge_weight_data = transfer_counts[['from_category', 'to_category', 'ptid']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
@@ -81,8 +81,6 @@ en=G.number_of_edges()
 nn=G.number_of_nodes()
 print(en)
 print(nn)
-
-
 
 #undirected graph of the same data
 nondiG = nx.Graph()
