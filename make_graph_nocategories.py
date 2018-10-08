@@ -59,15 +59,15 @@ specific_data = alldata
 
 #weighted edges first
 #drop the columns that are not needed for the graph, also only adults
-data_only_transfers = specific_data.loc[specific_data['age'] > 18].drop(['from_loc','to_loc','transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+data_only_transfers = specific_data.loc[specific_data['age'] > 18].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
 
 # count the number of times a specific transfer appears to get edge weight
-transfer_counts = data_only_transfers.groupby(['from_category', 'to_category']).count()
+transfer_counts = data_only_transfers.groupby(['from', 'to']).count()
 #add the old index as a column - int he above the count became the index.
 transfer_counts = transfer_counts.reset_index()
-transfer_counts = transfer_counts[transfer_counts['ptid'] > 5]
+transfer_counts = transfer_counts[transfer_counts['ptid'] > 3]
 # Get a list of tuples that contain the values from the rows.
-edge_weight_data = transfer_counts[['from_category', 'to_category', 'ptid']]
+edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
 edge_weight_data['ptid'] = edge_weight_data['ptid']/sum_of_all_transfers
 edge_weight_data.to_csv('edge_all11092018.csv', header=True, index=False)
