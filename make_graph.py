@@ -23,6 +23,7 @@ from datetime import datetime
 #    return weekend_admissions
 
 def is_weekend(date):
+    print(date)
     fmt = "%Y-%m-%d %H:%M"
     try:
 
