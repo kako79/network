@@ -139,12 +139,13 @@ def get_patient_transfers(ptid, patient_data):
     # The stack will contain the previous (location, entry_time, exit_time) tuples.
     location_stack = []
     transfer_list = []
+    dt_adm = patient_data['adm_hosp'].iloc[0]
 
     for i, row in patient_data.iterrows():
         loc = row['adt_department_name']
         dt_in = row['in_dttm']
         dt_out = row['out_dttm']
-        dt_adm = row['adm_hosp']
+        #dt_adm = row['adm_hosp']
         dt_dis = row['dis_hosp']
         spec = row['specialty']
         age = row['admAge']
