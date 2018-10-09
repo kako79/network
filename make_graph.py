@@ -45,21 +45,21 @@ print('reading in done')
 # now develop the network based on the transfer data
 
 #find all the admission dates on a weekend
-#alldata['dt_adm'] = pd.to_datetime(alldata['dt_adm'], format="%d/%m/%Y")
-#alldata['is_weekend'] = alldata['dt_adm'].map(is_weekend)
-#weekend_admissions = alldata[alldata['is_weekend']]
+alldata['dt_adm'] = pd.to_datetime(alldata['dt_adm'], format="%d/%m/%Y")
+alldata['is_weekend'] = alldata['dt_adm'].map(is_weekend)
+weekend_admissions = alldata[alldata['is_weekend']]
 #list_of_weekend_admissions =[get_weekend_list(data) for data in data['admission_time']]
 
 
 #now make the graph
-specific_data = alldata
-#specific_data = weekend_admissions
+#specific_data = alldata
+specific_data = weekend_admissions
 #specific_data = pd.read_csv("combined_data.csv")
 #specific_data.loc[admpoint[specific_data['admission_time'] == specific_data['extraid']].index, 'to'] = 'discharge'
 
 #weighted edges first
 #drop the columns that are not needed for the graph, also only adults
-data_only_transfers = specific_data.loc[specific_data['age'] > 18].drop(['from_loc','to_loc','transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+data_only_transfers = specific_data.loc[specific_data['age'] > 16].drop(['from_loc','to_loc','transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
 
 # count the number of times a specific transfer appears to get edge weight
 transfer_counts = data_only_transfers.groupby(['from_category', 'to_category']).count()
@@ -70,7 +70,7 @@ transfer_counts = transfer_counts[transfer_counts['ptid'] > 2]
 edge_weight_data = transfer_counts[['from_category', 'to_category', 'ptid']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
 edge_weight_data['ptid'] = edge_weight_data['ptid']/sum_of_all_transfers
-edge_weight_data.to_csv('edge_all11092018.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_weekendadult091018.csv', header=True, index=False)
 
 weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
 
