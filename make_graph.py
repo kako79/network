@@ -23,7 +23,7 @@ from datetime import datetime
 #    return weekend_admissions
 
 def is_weekend(date):
-    print(date)
+    #print(date)
     strdate = str(date)
     fmt = "%Y-%m-%d %H:%M"
     try:
@@ -41,8 +41,8 @@ def is_weekend(date):
 
 #read in the data from a combined csv file
 alldata= pd.read_csv("all_transfers_file.csv")
-adm_data = alldata['dt_adm']
-adm_data.to_csv('adm_data_only.csv', header=True, index=False)
+#adm_data = alldata['dt_adm']
+#adm_data.to_csv('adm_data_only.csv', header=True, index=False)
 
 
 print('reading in done')
