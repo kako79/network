@@ -64,10 +64,10 @@ specific_data = weekend_admissions
 
 #weighted edges first
 #drop the columns that are not needed for the graph, also only adults
-data_only_transfers = specific_data.loc[specific_data['age'] > 16].drop(['from_loc','to_loc','transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+data_only_transfers = specific_data.loc[specific_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
 
 # count the number of times a specific transfer appears to get edge weight
-transfer_counts = data_only_transfers.groupby(['from_category', 'to_category']).count()
+transfer_counts = data_only_transfers.groupby(['from', 'to']).count()
 #add the old index as a column - int he above the count became the index.
 transfer_counts = transfer_counts.reset_index()
 transfer_counts = transfer_counts[transfer_counts['ptid'] > 2]
