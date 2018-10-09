@@ -23,7 +23,7 @@ from datetime import datetime
 #    return weekend_admissions
 
 def is_weekend(date):
-    fmt = "%d/%m/%Y %H:%M"
+    fmt = "%d-%m-%Y %H:%M"
     try:
 
         d = datetime.strptime(date, fmt)
@@ -45,7 +45,7 @@ print('reading in done')
 # now develop the network based on the transfer data
 
 #find all the admission dates on a weekend
-alldata['dt_adm'] = pd.to_datetime(alldata['dt_adm'], format="%d/%m/%Y")
+alldata['dt_adm'] = pd.to_datetime(alldata['dt_adm'], format="%d-%m-%Y")
 alldata['is_weekend'] = alldata['dt_adm'].map(is_weekend)
 weekend_admissions = alldata[alldata['is_weekend']]
 #list_of_weekend_admissions =[get_weekend_list(data) for data in data['admission_time']]
