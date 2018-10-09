@@ -45,7 +45,7 @@ print('reading in done')
 # now develop the network based on the transfer data
 
 #find all the admission dates on a weekend
-#alldata['dt_adm'] = pd.to_datetime(alldata['dt_adm'], format="%Y-%m-%d")
+alldata['dt_adm'] = pd.to_datetime(alldata['dt_adm'], format="%Y-%m-%d")
 alldata['is_weekend'] = alldata['dt_adm'].map(is_weekend)
 weekend_admissions = alldata[alldata['is_weekend']]
 #list_of_weekend_admissions =[get_weekend_list(data) for data in data['admission_time']]
