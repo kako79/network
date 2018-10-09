@@ -53,7 +53,7 @@ print('reading in done')
 alldata['dt_adm'] = pd.to_datetime(alldata['dt_adm'], format="%Y-%m-%d %H:%M")
 alldata['is_weekend'] = alldata['dt_adm'].map(is_weekend)
 weekend_admissions = alldata[alldata['is_weekend']]
-weekday_admissions = alldata[not alldata['is_weekend']]
+weekday_admissions = alldata[~alldata['is_weekend']]
 #list_of_weekend_admissions =[get_weekend_list(data) for data in data['admission_time']]
 
 
