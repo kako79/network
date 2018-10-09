@@ -35,7 +35,7 @@ def is_weekend(date):
             else:
                 raise v
     #d = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
-    print(d)
+    #print(d)
     return d.isoweekday() % 7 < 2
 
 
@@ -72,7 +72,7 @@ transfer_counts = data_only_transfers.groupby(['from', 'to']).count()
 transfer_counts = transfer_counts.reset_index()
 transfer_counts = transfer_counts[transfer_counts['ptid'] > 2]
 # Get a list of tuples that contain the values from the rows.
-edge_weight_data = transfer_counts[['from_category', 'to_category', 'ptid']]
+edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
 edge_weight_data['ptid'] = edge_weight_data['ptid']/sum_of_all_transfers
 edge_weight_data.to_csv('edge_weekendadult091018.csv', header=True, index=False)
