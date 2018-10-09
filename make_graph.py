@@ -53,12 +53,14 @@ print('reading in done')
 alldata['dt_adm'] = pd.to_datetime(alldata['dt_adm'], format="%Y-%m-%d %H:%M")
 alldata['is_weekend'] = alldata['dt_adm'].map(is_weekend)
 weekend_admissions = alldata[alldata['is_weekend']]
+weekday_admissions = alldata[not alldata['is_weekend']]
 #list_of_weekend_admissions =[get_weekend_list(data) for data in data['admission_time']]
 
 
 #now make the graph
 #specific_data = alldata
-specific_data = weekend_admissions
+#specific_data = weekend_admissions
+specific_data = weekday_admissions
 #specific_data = pd.read_csv("combined_data.csv")
 #specific_data.loc[admpoint[specific_data['admission_time'] == specific_data['extraid']].index, 'to'] = 'discharge'
 
@@ -75,7 +77,7 @@ transfer_counts = transfer_counts[transfer_counts['ptid'] > 2]
 edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
 edge_weight_data['ptid'] = edge_weight_data['ptid']/sum_of_all_transfers
-edge_weight_data.to_csv('edge_weekendchildren091018.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_weekdaychildren091018.csv', header=True, index=False)
 
 weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
 
