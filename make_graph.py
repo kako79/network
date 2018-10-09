@@ -24,14 +24,14 @@ from datetime import datetime
 
 def is_weekend(date):
     print(date)
+    strdate = str(date)
     fmt = "%Y-%m-%d %H:%M"
     try:
-
-        d = datetime.strptime(date, fmt)
+        d = datetime.strptime(strdate, fmt)
     except ValueError as v:
             ulr = len(v.args[0].partition('unconverted data remains: ')[2])
             if ulr:
-                d = datetime.strptime(date[:-ulr], fmt)
+                d = datetime.strptime(strdate[:-ulr], fmt)
             else:
                 raise v
     #d = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
