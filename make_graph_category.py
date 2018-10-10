@@ -40,7 +40,7 @@ def is_weekend(date):
 
 
 #read in the data from a combined csv file
-alldata= pd.read_csv("transfer_categories.csv")
+alldata= pd.read_csv("transfers_categories.csv")
 #adm_data = alldata['dt_adm']
 #adm_data.to_csv('adm_data_only.csv', header=True, index=False)
 
