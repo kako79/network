@@ -3,7 +3,7 @@ import datetime
 import numpy as np
 from collections import deque, namedtuple
 
-alltransfers = pd.read_csv("all_transfers_file.csv")
+alltransfers = pd.read_csv("all_transfers_1110.csv")
 
 alltransfers.rename(index=str, columns={'from': 'from_loc'}, inplace=True)
 alltransfers.rename(index=str, columns={'to': 'to_loc'}, inplace=True)
