@@ -13,10 +13,11 @@ def get_separate_date_time(datetimeentry):
         return separate_date_time
 
 
-#admpoint contains the transfers of all the patients
+#admpoint contains the transfers of all the patients between wards
 admpoint = pd.read_csv("ADM_POINT_aug.csv")
 # keep the columns actually needed
 admpoint = admpoint[['STUDY_SUBJECT_DIGEST', 'in_dttm', 'out_dttm', 'adt_department_name']]
+#add on a column indicating the origin of an entry in this case adm point
 s_length = len(admpoint['in_dttm'])
 admpoint['data_origin'] = np.repeat('adm', s_length, axis=0)
 # Rename the 'STUDY_SUBJECT_DIGEST' column to 'ptid'.
@@ -53,7 +54,7 @@ enc_df['data_origin'] = np.repeat ('enc', s_length, axis = 0)
 enc_df.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
 enc_df.rename(index=str, columns={'at_time': 'in_dttm'}, inplace=True)
 enc_df.rename(index=str, columns={'dep_name': 'adt_department_name'}, inplace = True)
-
+enc_df['out_dttm'] = enc_df['in_dttm']
 
 #make dataframe containing all the information, then sort by patient id
 #convert in_dttm to a datetime object to be able to sort by it later
