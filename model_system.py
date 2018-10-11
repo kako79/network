@@ -14,7 +14,7 @@ list_to_wards = alltransfers.to_loc.unique()
 
 ward_dictionary = {'ADD A3 WARD': 'ns ward', 'ADD A4 WARD': 'ns ward',
                    'ADD A5 WARD': 'ns ward', 'ADD D6 WARD': 'ns ward',
-                   'ADD CLINICAL DECN UNIT': 'assess ward', 'ADD CT': 'CT scan',
+                   'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',
                    'ADD GENRAD': 'radiology', 'ADD IRAD': 'interv rad',
                    'ADD J2 WARD': 'day ward', 'ADD J2-C3 WARD': 'day ward',

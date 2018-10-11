@@ -206,7 +206,7 @@ def get_transfers(location_data: pd.DataFrame):
     return all_transfers
 
 all_transfers = get_transfers(full_info)
-all_transfers.to_csv('all_transfers_file.csv', header=True, index=False)
+all_transfers.to_csv('all_transfers_1110.csv', header=True, index=False)
 print('transfers file created')
 ##!!! finish of creating the transfers file
 
