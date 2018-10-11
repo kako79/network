@@ -213,8 +213,6 @@ print('transfers file created')
 
 
 
-
-
 ## this is old code - use for reference  only
 ## Create the actual transfers - currently just a list of start positions.
 ## Making the two columns from and to.
