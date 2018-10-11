@@ -66,7 +66,7 @@ specific_data = weekend_admissions
 
 #weighted edges first
 #drop the columns that are not needed for the graph, also only adults
-data_only_transfers = specific_data.loc[specific_data['age'] > 16].drop(['from_loc','to_loc','transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+data_only_transfers = specific_data.loc[specific_data['age'] < 16].drop(['from_loc','to_loc','transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
 
 # count the number of times a specific transfer appears to get edge weight
 transfer_counts = data_only_transfers.groupby(['from_category', 'to_category']).count()
@@ -77,7 +77,7 @@ transfer_counts = transfer_counts[transfer_counts['ptid'] > 2]
 edge_weight_data = transfer_counts[['from_category', 'to_category', 'ptid']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
 edge_weight_data['ptid'] = edge_weight_data['ptid']/sum_of_all_transfers
-edge_weight_data.to_csv('edge_weadultcat1110.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_wechildcat1110.csv', header=True, index=False)
 
 weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
 
