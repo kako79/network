@@ -83,7 +83,7 @@ def get_network_analytics(month_data_reduced):
 
     # calculate the degree
     degrees = nx.classes.function.degree(G)
-    degrees_list.append(list(G.degree.values()))
+    degrees_list.append(list(degrees.values)
     degrees.to_csv('degrees%s.csv' % str(i), header=True, index=False)
     print('degrees')
     print(degrees)
@@ -105,9 +105,9 @@ def get_network_analytics(month_data_reduced):
     print(flow_hierarchy)
 
     # clustering - doesnt work for directed graphs
-    clustering_average = nx.algorithms.cluster.clustering(nondiG)
-    print('clustering in non directed graph')
-    print(clustering_average)
+    #clustering_average = nx.algorithms.cluster.clustering(nondiG)
+    #print('clustering in non directed graph')
+    #print(clustering_average)
 
 
 
