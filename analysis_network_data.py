@@ -94,7 +94,18 @@ weekday_october_trans = weekday_transfers[weekday_transfers['month'] == 10]
 weekday_november_trans = weekday_transfers[weekday_transfers['month'] == 11]
 weekday_december_trans = weekday_transfers[weekday_transfers['month'] == 12]
 
-
+weekend_january_trans = weekend_transfers[weekend_transfers['month'] == 1]
+weekend_february_trans = weekend_transfers[weekend_transfers['month'] == 2]
+weekend_march_trans = weekend_transfers[weekend_transfers['month'] == 3]
+weekend_april_trans = weekend_transfers[weekend_transfers['month'] == 4]
+weekend_may_trans = weekend_transfers[weekend_transfers['month'] == 5]
+weekend_june_trans = weekend_transfers[weekend_transfers['month'] == 6]
+weekend_july_trans = weekend_transfers[weekend_transfers['month'] == 7]
+weekend_august_trans = weekend_transfers[weekend_transfers['month'] == 8]
+weekend_september_trans = weekend_transfers[weekend_transfers['month'] == 9]
+weekend_october_trans = weekend_transfers[weekend_transfers['month'] == 10]
+weekend_november_trans = weekend_transfers[weekend_transfers['month'] == 11]
+weekend_december_trans = weekend_transfers[weekend_transfers['month'] == 12]
 
 #list_of_weekend_admissions =[get_weekend_list(data) for data in data['admission_time']]
 
