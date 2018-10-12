@@ -54,8 +54,8 @@ def get_month(date):
             raise v
     return d.month
 
-def is_january(month):
-    return month == 1
+def get_network_analytics(month_graph):
+
 
 
 #read in the data from a combined csv file
@@ -94,18 +94,18 @@ weekday_trans_10 = weekday_transfers[weekday_transfers['month'] == 10]
 weekday_trans_11 = weekday_transfers[weekday_transfers['month'] == 11]
 weekday_trans_12 = weekday_transfers[weekday_transfers['month'] == 12]
 
-weekend_january_trans = weekend_transfers[weekend_transfers['month'] == 1]
-weekend_february_trans = weekend_transfers[weekend_transfers['month'] == 2]
-weekend_march_trans = weekend_transfers[weekend_transfers['month'] == 3]
-weekend_april_trans = weekend_transfers[weekend_transfers['month'] == 4]
-weekend_may_trans = weekend_transfers[weekend_transfers['month'] == 5]
-weekend_june_trans = weekend_transfers[weekend_transfers['month'] == 6]
-weekend_july_trans = weekend_transfers[weekend_transfers['month'] == 7]
-weekend_august_trans = weekend_transfers[weekend_transfers['month'] == 8]
-weekend_september_trans = weekend_transfers[weekend_transfers['month'] == 9]
-weekend_october_trans = weekend_transfers[weekend_transfers['month'] == 10]
-weekend_november_trans = weekend_transfers[weekend_transfers['month'] == 11]
-weekend_december_trans = weekend_transfers[weekend_transfers['month'] == 12]
+weekend_trans_1 = weekend_transfers[weekend_transfers['month'] == 1]
+weekend_trans_2 = weekend_transfers[weekend_transfers['month'] == 2]
+weekend_trans_3 = weekend_transfers[weekend_transfers['month'] == 3]
+weekend_trans_4 = weekend_transfers[weekend_transfers['month'] == 4]
+weekend_trans_5 = weekend_transfers[weekend_transfers['month'] == 5]
+weekend_trans_6 = weekend_transfers[weekend_transfers['month'] == 6]
+weekend_trans_7 = weekend_transfers[weekend_transfers['month'] == 7]
+weekend_trans_8 = weekend_transfers[weekend_transfers['month'] == 8]
+weekend_trans_9 = weekend_transfers[weekend_transfers['month'] == 9]
+weekend_trans_10 = weekend_transfers[weekend_transfers['month'] == 10]
+weekend_trans_11 = weekend_transfers[weekend_transfers['month'] == 11]
+weekend_trans_12 = weekend_transfers[weekend_transfers['month'] == 12]
 
 #list_of_weekend_admissions =[get_weekend_list(data) for data in data['admission_time']]
 
@@ -113,54 +113,77 @@ weekend_december_trans = weekend_transfers[weekend_transfers['month'] == 12]
 #now make the graph
 #specific_data = alldata
 #specific_data = weekend_admissions
-specific_data = weekday_admissions
+#specific_data = weekday_admissions
 #specific_data = pd.read_csv("combined_data.csv")
 #specific_data.loc[admpoint[specific_data['admission_time'] == specific_data['extraid']].index, 'to'] = 'discharge'
+#weekend_trans_by_month = [weekend_transfer[weekend_transfer['month'] == i] for i in range(1, 13)]
 
-#weighted edges first
-#drop the columns that are not needed for the graph, also select adults or children
-data_only_transfers = specific_data.loc[specific_data['age'] < 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+monthlist=[1,2,3,4,5,6,7,8,9,10,11,12]
+number_list = []
 
-# count the number of times a specific transfer appears to get edge weight
-transfer_counts = data_only_transfers.groupby(['from', 'to']).count()
-#add the old index as a column - int he above the count became the index.
-transfer_counts = transfer_counts.reset_index()
-transfer_counts = transfer_counts[transfer_counts['ptid'] > 2]
-# Get a list of tuples that contain the values from the rows.
-edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
-sum_of_all_transfers = edge_weight_data['ptid'].sum()
-edge_weight_data['ptid'] = edge_weight_data['ptid']/sum_of_all_transfers
-edge_weight_data.to_csv('edge_wdchild1110.csv', header=True, index=False)
+for i in monthlist:
+    month_data = weekend_transfers[weekend_transfers['month'] == i]
+    # drop the columns that are not needed for the graph, also select adults or children
+    month_data_reduced = month_data.loc[month_data['age'] < 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
 
-weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
+    #weighted edges first
+    # count the number of times a specific transfer appears to get edge weight
+    transfer_counts = month_data_reduced.groupby(['from', 'to']).count()
 
-G = nx.DiGraph()
-#print(weighted_edges)
-G.add_weighted_edges_from(weighted_edges)
-en=G.number_of_edges()
-nn=G.number_of_nodes()
-print(en)
-print(nn)
+    #add the old index as a column - int he above the count became the index.
+    transfer_counts = transfer_counts.reset_index()
+    transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
+    # Get a list of tuples that contain the values from the rows.
+    edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
+    sum_of_all_transfers = edge_weight_data['ptid'].sum()
+    edge_weight_data['ptid'] = edge_weight_data['ptid']/sum_of_all_transfers
+    edge_weight_data.to_csv('edge_weadult%s.csv' %str(i), header=True, index=False)
 
-#undirected graph of the same data
-nondiG = nx.Graph()
-nondiG.add_weighted_edges_from(weighted_edges)
+    weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
+
+    G = nx.DiGraph()
+    #print(weighted_edges)
+    G.add_weighted_edges_from(weighted_edges)
+    en=G.number_of_edges()
+    nn=G.number_of_nodes()
+    print(en)
+    print(nn)
+    number_list.append({en,nn})
+
+    # calculate the degree
+    degrees = nx.classes.function.degree(G)
+    degrees_list = [val for (node, val) in G.degree()]
+    degrees.to_csv('degrees%s.csv' %str(i), header = True, index = False)
+    print('degrees')
+    print(degrees)
+
+    histdegrees = nx.classes.function.degree_histogram(G)
+    print('histdegrees')
+    print(histdegrees)
+
+    # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
+    incentrality = nx.algorithms.centrality.in_degree_centrality(G)
+    outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
+    print('in and out centrality')
+    print(incentrality)
+    print(outcentrality)
+
+    # flow hiearchy - finds strongly connected components
+    flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
+    print('flow hierarchy')
+    print(flow_hierarchy)
+
+    # clustering - doesnt work for directed graphs
+    clustering_average = nx.algorithms.cluster.clustering(nondiG)
+    print('clustering in non directed graph')
+    print(clustering_average)
+
+    ##undirected graph of the same data
+    #nondiG = nx.Graph()
+    #nondiG.add_weighted_edges_from(weighted_edges)
 
 
-#calculate the degree
-degrees = nx.classes.function.degree(G)
-print('degrees')
-print(degrees)
-histdegrees = nx.classes.function.degree_histogram(G)
-print('histdegrees')
-print(histdegrees)
 
-# calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
-incentrality = nx.algorithms.centrality.in_degree_centrality(G)
-outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
-print('in and out centrality')
-print(incentrality)
-print(outcentrality)
 
 
 #centrality_overall = defaultdict(list)
@@ -171,20 +194,13 @@ print(outcentrality)
 #dfcentrality = pd.DataFrame.from_dict(centrality_overall,orient='index')
 #print(dfcentrality)
 
-#clustering - doesnt work for directed graphs
-clustering_average = nx.algorithms.cluster.clustering(nondiG)
-print('clustering in non directed graph')
-print(clustering_average)
+
 
 #shortest path in the directed graph, from a starting point source to a point target
 #shortest_path = nx.algorithms.shortest_paths.generic.shortest_path(G, source = 'ICU', target = 'ER')
 #print('shortest path is')
 #print(shortest_path)
 
-#flow hiearchy - finds strongly connected components
-flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
-print('flow hierarchy')
-print(flow_hierarchy)
 
 fig = plt.figure(figsize=(7, 5))
 #nx.set_node_attributes(G,'length_of_stay',los)
