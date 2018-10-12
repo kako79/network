@@ -54,8 +54,63 @@ def get_month(date):
             raise v
     return d.month
 
-def get_network_analytics(month_graph):
+def get_network_analytics(month_data_reduced):
+    # weighted edges first
+    # count the number of times a specific transfer appears to get edge weight
+    transfer_counts = month_data_reduced.groupby(['from', 'to']).count()
 
+    # add the old index as a column - int he above the count became the index.
+    transfer_counts = transfer_counts.reset_index()
+    transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
+    # Get a list of tuples that contain the values from the rows.
+    edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
+    sum_of_all_transfers = edge_weight_data['ptid'].sum()
+    edge_weight_data['ptid'] = edge_weight_data['ptid'] / sum_of_all_transfers
+    edge_weight_data.to_csv('edge_weadult%s.csv' % str(i), header=True, index=False)
+
+    weighted_edges = list(
+        itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
+
+    G = nx.DiGraph()
+    # print(weighted_edges)
+    G.add_weighted_edges_from(weighted_edges)
+    en = G.number_of_edges()
+    nn = G.number_of_nodes()
+    print(en)
+    print(nn)
+    number_list.append({en, nn})
+
+    # calculate the degree
+    degrees = nx.classes.function.degree(G)
+    degrees_list = [val for (node, val) in G.degree()]
+    degrees.to_csv('degrees%s.csv' % str(i), header=True, index=False)
+    print('degrees')
+    print(degrees)
+
+    # histdegrees = nx.classes.function.degree_histogram(G)
+    # print('histdegrees')
+    # print(histdegrees)
+
+    # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
+    incentrality = nx.algorithms.centrality.in_degree_centrality(G)
+    outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
+    print('in and out centrality')
+    print(incentrality)
+    print(outcentrality)
+
+    # flow hiearchy - finds strongly connected components
+    flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
+    print('flow hierarchy')
+    print(flow_hierarchy)
+
+    # clustering - doesnt work for directed graphs
+    clustering_average = nx.algorithms.cluster.clustering(nondiG)
+    print('clustering in non directed graph')
+    print(clustering_average)
+
+    ##undirected graph of the same data
+    # nondiG = nx.Graph()
+    # nondiG.add_weighted_edges_from(weighted_edges)
 
 
 #read in the data from a combined csv file
@@ -125,62 +180,10 @@ for i in monthlist:
     month_data = weekend_transfers[weekend_transfers['month'] == i]
     # drop the columns that are not needed for the graph, also select adults or children
     month_data_reduced = month_data.loc[month_data['age'] < 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+    get_network_analytics(month_data_reduced)
+    print(i)
 
-    #weighted edges first
-    # count the number of times a specific transfer appears to get edge weight
-    transfer_counts = month_data_reduced.groupby(['from', 'to']).count()
 
-    #add the old index as a column - int he above the count became the index.
-    transfer_counts = transfer_counts.reset_index()
-    transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
-    # Get a list of tuples that contain the values from the rows.
-    edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
-    sum_of_all_transfers = edge_weight_data['ptid'].sum()
-    edge_weight_data['ptid'] = edge_weight_data['ptid']/sum_of_all_transfers
-    edge_weight_data.to_csv('edge_weadult%s.csv' %str(i), header=True, index=False)
-
-    weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
-
-    G = nx.DiGraph()
-    #print(weighted_edges)
-    G.add_weighted_edges_from(weighted_edges)
-    en=G.number_of_edges()
-    nn=G.number_of_nodes()
-    print(en)
-    print(nn)
-    number_list.append({en,nn})
-
-    # calculate the degree
-    degrees = nx.classes.function.degree(G)
-    degrees_list = [val for (node, val) in G.degree()]
-    degrees.to_csv('degrees%s.csv' %str(i), header = True, index = False)
-    print('degrees')
-    print(degrees)
-
-    histdegrees = nx.classes.function.degree_histogram(G)
-    print('histdegrees')
-    print(histdegrees)
-
-    # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
-    incentrality = nx.algorithms.centrality.in_degree_centrality(G)
-    outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
-    print('in and out centrality')
-    print(incentrality)
-    print(outcentrality)
-
-    # flow hiearchy - finds strongly connected components
-    flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
-    print('flow hierarchy')
-    print(flow_hierarchy)
-
-    # clustering - doesnt work for directed graphs
-    clustering_average = nx.algorithms.cluster.clustering(nondiG)
-    print('clustering in non directed graph')
-    print(clustering_average)
-
-    ##undirected graph of the same data
-    #nondiG = nx.Graph()
-    #nondiG.add_weighted_edges_from(weighted_edges)
 
 
 
@@ -202,12 +205,12 @@ for i in monthlist:
 #print(shortest_path)
 
 
-fig = plt.figure(figsize=(7, 5))
+#fig = plt.figure(figsize=(7, 5))
 #nx.set_node_attributes(G,'length_of_stay',los)
 #pos = nx.circular_layout(G)
 #widthedge = [d['weight'] *0.1 for _,_,d in G.edges(data=True)]
 #nx.draw_networkx(G, pos=pos, with_labels=True, font_weight='bold', arrows = False, width= widthedge,  node_size=1300)
-nx.draw_circular(G)
+#nx.draw_circular(G)
 #width = [d['weight'] for _,_,d in G.edges(data=True)]
 
 #edge_labels=dict([((u,v,), d['weight'])
@@ -215,5 +218,5 @@ nx.draw_circular(G)
 #nx.draw_networkx(G, with_labels=True, font_weight='bold' )
 #nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
 #plt.show()
-fig.savefig("weekendchildrennetworkgraph.png")
-plt.gcf().clear()
+#fig.savefig("weekendchildrennetworkgraph.png")
+#plt.gcf().clear()
