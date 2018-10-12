@@ -111,6 +111,8 @@ def get_network_analytics(month_data_reduced):
     print(flow_hierarchy)
     flow_h_list.append(flow_hierarchy)
 
+    data_list.append(i, len(month_data_reduced['transfer_month']), nn, en,flow_hierarchy )
+
     # clustering - doesnt work for directed graphs
     #clustering_average = nx.algorithms.cluster.clustering(nondiG)
     #print('clustering in non directed graph')
@@ -186,6 +188,7 @@ en_list = []
 nn_list = []
 degrees_list = []
 flow_h_list = []
+data_list = []
 
 for i in monthlist:
     month_data = weekend_transfers[weekend_transfers['transfer_month'] == i]
@@ -199,8 +202,10 @@ print(nn_list)
 print(en_list)
 print(degrees_list)
 print(flow_h_list)
+print(data_list)
 
-
+analysis_data = pd.DataFrame(data_list, columns=['node', 'degree'])
+analysis_data.to_csv('analysis_data.csv', header =True, index=False)
 
 
 
