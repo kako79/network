@@ -109,6 +109,7 @@ def get_network_analytics(month_data_reduced):
     flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
     print('flow hierarchy')
     print(flow_hierarchy)
+    flow_h_list.append(flow_hierarchy)
 
     # clustering - doesnt work for directed graphs
     #clustering_average = nx.algorithms.cluster.clustering(nondiG)
