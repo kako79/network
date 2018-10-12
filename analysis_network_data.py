@@ -41,6 +41,7 @@ def is_weekend(date):
     else:
         return False
 
+
 def get_month(date):
     strdate = str(date)
     fmt = "%Y-%m-%d %H:%M"
