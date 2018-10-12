@@ -176,7 +176,7 @@ weekday_transfers = alldata[~alldata['is_weekend']]
 monthlist=[1,2]
 #monthlist=[1,2,3,4,5,6,7,8,9,10,11,12]
 number_list = []
-
+degrees_list = []
 for i in monthlist:
     month_data = weekend_transfers[weekend_transfers['transfer_month'] == i]
     # drop the columns that are not needed for the graph, also select adults or children
@@ -185,6 +185,7 @@ for i in monthlist:
     print(i)
 
 print(number_list)
+print(degrees_list)
 
 
 
