@@ -186,10 +186,11 @@ nn_list = []
 degrees_list = []
 for i in monthlist:
     month_data = weekend_transfers[weekend_transfers['transfer_month'] == i]
+    number_of_transfers = len(month_data['transfer_month'])
     # drop the columns that are not needed for the graph, also select adults or children
     month_data_reduced = month_data.loc[month_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
     get_network_analytics(month_data_reduced)
-    print(i)
+    print(i, number_of_transfers)
 
 print(nn_list)
 print(en_list)
