@@ -82,22 +82,22 @@ def get_network_analytics(month_data_reduced):
     number_list.append({en, nn})
 
     # calculate the degree
-    degrees = nx.classes.function.degree(G)
-    degrees_list.append(list(degrees.values)
-    degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
-    print('degrees')
-    print(degrees)
+    #degrees = nx.classes.function.degree(G)
+    #degrees_list.append(list(degrees.values)
+    #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
+    #print('degrees')
+    #print(degrees)
 
     # histdegrees = nx.classes.function.degree_histogram(G)
     # print('histdegrees')
     # print(histdegrees)
 
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
-    incentrality = nx.algorithms.centrality.in_degree_centrality(G)
-    outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
-    print('in and out centrality')
-    print(incentrality)
-    print(outcentrality)
+    #incentrality = nx.algorithms.centrality.in_degree_centrality(G)
+    #outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
+    #print('in and out centrality')
+    #print(incentrality)
+    #print(outcentrality)
 
     # flow hiearchy - finds strongly connected components
     flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
