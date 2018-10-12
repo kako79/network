@@ -181,7 +181,8 @@ weekday_transfers = alldata[~alldata['is_weekend']]
 
 #monthlist=[1,2]
 monthlist=[1,2,3,4,5,6,7,8,9,10,11,12]
-number_list = []
+en_list = []
+nn_list = []
 degrees_list = []
 for i in monthlist:
     month_data = weekend_transfers[weekend_transfers['transfer_month'] == i]
