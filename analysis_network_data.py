@@ -41,6 +41,19 @@ def is_weekend(date):
     else
         return False
 
+def get_month(date):
+    strdate = str(date)
+    fmt = "%Y-%m-%d %H:%M"
+    try:
+        d = datetime.strptime(strdate, fmt)
+    except ValueError as v:
+        ulr = len(v.args[0].partition('unconverted data remains: ')[2])
+        if ulr:
+            d = datetime.strptime(strdate[:-ulr], fmt)
+        else:
+            raise v
+    return d.month
+
 
 #read in the data from a combined csv file
 alldata= pd.read_csv("all_transfers_1110.csv")
