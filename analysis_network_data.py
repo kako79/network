@@ -38,7 +38,7 @@ def is_weekend(date):
     #print(d)
     if (d.isoweekday() == 6 or d.isoweekday() == 7):
         return True
-    else
+    else:
         return False
 
 def get_month(date):
