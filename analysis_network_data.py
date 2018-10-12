@@ -83,7 +83,7 @@ def get_network_analytics(month_data_reduced):
 
     # calculate the degree
     degrees = nx.classes.function.degree(G)
-    degrees_list = [val for (node, val) in G.degree()]
+    degrees_list.append(list(G.degree.values()))
     degrees.to_csv('degrees%s.csv' % str(i), header=True, index=False)
     print('degrees')
     print(degrees)
