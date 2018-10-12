@@ -108,9 +108,8 @@ def get_network_analytics(month_data_reduced):
     print('clustering in non directed graph')
     print(clustering_average)
 
-    ##undirected graph of the same data
-    # nondiG = nx.Graph()
-    # nondiG.add_weighted_edges_from(weighted_edges)
+
+
 
 
 #read in the data from a combined csv file
@@ -183,7 +182,7 @@ for i in monthlist:
     get_network_analytics(month_data_reduced)
     print(i)
 
-
+print(number_list)
 
 
 
