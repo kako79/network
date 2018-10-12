@@ -54,22 +54,48 @@ def get_month(date):
             raise v
     return d.month
 
+def is_january(month):
+    return month == 1
+
 
 #read in the data from a combined csv file
 alldata= pd.read_csv("all_transfers_1110.csv")
 #adm_data = alldata['dt_adm']
 #adm_data.to_csv('adm_data_only.csv', header=True, index=False)
-
-
 print('reading in done')
 
 # now develop the network based on the transfer data
 
-#find all the admission dates on a weekend
-alldata['dt_adm'] = pd.to_datetime(alldata['dt_adm'], format="%Y-%m-%d %H:%M")
-alldata['is_weekend'] = alldata['dt_adm'].map(is_weekend)
-weekend_admissions = alldata[alldata['is_weekend']]
-weekday_admissions = alldata[~alldata['is_weekend']]
+#find all the transfer dates on a weekend! not the admission dates
+alldata['transfer_dt'] = pd.to_datetime(alldata['transfer_dt'], format="%Y-%m-%d %H:%M")
+# add on columns for the true and false for weekend and the month as a number
+alldata['is_weekend'] = alldata['transfer_dt'].map(is_weekend)
+alldata['transfer_month'] = alldata['transfer_dt'].map(get_month)
+
+
+#weekend and weekday transfers
+weekend_transfers = alldata[alldata['is_weekend']]
+weekday_transfers = alldata[~alldata['is_weekend']]
+
+
+
+
+# collect the data for each month
+weekday_january_trans = weekday_transfers[weekday_transfers['month'] == 1]
+weekday_february_trans = weekday_transfers[weekday_transfers['month'] == 2]
+weekday_march_trans = weekday_transfers[weekday_transfers['month'] == 3]
+weekday_april_trans = weekday_transfers[weekday_transfers['month'] == 4]
+weekday_may_trans = weekday_transfers[weekday_transfers['month'] == 5]
+weekday_june_trans = weekday_transfers[weekday_transfers['month'] == 6]
+weekday_july_trans = weekday_transfers[weekday_transfers['month'] == 7]
+weekday_august_trans = weekday_transfers[weekday_transfers['month'] == 8]
+weekday_september_trans = weekday_transfers[weekday_transfers['month'] == 9]
+weekday_october_trans = weekday_transfers[weekday_transfers['month'] == 10]
+weekday_november_trans = weekday_transfers[weekday_transfers['month'] == 11]
+weekday_december_trans = weekday_transfers[weekday_transfers['month'] == 12]
+
+
+
 #list_of_weekend_admissions =[get_weekend_list(data) for data in data['admission_time']]
 
 
@@ -81,7 +107,7 @@ specific_data = weekday_admissions
 #specific_data.loc[admpoint[specific_data['admission_time'] == specific_data['extraid']].index, 'to'] = 'discharge'
 
 #weighted edges first
-#drop the columns that are not needed for the graph, also only adults
+#drop the columns that are not needed for the graph, also select adults or children
 data_only_transfers = specific_data.loc[specific_data['age'] < 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
 
 # count the number of times a specific transfer appears to get edge weight
