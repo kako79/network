@@ -79,11 +79,17 @@ def get_network_analytics(month_data_reduced):
     nn = G.number_of_nodes()
     print(en)
     print(nn)
-    number_list.append({en, nn})
+    en_list.append(en)
+    nn_list.append(nn)
 
     # calculate the degree
-    #degrees = nx.classes.function.degree(G)
-    #degrees_list.append(list(degrees.values)
+    degrees = nx.classes.function.degree(G)
+    degrees_list = [[n, d] for n, d in degrees]
+    degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
+    degrees_data.to_csv('degrees_weadult%s.csv'%str(i), header =True, index=False)
+
+
+    #degrees_list.append(list(degrees.values))
     #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
     #print('degrees')
     #print(degrees)
@@ -184,7 +190,8 @@ for i in monthlist:
     get_network_analytics(month_data_reduced)
     print(i)
 
-print(number_list)
+print(nn_list)
+print(en_list)
 print(degrees_list)
 
 
