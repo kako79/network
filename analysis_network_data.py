@@ -178,7 +178,7 @@ monthlist=[1,2]
 number_list = []
 
 for i in monthlist:
-    month_data = weekend_transfers[weekend_transfers['month'] == i]
+    month_data = weekend_transfers[weekend_transfers['transfer_month'] == i]
     # drop the columns that are not needed for the graph, also select adults or children
     month_data_reduced = month_data.loc[month_data['age'] < 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
     get_network_analytics(month_data_reduced)
