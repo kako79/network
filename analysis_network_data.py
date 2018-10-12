@@ -185,6 +185,8 @@ monthlist=[1,2,3,4,5,6,7,8,9,10,11,12]
 en_list = []
 nn_list = []
 degrees_list = []
+flow_h_list = []
+
 for i in monthlist:
     month_data = weekend_transfers[weekend_transfers['transfer_month'] == i]
     number_of_transfers = len(month_data['transfer_month'])
@@ -196,6 +198,7 @@ for i in monthlist:
 print(nn_list)
 print(en_list)
 print(degrees_list)
+print(flow_h_list)
 
 
 
