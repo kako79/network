@@ -190,8 +190,14 @@ degrees_list = []
 flow_h_list = []
 data_list = []
 
+it_is_weekend = True
+
 for i in monthlist:
-    month_data = weekend_transfers[weekend_transfers['transfer_month'] == i]
+    if it_is_weekend == True:
+        month_data = weekend_transfers[weekend_transfers['transfer_month'] == i]
+    else:
+        month_data = weekday_transfers[weekday_transfers['transfer_month'] == i]
+
     number_of_transfers = len(month_data['transfer_month'])
     # drop the columns that are not needed for the graph, also select adults or children
     month_data_reduced = month_data.loc[month_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
@@ -204,8 +210,8 @@ print(degrees_list)
 print(flow_h_list)
 print(data_list)
 
-analysis_data = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy'], data = data_list)
-analysis_data.to_csv('analysis_data.csv', header =True, index=False)
+analysis_data_weekend = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy'], data = data_list)
+analysis_data_weekend.to_csv('analysis_data_weekend.csv', header =True, index=False)
 
 
 
