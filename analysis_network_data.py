@@ -211,7 +211,7 @@ print(flow_h_list)
 print(data_list)
 
 analysis_data_weekday = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy'], data = data_list)
-analysis_data_weekday.to_csv('analysis_data_weekend.csv', header =True, index=False)
+analysis_data_weekday.to_csv('analysis_data_weekday.csv', header =True, index=False)
 
 
 
