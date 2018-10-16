@@ -67,8 +67,10 @@ def get_network_analytics(month_data_reduced):
     edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
     sum_of_all_transfers = edge_weight_data['ptid'].sum()
     edge_weight_data['ptid'] = edge_weight_data['ptid'] / sum_of_all_transfers
-    edge_weight_data.to_csv('edge_weadult%s.csv' % str(i), header=True, index=False)
-
+    if it_is_weekend == False:
+        edge_weight_data.to_csv('edge_wdadult%s.csv' % str(i), header=True, index=False)
+    else:
+        edge_weight_data.to_csv('edge_weadult%s.csv' % str(i), header=True, index=False)
     weighted_edges = list(
         itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
 
