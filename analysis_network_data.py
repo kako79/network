@@ -90,7 +90,10 @@ def get_network_analytics(month_data_reduced):
     degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
     degrees_data.to_csv('degrees_weadult%s.csv'%str(i), header =True, index=False)
     #look at degrees of the emergency department
-    emergency_degrees = degrees_data[degrees_data['degree'] == 'ADD EMERGENCY DEPT']
+    degrees_data.set_index('node', inplace=True)
+    degrees_dict = degrees_data.to_dict()['degree']
+    emergency_degrees = degrees_dict['ADD EMERGENCY DEPT']
+
 
     #degrees_list.append(list(degrees.values))
     #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
