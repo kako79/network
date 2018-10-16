@@ -212,13 +212,15 @@ for i in monthlist:
 
 print(nn_list)
 print(en_list)
-print(degrees_list)
-print(flow_h_list)
+#print(degrees_list)
+#print(flow_h_list)
 print(data_list)
 
-analysis_data_weekday = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degree'], data = data_list)
-analysis_data_weekday.to_csv('analysis_data_weekday.csv', header =True, index=False)
-
+analysis_data_week = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degree'], data = data_list)
+if it_is_weekend == True:
+    analysis_data_week.to_csv('analysis_data_weekend.csv', header =True, index=False)
+else:
+    analysis_data_week.to_csv('analysis_data_weekday.csv', header = True, index = False)
 
 
 #centrality_overall = defaultdict(list)
