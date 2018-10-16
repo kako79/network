@@ -109,9 +109,9 @@ def get_network_analytics(month_data_reduced):
     incentrality = nx.algorithms.centrality.in_degree_centrality(G)
     outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
 
-    in_theatre_centrality = incentrality['ADD MAIN THEATRE'] + incentrality['ADD MAIN THEATRE 04']+ incentrality['ADD MAIN THEATRE 01']+incentrality['ADD MAIN THEATRE 02']+incentrality['ADD MAIN THEATRE 03']
+    in_theatre_centrality = incentrality['theatres']
     print(in_theatre_centrality)
-    out_theatre_centrality = outcentrality['ADD MAIN THEATRE']
+    out_theatre_centrality = outcentrality['theatres']
 
 
 
@@ -121,7 +121,7 @@ def get_network_analytics(month_data_reduced):
     #print(flow_hierarchy)
     flow_h_list.append(flow_hierarchy)
 
-    data_list.append({'month':i,'number of transfers': len(month_data_reduced['transfer_month']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees, 'incentrality theatres': in_theatre_centrality})
+    data_list.append({'month':i,'number of transfers': len(month_data_reduced['transfer_month']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality})
     return data_list
     # clustering - doesnt work for directed graphs
     #clustering_average = nx.algorithms.cluster.clustering(nondiG)
@@ -216,7 +216,7 @@ for i in monthlist:
 #print(flow_h_list)
 print(data_list)
 
-analysis_data_week = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres'], data = data_list)
+analysis_data_week = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list)
 if it_is_weekend == True:
     analysis_data_week.to_csv('analysis_data_weekend.csv', header =True, index=False)
 else:
