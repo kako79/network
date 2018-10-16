@@ -120,6 +120,7 @@ def get_network_analytics(month_data_reduced):
     #outcentrality_dict = incentrality_data.to_dict()['outcentrality']
 
     in_theatre_centrality = incentrality['ADD MAIN THEATRE']
+    print(in_theatre_centrality)
     out_theatre_centrality = outcentrality['ADD MAIN THEATRE']
 
 
