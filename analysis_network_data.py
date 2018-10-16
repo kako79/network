@@ -109,9 +109,9 @@ def get_network_analytics(month_data_reduced):
     incentrality = nx.algorithms.centrality.in_degree_centrality(G)
     outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
     print (incentrality)
-    in_theatre_centrality = incentrality['theatres']
+    in_theatre_centrality = incentrality['theatre']
     print(in_theatre_centrality)
-    out_theatre_centrality = outcentrality['theatres']
+    out_theatre_centrality = outcentrality['theatre']
 
 
 
