@@ -119,7 +119,7 @@ def get_network_analytics(month_data_reduced):
     #incentrality_dict = incentrality_data.to_dict()['incentrality']
     #outcentrality_dict = incentrality_data.to_dict()['outcentrality']
 
-    in_theatre_centrality = incentrality['ADD MAIN THEATRE']
+    in_theatre_centrality = incentrality['ADD MAIN THEATRE'] + incentrality['ADD MAIN THEATRE 04']+ incentrality['ADD MAIN THEATRE 01']+incentrality['ADD MAIN THEATRE 02']+incentrality['ADD MAIN THEATRE 03']
     print(in_theatre_centrality)
     out_theatre_centrality = outcentrality['ADD MAIN THEATRE']
 
@@ -210,7 +210,7 @@ degrees_list = []
 flow_h_list = []
 data_list = []
 
-it_is_weekend = False
+it_is_weekend = True
 
 for i in monthlist:
     if it_is_weekend == True:
