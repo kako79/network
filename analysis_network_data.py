@@ -89,6 +89,7 @@ def get_network_analytics(month_data_reduced):
     degrees_list = [[n, d] for n, d in degrees]
     degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
     degrees_data.to_csv('degrees_weadult%s.csv'%str(i), header =True, index=False)
+    #look at degrees of the emergency department
     emergency_degrees = degrees_data[degrees_data['degree'] == 'ADD EMERGENCY DEPT']
 
     #degrees_list.append(list(degrees.values))
@@ -101,10 +102,10 @@ def get_network_analytics(month_data_reduced):
     # print(histdegrees)
 
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
-    #incentrality = nx.algorithms.centrality.in_degree_centrality(G)
+    incentrality = nx.algorithms.centrality.in_degree_centrality(G)
     #outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
     #print('in and out centrality')
-    #print(incentrality)
+    print(incentrality)
     #print(outcentrality)
 
     # flow hiearchy - finds strongly connected components
