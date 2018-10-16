@@ -110,17 +110,17 @@ def get_network_analytics(month_data_reduced):
     #print('in and out centrality')
     #print(incentrality)
     #print(outcentrality)
-    incentrality_list = [[n, inc] for n, inc in incentrality]
-    outcentrality_list = [[n, ouc] for n, ouc in outcentrality]
-    incentrality_data = pd.DataFrame(incentrality_list, columns=['node', 'incentrality'])
-    outcentrality_list = pd.DataFrame(outcentrality_list, columns = ['node', 'outcentrality'])
-    incentrality_data.set_index('node', inplace=True)
-    outcentrality_data.set_index('node', inplace=True)
-    incentrality_dict = incentrality_data.to_dict()['incentrality']
-    outcentrality_dict = incentrality_data.to_dict()['outcentrality']
+    #incentrality_list = [[n, inc] for n, inc in incentrality]
+    #outcentrality_list = [[n, ouc] for n, ouc in outcentrality]
+    #incentrality_data = pd.DataFrame(incentrality_list, columns=['node', 'incentrality'])
+    #outcentrality_list = pd.DataFrame(outcentrality_list, columns = ['node', 'outcentrality'])
+    #incentrality_data.set_index('node', inplace=True)
+    #outcentrality_data.set_index('node', inplace=True)
+    #incentrality_dict = incentrality_data.to_dict()['incentrality']
+    #outcentrality_dict = incentrality_data.to_dict()['outcentrality']
 
-    in_theatre_centrality = incentrality_dict['ADD MAIN THEATRE']
-    out_theatre_centrality = outcentrality_dict['ADD MAIN THEATRE']
+    in_theatre_centrality = incentrality['ADD MAIN THEATRE']
+    out_theatre_centrality = outcentrality['ADD MAIN THEATRE']
 
 
 
