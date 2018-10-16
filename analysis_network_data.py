@@ -108,7 +108,7 @@ def get_network_analytics(month_data_reduced):
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
     incentrality = nx.algorithms.centrality.in_degree_centrality(G)
     outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
-
+    print (incentrality)
     in_theatre_centrality = incentrality['theatres']
     print(in_theatre_centrality)
     out_theatre_centrality = outcentrality['theatres']
