@@ -106,18 +106,31 @@ def get_network_analytics(month_data_reduced):
 
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
     incentrality = nx.algorithms.centrality.in_degree_centrality(G)
-    #outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
+    outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
     #print('in and out centrality')
-    print(incentrality)
+    #print(incentrality)
     #print(outcentrality)
+    incentrality_list = [[n, inc] for n, inc in incentrality]
+    outcentrality_list = [[n, ouc] for n, ouc in outcentrality]
+    incentrality_data = pd.DataFrame(incentrality_list, columns=['node', 'incentrality'])
+    outcentrality_list = pd.DataFrame(outcentrality_list, columns = ['node', 'outcentrality'])
+    incentrality_data.set_index('node', inplace=True)
+    outcentrality_data.set_index('node', inplace=True)
+    incentrality_dict = incentrality_data.to_dict()['incentrality']
+    outcentrality_dict = incentrality_data.to_dict()['outcentrality']
+
+    in_theatre_centrality = incentrality_dict['ADD MAIN THEATRE']
+    out_theatre_centrality = outcentrality_dict['ADD MAIN THEATRE']
+
+
 
     # flow hiearchy - finds strongly connected components
     flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
-    print('flow hierarchy')
-    print(flow_hierarchy)
+    #print('flow hierarchy')
+    #print(flow_hierarchy)
     flow_h_list.append(flow_hierarchy)
 
-    data_list.append({'month':i,'number of transfers': len(month_data_reduced['transfer_month']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'ED degrees': emergency_degrees })
+    data_list.append({'month':i,'number of transfers': len(month_data_reduced['transfer_month']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees, 'incentrality theatres': in_theatre_centrality})
     return data_list
     # clustering - doesnt work for directed graphs
     #clustering_average = nx.algorithms.cluster.clustering(nondiG)
@@ -210,13 +223,13 @@ for i in monthlist:
     get_network_analytics(month_data_reduced)
     print(i, number_of_transfers)
 
-print(nn_list)
-print(en_list)
+#print(nn_list)
+#print(en_list)
 #print(degrees_list)
 #print(flow_h_list)
 print(data_list)
 
-analysis_data_week = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degree'], data = data_list)
+analysis_data_week = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres'], data = data_list)
 if it_is_weekend == True:
     analysis_data_week.to_csv('analysis_data_weekend.csv', header =True, index=False)
 else:
