@@ -89,7 +89,7 @@ def get_network_analytics(month_data_reduced):
     degrees_list = [[n, d] for n, d in degrees]
     degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
     degrees_data.to_csv('degrees_weadult%s.csv'%str(i), header =True, index=False)
-    #look at degrees of the emergency department
+    #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
     degrees_data.set_index('node', inplace=True)
     degrees_dict = degrees_data.to_dict()['degree']
     emergency_degrees = degrees_dict['ADD EMERGENCY DEPT']
@@ -216,7 +216,7 @@ print(degrees_list)
 print(flow_h_list)
 print(data_list)
 
-analysis_data_weekday = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy'], data = data_list)
+analysis_data_weekday = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degree'], data = data_list)
 analysis_data_weekday.to_csv('analysis_data_weekday.csv', header =True, index=False)
 
 
