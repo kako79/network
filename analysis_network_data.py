@@ -16,11 +16,9 @@ import networkx as nx
 #from collections import defaultdict
 from datetime import datetime
 
-#def get_weekend_list(alldata):
-#    #weekend_admissions = alldata[alldata['admission_time'].get_weekday() == True]
-#    weekend_admissions = alldata[alldata['admission_time'].weekday() == '5' or alldata['admission_time'].weekday() == '6']
-#    #weekend_admissions = alldata.loc[alldata['admission_time'].get_weekday() == 'Saturday' ]
-#    return weekend_admissions
+#this programme takes a list of transfers and analyses them by month
+# it makes an edge file for each month and also creates a data analysis csv file that contains some network charactersistics for each month
+# it replaces the individual theatres with a a general theatre category to capture the degree of the theatre node overall.
 
 def is_weekend(date):
     #print(date)
@@ -196,7 +194,7 @@ degrees_list = []
 flow_h_list = []
 data_list = []
 
-it_is_weekend = True
+it_is_weekend = False
 
 for i in monthlist:
     if it_is_weekend == True:
