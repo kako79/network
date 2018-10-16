@@ -87,7 +87,7 @@ def get_network_analytics(month_data_reduced):
     degrees_list = [[n, d] for n, d in degrees]
     degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
     degrees_data.to_csv('degrees_weadult%s.csv'%str(i), header =True, index=False)
-
+    emergency_degrees = degrees_data[degrees_data['degree'] == 'ADD EMERGENCY DEPT']
 
     #degrees_list.append(list(degrees.values))
     #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
@@ -111,7 +111,7 @@ def get_network_analytics(month_data_reduced):
     print(flow_hierarchy)
     flow_h_list.append(flow_hierarchy)
 
-    data_list.append({'month':i,'number of transfers': len(month_data_reduced['transfer_month']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy })
+    data_list.append({'month':i,'number of transfers': len(month_data_reduced['transfer_month']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'ED degrees': emergency_degrees })
     return data_list
     # clustering - doesnt work for directed graphs
     #clustering_average = nx.algorithms.cluster.clustering(nondiG)
