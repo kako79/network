@@ -71,6 +71,7 @@ def get_network_analytics(month_data_reduced):
         edge_weight_data.to_csv('edge_wdadult%s.csv' % str(i), header=True, index=False)
     else:
         edge_weight_data.to_csv('edge_weadult%s.csv' % str(i), header=True, index=False)
+
     weighted_edges = list(
         itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
 
@@ -107,17 +108,6 @@ def get_network_analytics(month_data_reduced):
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
     incentrality = nx.algorithms.centrality.in_degree_centrality(G)
     outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
-    #print('in and out centrality')
-    #print(incentrality)
-    #print(outcentrality)
-    #incentrality_list = [[n, inc] for n, inc in incentrality]
-    #outcentrality_list = [[n, ouc] for n, ouc in outcentrality]
-    #incentrality_data = pd.DataFrame(incentrality_list, columns=['node', 'incentrality'])
-    #outcentrality_list = pd.DataFrame(outcentrality_list, columns = ['node', 'outcentrality'])
-    #incentrality_data.set_index('node', inplace=True)
-    #outcentrality_data.set_index('node', inplace=True)
-    #incentrality_dict = incentrality_data.to_dict()['incentrality']
-    #outcentrality_dict = incentrality_data.to_dict()['outcentrality']
 
     in_theatre_centrality = incentrality['ADD MAIN THEATRE'] + incentrality['ADD MAIN THEATRE 04']+ incentrality['ADD MAIN THEATRE 01']+incentrality['ADD MAIN THEATRE 02']+incentrality['ADD MAIN THEATRE 03']
     print(in_theatre_centrality)
@@ -157,39 +147,31 @@ alldata['is_weekend'] = alldata['transfer_dt'].map(is_weekend)
 alldata['transfer_month'] = alldata['transfer_dt'].map(get_month)
 
 
+alldata['to'].replace(to_replace=['ADD MAIN THEATRE', 'ADD MAIN THEATRE 01','ADD MAIN THEATRE 02', 'ADD MAIN THEATRE 03', 'ADD MAIN THEATRE 04' , 'ADD MAIN THEATRE 05', 'ADD MAIN THEATRE 06', 'ADD MAIN THEATRE 07','ADD MAIN THEATRE 08', 'ADD MAIN THEATRE 09', 'ADD MAIN THEATRE 10' ,'ADD MAIN THEATRE 11', 'ADD MAIN THEATRE 12', 'ADD MAIN THEATRE 14','ADD MAIN THEATRE 15', 'ADD MAIN THEATRE 16','ADD MAIN THEATRE 17', 'ADD MAIN THEATRE 18','ADD MAIN THEATRE 19', 'ADD MAIN THEATRE 20','ADD MAIN THEATRE 21', 'ADD MAIN THEATRE 22','ADD ATC THEATRE 31', 'ADD ATC THEATRE 32','ADD ATC THEATRE 33', 'ADD ATC THEATRE 34','ADD ATC THEATRE 35', 'ADD ATC THEATRE 36'],value='theatre',inplace=True)
+alldata['from'].replace(to_replace=['ADD MAIN THEATRE', 'ADD MAIN THEATRE 01','ADD MAIN THEATRE 02', 'ADD MAIN THEATRE 03', 'ADD MAIN THEATRE 04' , 'ADD MAIN THEATRE 05', 'ADD MAIN THEATRE 06', 'ADD MAIN THEATRE 07','ADD MAIN THEATRE 08', 'ADD MAIN THEATRE 09', 'ADD MAIN THEATRE 10' ,'ADD MAIN THEATRE 11', 'ADD MAIN THEATRE 12', 'ADD MAIN THEATRE 14','ADD MAIN THEATRE 15', 'ADD MAIN THEATRE 16','ADD MAIN THEATRE 17', 'ADD MAIN THEATRE 18','ADD MAIN THEATRE 19', 'ADD MAIN THEATRE 20','ADD MAIN THEATRE 21', 'ADD MAIN THEATRE 22','ADD ATC THEATRE 31', 'ADD ATC THEATRE 32','ADD ATC THEATRE 33', 'ADD ATC THEATRE 34','ADD ATC THEATRE 35', 'ADD ATC THEATRE 36'],value='theatre',inplace=True)
+
+#theatre_dictionary = {'ADD MAIN THEATRE': 'theatre', 'ADD MAIN THEATRE 01': 'theatre',
+#                       'ADD MAIN THEATRE 02': 'theatre', 'ADD MAIN THEATRE 03': 'theatre',
+#                       'ADD MAIN THEATRE 04': 'theatre', 'ADD MAIN THEATRE 05': 'theatre',
+#                       'ADD MAIN THEATRE 06': 'theatre', 'ADD MAIN THEATRE 07': 'theatre',
+#                       'ADD MAIN THEATRE 08': 'theatre', 'ADD MAIN THEATRE 09': 'theatre',
+#                          'ADD MAIN THEATRE 10': 'theatre','ADD MAIN THEATRE 11': 'theatre',
+#                          'ADD MAIN THEATRE 12': 'theatre', 'ADD MAIN THEATRE 14': 'theatre',
+#                          'ADD MAIN THEATRE 15': 'theatre', 'ADD MAIN THEATRE 16': 'theatre',
+#                          'ADD MAIN THEATRE 17': 'theatre', 'ADD MAIN THEATRE 18': 'theatre',
+#                          'ADD MAIN THEATRE 19': 'theatre', 'ADD MAIN THEATRE 20': 'theatre',
+#                          'ADD MAIN THEATRE 21': 'theatre', 'ADD MAIN THEATRE 22': 'theatre',
+#                          'ADD ATC THEATRE 31': 'theatre', 'ADD ATC THEATRE 32': 'theatre',
+#                          'ADD ATC THEATRE 33': 'theatre', 'ADD ATC THEATRE 34': 'theatre',
+#                          'ADD ATC THEATRE 35': 'theatre', 'ADD ATC THEATRE 36': 'theatre'}
+
+
 #weekend and weekday transfers
 weekend_transfers = alldata[alldata['is_weekend']]
 weekday_transfers = alldata[~alldata['is_weekend']]
 
 
 
-
-# collect the data for each month
-#weekday_trans_1 = weekday_transfers[weekday_transfers['month'] == 1]
-#weekday_trans_2 = weekday_transfers[weekday_transfers['month'] == 2]
-#weekday_trans_3 = weekday_transfers[weekday_transfers['month'] == 3]
-#weekday_trans_4 = weekday_transfers[weekday_transfers['month'] == 4]
-#weekday_trans_5 = weekday_transfers[weekday_transfers['month'] == 5]
-#weekday_trans_6 = weekday_transfers[weekday_transfers['month'] == 6]
-#weekday_trans_7 = weekday_transfers[weekday_transfers['month'] == 7]
-#weekday_trans_8 = weekday_transfers[weekday_transfers['month'] == 8]
-#weekday_trans_9 = weekday_transfers[weekday_transfers['month'] == 9]
-#weekday_trans_10 = weekday_transfers[weekday_transfers['month'] == 10]
-#weekday_trans_11 = weekday_transfers[weekday_transfers['month'] == 11]
-#weekday_trans_12 = weekday_transfers[weekday_transfers['month'] == 12]
-
-#weekend_trans_1 = weekend_transfers[weekend_transfers['month'] == 1]
-#weekend_trans_2 = weekend_transfers[weekend_transfers['month'] == 2]
-#weekend_trans_3 = weekend_transfers[weekend_transfers['month'] == 3]
-#weekend_trans_4 = weekend_transfers[weekend_transfers['month'] == 4]
-#weekend_trans_5 = weekend_transfers[weekend_transfers['month'] == 5]
-#weekend_trans_6 = weekend_transfers[weekend_transfers['month'] == 6]
-#weekend_trans_7 = weekend_transfers[weekend_transfers['month'] == 7]
-#weekend_trans_8 = weekend_transfers[weekend_transfers['month'] == 8]
-#weekend_trans_9 = weekend_transfers[weekend_transfers['month'] == 9]
-#weekend_trans_10 = weekend_transfers[weekend_transfers['month'] == 10]
-#weekend_trans_11 = weekend_transfers[weekend_transfers['month'] == 11]
-#weekend_trans_12 = weekend_transfers[weekend_transfers['month'] == 12]
 
 #list_of_weekend_admissions =[get_weekend_list(data) for data in data['admission_time']]
 
@@ -202,7 +184,11 @@ weekday_transfers = alldata[~alldata['is_weekend']]
 #specific_data.loc[admpoint[specific_data['admission_time'] == specific_data['extraid']].index, 'to'] = 'discharge'
 #weekend_trans_by_month = [weekend_transfer[weekend_transfer['month'] == i] for i in range(1, 13)]
 
-#monthlist=[1,2]
+
+
+
+
+
 monthlist=[1,2,3,4,5,6,7,8,9,10,11,12]
 en_list = []
 nn_list = []
