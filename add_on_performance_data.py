@@ -1,10 +1,9 @@
 import pandas as pd
-import datetime
+from datetime import datetime
 import numpy as np
 from collections import deque, namedtuple
 
-
-#adds on the ED performance data to the transfer file as a new column
+# adds on the ED performance data to the transfer file as a new column
 def get_separate_date_time(datetimeentry):
     #print(datetimeentry)
     strdate = str(datetimeentry)
@@ -20,7 +19,7 @@ def get_separate_date_time(datetimeentry):
             raise v
 
     if type(d) == float:
-        return datetime.datetime.max
+        return datetime.max
     else:
         # this returns the date in a format where the hours and days can be accessed eg d.year or d.minute
         dstr = str(d)
