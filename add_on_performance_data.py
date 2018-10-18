@@ -12,7 +12,6 @@ def get_separate_date_time(datetimeentry):
         d = datetime.strptime(strdate, fmt)
     except ValueError as v:
         ulr = len(v.args[0].partition('unconverted data remains: ')[2])
-        print(ulr)
         if ulr:
             d = datetime.strptime(strdate[:-ulr], fmt)
         else:
