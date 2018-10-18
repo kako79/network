@@ -16,7 +16,7 @@ import networkx as nx
 #from collections import defaultdict
 from datetime import datetime
 
-#this programme takes a list of transfers and analyses them by month
+#this programme takes a list of transfers and analyses them by month and whether they were on a weekend or weekday
 # it makes an edge file for each month and also creates a data analysis csv file that contains some network charactersistics for each month
 # it replaces the individual theatres with a a general theatre category to capture the degree of the theatre node overall.
 
