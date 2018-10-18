@@ -5,30 +5,37 @@ from collections import deque, namedtuple
 
 
 #adds on the ED performance data to the transfer file as a new column
-
 def get_separate_date_time(datetimeentry):
-    print(datetimeentry)
-    if type(datetimeentry) == float:
+    #print(datetimeentry)
+    strdate = str(datetimeentry)
+    fmt = "%Y-%m-%d %H:%M"
+    try:
+        d = datetime.strptime(strdate, fmt)
+    except ValueError as v:
+        ulr = len(v.args[0].partition('unconverted data remains: ')[2])
+        print(ulr)
+        if ulr:
+            d = datetime.strptime(strdate[:-ulr], fmt)
+        else:
+            raise v
+
+    if type(d) == float:
         return datetime.datetime.max
     else:
-        #this returns the date in a format where the hours and days can be accessed eg d.year or d.minute
-        separate_date_time = datetime.datetime.strptime(datetimeentry,"%Y-%m-%d %H:%M:%S")
+        # this returns the date in a format where the hours and days can be accessed eg d.year or d.minute
+        dstr = str(d)
+        separate_date_time = datetime.strptime(dstr, "%Y-%m-%d %H:%M:%S")
         return separate_date_time
 
-
 def get_date_only(date_time_entry):
+    #print(date_time_entry)
     separated_date_entry = get_separate_date_time(date_time_entry)
-    print(separated_date_entry)
+    #print(separated_date_entry)
     year_only = separated_date_entry.year
     month_only = separated_date_entry.month
     day_only = separated_date_entry.day
-    date_only = datetime.datetime(year_only, month_only, day_only)
+    date_only = datetime(year_only, month_only, day_only)
     return date_only.date()
-
-
-
-
-
 
 
 all_transfers = pd.read_csv("all_transfers_1110.csv")
