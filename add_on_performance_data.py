@@ -3,6 +3,9 @@ import datetime
 import numpy as np
 from collections import deque, namedtuple
 
+
+#adds on the ED performance data to the transfer file as a new column
+
 def get_separate_date_time(datetimeentry):
     print(datetimeentry)
     if type(datetimeentry) == float:
@@ -37,8 +40,10 @@ all_transfers['transfer_date_only'] = get_date_only(all_transfers['transfer_dt']
 ed_performance.set_index('date', drop = True, inplace = True)
 all_transfers_with_performance = ed_performance.join(all_transfers, on='transfer_date_only', how='left')
 
+all_t_with_performance = all_transfers_with_performance.drop(['transfer_date_only'], axis=1)
 
 
-all_transfers_with_performance.to_csv('all_transfers_with_ed_perf.csv', header=True, index=False)
+
+all_t_with_performance.to_csv('all_transfers_with_ed_perf.csv', header=True, index=False)
 print('transfers file created')
 ##!!! finish of creating the transfers file
