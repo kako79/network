@@ -37,6 +37,18 @@ def get_date_number_from_string(date_time_entry):
 
 all_transfers = pd.read_csv("all_transfers_1110.csv")
 
+print("Rows: %s" % len(all_transfers))
+
+first_date = datetime(2015, 1, 1)
+last_date = datetime(2018, 6, 1)
+after_last_date = all_transfers[all_transfers['transfer_dt'] > last_date]
+all_transfers.drop(after_last_date.index, axis=0, inplace=True)
+before_first_date = all_transfers[all_transfers['transfer_dt'] < first_date]
+all_transfers.drop(before_first_date.index, axis=0, inplace=True)
+
+print("Rows after removing bad dates: %s" % len(all_transfers))
+
+
 #add on the information about the hospital state from the ED performance file
 ed_performance = pd.read_csv("ed_performance_with_average.csv")
 # need transfer date only in a separate column
