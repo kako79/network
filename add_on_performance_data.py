@@ -31,12 +31,7 @@ def get_date_only(date_time_entry):
     #print(date_time_entry)
     separated_date_entry = get_separate_date_time(date_time_entry)
     #print(separated_date_entry)
-    year_only = separated_date_entry.year
-    month_only = separated_date_entry.month
-    day_only = separated_date_entry.day
-    date_only = datetime(year_only, month_only, day_only)
-    return date_only.date()
-
+    return separated_date_entry.date()
 
 
 all_transfers = pd.read_csv("all_transfers_1110.csv")
@@ -45,7 +40,7 @@ all_transfers = pd.read_csv("all_transfers_1110.csv")
 ed_performance = pd.read_csv("ed_performance_with_average.csv")
 # need transfer date only in a separate column
 all_transfers['transfer_date_only'] = all_transfers['transfer_dt'].map(get_date_only)
-ed_performance.set_index('date', drop = True, inplace = True)
+ed_performance.set_index('date', drop=True, inplace=True)
 all_transfers_with_performance = ed_performance.join(all_transfers, on='transfer_date_only', how='left')
 
 all_t_with_performance = all_transfers_with_performance.drop(['transfer_date_only'], axis=1)
