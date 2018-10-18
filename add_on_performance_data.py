@@ -43,6 +43,7 @@ ed_performance = pd.read_csv("ed_performance_with_average.csv")
 all_transfers['transfer_date_number'] = all_transfers['transfer_dt'].map(get_date_number_from_string)
 ed_performance['date'] = pd.to_datetime(ed_performance['day'], format='%d/%m/%Y')
 ed_performance['date_number'] = ed_performance['date'].map(get_date_number)
+ed_performance.drop(['date'], axis=1, inplace=True)
 ed_performance.set_index('date_number', drop=True, inplace=True)
 all_transfers_with_performance = all_transfers.join(ed_performance, on='transfer_date_number', how='left')
 
