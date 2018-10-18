@@ -36,7 +36,7 @@ all_transfers = pd.read_csv("all_transfers_1110.csv")
 #add on the information about the hospital state from the ED performance file
 ed_performance = pd.read_csv("ed_performance_with_average.csv")
 # need transfer date only in a separate column
-all_transfers['transfer_date_only'] = get_date_only(all_transfers['transfer_dt'])
+all_transfers['transfer_date_only'] = all_transfers['transfer_dt'].map(get_date_only)
 ed_performance.set_index('date', drop = True, inplace = True)
 all_transfers_with_performance = ed_performance.join(all_transfers, on='transfer_date_only', how='left')
 
