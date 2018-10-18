@@ -1,26 +1,19 @@
 import pandas as pd
-import datetime
+from datetime import datetime
 import numpy as np
 from collections import deque, namedtuple
 
 def get_separate_date_time(datetimeentry):
     print(datetimeentry)
     if type(datetimeentry) == float:
-        return datetime.datetime.max
+        return datetime.max
     else:
         #this returns the date in a format where the hours and days can be accessed eg d.year or d.minute
-        separate_date_time = datetime.datetime.strptime(datetimeentry,"%Y-%m-%d %H:%M:%S")
+        separate_date_time = datetime.strptime(datetimeentry,"%Y-%m-%d %H:%M:%S")
         return separate_date_time
 
 
-def get_date_only(date_time_entry):
-    separated_date_entry = get_separate_date_time(date_time_entry)
-    print(separated_date_entry)
-    year_only = separated_date_entry.year
-    month_only = separated_date_entry.month
-    day_only = separated_date_entry.day
-    date_only = datetime.datetime(year_only, month_only, day_only)
-    return date_only.date()
+
 
 
 #admpoint contains the transfers of all the patients between wards
@@ -191,7 +184,7 @@ def get_patient_transfers(ptid, patient_data):
                     {'ptid': ptid, 'transfer_dt': new_loc.dt_in, 'from': current_loc.name, 'to': new_loc.name, 'dt_adm': new_loc.dt_adm, 'dt_dis': new_loc.dt_dis, 'spec': new_loc.spec, 'age': new_loc.age, 'asa': new_loc.asa})
 
     # In case we are inside a bunch of nested locations, we now need to transfer the patient out of them.
-    transfer_list += get_transfers_out(ptid, location_stack, datetime.datetime.max)
+    transfer_list += get_transfers_out(ptid, location_stack, datetime.max)
 
     # Finally we need to discharge the patient.
     last_loc = location_stack[-1]
@@ -217,14 +210,16 @@ def get_transfers(location_data: pd.DataFrame):
 
 all_transfers = get_transfers(full_info)
 
-#add on the information about the hospital state from the ED performance file
-ed_performance = pd.read_csv("ed_perfomance_with_average.csv")
-# need transfer date only in a separate column
-all_transfers['transfer_date_only'] = get_date_only(all_transfers['transfer_dt'])
-ed_performance.set_index('date', drop = True, inplace = True)
-all_transfers_with_performance = ed_performance.join(all_transfers, on='transfer_date_only', how='left')
+print("Rows: %s" % len(all_transfers))
 
+first_date = datetime(2015, 1, 1)
+last_date = datetime(2018, 6, 1)
+after_last_date = all_transfers[all_transfers['transfer_dt'] > last_date]
+all_transfers.drop(after_last_date.index, axis=0, inplace=True)
+before_first_date = all_transfers[all_transfers['transfer_dt'] < first_date]
+all_transfers.drop(before_first_date.index, axis=0, inplace=True)
 
+print("Rows after removing bad dates: %s" % len(all_transfers))
 
 all_transfers.to_csv('all_transfers_1110.csv', header=True, index=False)
 print('transfers file created')
