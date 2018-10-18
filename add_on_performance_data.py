@@ -38,6 +38,7 @@ def get_date_only(date_time_entry):
     return date_only.date()
 
 
+
 all_transfers = pd.read_csv("all_transfers_1110.csv")
 
 #add on the information about the hospital state from the ED performance file
