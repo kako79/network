@@ -42,7 +42,7 @@ all_transfers['transfer_date_number'] = all_transfers['transfer_dt'].map(get_dat
 print("Rows: %s" % len(all_transfers))
 
 first_date = datetime(2015, 1, 1)
-last_date = datetime(2018, 6, 1)
+last_date = datetime(2018, 7, 1)
 after_last_date = all_transfers[all_transfers['transfer_dt'] > last_date]
 all_transfers.drop(after_last_date.index, axis=0, inplace=True)
 before_first_date = all_transfers[all_transfers['transfer_dt'] < first_date]
