@@ -39,6 +39,6 @@ all_transfers_with_performance = ed_performance.join(all_transfers, on='transfer
 
 
 
-all_transfers.to_csv('all_transfers_1110.csv', header=True, index=False)
+all_transfers_with_performance.to_csv('all_transfers_with_ed_perf.csv', header=True, index=False)
 print('transfers file created')
 ##!!! finish of creating the transfers file
