@@ -237,5 +237,5 @@ if it_is_weekend == True:
     analysis_data_week_stress.to_csv('analysis_data_weekend_stress.csv', header =True, index=False)
     analysis_data_week_calm.to_csv('analysis_data_weekend_calm.csv', header=True, index=False)
 else:
-    analysis_data_week_stress.to_csv('analysis_data_weekend_stress.csv', header =True, index=False)
-    analysis_data_week_calm.to_csv('analysis_data_weekend_calm.csv', header=True, index=False)
+    analysis_data_week_stress.to_csv('analysis_data_weekday_stress.csv', header =True, index=False)
+    analysis_data_week_calm.to_csv('analysis_data_weekday_calm.csv', header=True, index=False)
