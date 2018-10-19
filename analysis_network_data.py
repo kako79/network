@@ -39,6 +39,12 @@ def is_weekend(date):
     else:
         return False
 
+def is_ED_strained(breach_perc):
+    if breach_perc < 0.90:
+        return True
+    else:
+        return False
+
 
 def get_month(date):
     strdate = str(date)
@@ -121,17 +127,12 @@ def get_network_analytics(month_data_reduced):
 
     data_list.append({'month':i,'number of transfers': len(month_data_reduced['transfer_month']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality})
     return data_list
-    # clustering - doesnt work for directed graphs
-    #clustering_average = nx.algorithms.cluster.clustering(nondiG)
-    #print('clustering in non directed graph')
-    #print(clustering_average)
-
 
 
 
 
 #read in the data from a combined csv file
-alldata= pd.read_csv("all_transfers_1110.csv")
+alldata= pd.read_csv("all_transfers_with_ed_perf.csv")
 #adm_data = alldata['dt_adm']
 #adm_data.to_csv('adm_data_only.csv', header=True, index=False)
 print('reading in done')
@@ -140,9 +141,11 @@ print('reading in done')
 
 #find all the transfer dates on a weekend! not the admission dates
 alldata['transfer_dt'] = pd.to_datetime(alldata['transfer_dt'], format="%Y-%m-%d %H:%M")
-# add on columns for the true and false for weekend and the month as a number
+# add on columns for the true and false for weekend, true/false for ED stress and the month as a number
 alldata['is_weekend'] = alldata['transfer_dt'].map(is_weekend)
+alldata['ed_stress'] = alldata['breach_percentage'].map(is_ED_strained)
 alldata['transfer_month'] = alldata['transfer_dt'].map(get_month)
+
 
 
 alldata['to'].replace(to_replace=['ADD MAIN THEATRE', 'ADD MAIN THEATRE 01','ADD MAIN THEATRE 02', 'ADD MAIN THEATRE 03', 'ADD MAIN THEATRE 04' , 'ADD MAIN THEATRE 05', 'ADD MAIN THEATRE 06', 'ADD MAIN THEATRE 07','ADD MAIN THEATRE 08', 'ADD MAIN THEATRE 09', 'ADD MAIN THEATRE 10' ,'ADD MAIN THEATRE 11', 'ADD MAIN THEATRE 12', 'ADD MAIN THEATRE 14','ADD MAIN THEATRE 15', 'ADD MAIN THEATRE 16','ADD MAIN THEATRE 17', 'ADD MAIN THEATRE 18','ADD MAIN THEATRE 19', 'ADD MAIN THEATRE 20','ADD MAIN THEATRE 21', 'ADD MAIN THEATRE 22','ADD ATC THEATRE 31', 'ADD ATC THEATRE 32','ADD ATC THEATRE 33', 'ADD ATC THEATRE 34','ADD ATC THEATRE 35', 'ADD ATC THEATRE 36'],value='theatre',inplace=True)
@@ -168,25 +171,13 @@ alldata['from'].replace(to_replace=['ADD MAIN THEATRE', 'ADD MAIN THEATRE 01','A
 weekend_transfers = alldata[alldata['is_weekend']]
 weekday_transfers = alldata[~alldata['is_weekend']]
 
-
+weekend_transfers_ed_stress = weekend_transfers[weekend_transfers['ed_stress']]
+weekend_transfers_ed_calm = weekend_transfers[~weekend_transfers['ed_stress']]
+weekday_transfers_ed_stress = weekday_transfers[weekday_transfers['ed_stress']]
+weekday_transfers_ed_calm = weekday_transfers[~weekday_transfers['ed_stress']]
 
 
 #list_of_weekend_admissions =[get_weekend_list(data) for data in data['admission_time']]
-
-
-#now make the graph
-#specific_data = alldata
-#specific_data = weekend_admissions
-#specific_data = weekday_admissions
-#specific_data = pd.read_csv("combined_data.csv")
-#specific_data.loc[admpoint[specific_data['admission_time'] == specific_data['extraid']].index, 'to'] = 'discharge'
-#weekend_trans_by_month = [weekend_transfer[weekend_transfer['month'] == i] for i in range(1, 13)]
-
-
-
-
-
-
 monthlist=[1,2,3,4,5,6,7,8,9,10,11,12]
 en_list = []
 nn_list = []
@@ -208,10 +199,6 @@ for i in monthlist:
     get_network_analytics(month_data_reduced)
     print(i, number_of_transfers)
 
-#print(nn_list)
-#print(en_list)
-#print(degrees_list)
-#print(flow_h_list)
 print(data_list)
 
 analysis_data_week = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list)
@@ -220,35 +207,35 @@ if it_is_weekend == True:
 else:
     analysis_data_week.to_csv('analysis_data_weekday.csv', header = True, index = False)
 
+# now look at ED stress
+for i in monthlist:
+    if it_is_weekend == True:
+        ED_stress_data = weekend_transfers_ed_stress[weekend_transfers_ed_stress['transfer_month'] == i]
+        ED_calm_data = weekend_transfers_ed_calm[weekend_transfers_ed_calm['transfer_month'] == i]
+    else:
+        ED_stress_data = weekday_transfers_ed_stress[weekday_transfers_ed_stress['transfer_month'] == i]
+        ED_calm_data = weekday_transfers_ed_calm[weekday_transfers_ed_calm['transfer_month'] == i]
 
-#centrality_overall = defaultdict(list)
-#for k,v in chain(incentrality.items(), outcentrality.items()):
-#    centrality_overall[k].append(v)
+    number_of_transfers_calm = len(ED_calm_data['transfer_month'])
+    number_of_transfers_stress = len(ED_stress_data['transfer_month'])
+    # drop the columns that are not needed for the graph, also select adults or children
+    ED_stress_data_reduced = ED_stress_data.loc[month_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+    ED_calm_data_reduced =  ED_calm_data.loc[month_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
 
-#print(centrality_overall)
-#dfcentrality = pd.DataFrame.from_dict(centrality_overall,orient='index')
-#print(dfcentrality)
+    data_list_stress = get_network_analytics(ED_stress_data_reduced)
 
+    data_list_calm = get_network_analytics(ED_calm_data_reduced)
 
+    print(i, number_of_transfers_calm, number_of_transfers_stress)
 
-#shortest path in the directed graph, from a starting point source to a point target
-#shortest_path = nx.algorithms.shortest_paths.generic.shortest_path(G, source = 'ICU', target = 'ER')
-#print('shortest path is')
-#print(shortest_path)
+print(data_list_stress)
 
+analysis_data_week_stress = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list_stress)
+analysis_data_week_calm = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list_calm)
 
-#fig = plt.figure(figsize=(7, 5))
-#nx.set_node_attributes(G,'length_of_stay',los)
-#pos = nx.circular_layout(G)
-#widthedge = [d['weight'] *0.1 for _,_,d in G.edges(data=True)]
-#nx.draw_networkx(G, pos=pos, with_labels=True, font_weight='bold', arrows = False, width= widthedge,  node_size=1300)
-#nx.draw_circular(G)
-#width = [d['weight'] for _,_,d in G.edges(data=True)]
-
-#edge_labels=dict([((u,v,), d['weight'])
-#             for u,v,d in G.edges(data=True)])
-#nx.draw_networkx(G, with_labels=True, font_weight='bold' )
-#nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
-#plt.show()
-#fig.savefig("weekendchildrennetworkgraph.png")
-#plt.gcf().clear()
+if it_is_weekend == True:
+    analysis_data_week_stress.to_csv('analysis_data_weekend_stress.csv', header =True, index=False)
+    analysis_data_week_calm.to_csv('analysis_data_weekend_calm.csv', header=True, index=False)
+else:
+    analysis_data_week_stress.to_csv('analysis_data_weekend_stress.csv', header =True, index=False)
+    analysis_data_week_calm.to_csv('analysis_data_weekend_calm.csv', header=True, index=False)
