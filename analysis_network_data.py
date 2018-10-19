@@ -231,7 +231,7 @@ for i in monthlist:
     if it_is_weekend == True:
         ED_calm_data = weekend_transfers_ed_calm[weekend_transfers_ed_calm['transfer_month'] == i]
     else:
-        ED_stress_data = weekday_transfers_ed_stress[weekday_transfers_ed_stress['transfer_month'] == i]
+        ED_calm_data = weekday_transfers_ed_calm[weekday_transfers_ed_calm['transfer_month'] == i]
 
     number_of_transfers_calm = len(ED_calm_data['transfer_month'])
 
