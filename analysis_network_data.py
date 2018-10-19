@@ -208,28 +208,40 @@ if it_is_weekend == True:
 else:
     analysis_data_week.to_csv('analysis_data_weekday.csv', header = True, index = False)
 
+
+data_list = []
 # now look at ED stress
 for i in monthlist:
     if it_is_weekend == True:
         ED_stress_data = weekend_transfers_ed_stress[weekend_transfers_ed_stress['transfer_month'] == i]
-        ED_calm_data = weekend_transfers_ed_calm[weekend_transfers_ed_calm['transfer_month'] == i]
     else:
         ED_stress_data = weekday_transfers_ed_stress[weekday_transfers_ed_stress['transfer_month'] == i]
-        ED_calm_data = weekday_transfers_ed_calm[weekday_transfers_ed_calm['transfer_month'] == i]
 
-    number_of_transfers_calm = len(ED_calm_data['transfer_month'])
     number_of_transfers_stress = len(ED_stress_data['transfer_month'])
     # drop the columns that are not needed for the graph, also select adults or children
     ED_stress_data_reduced = ED_stress_data.loc[ED_stress_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
-    ED_calm_data_reduced =  ED_calm_data.loc[ED_calm_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
 
     data_list_stress = get_network_analytics(ED_stress_data_reduced)
 
+
+    print(i, number_of_transfers_stress)
+
+data_list = []
+for i in monthlist:
+    if it_is_weekend == True:
+        ED_calm_data = weekend_transfers_ed_calm[weekend_transfers_ed_calm['transfer_month'] == i]
+    else:
+        ED_stress_data = weekday_transfers_ed_stress[weekday_transfers_ed_stress['transfer_month'] == i]
+
+    number_of_transfers_calm = len(ED_calm_data['transfer_month'])
+
+    # drop the columns that are not needed for the graph, also select adults or children
+    ED_calm_data_reduced =  ED_calm_data.loc[ED_calm_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+
     data_list_calm = get_network_analytics(ED_calm_data_reduced)
 
-    print(i, number_of_transfers_calm, number_of_transfers_stress)
+    print(i, number_of_transfers_calm)
 
-print(data_list_stress)
 
 analysis_data_week_stress = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list_stress)
 analysis_data_week_calm = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list_calm)
