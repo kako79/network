@@ -185,7 +185,7 @@ degrees_list = []
 flow_h_list = []
 data_list = []
 
-it_is_weekend = False
+it_is_weekend = True
 
 for i in monthlist:
     if it_is_weekend == True:
