@@ -184,7 +184,8 @@ nn_list = []
 degrees_list = []
 flow_h_list = []
 data_list = []
-
+data_list_stress = []
+data_list_calm = []
 it_is_weekend = True
 
 for i in monthlist:
