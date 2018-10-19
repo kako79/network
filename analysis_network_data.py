@@ -219,8 +219,8 @@ for i in monthlist:
     number_of_transfers_calm = len(ED_calm_data['transfer_month'])
     number_of_transfers_stress = len(ED_stress_data['transfer_month'])
     # drop the columns that are not needed for the graph, also select adults or children
-    ED_stress_data_reduced = ED_stress_data.loc[month_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
-    ED_calm_data_reduced =  ED_calm_data.loc[month_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+    ED_stress_data_reduced = ED_stress_data.loc[ED_stress_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+    ED_calm_data_reduced =  ED_calm_data.loc[ED_calm_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
 
     data_list_stress = get_network_analytics(ED_stress_data_reduced)
 
