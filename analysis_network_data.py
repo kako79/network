@@ -40,7 +40,7 @@ def is_weekend(date):
         return False
 
 def is_ED_strained(breach_perc):
-    if breach_perc < 0.85:
+    if breach_perc < 0.7:
         return True
     else:
         return False
@@ -84,8 +84,8 @@ def get_network_analytics(month_data_reduced):
     G.add_weighted_edges_from(weighted_edges)
     en = G.number_of_edges()
     nn = G.number_of_nodes()
-    print(en)
-    print(nn)
+    #print(en)
+    #print(nn)
     en_list.append(en)
     nn_list.append(nn)
 
@@ -112,9 +112,9 @@ def get_network_analytics(month_data_reduced):
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
     incentrality = nx.algorithms.centrality.in_degree_centrality(G)
     outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
-    print (incentrality)
+    #print (incentrality)
     in_theatre_centrality = incentrality['theatre']
-    print(in_theatre_centrality)
+    #print(in_theatre_centrality)
     out_theatre_centrality = outcentrality['theatre']
 
 
