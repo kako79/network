@@ -186,7 +186,7 @@ flow_h_list = []
 data_list = []
 data_list_stress = []
 data_list_calm = []
-it_is_weekend = False
+it_is_weekend = True
 
 for i in monthlist:
     if it_is_weekend == True:
