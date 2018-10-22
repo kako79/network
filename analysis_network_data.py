@@ -100,8 +100,10 @@ def get_network_analytics(month_data_reduced):
     if 'ADD EMERGENCY DEPT' in degrees_dict:
         emergency_degrees = degrees_dict['ADD EMERGENCY DEPT']
         print('in dict')
+        no_data = False
     else:
         print('not in dict')
+        no_data = True
         emergency_degrees = 0
 
 
@@ -133,7 +135,10 @@ def get_network_analytics(month_data_reduced):
     #print(in_theatre_centrality)
 
     # flow hiearchy - finds strongly connected components
-    flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
+    if no_data == True:
+        flow_hierarchy = 0
+    else:
+        flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
     #print('flow hierarchy')
     #print(flow_hierarchy)
     flow_h_list.append(flow_hierarchy)
