@@ -97,7 +97,12 @@ def get_network_analytics(month_data_reduced):
     #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
     degrees_data.set_index('node', inplace=True)
     degrees_dict = degrees_data.to_dict()['degree']
-    emergency_degrees = degrees_dict['ADD EMERGENCY DEPT']
+    if 'ADD EMERGENCY DEPT' in dict:
+        emergency_degrees = degrees_dict['ADD EMERGENCY DEPT']
+        print('in dict')
+    else:
+        print('not in dict')
+        emergency_degrees = 0
 
 
     #degrees_list.append(list(degrees.values))
