@@ -40,7 +40,7 @@ def is_weekend(date):
         return False
 
 def is_ED_strained(breach_perc):
-    if breach_perc < 0.90:
+    if breach_perc < 0.85:
         return True
     else:
         return False
