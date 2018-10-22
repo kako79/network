@@ -116,13 +116,21 @@ def get_network_analytics(month_data_reduced):
 
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
     incentrality = nx.algorithms.centrality.in_degree_centrality(G)
+    if 'theatre' in incentrality:
+        in_theatre_centrality = incentrality['theatre']
+    else:
+        in_theatre_centrality = 0
+
     outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
+    if 'theatre' in outcentrality:
+        out_theatre_centrality = outcentrality['theatre']
+    else:
+        out_theatre_centrality = 0
+
+
+
     #print (incentrality)
-    in_theatre_centrality = incentrality['theatre']
     #print(in_theatre_centrality)
-    out_theatre_centrality = outcentrality['theatre']
-
-
 
     # flow hiearchy - finds strongly connected components
     flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
