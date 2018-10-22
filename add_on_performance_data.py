@@ -52,7 +52,7 @@ print("Rows after removing bad dates: %s" % len(all_transfers))
 
 
 #add on the information about the hospital state from the ED performance file
-ed_performance = pd.read_csv("ed_performance_with_average.csv")
+ed_performance = pd.read_csv("ed_performance_with_nextyear.csv")
 # need transfer date only in a separate column
 ed_performance['date'] = pd.to_datetime(ed_performance['day'], format='%d/%m/%Y')
 ed_performance['date_number'] = ed_performance['date'].map(get_date_number)
