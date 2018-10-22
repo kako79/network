@@ -97,6 +97,7 @@ def get_network_analytics(month_data_reduced):
     #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
     degrees_data.set_index('node', inplace=True)
     degrees_dict = degrees_data.to_dict()['degree']
+    #check if there is data in this specific subset eg there may not be data in a weekend stress set in summer...
     if 'ADD EMERGENCY DEPT' in degrees_dict:
         emergency_degrees = degrees_dict['ADD EMERGENCY DEPT']
         print('in dict')
@@ -118,6 +119,7 @@ def get_network_analytics(month_data_reduced):
 
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
     incentrality = nx.algorithms.centrality.in_degree_centrality(G)
+    # check if the theatre node exists in this data subset
     if 'theatre' in incentrality:
         in_theatre_centrality = incentrality['theatre']
     else:
@@ -204,7 +206,7 @@ flow_h_list = []
 data_list = []
 data_list_stress = []
 data_list_calm = []
-it_is_weekend = True
+it_is_weekend = False
 
 for i in monthlist:
     if it_is_weekend == True:
