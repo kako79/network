@@ -191,6 +191,8 @@ alldata['from'].replace(to_replace=['ADD MAIN THEATRE', 'ADD MAIN THEATRE 01','A
 weekend_transfers = alldata[alldata['is_weekend']]
 weekday_transfers = alldata[~alldata['is_weekend']]
 
+stress_transfers = alldata[alldata['ed_stress']]
+calm_transfers = alldata[~alldata['ed_stress']]
 weekend_transfers_ed_stress = weekend_transfers[weekend_transfers['ed_stress']]
 weekend_transfers_ed_calm = weekend_transfers[~weekend_transfers['ed_stress']]
 weekday_transfers_ed_stress = weekday_transfers[weekday_transfers['ed_stress']]
