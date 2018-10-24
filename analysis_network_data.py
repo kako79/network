@@ -210,6 +210,7 @@ data_list_stress = []
 data_list_calm = []
 it_is_weekend = False
 
+#data seprated by weekend weekday
 for i in monthlist:
     if it_is_weekend == True:
         month_data = weekend_transfers[weekend_transfers['transfer_month'] == i]
@@ -225,14 +226,36 @@ for i in monthlist:
 print(data_list)
 
 analysis_data_week = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list)
+#data into csv
+if it_is_weekend == True:
+    analysis_data_week.to_csv('analysis_data_weekend.csv', header =True, index=False)
+else:
+    analysis_data_week.to_csv('analysis_data_weekday.csv', header = True, index = False)
+
+#data separated  by stress and calm overall - no weekend distinction
+for i in monthlist:
+    monthly_stress_data = stress_transfers[stress_transfers['transfer_month'] == i]
+    monthly_calm_data = calm_transfers[calm_transfers['transfer_month'] == i]
+    number_of_stress_transfers = len(monthly_stress_data['transfer month'])
+    number_of_calm_transfers = len(monthly_calm_data['transfer_month'])
+    # drop the columns that are not needed for the graph, also select adults or children
+    monthly_stress_data_reduced = monthly_stress_data.loc[monthly_stress_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+    get_network_analytics(month_data_reduced)
+    print(i, number_of_transfers)
+
+print(data_list)
+
+analysis_data_week = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list)
 if it_is_weekend == True:
     analysis_data_week.to_csv('analysis_data_weekend.csv', header =True, index=False)
 else:
     analysis_data_week.to_csv('analysis_data_weekday.csv', header = True, index = False)
 
 
+
+
 data_list = []
-# now look at ED stress
+# now look at ED stress also separated by weekend and weekday
 for i in monthlist:
     if it_is_weekend == True:
         ED_stress_data = weekend_transfers_ed_stress[weekend_transfers_ed_stress['transfer_month'] == i]
