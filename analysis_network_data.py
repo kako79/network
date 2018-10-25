@@ -231,25 +231,30 @@ if it_is_weekend == True:
     analysis_data_week.to_csv('analysis_data_weekend.csv', header =True, index=False)
 else:
     analysis_data_week.to_csv('analysis_data_weekday.csv', header = True, index = False)
-
+data_list = []
 #data separated  by stress and calm overall - no weekend distinction
 for i in monthlist:
     monthly_stress_data = stress_transfers[stress_transfers['transfer_month'] == i]
-    monthly_calm_data = calm_transfers[calm_transfers['transfer_month'] == i]
     number_of_stress_transfers = len(monthly_stress_data['transfer month'])
-    number_of_calm_transfers = len(monthly_calm_data['transfer_month'])
     # drop the columns that are not needed for the graph, also select adults or children
     monthly_stress_data_reduced = monthly_stress_data.loc[monthly_stress_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
-    get_network_analytics(month_data_reduced)
+    data_list_stress_all = get_network_analytics(monthly_stress_data_reduced)
+    print(i, number_of_transfers)
+data_list = []
+for i in monthlist:
+    monthly_calm_data = calm_transfers[calm_transfers['transfer_month'] == i]
+    number_of_calm_transfers = len(monthly_calm_data['transfer_month'])
+    # drop the columns that are not needed for the graph, also select adults or children
+    monthly_calm_data_reduced = monthly_calm_data.loc[monthly_calm_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+    data_list_calm_all = get_network_analytics(monthly_calm_data_reduced)
     print(i, number_of_transfers)
 
 print(data_list)
 
-analysis_data_week = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list)
-if it_is_weekend == True:
-    analysis_data_week.to_csv('analysis_data_weekend.csv', header =True, index=False)
-else:
-    analysis_data_week.to_csv('analysis_data_weekday.csv', header = True, index = False)
+analysis_data_calm = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list_calm_all)
+analysis_data_stress = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list_stress_all)
+analysis_data_calm.to_csv('analysis_data_calm_all.csv', header =True, index=False)
+analysis_data_stress.to_csv('analysis_data_stress_all.csv', header = True, index = False)
 
 
 
@@ -267,8 +272,6 @@ for i in monthlist:
     ED_stress_data_reduced = ED_stress_data.loc[ED_stress_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
 
     data_list_stress = get_network_analytics(ED_stress_data_reduced)
-
-
     print(i, number_of_transfers_stress)
 
 data_list = []
