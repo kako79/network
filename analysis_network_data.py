@@ -235,7 +235,7 @@ data_list = []
 #data separated  by stress and calm overall - no weekend distinction
 for i in monthlist:
     monthly_stress_data = stress_transfers[stress_transfers['transfer_month'] == i]
-    number_of_stress_transfers = len(monthly_stress_data['transfer month'])
+    number_of_stress_transfers = len(monthly_stress_data['transfer_month'])
     # drop the columns that are not needed for the graph, also select adults or children
     monthly_stress_data_reduced = monthly_stress_data.loc[monthly_stress_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
     data_list_stress_all = get_network_analytics(monthly_stress_data_reduced)
