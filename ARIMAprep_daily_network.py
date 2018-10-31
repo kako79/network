@@ -125,7 +125,22 @@ def get_network_analytics(data_reduced):
     #print(flow_hierarchy)
     #flow_h_list.append(flow_hierarchy)
 
-    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality})
+    if nn ==0:
+        diameter_net = 0
+    else:
+        diameter_net = nx.diameter(G)
+
+    if nn== 0:
+        clustering_net = 0
+    else:
+        clustering_net = nx.average_clustering(G)
+
+    if nn==0:
+        av_shortest_path_net = 0
+    else:
+        av_shortest_path_net = nx.average_shortest_path_length(G, edge_weight_data['ptid'])
+
+    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'diameter': diameter_net, 'clustering': clustering_net, 'shortest path': av_shortest_path_net})
     return data_list
 
 data_t_strain_cat['transfer_dt'] = pd.to_datetime(data_t_strain_cat['transfer_dt'], format="%Y-%m-%d %H:%M")
@@ -157,7 +172,7 @@ for i in all_datesdf:
 
 
 
-arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list)
+arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres', 'diameter', 'clustering', 'shortest path'], data = data_list)
 
 arimaprep_data['date_number'] =  arimaprep_data['date'].map(get_date_number)
 
