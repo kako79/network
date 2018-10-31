@@ -125,7 +125,7 @@ data_list = []
 data_t_strain_cat['transfer_day'] = data_t_strain_cat['transfer_dt'].map(get_transfer_day)
 all_datesdf = data_t_strain_cat['transfer_day']
 
-for for i, row in alldatesdf.iterrows():
+for i, row in alldatesdf.iterrows():
     day_data = data_t_strain_cat[data_t_strain_cat['transfer_day'] == i]
     number_of_transfers = len(day_data['transfer_day'])
     # drop the columns that are not needed for the graph, also select adults or children
