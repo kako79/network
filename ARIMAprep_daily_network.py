@@ -27,6 +27,11 @@ def get_diameter(network):
     except:
         return 0
 
+def get_shortest_path(G)
+    try:
+        nx.average_shortest_path_length(G)
+    except:
+        return 0
 
 def get_date_number(dt):
     return dt.year * 10000 + dt.month * 100 + dt.day
@@ -148,7 +153,9 @@ def get_network_analytics(data_reduced):
     if nn==0:
         av_shortest_path_net = 0
     else:
-        av_shortest_path_net = nx.average_shortest_path_length(G)
+        av_shortest_path_net = get_shortest_path(G)
+
+
 
     data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'diameter': diameter_net, 'shortest path': av_shortest_path_net})
     return data_list
