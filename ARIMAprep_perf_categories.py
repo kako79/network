@@ -89,7 +89,7 @@ list_to_wards = all_t_strain.to_loc.unique()
 #need to make an assignment of the individual wards to a category eg surgical ward, outlier, high dependency...
 
 
-ward_dictionary = {'ADD A3 WARD': 'ns ward', 'ADD A4 WARD': 'ns ward',
+ward_dictionary = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'ns ward',
                    'ADD A5 WARD': 'ns ward', 'ADD D6 WARD': 'ns ward',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',

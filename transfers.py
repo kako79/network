@@ -89,7 +89,7 @@ full_info = full_info[full_info.adt_department_name != ' '] # removes all lines 
 
 #remove any lines where the location is not at least 3 length
 full_info['adt_department_name'] = full_info['adt_department_name'].astype('str')
-mask = (full_info['adt_department_name'].str.len() >= 5)
+mask = (full_info['adt_department_name'].str.len() >= 3)
 full_info = full_info.loc[mask]
 
 
