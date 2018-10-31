@@ -116,7 +116,7 @@ def get_network_analytics(data_reduced):
     #print(in_theatre_centrality)
 
     # flow hiearchy - finds strongly connected components
-    if no_data == True:
+    if nn == 0:
         flow_hierarchy = 0
     else:
         flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
@@ -136,7 +136,8 @@ data_t_strain_cat['transfer_day'] = data_t_strain_cat['transfer_dt'].map(get_tra
 #get the list of dates to loop over
 dates_list = pd.read_csv("ed_performance_all.csv")
 dates_list['date'] = pd.to_datetime(dates_list['day'], format='%d/%m/%Y')
-all_datesdf = dates_list['date']
+
+all_datesdf = dates_list['date'].map(get_transfer_day)
 
 for i in all_datesdf:
     print(i)
@@ -150,6 +151,6 @@ for i in all_datesdf:
 
 print(data_list)
 
-analysis_data_week = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list)
+analysis_data_week = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list)
 #data into csv
 analysis_data_week.to_csv('analysis_data_weekend.csv', header =True, index=False)
