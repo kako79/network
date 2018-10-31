@@ -23,13 +23,13 @@ from datetime import datetime
 
 def get_diameter(network):
     try:
-        return network.diameter()
+        return network.diameter(G)
     except:
         return 0
 
 def get_shortest_path(G):
     try:
-        nx.average_shortest_path_length(G)
+        return nx.average_shortest_path_length(G)
     except:
         return 0
 
