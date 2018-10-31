@@ -148,7 +148,7 @@ def get_network_analytics(data_reduced):
     if nn==0:
         av_shortest_path_net = 0
     else:
-        av_shortest_path_net = nx.average_shortest_path_length(G, edge_weight_data['ptid'])
+        av_shortest_path_net = nx.average_shortest_path_length(G)
 
     data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'diameter': diameter_net, 'shortest path': av_shortest_path_net})
     return data_list
