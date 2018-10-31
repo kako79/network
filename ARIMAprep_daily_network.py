@@ -29,7 +29,7 @@ def get_diameter(network):
 
 def get_shortest_path(G):
     try:
-        return nx.average_shortest_path_length(G)
+        return nx.shortest_path(G, 'AE', 'discharge')
     except:
         return 0
 
