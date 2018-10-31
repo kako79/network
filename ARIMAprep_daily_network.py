@@ -181,7 +181,6 @@ for i in all_datesdf:
 #print(data_list)
 
 
-
 arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres', 'diameter', 'shortest path'], data = data_list)
 
 arimaprep_data['date_number'] =  arimaprep_data['date'].map(get_date_number)
