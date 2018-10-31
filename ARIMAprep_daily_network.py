@@ -27,7 +27,7 @@ def get_diameter(network):
     except:
         return 0
 
-def get_shortest_path(G)
+def get_shortest_path(G):
     try:
         nx.average_shortest_path_length(G)
     except:
