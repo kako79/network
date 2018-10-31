@@ -24,7 +24,7 @@ from datetime import datetime
 
 def get_transfer_day(date):
     strdate = str(date)
-    fmt = "%Y-%m-%d %H:%M"
+    fmt = "%Y-%m-%d"
     try:
         d = datetime.strptime(strdate, fmt)
     except ValueError as v:
