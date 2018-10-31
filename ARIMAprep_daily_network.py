@@ -65,24 +65,24 @@ def get_network_analytics(data_reduced):
     nn = G.number_of_nodes()
     #print(en)
     #print(nn)
-    en_list.append(en)
-    nn_list.append(nn)
+    #en_list.append(en)
+    #nn_list.append(nn)
 
     # calculate the degree
     degrees = nx.classes.function.degree(G)
     degrees_list = [[n, d] for n, d in degrees]
     degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
-    degrees_data.to_csv('degrees_weadult%s.csv'%str(i), header =True, index=False)
+    #degrees_data.to_csv('degrees_weadult%s.csv'%str(i), header =True, index=False)
     #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
     degrees_data.set_index('node', inplace=True)
     degrees_dict = degrees_data.to_dict()['degree']
     #check if there is data in this specific subset eg there may not be data in a weekend stress set in summer...
     if 'ADD EMERGENCY DEPT' in degrees_dict:
         emergency_degrees = degrees_dict['ADD EMERGENCY DEPT']
-        print('in dict')
+        #print('in dict')
         no_data = False
     else:
-        print('not in dict')
+        #print('not in dict')
         no_data = True
         emergency_degrees = 0
 
@@ -122,7 +122,7 @@ def get_network_analytics(data_reduced):
         flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
     #print('flow hierarchy')
     #print(flow_hierarchy)
-    flow_h_list.append(flow_hierarchy)
+    #flow_h_list.append(flow_hierarchy)
 
     data_list.append({'month':i,'number of transfers': len(month_data_reduced['transfer_month']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality})
     return data_list
