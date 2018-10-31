@@ -179,7 +179,7 @@ bedstate_info.set_index('date_number', drop = True, inplace = True)
 all_transfers_with_ed_beds= arimaprep_data.join(bedstate_info, on = 'date_number', how = 'left')
 
 
-arimaprep = arimaprep_data.drop(['transfer_date_number'], axis=1)
+arimaprep = arimaprep_data.drop(['date_number'], axis=1)
 #now we have a file with all trasnfers and the bestate and ed performance
 #now need to combine wards into categories to allow for daily network construction with enough data
 
