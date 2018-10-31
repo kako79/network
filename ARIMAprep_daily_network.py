@@ -77,8 +77,8 @@ def get_network_analytics(data_reduced):
     degrees_data.set_index('node', inplace=True)
     degrees_dict = degrees_data.to_dict()['degree']
     #check if there is data in this specific subset eg there may not be data in a weekend stress set in summer...
-    if 'ADD EMERGENCY DEPT' in degrees_dict:
-        emergency_degrees = degrees_dict['ADD EMERGENCY DEPT']
+    if 'AE' in degrees_dict:
+        emergency_degrees = degrees_dict['AE']
         #print('in dict')
         no_data = False
     else:
