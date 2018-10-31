@@ -125,6 +125,7 @@ data_list = []
 data_t_strain_cat['transfer_day'] = data_t_strain_cat['transfer_dt'].map(get_transfer_day)
 all_datesdf = data_t_strain_cat['transfer_day']
 
+
 for i in all_datesdf:
     day_data = data_t_strain_cat[data_t_strain_cat['transfer_day'] == i]
     number_of_transfers = len(day_data['transfer_day'])
