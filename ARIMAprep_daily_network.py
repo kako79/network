@@ -138,6 +138,9 @@ dates_list = pd.read_csv("ed_performance_all.csv")
 dates_list['date'] = pd.to_datetime(dates_list['day'], format='%d/%m/%Y')
 
 all_datesdf = dates_list['date'].map(get_transfer_day)
+#load ed_performance and bedstate
+
+
 
 for i in all_datesdf:
     print(i)
@@ -149,8 +152,40 @@ for i in all_datesdf:
     print(i, number_of_transfers)
 
 
-print(data_list)
+#print(data_list)
 
-analysis_data_week = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list)
+
+
+arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres'], data = data_list)
+
+arimaprep_data['date_number'] =  arimaprep_data['date'].map(get_date_number)
+
+#add on the information about the hospital state from the ED performance file
+ed_performance = pd.read_csv("ed_performance_all.csv")
+# need transfer date only in a separate column
+ed_performance['date'] = pd.to_datetime(ed_performance['day'], format='%d/%m/%Y')
+ed_performance['date_number'] = ed_performance['date'].map(get_date_number)
+ed_performance.drop(['date'], axis=1, inplace=True)
+ed_performance.set_index('date_number', drop=True, inplace=True)
+all_transfers_with_edperf = arimaprep_data.join(ed_performance, on='date_number', how='left')
+
+#add on bedstate information - all beds
+bedstate_info = pd.read_csv("all_beds_info.csv")
+bedstate_info['date'] = pd.to_datetime(bedstate_info['Date'], format='%Y-%m-%d')
+bedstate_info['date_number'] = bedstate_info['date'].map(get_date_number)
+bedstate_info.drop(['date'], axis = 1, inplace = True)
+bedstate_info.set_index('date_number', drop = True, inplace = True)
+all_transfers_with_ed_beds= arimaprep_data.join(bedstate_info, on = 'date_number', how = 'left')
+
+
+arimaprep = arimaprep_data.drop(['transfer_date_number'], axis=1)
+#now we have a file with all trasnfers and the bestate and ed performance
+#now need to combine wards into categories to allow for daily network construction with enough data
+
+arimaprep.to_csv('arima_prep.csv', header=True, index=False)
+print('performance added on file created')
+
+
+
 #data into csv
 analysis_data_week.to_csv('analysis_data_weekend.csv', header =True, index=False)
