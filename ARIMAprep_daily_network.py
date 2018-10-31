@@ -168,7 +168,7 @@ ed_performance['date'] = pd.to_datetime(ed_performance['day'], format='%d/%m/%Y'
 ed_performance['date_number'] = ed_performance['date'].map(get_date_number)
 ed_performance.drop(['date'], axis=1, inplace=True)
 ed_performance.set_index('date_number', drop=True, inplace=True)
-all_transfers_with_edperf = arimaprep_data.join(ed_performance, on='date_number', how='left')
+arimaprep_data_ed = arimaprep_data.join(ed_performance, on='date_number', how='left')
 
 #add on bedstate information - all beds
 bedstate_info = pd.read_csv("all_beds_info.csv")
@@ -176,10 +176,10 @@ bedstate_info['date'] = pd.to_datetime(bedstate_info['Date'], format='%Y-%m-%d')
 bedstate_info['date_number'] = bedstate_info['date'].map(get_date_number)
 bedstate_info.drop(['date'], axis = 1, inplace = True)
 bedstate_info.set_index('date_number', drop = True, inplace = True)
-all_transfers_with_ed_beds= arimaprep_data.join(bedstate_info, on = 'date_number', how = 'left')
+arimaprep_data_all= arimaprep_data_ed.join(bedstate_info, on = 'date_number', how = 'left')
 
 
-arimaprep = arimaprep_data.drop(['date_number'], axis=1)
+arimaprep = arimaprep_data_all.drop(['date_number'], axis=1)
 #now we have a file with all trasnfers and the bestate and ed performance
 #now need to combine wards into categories to allow for daily network construction with enough data
 
@@ -189,4 +189,3 @@ print('performance added on file created')
 
 
 #data into csv
-analysis_data_week.to_csv('analysis_data_weekend.csv', header =True, index=False)
