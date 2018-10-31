@@ -20,6 +20,14 @@ import networkx as nx
 #from collections import defaultdict
 from datetime import datetime
 
+
+def get_diameter(network):
+    try:
+        return network.diameter()
+    except:
+        return 0
+
+
 def get_date_number(dt):
     return dt.year * 10000 + dt.month * 100 + dt.day
 
@@ -125,10 +133,12 @@ def get_network_analytics(data_reduced):
     #print(flow_hierarchy)
     #flow_h_list.append(flow_hierarchy)
 
+
+
     if nn ==0:
         diameter_net = 0
     else:
-        diameter_net = nx.diameter(G)
+        diameter_net = get_diameter(G)
 
     if nn== 0:
         clustering_net = 0
