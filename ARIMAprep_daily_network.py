@@ -1,10 +1,24 @@
 #now make networks for each day
 # to follow from perf_categories
 import pandas as pd
-from datetime import datetime
 import numpy as np
 from collections import deque, namedtuple
+import itertools
+import functools
 
+import matplotlib
+matplotlib.use('agg')
+import matplotlib.pyplot as plt
+
+import pandas as pd
+#from mpl_toolkits import mplot3d
+#from matplotlib import cm
+#from matplotlib import colors
+import networkx as nx
+#from collections import Counter
+#from itertools import chain
+#from collections import defaultdict
+from datetime import datetime
 
 
 
