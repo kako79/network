@@ -20,7 +20,8 @@ import networkx as nx
 #from collections import defaultdict
 from datetime import datetime
 
-
+def get_date_number(dt):
+    return dt.year * 10000 + dt.month * 100 + dt.day
 
 def get_transfer_day(date):
     strdate = str(date)
