@@ -30,7 +30,7 @@ def get_separate_date_time(datetimeentry):
 
 
 def get_date_number(dt):
-    return dt.year * 1000 + dt.month * 100 + dt.day
+    return dt.year * 10000 + dt.month * 100 + dt.day
 
 
 def get_date_number_from_string(date_time_entry):
@@ -41,6 +41,7 @@ def get_date_number_from_string(date_time_entry):
 all_transfers = pd.read_csv("all_transfers_1110.csv")
 all_transfers['transfer_dt'] = all_transfers['transfer_dt'].map(get_separate_date_time)
 all_transfers['transfer_date_number'] = all_transfers['transfer_dt'].map(get_date_number)
+print(all_transfers['transfer_date_number'])
 
 print("Rows: %s" % len(all_transfers))
 
@@ -55,9 +56,9 @@ print("Rows after removing bad dates: %s" % len(all_transfers))
 
 
 #add on the information about the hospital state from the ED performance file
-ed_performance = pd.read_csv("ed_performance_with_nextyear.csv")
+ed_performance = pd.read_csv("ed_performance_all.csv")
 # need transfer date only in a separate column
-ed_performance['date'] = pd.to_datetime(ed_performance['day'], format='%d/%m/%Y')
+ed_performance['date'] = pd.to_datetime(ed_performance['day'], format='%Y-%m-%d')
 ed_performance['date_number'] = ed_performance['date'].map(get_date_number)
 ed_performance.drop(['date'], axis=1, inplace=True)
 ed_performance.set_index('date_number', drop=True, inplace=True)
