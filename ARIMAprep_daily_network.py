@@ -117,17 +117,17 @@ def get_network_analytics(data_reduced):
     data_list.append({'month':i,'number of transfers': len(month_data_reduced['transfer_month']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality})
     return data_list
 
-data_t_strain_cat['transfer_dt'] = pd.to_datetime(alldata['transfer_dt'], format="%Y-%m-%d %H:%M")
+data_t_strain_cat['transfer_dt'] = pd.to_datetime(data_t_strain_cat['transfer_dt'], format="%Y-%m-%d %H:%M")
 data_list = []
 
 
 
-alldata['transfer_day'] = alldata['transfer_dt'].map(get_transfer_day)
+data_t_strain_cat['transfer_day'] = data_t_strain_cat['transfer_dt'].map(get_transfer_day)
 
 
 for i in all_dates:
     day_data = data_t_strain_cat[data_t_strain_cat['transfer_day'] == i]
-    number_of_transfers = len(day_data['transfer_month'])
+    number_of_transfers = len(day_data['transfer_day'])
     # drop the columns that are not needed for the graph, also select adults or children
     day_data_reduced = day_data.loc[day_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
     get_network_analytics(day_data_reduced)
