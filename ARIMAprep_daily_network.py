@@ -156,8 +156,6 @@ def get_network_analytics(data_reduced):
 data_t_strain_cat['transfer_dt'] = pd.to_datetime(data_t_strain_cat['transfer_dt'], format="%Y-%m-%d %H:%M")
 data_list = []
 
-
-
 data_t_strain_cat['transfer_day'] = data_t_strain_cat['transfer_dt'].map(get_transfer_day)
 #get the list of dates to loop over
 dates_list = pd.read_csv("ed_performance_all.csv")
