@@ -135,8 +135,8 @@ data_list = []
 data_t_strain_cat['transfer_day'] = data_t_strain_cat['transfer_dt'].map(get_transfer_day)
 #get the list of dates to loop over
 dates_list = pd.read_csv("ed_performance_all.csv")
-ed_performance['date'] = pd.to_datetime(ed_performance['day'], format='%d/%m/%Y')
-all_datesdf = ed_performance['date']
+dates_list['date'] = pd.to_datetime(dates_list['day'], format='%d/%m/%Y')
+all_datesdf = dates_list['date']
 
 for i in all_datesdf:
     print(i)
