@@ -49,7 +49,6 @@ def get_transfer_day(date):
             raise v
     return d
 
-
 data_t_strain_cat = pd.read_csv("transfers_strain_cat.csv")
 data_t_strain_cat = data_t_strain_cat.drop(['from_loc','to_loc'], axis=1)
 data_t_strain_cat.rename(index=str, columns={'from_category': 'from'}, inplace = True)
