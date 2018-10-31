@@ -123,7 +123,7 @@ data_list = []
 
 
 data_t_strain_cat['transfer_day'] = data_t_strain_cat['transfer_dt'].map(get_transfer_day)
-
+all_dates = Series(data_t_strain_cat['transfer_day'])
 
 for i in all_dates:
     day_data = data_t_strain_cat[data_t_strain_cat['transfer_day'] == i]
