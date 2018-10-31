@@ -171,7 +171,7 @@ location_category_map = ward_dictionary
 all_t_strain['from_category'] = all_t_strain['from_loc'].map(location_category_map)
 all_t_strain['to_category'] = all_t_strain['to_loc'].map(location_category_map)
 
-list_from_wards = all_t_strain.from_loc.unique()
+list_from_wards = all_t_strain.from_category.unique()
 print(list_from_wards)
 all_t_strain.to_csv('transfers_strain_cat.csv', header=True, index=False)
 print('transfer file with cat and strain written')
