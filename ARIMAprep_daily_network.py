@@ -102,12 +102,10 @@ def get_network_analytics(data_reduced):
 
     #degrees_list.append(list(degrees.values))
     #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
-    #print('degrees')
-    #print(degrees)
+
 
     # histdegrees = nx.classes.function.degree_histogram(G)
-    # print('histdegrees')
-    # print(histdegrees)
+
 
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
     incentrality = nx.algorithms.centrality.in_degree_centrality(G)
@@ -123,10 +121,12 @@ def get_network_analytics(data_reduced):
     else:
         out_theatre_centrality = 0
 
+    if 'AE' in outcentrality:
+        out_ed_centrality = outcentrality['AE']
+    else:
+        out_ed_centrality = 0
 
 
-    #print (incentrality)
-    #print(in_theatre_centrality)
 
     # flow hiearchy - finds strongly connected components
     if nn == 0:
@@ -142,7 +142,7 @@ def get_network_analytics(data_reduced):
     if nn ==0:
         theatres_load_centrality = 0
     else:
-        load_centr = load_centrality(G)
+        load_centr = nx.algorithms.centrality.load_centrality(G)
         theatres_load_centrality = load_centr['theatre']
 
     #if nn== 0:
@@ -157,7 +157,7 @@ def get_network_analytics(data_reduced):
 
 
 
-    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'loadcentrality theatres': theatres_load_centrality, 'shortest path': av_shortest_path_net})
+    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'loadcentrality theatres': theatres_load_centrality, 'shortest path': av_shortest_path_net})
     return data_list
 
 data_t_strain_cat['transfer_dt'] = pd.to_datetime(data_t_strain_cat['transfer_dt'], format="%Y-%m-%d %H:%M")
@@ -186,7 +186,7 @@ for i in all_datesdf:
 #print(data_list)
 
 
-arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres', 'loadcentrality theatres', 'shortest path'], data = data_list)
+arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality theatres','incentrality theatres', 'outcentrality theatres', 'loadcentrality theatres', 'shortest path'], data = data_list)
 
 arimaprep_data['date_number'] =  arimaprep_data['date'].map(get_date_number)
 
