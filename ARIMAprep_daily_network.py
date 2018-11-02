@@ -66,7 +66,7 @@ def get_network_analytics(data_reduced):
     # Get a list of tuples that contain the values from the rows.
     edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
     sum_of_all_transfers = edge_weight_data['ptid'].sum()
-    edge_weight_data['ptid'] = edge_weight_data['ptid'] / sum_of_all_transfers
+    #edge_weight_data['ptid'] = edge_weight_data['ptid']/sum_of_all_transfers
     #edge_weight_data.to_csv('edge_wdadult%s.csv' % str(i), header=True, index=False)
     weighted_edges = list(
         itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
@@ -140,9 +140,10 @@ def get_network_analytics(data_reduced):
 
 
     if nn ==0:
-        diameter_net = 0
+        theatres_load_centrality = 0
     else:
-        diameter_net = get_diameter(G)
+        load_centr = load_centrality(G)
+        theatres_load_centrality = load_centr['theatre']
 
     #if nn== 0:
     #    clustering_net = 0
@@ -156,7 +157,7 @@ def get_network_analytics(data_reduced):
 
 
 
-    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'diameter': diameter_net, 'shortest path': av_shortest_path_net})
+    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'loadcentrality theatres': theatres_load_centrality, 'shortest path': av_shortest_path_net})
     return data_list
 
 data_t_strain_cat['transfer_dt'] = pd.to_datetime(data_t_strain_cat['transfer_dt'], format="%Y-%m-%d %H:%M")
@@ -185,7 +186,7 @@ for i in all_datesdf:
 #print(data_list)
 
 
-arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres', 'diameter', 'shortest path'], data = data_list)
+arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'incentrality theatres', 'outcentrality theatres', 'loadcentrality theatres', 'shortest path'], data = data_list)
 
 arimaprep_data['date_number'] =  arimaprep_data['date'].map(get_date_number)
 
