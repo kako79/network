@@ -103,7 +103,11 @@ def get_network_analytics(data_reduced):
 
     # histdegrees = nx.classes.function.degree_histogram(G)
 
-
+    acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default=0)
+    gen_to_theatre = G.get_edge_data('general medical ward','theatre',default=0)
+    card_to_theatre = G.get_edge_data('cardiology ward','theatre',default=0)
+    numbers_to_sum = [acute_to_theatre, gen_to_theatre, card_to_theatre]
+    total_medical_to_theatre = sum(numbers_to_sum)
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
     incentrality = nx.algorithms.centrality.in_degree_centrality(G)
     # check if the theatre node exists in this data subset
@@ -150,7 +154,7 @@ def get_network_analytics(data_reduced):
 
 
 
-    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'loadcentrality theatres': theatres_bet_centrality, 'shortest path': av_shortest_path_net})
+    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'shortest path': shortest_path_length})
     return data_list
 
 data_t_strain_cat['transfer_dt'] = pd.to_datetime(data_t_strain_cat['transfer_dt'], format="%Y-%m-%d %H:%M")
@@ -179,7 +183,7 @@ for i in all_datesdf:
 #print(data_list)
 
 
-arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'loadcentrality theatres', 'shortest path'], data = data_list)
+arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre' 'shortest path'], data = data_list)
 
 arimaprep_data['date_number'] =  arimaprep_data['date'].map(get_date_number)
 
