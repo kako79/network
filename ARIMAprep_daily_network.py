@@ -142,8 +142,8 @@ def get_network_analytics(data_reduced):
     if nn ==0:
         theatres_load_centrality = 0
     else:
-        load_centr = nx.algorithms.centrality.load_centrality(G)
-        theatres_load_centrality = load_centr['theatre']
+        bet_centr = nx.algorithms.centrality.betweenness_centrality(G)
+        theatres_load_centrality = bet_centr['theatre']
 
     #if nn== 0:
     #    clustering_net = 0
