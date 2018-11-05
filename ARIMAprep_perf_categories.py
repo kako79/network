@@ -182,6 +182,10 @@ ward_dictionary = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'ns ward',
 
 location_category_map = ward_dictionary
 all_t_strain['from_category'] = all_t_strain['from_loc'].map(location_category_map)
+nan_indeces = all_t_strain[all_t_strain['from_category'] == nan]
+from_category_print = all_t_strain['from_category']
+print(from_category_print[nan_indeces])
+
 all_t_strain['to_category'] = all_t_strain['to_loc'].map(location_category_map)
 
 list_from_wards = all_t_strain.from_category.unique()
