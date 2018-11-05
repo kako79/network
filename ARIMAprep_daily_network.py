@@ -221,7 +221,3 @@ arimaprep = arimaprep_data_all.drop(['date_number', 'day', 'Date'], axis=1)
 
 arimaprep.to_csv('arima_prep_noweekday.csv', header=True, index=False)
 print('performance added on file created')
-
-
-
-#data into csv
