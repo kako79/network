@@ -137,13 +137,11 @@ def get_network_analytics(data_reduced):
     #print(flow_hierarchy)
     #flow_h_list.append(flow_hierarchy)
 
-
-
-    if nn ==0:
-        theatres_load_centrality = 0
-    else:
-        bet_centr = nx.algorithms.centrality.betweenness_centrality(G)
+    bet_centr = nx.algorithms.centrality.betweenness_centrality(G)
+    if 'theatre' in bet_centr:
         theatres_load_centrality = bet_centr['theatre']
+    else:
+        theatres_load_centrality = 0
 
     #if nn== 0:
     #    clustering_net = 0
