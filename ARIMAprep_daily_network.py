@@ -27,9 +27,9 @@ def get_diameter(network):
     except:
         return 0
 
-def get_shortest_path(G):
+def get_shortest_path(G, edge_weights):
     try:
-        return nx.shortest_path(G, 'AE', 'discharge')
+        return nx.shortest_path_length(G,source = 'AE', target=  'discharge', weight = edge_weights)
     except:
         return 0
 
@@ -76,10 +76,7 @@ def get_network_analytics(data_reduced):
     G.add_weighted_edges_from(weighted_edges)
     en = G.number_of_edges()
     nn = G.number_of_nodes()
-    #print(en)
-    #print(nn)
-    #en_list.append(en)
-    #nn_list.append(nn)
+
 
     # calculate the degree
     degrees = nx.classes.function.degree(G)
@@ -133,15 +130,13 @@ def get_network_analytics(data_reduced):
         flow_hierarchy = 0
     else:
         flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
-    #print('flow hierarchy')
-    #print(flow_hierarchy)
-    #flow_h_list.append(flow_hierarchy)
+
 
     bet_centr = nx.algorithms.centrality.betweenness_centrality(G)
     if 'theatre' in bet_centr:
-        theatres_load_centrality = bet_centr['theatre']
+        theatres_bet_centrality = bet_centr['theatre']
     else:
-        theatres_load_centrality = 0
+        theatres_bet_centrality = 0
 
     #if nn== 0:
     #    clustering_net = 0
@@ -149,13 +144,13 @@ def get_network_analytics(data_reduced):
     #    clustering_net = nx.average_clustering(G)
 
     if nn==0:
-        av_shortest_path_net = 0
+        shortest_path_length = 0
     else:
-        av_shortest_path_net = get_shortest_path(G)
+        shortest_path_length = get_shortest_path(G, edge_weight_data['ptid'])
 
 
 
-    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'loadcentrality theatres': theatres_load_centrality, 'shortest path': av_shortest_path_net})
+    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'loadcentrality theatres': theatres_bet_centrality, 'shortest path': av_shortest_path_net})
     return data_list
 
 data_t_strain_cat['transfer_dt'] = pd.to_datetime(data_t_strain_cat['transfer_dt'], format="%Y-%m-%d %H:%M")
