@@ -49,7 +49,7 @@ def get_transfer_day(date):
             raise v
     return d
 
-data_t_strain_cat = pd.read_csv("transfers_strain_cat.csv")
+data_t_strain_cat = pd.read_csv("transfers_strain_cat_adm.csv")
 data_t_strain_cat = data_t_strain_cat.drop(['from_loc','to_loc'], axis=1)
 data_t_strain_cat.rename(index=str, columns={'from_category': 'from'}, inplace = True)
 data_t_strain_cat.rename(index=str, columns={'to_category': 'to'}, inplace = True)
@@ -210,7 +210,7 @@ arimaprep = arimaprep_data_all.drop(['date_number', 'day', 'Date'], axis=1)
 #now we have a file with all trasnfers and the bestate and ed performance
 #now need to combine wards into categories to allow for daily network construction with enough data
 
-arimaprep.to_csv('arima_prep.csv', header=True, index=False)
+arimaprep.to_csv('arima_prep_adm.csv', header=True, index=False)
 print('performance added on file created')
 
 
