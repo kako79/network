@@ -187,6 +187,7 @@ list_to_wards = all_t_strain.to_loc.unique()
 #                   'ADD LVRF':'trauma appt','ADD KDABI':'plastic surgery appt', 'ADD NSGYFC':'ns appt', 'ADD PSUD':'plastic surgery appt',
 #                   'ADD BU':'radiology', 'POST-DISCHARGE':'post-discharge', 'PRE-ADMISSION':'pre-ad'}
 
+#dictionary for removing weekday influence on node numbers
 ward_dictionary = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'ns ward',
                    'ADD A5 WARD': 'ns ward', 'ADD D6 WARD': 'ns ward',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
@@ -275,7 +276,7 @@ all_t_strain['to_category'] = all_t_strain['to_loc'].map(location_category_map)
 
 list_from_wards = all_t_strain.from_category.unique()
 print(list_from_wards)
-all_t_strain.to_csv('transfers_strain_cat_adm.csv', header=True, index=False)
+all_t_strain.to_csv('transfers_strain_cat_adm_noweekday.csv', header=True, index=False)
 print('transfer file with cat and strain written')
 
 #
