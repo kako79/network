@@ -266,7 +266,7 @@ location_category_map = ward_dictionary
 
 all_t_strain['from_category'] = all_t_strain['from_loc'].map(location_category_map)
 
-missing_locations = all_t_strain[all_t_strain['from_category'] == 'nan']['from_loc'].unique()
+missing_locations = all_t_strain[all_t_strain['from_category'].isnull()]['from_loc'].unique()
 print(missing_locations)
 
 
