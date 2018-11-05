@@ -210,7 +210,7 @@ arimaprep = arimaprep_data_all.drop(['date_number', 'day', 'Date'], axis=1)
 #now we have a file with all trasnfers and the bestate and ed performance
 #now need to combine wards into categories to allow for daily network construction with enough data
 
-arimaprep.to_csv('arima_prep_adm.csv', header=True, index=False)
+arimaprep.to_csv('arima_prep_adm_noweekday.csv', header=True, index=False)
 print('performance added on file created')
 
 
