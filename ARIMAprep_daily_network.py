@@ -103,9 +103,9 @@ def get_network_analytics(data_reduced):
 
     # histdegrees = nx.classes.function.degree_histogram(G)
     #number of transfers from medical wards to theatre
-    acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default=0)
-    gen_to_theatre = G.get_edge_data('general medical ward','theatre',default=0)
-    card_to_theatre = G.get_edge_data('cardiology ward','theatre',default=0)
+    acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default=0).values
+    gen_to_theatre = G.get_edge_data('general medical ward','theatre',default=0).values
+    card_to_theatre = G.get_edge_data('cardiology ward','theatre',default=0).values
     numbers_to_sum = [acute_to_theatre, gen_to_theatre, card_to_theatre]
     total_medical_to_theatre = sum(numbers_to_sum)
 
