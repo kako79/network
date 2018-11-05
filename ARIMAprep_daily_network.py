@@ -103,19 +103,19 @@ def get_network_analytics(data_reduced):
 
     # histdegrees = nx.classes.function.degree_histogram(G)
     #number of transfers from medical wards to theatre
-    acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default=0).values
-    gen_to_theatre = G.get_edge_data('general medical ward','theatre',default=0).values
-    card_to_theatre = G.get_edge_data('cardiology ward','theatre',default=0).values
+    acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default={}).get('weight', 0)
+    gen_to_theatre = G.get_edge_data('general medical ward', 'theatre', default={}).get('weight', 0)
+    card_to_theatre = G.get_edge_data('cardiology ward', 'theatre', default={}).get('weight', 0)
     numbers_to_sum = [acute_to_theatre, gen_to_theatre, card_to_theatre]
     total_medical_to_theatre = sum(numbers_to_sum)
 
     #number of circular or unnecessary ward transfers
-    med_to_med_acute = G.get_edge_data('acute medical ward', 'acute medical ward', default = 0)
-    med_to_med_general = G.get_edge_data('general medical ward', 'general medical ward', default=0)
-    med_to_surg = G.get_edge_data('general medical ward', 'general surgical ward', default =0)
-    med_to_ortho = G.get_edge_data('general medical ward', ' orthopaedic ward', default =0)
-    med_to_surg_acute = G.get_edge_data('acute medical ward', 'general surgical ward', default=0)
-    med_to_orth_acute = G.get_edge_data('acute medical ward', ' orthopaedic ward', default=0)
+    med_to_med_acute = G.get_edge_data('acute medical ward', 'acute medical ward', default = {}).get('weight', 0)
+    med_to_med_general = G.get_edge_data('general medical ward', 'general medical ward', default={}).get('weight', 0)
+    med_to_surg = G.get_edge_data('general medical ward', 'general surgical ward', default ={}).get('weight', 0)
+    med_to_ortho = G.get_edge_data('general medical ward', ' orthopaedic ward', default ={}).get('weight', 0)
+    med_to_surg_acute = G.get_edge_data('acute medical ward', 'general surgical ward', default={}).get('weight', 0)
+    med_to_orth_acute = G.get_edge_data('acute medical ward', ' orthopaedic ward', default={}).get('weight', 0)
     ward_numbers = [med_to_med_acute, med_to_med_general, med_to_ortho, med_to_surg, med_to_surg_acute, med_to_orth_acute]
     total_medical_ward_transfers = sum(ward_numbers)
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
