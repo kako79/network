@@ -186,8 +186,6 @@ dates_list['date'] = pd.to_datetime(dates_list['day'], format='%d/%m/%Y')
 all_datesdf = dates_list['date'].map(get_transfer_day)
 #load ed_performance and bedstate
 
-
-
 for i in all_datesdf:
     print(i)
     day_data = data_t_strain_cat[data_t_strain_cat['transfer_day'] == i]
