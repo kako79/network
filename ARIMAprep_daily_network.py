@@ -86,6 +86,7 @@ def get_network_analytics(data_reduced):
     #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
     degrees_data.set_index('node', inplace=True)
     degrees_dict = degrees_data.to_dict()['degree']
+
     #check if there is data in this specific subset eg there may not be data in a weekend stress set in summer...
     if 'AE' in degrees_dict:
         emergency_degrees = degrees_dict['AE']
@@ -103,9 +104,9 @@ def get_network_analytics(data_reduced):
 
     # histdegrees = nx.classes.function.degree_histogram(G)
     #number of transfers from medical wards to theatre
-    acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default={}).get('weight', 0)
-    gen_to_theatre = G.get_edge_data('general medical ward', 'theatre', default={}).get('weight', 0)
-    card_to_theatre = G.get_edge_data('cardiology ward', 'theatre', default={}).get('weight', 0)
+    acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default={}).get('ptid', 0)
+    gen_to_theatre = G.get_edge_data('general medical ward', 'theatre', default={}).get('ptid', 0)
+    card_to_theatre = G.get_edge_data('cardiology ward', 'theatre', default={}).get('ptid', 0)
     numbers_to_sum = [acute_to_theatre, gen_to_theatre, card_to_theatre]
     total_medical_to_theatre = sum(numbers_to_sum)
 
