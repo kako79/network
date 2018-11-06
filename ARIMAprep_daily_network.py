@@ -111,12 +111,18 @@ def get_network_analytics(data_reduced):
 
     #number of circular or unnecessary ward transfers
     med_to_med_acute = G.get_edge_data('acute medical ward', 'acute medical ward', default = {}).get('weight', 0)
+    med_to_med_acgen = G.get_edge_data('acute medical ward', 'general medical ward', default={}).get('weight', 0)
+    med_to_med_genac = G.get_edge_data('general medical ward', 'acute medical ward', default={}).get('weight', 0)
     med_to_med_general = G.get_edge_data('general medical ward', 'general medical ward', default={}).get('weight', 0)
+
     med_to_surg = G.get_edge_data('general medical ward', 'general surgical ward', default ={}).get('weight', 0)
     med_to_ortho = G.get_edge_data('general medical ward', ' orthopaedic ward', default ={}).get('weight', 0)
     med_to_surg_acute = G.get_edge_data('acute medical ward', 'general surgical ward', default={}).get('weight', 0)
     med_to_orth_acute = G.get_edge_data('acute medical ward', ' orthopaedic ward', default={}).get('weight', 0)
-    ward_numbers = [med_to_med_acute, med_to_med_general, med_to_ortho, med_to_surg, med_to_surg_acute, med_to_orth_acute]
+
+
+
+    ward_numbers = [med_to_med_acute, med_to_med_general,med_to_med_acgen,med_to_med_genac, med_to_ortho, med_to_surg, med_to_surg_acute, med_to_orth_acute]
     total_medical_ward_transfers = sum(ward_numbers)
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
     incentrality = nx.algorithms.centrality.in_degree_centrality(G)
