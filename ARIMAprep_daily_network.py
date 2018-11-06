@@ -168,7 +168,7 @@ def get_network_analytics(data_reduced):
     if nn==0:
         shortest_path_length = 0
     else:
-        shortest_path_length = get_shortest_path(G, edge_weight_data['ptid'])
+        shortest_path_length = get_shortest_path(G, edge_weight_data['weight'])
 
 
 
