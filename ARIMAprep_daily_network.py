@@ -106,11 +106,11 @@ def get_network_analytics(data_reduced):
 
     # histdegrees = nx.classes.function.degree_histogram(G)
     #number of transfers from medical wards to theatre
-    acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default={}).get('ptid', 0)
-    gen_to_theatre = G.get_edge_data('general medical ward', 'theatre', default={}).get('ptid', 0)
-    card_to_theatre = G.get_edge_data('cardiology ward', 'theatre', default={}).get('ptid', 0)
-    numbers_to_sum = [acute_to_theatre, gen_to_theatre, card_to_theatre]
-    total_medical_to_theatre = sum(numbers_to_sum)
+    acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default={}).get('weight', 0)
+    gen_to_theatre = G.get_edge_data('general medical ward', 'theatre', default={}).get('weight', 0)
+    card_to_theatre = G.get_edge_data('cardiology ward', 'theatre', default={}).get('weight', 0)
+    rehab_to_theatre = G.get_edge_data('rehab', 'theatre', default={}).get('weight', 0)
+    total_medical_to_theatre = acute_to_theatre + gen_to_theatre + card_to_theatre + rehab_to_theatre
 
     #number of circular or unnecessary ward transfers
     med_to_med_acute = G.get_edge_data('acute medical ward', 'acute medical ward', default = {}).get('weight', 0)
@@ -125,10 +125,13 @@ def get_network_analytics(data_reduced):
     med_to_orth_acute = G.get_edge_data('acute medical ward', ' orthopaedic ward', default={}).get('weight', 0)
 
 
-    ward_sum = med_to_med_acute + med_to_med_general+med_to_med_acgen+med_to_med_genac+ med_to_ortho+ med_to_surg+ med_to_surg_acute+ med_to_orth_acute
-    print (ward_sum)
-    ward_numbers = [med_to_med_acute, med_to_med_general,med_to_med_acgen,med_to_med_genac, med_to_ortho, med_to_surg, med_to_surg_acute, med_to_orth_acute]
-    total_medical_ward_transfers = sum(ward_numbers)
+    total_medical_ward_transfers = med_to_med_acute + med_to_med_general+med_to_med_acgen+med_to_med_genac+ med_to_ortho+ med_to_surg+ med_to_surg_acute+ med_to_orth_acute
+    print (total_medical_ward_transfers)
+
+    total_ae_cdu_to_theatre = G.get_edge_data('ae', 'theatre', default ={}).get('weight', 0) + G.get_edge_data('ae', 'neuro theatre', default ={}).get('weight', 0) + G.get_edge_data('cdu', 'theatre', default ={}).get('weight', 0) + G.get_edge_data('cdu', 'neuro theatre', default ={}).get('weight', 0)
+
+
+
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
     incentrality = nx.algorithms.centrality.in_degree_centrality(G)
     # check if the theatre node exists in this data subset
@@ -175,7 +178,7 @@ def get_network_analytics(data_reduced):
 
 
 
-    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers,'shortest path': shortest_path_length})
+    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers,'AE CDU to theatre': total_ae_cdu_to_theatre})
     return data_list
 
 data_t_strain_cat['transfer_dt'] = pd.to_datetime(data_t_strain_cat['transfer_dt'], format="%Y-%m-%d %H:%M")
@@ -190,19 +193,19 @@ all_datesdf = dates_list['date'].map(get_transfer_day)
 #load ed_performance and bedstate
 
 for i in all_datesdf:
-    print(i)
+    #print(i)
     day_data = data_t_strain_cat[data_t_strain_cat['transfer_day'] == i]
     number_of_transfers = len(day_data['transfer_day'])
     # drop the columns that are not needed for the graph, also select adults or children
     day_data_reduced = day_data.loc[day_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
     get_network_analytics(day_data_reduced)
-    print(i, number_of_transfers)
+    #print(i, number_of_transfers)
 
 
 #print(data_list)
 
 
-arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'shortest path'], data = data_list)
+arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'AE CDU to theatre'], data = data_list)
 
 arimaprep_data['date_number'] =  arimaprep_data['date'].map(get_date_number)
 
@@ -225,6 +228,14 @@ arimaprep_data_all= arimaprep_data_ed.join(bedstate_info, on = 'date_number', ho
 
 
 arimaprep = arimaprep_data_all.drop(['date_number', 'day', 'Date'], axis=1)
+max_beds = 1154 # maximal number of beds
+
+def get_free_beds(beds_occupied):
+    return max_beds - beds_occupied
+
+
+arimaprep['bedsfree'] = arimaprep['Total occupied'].map(get_free_beds)
+arimaprep['strain'] = arimaprep.bedsfree * arimaprep.breach_percentage
 #now we have a file with all trasnfers and the bestate and ed performance
 #now need to combine wards into categories to allow for daily network construction with enough data
 
