@@ -234,7 +234,7 @@ def get_free_beds(beds_occupied):
     return max_beds - beds_occupied
 
 
-arimaprep['bedsfree'] = arimaprep['Total occupied'].map(get_free_beds)
+arimaprep['bedsfree'] = arimaprep['Total Occupied'].map(get_free_beds)
 arimaprep['strain'] = arimaprep.bedsfree * arimaprep.breach_percentage
 #now we have a file with all trasnfers and the bestate and ed performance
 #now need to combine wards into categories to allow for daily network construction with enough data
