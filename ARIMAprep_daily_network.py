@@ -67,6 +67,7 @@ def get_network_analytics(data_reduced):
     edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
     edge_weight_data.rename(index=str, columns={'ptid': 'weight'}, inplace=True)
     sum_of_all_transfers = edge_weight_data['weight'].sum()
+    print(sum_of_all_transfers)
     #edge_weight_data['ptid'] = edge_weight_data['ptid']/sum_of_all_transfers
     #edge_weight_data.to_csv('edge_wdadult%s.csv' % str(i), header=True, index=False)
     weighted_edges = list(
