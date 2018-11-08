@@ -165,7 +165,8 @@ def get_network_analytics(data_reduced):
         theatres_bet_centrality = 0
 
     if nn== 0:
-        average_degree_connectivity = 0
+        average_degree_connectivity_ae = 0
+        average_degree_connectivity_theatre = 0
     else:
         average_degree_connectivity = nx.average_degree_connectivity(G,source="out", target="in",weight = 'weight')
         if 'AE' in average_degree_connectivity:
