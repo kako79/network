@@ -166,19 +166,16 @@ def get_network_analytics(data_reduced):
     else:
         theatres_bet_centrality = 0
 
-    #if nn== 0:
-    #    clustering_net = 0
-    #else:
-    #    clustering_net = nx.average_clustering(G)
-
-    if nn==0:
-        shortest_path_length = 0
+    if nn== 0:
+        average_degree_connectivity = 0
     else:
-        shortest_path_length = get_shortest_path(G, edge_weight_data['weight'])
+        average_degree_connectivity = nx.average_degree_connectivity(G,source="out", target="in",weight = edge_weight_data['weight'])
+
+    average_degree_connectivity_ae = average_degree_connectivity['AE']
+    average_degree_connectivity_theatre = average_degree_connectivity['theatre']
 
 
-
-    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers,'AE CDU to theatre': total_ae_cdu_to_theatre})
+    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers,'AE average degree': average_degree_connectivity_ae, 'theatre average degree': average_degree_connectivity_theatre})
     return data_list
 
 data_t_strain_cat['transfer_dt'] = pd.to_datetime(data_t_strain_cat['transfer_dt'], format="%Y-%m-%d %H:%M")
@@ -205,7 +202,7 @@ for i in all_datesdf:
 #print(data_list)
 
 
-arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'AE CDU to theatre'], data = data_list)
+arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'AE average degree', 'theatre average degree'], data = data_list)
 
 arimaprep_data['date_number'] =  arimaprep_data['date'].map(get_date_number)
 
@@ -239,5 +236,5 @@ arimaprep['strain'] = arimaprep.bedsfree * arimaprep.breach_percentage
 #now we have a file with all trasnfers and the bestate and ed performance
 #now need to combine wards into categories to allow for daily network construction with enough data
 
-arimaprep.to_csv('arima_prep_noweekday.csv', header=True, index=False)
+arimaprep.to_csv('arima_prep_noweekday_nov8.csv', header=True, index=False)
 print('performance added on file created')
