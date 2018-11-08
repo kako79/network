@@ -170,9 +170,16 @@ def get_network_analytics(data_reduced):
         average_degree_connectivity = 0
     else:
         average_degree_connectivity = nx.average_degree_connectivity(G,source="out", target="in",weight = 'weight')
+        if 'AE' in average_degree_connectivity:
+            average_degree_connectivity_ae = average_degree_connectivity['AE']
+        else:
+            average_degree_connectivity_ae = 0
 
-    average_degree_connectivity_ae = average_degree_connectivity['AE']
-    average_degree_connectivity_theatre = average_degree_connectivity['theatre']
+        if 'theatre' in average_degree_connectivity:
+            average_degree_connectivity_theatre = average_degree_connectivity['theatre']
+        else:
+            average_degree_connectivity_theatre = 0
+
 
 
     data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers,'AE average degree': average_degree_connectivity_ae, 'theatre average degree': average_degree_connectivity_theatre})
