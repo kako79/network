@@ -151,8 +151,6 @@ def get_network_analytics(data_reduced):
     else:
         out_ed_centrality = 0
 
-
-
     # flow hiearchy - finds strongly connected components
     if nn == 0:
         flow_hierarchy = 0
