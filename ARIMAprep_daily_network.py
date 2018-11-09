@@ -85,7 +85,7 @@ def get_network_analytics(data_reduced):
     # calculate the degree
     degrees = nx.classes.function.degree(G)
     degrees_list = [[n, d] for n, d in degrees]
-    if i ==1277:
+    if b ==1000:
         print(degrees_list)
 
 
@@ -213,8 +213,9 @@ dates_list['date'] = pd.to_datetime(dates_list['day'], format='%d/%m/%Y')
 all_datesdf = dates_list['date'].map(get_transfer_day)
 #load ed_performance and bedstate
 
+b = 0
 for i in all_datesdf:
-    #print(i)
+    b+=1
     day_data = data_t_strain_cat[data_t_strain_cat['transfer_day'] == i]
     number_of_transfers = len(day_data['transfer_day'])
     # drop the columns that are not needed for the graph, also select adults or children
