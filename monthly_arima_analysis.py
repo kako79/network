@@ -220,7 +220,7 @@ ed_performance = pd.read_csv("ed_performance_all.csv")
 # need transfer date only in a separate column
 ed_performance['date'] = pd.to_datetime(ed_performance['day'], format='%d/%m/%Y')
 ed_performance['date_number'] = ed_performance['date'].map(get_date_number)
-ed_performance.drop(['date'], axis=1, inplace=True)
+ed_performance.drop(['date', 'day'], axis=1, inplace=True)
 ed_performance.set_index('date_number', drop=True, inplace=True)
 monthly_arima_data_ed = data_t_strain_cat.join(ed_performance, on='date_number', how='left')
 
@@ -246,6 +246,7 @@ it_is_weekend = False
 #data seprated by weekend weekday
 for i in monthlist:
     b+=1
+    print(b)
     month_data = monthly_arima_data_all[monthly_arima_data_ed['transfer_month'] == i]
     number_of_transfers = len(month_data['transfer_month'])
     # drop the columns that are not needed for the graph, also select adults or children
