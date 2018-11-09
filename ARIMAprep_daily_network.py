@@ -253,7 +253,7 @@ bedstate_info.set_index('date_number', drop = True, inplace = True)
 arimaprep_data_all= arimaprep_data_ed.join(bedstate_info, on = 'date_number', how = 'left')
 
 
-arimaprep = arimaprep_data_all.drop(['date_number', 'day', 'Date'], axis=1)
+arimaprep = arimaprep_data_all.drop(['day', 'Date'], axis=1)
 max_beds = 1154 # maximal number of beds
 
 def get_free_beds(beds_occupied):
