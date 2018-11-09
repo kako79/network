@@ -195,7 +195,7 @@ def get_network_analytics(data_reduced):
     else:
         theatres_bet_centrality = 0
 
-    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers, 'med surg ratio': ratio_wards_surg_med, 'average breach percentage': average_breach_perc, 'average bed occupancy': average_bed_occupancy})
+    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers, 'med surg ratio': ratio_wards_surg_med, 'average_breach_percentage': average_breach_perc, 'average bed occupancy': average_bed_occupancy})
 
 
     return data_list
@@ -254,7 +254,7 @@ for i in monthlist:
     print(i, number_of_transfers)
 
 
-monthly_arima_df = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio', 'average breach percentage', 'average bed occupancy'], data = data_list)
+monthly_arima_df = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio', 'average_breach_percentage', 'average bed occupancy'], data = data_list)
 
 monthly_arima_df = monthly_arima_df.drop(['date_number', 'day', 'Date'], axis=1)
 max_beds = 1154 # maximal number of beds
@@ -263,7 +263,7 @@ def get_free_beds(beds_occupied):
     return max_beds - beds_occupied
 
 
-monthly_arima_df['bedsfree'] = monthly_arima_df['Total Occupied'].map(get_free_beds)
+monthly_arima_df['bedsfree'] = monthly_arima_df['average bed occupancy'].map(get_free_beds)
 monthly_arima_df['strain'] = monthly_arima_df.bedsfree * monthly_arima_df.breach_percentage
 #now we have a file with all trasnfers and the bestate and ed performance
 #now need to combine wards into categories to allow for daily network construction with enough data
