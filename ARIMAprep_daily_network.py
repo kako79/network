@@ -53,7 +53,7 @@ data_t_strain_cat = pd.read_csv("transfers_strain_cat_noweekday.csv")
 data_t_strain_cat = data_t_strain_cat.drop(['from_loc','to_loc'], axis=1)
 data_t_strain_cat.rename(index=str, columns={'from_category': 'from'}, inplace = True)
 data_t_strain_cat.rename(index=str, columns={'to_category': 'to'}, inplace = True)
-
+degree_list =[]
 
 def get_network_analytics(data_reduced):
     # weighted edges first
@@ -91,7 +91,7 @@ def get_network_analytics(data_reduced):
     #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
     degrees_data.set_index('node', inplace=True)
     degrees_dict = degrees_data.to_dict()['degree']
-
+    degree_list = list(degrees_dict)
     #check if there is data in this specific subset eg there may not be data in a weekend stress set in summer...
     if 'AE' in degrees_dict:
         emergency_degrees = degrees_dict['AE']
@@ -107,7 +107,7 @@ def get_network_analytics(data_reduced):
     #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
 
 
-    histdegrees = nx.classes.function.degree_histogram(G)
+    #histdegrees = nx.classes.function.degree_histogram(G)
 
 
     #number of transfers from medical wards to theatre
@@ -192,7 +192,7 @@ def get_network_analytics(data_reduced):
 data_t_strain_cat['transfer_dt'] = pd.to_datetime(data_t_strain_cat['transfer_dt'], format="%Y-%m-%d %H:%M")
 data_list = []
 
-print(histdegrees)
+print(degree_list)
 
 data_t_strain_cat['transfer_day'] = data_t_strain_cat['transfer_dt'].map(get_transfer_day)
 #get the list of dates to loop over
