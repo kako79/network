@@ -242,7 +242,7 @@ data_list = []
 data_list_stress = []
 data_list_calm = []
 it_is_weekend = False
-
+b=0
 #data seprated by weekend weekday
 for i in monthlist:
     b+=1
