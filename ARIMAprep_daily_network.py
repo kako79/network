@@ -90,7 +90,7 @@ def get_network_analytics(data_reduced):
     #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
     degrees_data.set_index('node', inplace=True)
     degrees_dict = degrees_data.to_dict()['degree']
-    degree_list = list(degrees_dict)
+
     #check if there is data in this specific subset eg there may not be data in a weekend stress set in summer...
     if 'AE' in degrees_dict:
         emergency_degrees = degrees_dict['AE']
@@ -198,7 +198,7 @@ def get_network_analytics(data_reduced):
 data_t_strain_cat['transfer_dt'] = pd.to_datetime(data_t_strain_cat['transfer_dt'], format="%Y-%m-%d %H:%M")
 data_list = []
 
-print(degree_list)
+print(degrees_list)
 
 data_t_strain_cat['transfer_day'] = data_t_strain_cat['transfer_dt'].map(get_transfer_day)
 #get the list of dates to loop over
@@ -218,7 +218,7 @@ for i in all_datesdf:
     #print(i, number_of_transfers)
 
 
-print(degree_list)
+print(degrees_list)
 
 arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio'], data = data_list)
 
