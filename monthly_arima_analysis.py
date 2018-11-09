@@ -195,7 +195,7 @@ def get_network_analytics(data_reduced):
     else:
         theatres_bet_centrality = 0
 
-    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers, 'med surg ratio': ratio_wards_surg_med, 'average_breach_percentage': average_breach_perc, 'average bed occupancy': average_bed_occupancy})
+    data_list.append({'month':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers, 'med surg ratio': ratio_wards_surg_med, 'average_breach_percentage': average_breach_perc, 'average bed occupancy': average_bed_occupancy})
 
 
     return data_list
@@ -214,23 +214,23 @@ all_datesdf = dates_list['date'].map(get_transfer_day)
 
 data_t_strain_cat['date_number'] =  data_t_strain_cat['transfer_day'].map(get_date_number)
 
-#load ed_performance and bedstate
-#add on the information about the hospital state from the ED performance file
-ed_performance = pd.read_csv("ed_performance_all.csv")
-# need transfer date only in a separate column
-ed_performance['date'] = pd.to_datetime(ed_performance['day'], format='%d/%m/%Y')
-ed_performance['date_number'] = ed_performance['date'].map(get_date_number)
-ed_performance.drop(['date', 'day'], axis=1, inplace=True)
-ed_performance.set_index('date_number', drop=True, inplace=True)
-monthly_arima_data_ed = data_t_strain_cat.join(ed_performance, on='date_number', how='left')
+##load ed_performance and bedstate
+##add on the information about the hospital state from the ED performance file
+#ed_performance = pd.read_csv("ed_performance_all.csv")
+## need transfer date only in a separate column
+#ed_performance['date'] = pd.to_datetime(ed_performance['day'], format='%d/%m/%Y')
+#ed_performance['date_number'] = ed_performance['date'].map(get_date_number)
+#ed_performance.drop(['date', 'day'], axis=1, inplace=True)
+#ed_performance.set_index('date_number', drop=True, inplace=True)
+monthly_arima_data_all = data_t_strain_cat
 
-#add on bedstate information - all beds
-bedstate_info = pd.read_csv("all_beds_info.csv")
-bedstate_info['date'] = pd.to_datetime(bedstate_info['Date'], format='%Y-%m-%d')
-bedstate_info['date_number'] = bedstate_info['date'].map(get_date_number)
-bedstate_info.drop(['date'], axis = 1, inplace = True)
-bedstate_info.set_index('date_number', drop = True, inplace = True)
-monthly_arima_data_all= monthly_arima_data_ed.join(bedstate_info, on = 'date_number', how = 'left')
+##add on bedstate information - all beds
+#bedstate_info = pd.read_csv("all_beds_info.csv")
+#bedstate_info['date'] = pd.to_datetime(bedstate_info['Date'], format='%Y-%m-%d')
+#bedstate_info['date_number'] = bedstate_info['date'].map(get_date_number)
+#bedstate_info.drop(['date'], axis = 1, inplace = True)
+#bedstate_info.set_index('date_number', drop = True, inplace = True)
+#monthly_arima_data_all= monthly_arima_data_ed.join(bedstate_info, on = 'date_number', how = 'left')
 
 
 monthlist=[1,2,3,4,5,6,7,8,9,10,11,12]
@@ -247,7 +247,7 @@ it_is_weekend = False
 for i in monthlist:
     b+=1
     print(b)
-    month_data = monthly_arima_data_all[monthly_arima_data_ed['transfer_month'] == i]
+    month_data = monthly_arima_data_all[monthly_arima_data_all['transfer_month'] == i]
     number_of_transfers = len(month_data['transfer_month'])
     # drop the columns that are not needed for the graph, also select adults or children
     month_data_reduced = month_data.loc[month_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
@@ -255,9 +255,9 @@ for i in monthlist:
     print(i, number_of_transfers)
 
 
-monthly_arima_df = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio', 'average_breach_percentage', 'average bed occupancy'], data = data_list)
+monthly_arima_df = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio', 'average_breach_percentage', 'average bed occupancy'], data = data_list)
 
-monthly_arima_df = monthly_arima_df.drop(['date_number', 'day', 'Date'], axis=1)
+#monthly_arima_df = monthly_arima_df.drop(['date_number', 'day', 'Date'], axis=1)
 max_beds = 1154 # maximal number of beds
 
 def get_free_beds(beds_occupied):
