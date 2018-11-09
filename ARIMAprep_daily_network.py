@@ -218,7 +218,6 @@ for i in all_datesdf:
     #print(i, number_of_transfers)
 
 
-#print(data_list)
 print(degree_list)
 
 arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio'], data = data_list)
