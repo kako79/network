@@ -76,8 +76,7 @@ def get_network_analytics(data_reduced):
     G = nx.DiGraph()
     # print(weighted_edges)
     G.add_weighted_edges_from(weighted_edges)
-    ae_radio = G.get_edge_data('AE', 'radiology', default={}).get('weight', 0)
-    print(ae_radio)
+
 
     en = G.number_of_edges()
     nn = G.number_of_nodes()
@@ -134,7 +133,14 @@ def get_network_analytics(data_reduced):
     #print (total_medical_ward_transfers)
 
     total_ae_cdu_to_theatre = G.get_edge_data('ae', 'theatre', default ={}).get('weight', 0) + G.get_edge_data('ae', 'neuro theatre', default ={}).get('weight', 0) + G.get_edge_data('cdu', 'theatre', default ={}).get('weight', 0) + G.get_edge_data('cdu', 'neuro theatre', default ={}).get('weight', 0)
+    print(total_ae_cdu_to_theatre)
 
+    ae_surg = G.get_edge_data('AE', 'general surgical ward', default={}).get('weight', 0)+ G.get_edge_data('AE', 'orthopaedic ward', default={}).get('weight', 0) +G.get_edge_data('AE', 'ATC surgical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'gynae ward', default={}).get('weight', 0)
+    ae_med = G.get_edge_data('AE', 'acute medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'general medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'cardiology ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'rehab', default={}).get('weight', 0)
+    if ae_surg == 0:
+        ratio_wards_surg_med = 0
+    else:
+        ratio_wards_surg_med = ae_med/ae_surg
 
 
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
@@ -186,7 +192,7 @@ def get_network_analytics(data_reduced):
 
 
 
-    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers})
+    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers, 'med surg ratio': ratio_wards_surg_med})
     return data_list
 
 data_t_strain_cat['transfer_dt'] = pd.to_datetime(data_t_strain_cat['transfer_dt'], format="%Y-%m-%d %H:%M")
@@ -213,9 +219,9 @@ for i in all_datesdf:
 
 
 #print(data_list)
+print(degree_list)
 
-
-arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers'], data = data_list)
+arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio'], data = data_list)
 
 arimaprep_data['date_number'] =  arimaprep_data['date'].map(get_date_number)
 
