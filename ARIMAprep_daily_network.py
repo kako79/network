@@ -53,7 +53,6 @@ data_t_strain_cat = pd.read_csv("transfers_strain_cat_noweekday.csv")
 data_t_strain_cat = data_t_strain_cat.drop(['from_loc','to_loc'], axis=1)
 data_t_strain_cat.rename(index=str, columns={'from_category': 'from'}, inplace = True)
 data_t_strain_cat.rename(index=str, columns={'to_category': 'to'}, inplace = True)
-degree_list =[]
 
 def get_network_analytics(data_reduced):
     # weighted edges first
@@ -84,12 +83,15 @@ def get_network_analytics(data_reduced):
 
     # calculate the degree
     degrees = nx.classes.function.degree(G)
+
+
     degrees_list = [[n, d] for n, d in degrees]
     if b ==1000:
         print(degrees_list)
 
 
     degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
+    degrees_data_degree = degrees_data['degree']
     #degrees_data.to_csv('degrees_weadult%s.csv'%str(i), header =True, index=False)
     #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
     degrees_data.set_index('node', inplace=True)
@@ -196,11 +198,14 @@ def get_network_analytics(data_reduced):
 
 
     data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers, 'med surg ratio': ratio_wards_surg_med})
+    degrees_hist_file.append(degrees_data_degree)
+
+
     return data_list
 
 data_t_strain_cat['transfer_dt'] = pd.to_datetime(data_t_strain_cat['transfer_dt'], format="%Y-%m-%d %H:%M")
 data_list = []
-
+degree_hist_file = []
 
 
 data_t_strain_cat['transfer_day'] = data_t_strain_cat['transfer_dt'].map(get_transfer_day)
@@ -223,6 +228,7 @@ for i in all_datesdf:
 
 
 
+degree_hist_df = pd.DataFrame(data = degree_hist_file)
 
 arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio'], data = data_list)
 
@@ -258,5 +264,6 @@ arimaprep['strain'] = arimaprep.bedsfree * arimaprep.breach_percentage
 #now we have a file with all trasnfers and the bestate and ed performance
 #now need to combine wards into categories to allow for daily network construction with enough data
 
+degree_hist_df.to_csv('degreehist_nov8.csv', header = False, index = False)
 arimaprep.to_csv('arima_prep_noweekday_nov8.csv', header=True, index=False)
 print('performance added on file created')
