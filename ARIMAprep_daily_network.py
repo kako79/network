@@ -171,7 +171,7 @@ def get_network_analytics(data_reduced):
         average_degree_connectivity_ae = 0
         average_degree_connectivity_theatre = 0
     else:
-        average_degree_connectivity = nx.average_degree_connectivity(G,source="out+in", target="out+in",weight = 'weight')
+        average_degree_connectivity = nx.average_degree_connectivity(G,source="in+out", target="in+out",weight = 'weight')
         if 'AE' in average_degree_connectivity:
             average_degree_connectivity_ae = average_degree_connectivity['AE']
         else:
