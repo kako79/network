@@ -198,7 +198,7 @@ def get_network_analytics(data_reduced):
 
 
     data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers, 'med surg ratio': ratio_wards_surg_med})
-    #degrees_hist_file.append(degrees_data_degree)
+    degrees_hist_file.append(degrees_data_degree)
 
 
     return data_list
@@ -228,7 +228,7 @@ for i in all_datesdf:
 
 
 
-#degree_hist_df = pd.DataFrame(data = degree_hist_file)
+degree_hist_df = pd.DataFrame(data = degree_hist_file)
 
 arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio'], data = data_list)
 
@@ -264,6 +264,6 @@ arimaprep['strain'] = arimaprep.bedsfree * arimaprep.breach_percentage
 #now we have a file with all trasnfers and the bestate and ed performance
 #now need to combine wards into categories to allow for daily network construction with enough data
 
-#degree_hist_df.to_csv('degreehist_nov8.csv', header = False, index = False)
-arimaprep.to_csv('arima_prep_noweekday_nov8.csv', header=True, index=False)
+degree_hist_df.to_csv('monthly_nov8.csv', header = False, index = False)
+arimaprep.to_csv('monthly_arima_noweekday_nov8.csv', header=True, index=False)
 print('performance added on file created')
