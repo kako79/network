@@ -133,9 +133,10 @@ def get_network_analytics(data_reduced):
     #print (total_medical_ward_transfers)
 
     total_ae_cdu_to_theatre = G.get_edge_data('ae', 'theatre', default ={}).get('weight', 0) + G.get_edge_data('ae', 'neuro theatre', default ={}).get('weight', 0) + G.get_edge_data('cdu', 'theatre', default ={}).get('weight', 0) + G.get_edge_data('cdu', 'neuro theatre', default ={}).get('weight', 0)
-    print(total_ae_cdu_to_theatre)
+   #print(total_ae_cdu_to_theatre)
 
     ae_surg = G.get_edge_data('AE', 'general surgical ward', default={}).get('weight', 0)+ G.get_edge_data('AE', 'orthopaedic ward', default={}).get('weight', 0) +G.get_edge_data('AE', 'ATC surgical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'gynae ward', default={}).get('weight', 0)
+    print(ae_surg)
     ae_med = G.get_edge_data('AE', 'acute medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'general medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'cardiology ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'rehab', default={}).get('weight', 0)
     if ae_surg == 0:
         ratio_wards_surg_med = 0
@@ -175,20 +176,20 @@ def get_network_analytics(data_reduced):
     else:
         theatres_bet_centrality = 0
 
-    if nn== 0:
-        average_degree_connectivity_ae = 0
-        average_degree_connectivity_theatre = 0
-    else:
-        average_degree_connectivity = nx.average_degree_connectivity(G,source="in+out", target="in+out")
-        if 'AE' in average_degree_connectivity:
-            average_degree_connectivity_ae = average_degree_connectivity['AE']
-        else:
-            average_degree_connectivity_ae = 0
+   # if nn== 0:
+   #     average_degree_connectivity_ae = 0
+   #     average_degree_connectivity_theatre = 0
+   # else:
+    #    average_degree_connectivity = nx.average_degree_connectivity(G,source="in+out", target="in+out")
+   #     if 'AE' in average_degree_connectivity:
+   #         average_degree_connectivity_ae = average_degree_connectivity['AE']
+   #     else:
+    #        average_degree_connectivity_ae = 0#
 
-        if 'theatre' in average_degree_connectivity:
-            average_degree_connectivity_theatre = average_degree_connectivity['theatre']
-        else:
-            average_degree_connectivity_theatre = 0
+#        if 'theatre' in average_degree_connectivity:
+#            average_degree_connectivity_theatre = average_degree_connectivity['theatre']
+#        else:
+#            average_degree_connectivity_theatre = 0
 
 
 
