@@ -51,7 +51,7 @@ def get_transfer_day(date):
 
 def get_month(date):
     strdate = str(date)
-    fmt = "%Y-%m-%d
+    fmt = "%Y-%m-%d"
     try:
         d = datetime.strptime(strdate, fmt)
     except ValueError as v:
