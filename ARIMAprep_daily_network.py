@@ -76,6 +76,9 @@ def get_network_analytics(data_reduced):
     G = nx.DiGraph()
     # print(weighted_edges)
     G.add_weighted_edges_from(weighted_edges)
+    ae_radio = G.get_edge_data('AE', 'radiology', default={}).get('weight', 0)
+    print(ae_radio)
+
     en = G.number_of_edges()
     nn = G.number_of_nodes()
 
