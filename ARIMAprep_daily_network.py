@@ -85,6 +85,10 @@ def get_network_analytics(data_reduced):
     # calculate the degree
     degrees = nx.classes.function.degree(G)
     degrees_list = [[n, d] for n, d in degrees]
+    if i ==1277:
+        print(degrees_list)
+
+
     degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
     #degrees_data.to_csv('degrees_weadult%s.csv'%str(i), header =True, index=False)
     #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
@@ -219,7 +223,7 @@ for i in all_datesdf:
     #print(i, number_of_transfers)
 
 
-print(degrees_list)
+
 
 arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio'], data = data_list)
 
