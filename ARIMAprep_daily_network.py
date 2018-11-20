@@ -177,7 +177,7 @@ def get_network_analytics(data_reduced):
     else:
         theatres_bet_centrality = 0
 
-    if nn == 0:
+    if en == 0:
         theatres_eigen_centr = 0
         assortativity_net_inout = 0
     else:
@@ -190,6 +190,7 @@ def get_network_analytics(data_reduced):
 
         if 'AE' in eigen_centr:
             ed_eigen_centr = eigen_centr['AE']
+
         else:
             ed_eigen_centr = 0
 
