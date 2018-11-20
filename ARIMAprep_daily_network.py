@@ -183,8 +183,9 @@ def get_network_analytics(data_reduced):
         theatres_eigen_centr = 0
 
 
-    for c in nx.connected_component_subgraphs(G):
-        shortest_path = nx.average_shortest_path_length(c)
+    #for c in nx.connected_component_subgraphs(G):
+    #    shortest_path = nx.average_shortest_path_length(c)
+    shortest_path = 0
     #diameter_net = nx.diameter(G)
     diameter_net = 0
     #radius_net = nx.radius(G)
