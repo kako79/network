@@ -265,7 +265,7 @@ def get_free_beds(beds_occupied):
 
 
 monthly_arima_df['bedsfree'] = monthly_arima_df['average bed occupancy'].map(get_free_beds)
-monthly_arima_df['strain'] = monthly_arima_df.bedsfree * monthly_arima_df.breach_percentage
+monthly_arima_df['strain'] = monthly_arima_df.bedsfree * monthly_arima_df.average_breach_percentage
 #now we have a file with all trasnfers and the bestate and ed performance
 #now need to combine wards into categories to allow for daily network construction with enough data
 
