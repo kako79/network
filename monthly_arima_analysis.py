@@ -127,8 +127,8 @@ def get_network_analytics(data_reduced):
         emergency_degrees = 0
 
 
-    degrees_list.append(list(degrees.values))
-    degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
+    #degrees_list.append(list(degrees.values))
+    #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
 
     #number of transfers from medical wards to theatre
     acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default={}).get('weight', 0)
