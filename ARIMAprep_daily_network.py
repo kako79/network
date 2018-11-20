@@ -183,7 +183,8 @@ def get_network_analytics(data_reduced):
         theatres_eigen_centr = 0
 
     shortest_path = nx.average_shortest_path_length(G)
-    diameter_net = nx.diameter(G)
+    #diameter_net = nx.diameter(G)
+    diameter_net = 0
     radius_net = nx.radius(G)
     print('center nodes')
     print (nx.center(G))
