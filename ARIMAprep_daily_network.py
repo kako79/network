@@ -136,7 +136,7 @@ def get_network_analytics(data_reduced):
 
 
     ae_surg = G.get_edge_data('AE', 'general surgical ward', default={}).get('weight', 0)+ G.get_edge_data('AE', 'orthopaedic ward', default={}).get('weight', 0) +G.get_edge_data('AE', 'ATC surgical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'gynae ward', default={}).get('weight', 0)+  G.get_edge_data('AE', 'ns ward', default={}).get('weight', 0)
-    print(ae_surg)
+   # print(ae_surg)
     ae_med = G.get_edge_data('AE', 'acute medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'general medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'cardiology ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'rehab', default={}).get('weight', 0) +  G.get_edge_data('AE', 'cdu', default={}).get('weight', 0)
     if ae_surg == 0:
         ratio_wards_surg_med = 0
@@ -176,7 +176,7 @@ def get_network_analytics(data_reduced):
     else:
         theatres_bet_centrality = 0
 
-    eigen_centr = nx.eigenvector_centrality(G)
+    eigen_centr = nx.eigenvector_centrality_numpy(G)
     if 'theatre' in eigen_centr:
         theatres_eigen_centr = eigen_centr['theatre']
     else:
