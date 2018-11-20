@@ -190,7 +190,7 @@ def get_network_analytics(data_reduced):
 
     density_net = nx.density(G)
     transitivity_net = nx.transitivity(G)
-    assortativity_net_inout = nx.degree_assortativity_coefficient(G,x='out',y='in', weight = )
+    assortativity_net_inout = nx.degree_assortativity_coefficient(G,x='out',y='in', weight = 'weights')
 
 
 
