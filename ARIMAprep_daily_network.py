@@ -179,8 +179,10 @@ def get_network_analytics(data_reduced):
 
     if nn == 0:
         theatres_eigen_centr = 0
+        assortativity_net_inout = 0
     else:
         eigen_centr = nx.eigenvector_centrality_numpy(G)
+        assortativity_net_inout = nx.degree_assortativity_coefficient(G, x='out', y='in', weight='weights')
         if 'theatre' in eigen_centr:
             theatres_eigen_centr = eigen_centr['theatre']
         else:
@@ -199,7 +201,7 @@ def get_network_analytics(data_reduced):
 
     density_net = nx.density(G)
     transitivity_net = nx.transitivity(G)
-    assortativity_net_inout = nx.degree_assortativity_coefficient(G,x='out',y='in', weight = 'weights')
+
 
 
 
