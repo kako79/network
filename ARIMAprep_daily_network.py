@@ -187,8 +187,8 @@ def get_network_analytics(data_reduced):
     diameter_net = 0
     #radius_net = nx.radius(G)
     radius_net = 0
-    print('center nodes')
-    print (nx.center(G))
+   # print('center nodes')
+    #print (nx.center(G))
 
     density_net = nx.density(G)
     transitivity_net = nx.transitivity(G)
