@@ -324,5 +324,5 @@ monthly_arima_df['strain'] = monthly_arima_df.bedsfree * monthly_arima_df.averag
 #now we have a file with all trasnfers and the bestate and ed performance
 #now need to combine wards into categories to allow for daily network construction with enough data
 
-monthly_arima_df.to_csv('monthly_arima_weekend_nov20.csv', header=True, index=False)
+monthly_arima_df.to_csv('monthly_weekend_nov20.csv', header=True, index=False)
 print('performance added on file created')
