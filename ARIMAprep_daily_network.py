@@ -78,6 +78,7 @@ def get_network_analytics(data_reduced):
 
 
     en = G.number_of_edges()
+    print(en)
     nn = G.number_of_nodes()
     # calculate the degree
     degrees = nx.classes.function.degree(G)
