@@ -184,7 +184,7 @@ def get_network_analytics(data_reduced):
 
 
     for c in nx.connected_component_subgraphs(G):
-        shortest_path = nx.average_shortest_path_length(c))
+        shortest_path = nx.average_shortest_path_length(c)
     #diameter_net = nx.diameter(G)
     diameter_net = 0
     #radius_net = nx.radius(G)
