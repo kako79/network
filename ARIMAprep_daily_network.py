@@ -179,6 +179,7 @@ def get_network_analytics(data_reduced):
 
     if en == 0:
         theatres_eigen_centr = 0
+        ed_eigen_centr = 0
         assortativity_net_inout = 0
     else:
         eigen_centr = nx.eigenvector_centrality_numpy(G)
