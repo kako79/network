@@ -188,6 +188,11 @@ def get_network_analytics(data_reduced):
         else:
             theatres_eigen_centr = 0
 
+        if 'AE' in eigen_centr:
+            ed_eigen_centr = eigen_centr['AE']
+        else:
+            ed_eigen_centr = 0
+
 
     #for c in nx.connected_component_subgraphs(G):
     #    shortest_path = nx.average_shortest_path_length(c)
@@ -208,7 +213,7 @@ def get_network_analytics(data_reduced):
     data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,
                       'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality,
                       'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers,
-                      'med surg ratio': ratio_wards_surg_med, 'eigen_centr_theatre': theatres_eigen_centr, 'diameter': diameter_net, 'radius': radius_net,'average shortest path': shortest_path,
+                      'med surg ratio': ratio_wards_surg_med, 'eigen_centr_theatre': theatres_eigen_centr,'eigen_centr_ed': ed_eigen_centr,
                       'density': density_net, 'transitivity': transitivity_net, 'assortativity coeff': assortativity_net_inout})
     #degrees_hist_file.append(degrees_data_degree)
 
@@ -245,7 +250,7 @@ for i in all_datesdf:
 
 arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres',
                                        'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio', 'eigen_centr_theatre',
-                                       'density', 'transitivity', 'assortativity coeff'], data = data_list)
+                                       'eigen_centr_ed','density', 'transitivity', 'assortativity coeff'], data = data_list)
 
 arimaprep_data['date_number'] =  arimaprep_data['date'].map(get_date_number)
 
