@@ -244,8 +244,8 @@ for i in all_datesdf:
 #degree_hist_df = pd.DataFrame(data = degree_hist_file)
 
 arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres',
-                                       'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio', 'eigen_centr_theatre', 'diameter',
-                                       'radius', 'average shortest path', 'density', 'transitivity', 'assortativity coeff'], data = data_list)
+                                       'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio', 'eigen_centr_theatre',
+                                       'density', 'transitivity', 'assortativity coeff'], data = data_list)
 
 arimaprep_data['date_number'] =  arimaprep_data['date'].map(get_date_number)
 
