@@ -177,11 +177,14 @@ def get_network_analytics(data_reduced):
     else:
         theatres_bet_centrality = 0
 
-    eigen_centr = nx.eigenvector_centrality_numpy(G)
-    if 'theatre' in eigen_centr:
-        theatres_eigen_centr = eigen_centr['theatre']
-    else:
+    if nn == 0:
         theatres_eigen_centr = 0
+    else:
+        eigen_centr = nx.eigenvector_centrality_numpy(G)
+        if 'theatre' in eigen_centr:
+            theatres_eigen_centr = eigen_centr['theatre']
+        else:
+            theatres_eigen_centr = 0
 
 
     #for c in nx.connected_component_subgraphs(G):
@@ -203,7 +206,7 @@ def get_network_analytics(data_reduced):
     data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,
                       'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality,
                       'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers,
-                      'med surg ratio': ratio_wards_surg_med, 'eigen_centr': eigen_centr, 'diameter': diameter_net, 'radius': radius_net,'average shortest path': shortest_path,
+                      'med surg ratio': ratio_wards_surg_med, 'eigen_centr_theatre': theatres_eigen_centr, 'diameter': diameter_net, 'radius': radius_net,'average shortest path': shortest_path,
                       'density': density_net, 'transitivity': transitivity_net, 'assortativity coeff': assortativity_net_inout})
     #degrees_hist_file.append(degrees_data_degree)
 
@@ -239,7 +242,7 @@ for i in all_datesdf:
 #degree_hist_df = pd.DataFrame(data = degree_hist_file)
 
 arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres',
-                                       'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio', 'eigen_centr', 'diameter',
+                                       'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio', 'eigen_centr_theatre', 'diameter',
                                        'radius', 'average shortest path', 'density', 'transitivity', 'assortativity coeff'], data = data_list)
 
 arimaprep_data['date_number'] =  arimaprep_data['date'].map(get_date_number)
