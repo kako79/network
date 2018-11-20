@@ -277,7 +277,7 @@ it_is_weekend = False
 b=0
 #data seprated by weekend weekday
 
-if it_is_weekend == True
+if it_is_weekend == True:
     for i in monthlist:
         b+=1
         print(b)
