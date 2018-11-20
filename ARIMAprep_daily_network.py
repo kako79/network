@@ -79,15 +79,13 @@ def get_network_analytics(data_reduced):
 
     en = G.number_of_edges()
     nn = G.number_of_nodes()
-
-
     # calculate the degree
     degrees = nx.classes.function.degree(G)
 
 
     degrees_list = [[n, d] for n, d in degrees]
-    if b ==1000:
-        print(degrees_list)
+    #if b ==1000:
+    #    print(degrees_list)
 
 
     degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
@@ -110,8 +108,6 @@ def get_network_analytics(data_reduced):
 
     #degrees_list.append(list(degrees.values))
     #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
-
-
     #histdegrees = nx.classes.function.degree_histogram(G)
 
 
@@ -180,24 +176,29 @@ def get_network_analytics(data_reduced):
     else:
         theatres_bet_centrality = 0
 
-   # if nn== 0:
-   #     average_degree_connectivity_ae = 0
-   #     average_degree_connectivity_theatre = 0
-   # else:
-    #    average_degree_connectivity = nx.average_degree_connectivity(G,source="in+out", target="in+out")
-   #     if 'AE' in average_degree_connectivity:
-   #         average_degree_connectivity_ae = average_degree_connectivity['AE']
-   #     else:
-    #        average_degree_connectivity_ae = 0#
+    eigen_centr = nx.eigenvector_centrality(G)
+    if 'theatre' in eigen_centr:
+        theatres_eigen_centr = eigen_centr['theatre']
+    else:
+        theatres_eigen_centr = 0
 
-#        if 'theatre' in average_degree_connectivity:
-#            average_degree_connectivity_theatre = average_degree_connectivity['theatre']
-#        else:
-#            average_degree_connectivity_theatre = 0
+    shortest_path = nx.average_shortest_path_length(G)
+    diameter_net = nx.diameter(G)
+    radius_net = nx.radius(G)
+    print('center nodes')
+    print (nx.center(G))
+
+    density_net = nx.density(G)
+    transitivity_net = nx.transitivity(G)
+    assortativity_net_inout = nx.degree_assortativity_coefficient(G,x='out',y='in', weight = )
 
 
 
-    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers, 'med surg ratio': ratio_wards_surg_med})
+    data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,
+                      'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality,
+                      'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers,
+                      'med surg ratio': ratio_wards_surg_med, 'eigen_centr': eigen_centr, 'diameter': diameter_net, 'radius': radius_net,'average shortest path': shortest_path,
+                      'density': density_net, 'transitivity': transitivity_net, 'assortativity coeff': assortativity_net_inout})
     #degrees_hist_file.append(degrees_data_degree)
 
 
@@ -231,7 +232,9 @@ for i in all_datesdf:
 
 #degree_hist_df = pd.DataFrame(data = degree_hist_file)
 
-arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio'], data = data_list)
+arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres',
+                                       'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio', 'eigen_centr', 'diameter',
+                                       'radius', 'average shortest path', 'density', 'transitivity', 'assortativity coeff'], data = data_list)
 
 arimaprep_data['date_number'] =  arimaprep_data['date'].map(get_date_number)
 
@@ -266,5 +269,5 @@ arimaprep['strain'] = arimaprep.bedsfree * arimaprep.breach_percentage
 #now need to combine wards into categories to allow for daily network construction with enough data
 
 #degree_hist_df.to_csv('degreehist_nov8.csv', header = False, index = False)
-arimaprep.to_csv('arima_prep_noweekday_nov8.csv', header=True, index=False)
+arimaprep.to_csv('arima_prep_noweekday_nov20.csv', header=True, index=False)
 print('performance added on file created')
