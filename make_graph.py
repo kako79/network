@@ -105,9 +105,9 @@ print(histdegrees)
 # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
 incentrality = nx.algorithms.centrality.in_degree_centrality(G)
 outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
-print('in and out centrality')
-print(incentrality)
-print(outcentrality)
+#print('in and out centrality')
+#print(incentrality)
+#print(outcentrality)
 
 
 #centrality_overall = defaultdict(list)
@@ -117,6 +117,120 @@ print(outcentrality)
 #print(centrality_overall)
 #dfcentrality = pd.DataFrame.from_dict(centrality_overall,orient='index')
 #print(dfcentrality)
+
+
+# calculate the degree
+degrees_list = [[n, d] for n, d in degrees]
+degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
+#degrees_data_degree = degrees_data['degree']
+degrees_data.to_csv('degrees_all.csv', header =True, index=False)
+
+#look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
+degrees_data.set_index('node', inplace=True)
+degrees_dict = degrees_data.to_dict()['degree']
+
+#check if there is data in this specific subset eg there may not be data in a weekend stress set in summer...
+if 'AE' in degrees_dict:
+    emergency_degrees = degrees_dict['AE']
+    #print('in dict')
+    no_data = False
+    else:
+    #print('not in dict')
+    no_data = True
+    emergency_degrees = 0
+
+
+    #degrees_list.append(list(degrees.values))
+    #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
+
+#number of transfers from medical wards to theatre
+acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default={}).get('weight', 0)
+gen_to_theatre = G.get_edge_data('general medical ward', 'theatre', default={}).get('weight', 0)
+card_to_theatre = G.get_edge_data('cardiology ward', 'theatre', default={}).get('weight', 0)
+rehab_to_theatre = G.get_edge_data('rehab', 'theatre', default={}).get('weight', 0)
+total_medical_to_theatre = acute_to_theatre + gen_to_theatre + card_to_theatre + rehab_to_theatre
+
+#number of circular or unnecessary ward transfers
+med_to_med_acute = G.get_edge_data('acute medical ward', 'acute medical ward', default = {}).get('weight', 0)
+med_to_med_acgen = G.get_edge_data('acute medical ward', 'general medical ward', default={}).get('weight', 0)
+med_to_med_genac = G.get_edge_data('general medical ward', 'acute medical ward', default={}).get('weight', 0)
+med_to_med_general = G.get_edge_data('general medical ward', 'general medical ward', default={}).get('weight', 0)
+
+
+med_to_surg = G.get_edge_data('general medical ward', 'general surgical ward', default ={}).get('weight', 0)
+med_to_ortho = G.get_edge_data('general medical ward', ' orthopaedic ward', default ={}).get('weight', 0)
+med_to_surg_acute = G.get_edge_data('acute medical ward', 'general surgical ward', default={}).get('weight', 0)
+med_to_orth_acute = G.get_edge_data('acute medical ward', ' orthopaedic ward', default={}).get('weight', 0)
+acmed_to_ns = G.get_edge_data('acute medical ward', 'ns ward', default={}).get('weight', 0)
+genmed_to_ns = G.get_edge_data('general medical ward', 'ns ward', default={}).get('weight', 0)
+total_medical_ward_transfers = med_to_med_acute + med_to_med_general+med_to_med_acgen+med_to_med_genac+ med_to_ortho+ med_to_surg+ med_to_surg_acute+ med_to_orth_acute+acmed_to_ns+genmed_to_ns
+#print (total_medical_ward_transfers)
+
+
+ae_surg = G.get_edge_data('AE', 'general surgical ward', default={}).get('weight', 0)+ G.get_edge_data('AE', 'orthopaedic ward', default={}).get('weight', 0) +G.get_edge_data('AE', 'ATC surgical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'gynae ward', default={}).get('weight', 0)+  G.get_edge_data('AE', 'ns ward', default={}).get('weight', 0)
+print(ae_surg)
+ae_med = G.get_edge_data('AE', 'acute medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'general medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'cardiology ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'rehab', default={}).get('weight', 0) +  G.get_edge_data('AE', 'cdu', default={}).get('weight', 0)
+if ae_surg == 0:
+    ratio_wards_surg_med = 0
+else:
+    ratio_wards_surg_med = ae_med/ae_surg
+
+
+# calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
+incentrality = nx.algorithms.centrality.in_degree_centrality(G)
+# check if the theatre node exists in this data subset
+if 'theatre' in incentrality:
+    in_theatre_centrality = incentrality['theatre']
+else:
+    in_theatre_centrality = 0
+
+outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
+if 'theatre' in outcentrality:
+    out_theatre_centrality = outcentrality['theatre']
+else:
+    out_theatre_centrality = 0
+
+if 'AE' in outcentrality:
+    out_ed_centrality = outcentrality['AE']
+else:
+    out_ed_centrality = 0
+
+# flow hiearchy - finds strongly connected components
+if nn == 0:
+    flow_hierarchy = 0
+else:
+    flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
+
+
+bet_centr = nx.algorithms.centrality.betweenness_centrality(G)
+if 'theatre' in bet_centr:
+    theatres_bet_centrality = bet_centr['theatre']
+else:
+    theatres_bet_centrality = 0
+
+
+if en == 0:
+    theatres_eigen_centr = 0
+    ed_eigen_centr = 0
+    assortativity_net_inout = 0
+else:
+    eigen_centr = nx.eigenvector_centrality_numpy(G)
+    assortativity_net_inout = nx.degree_assortativity_coefficient(G, x='out', y='in', weight='weights')
+    if 'theatre' in eigen_centr:
+        theatres_eigen_centr = eigen_centr['theatre']
+    else:
+        theatres_eigen_centr = 0
+
+    if 'AE' in eigen_centr:
+        ed_eigen_centr = eigen_centr['AE']
+    else:
+        ed_eigen_centr = 0
+
+density_net = nx.density(G)
+transitivity_net = nx.transitivity(G)
+
+
+
 
 #clustering - doesnt work for directed graphs
 clustering_average = nx.algorithms.cluster.clustering(nondiG)
