@@ -330,9 +330,9 @@ weekday_admissions = alldata[~alldata['is_weekend']]
 
 
 #now make the graph
-#specific_data = alldata
+specific_data = alldata
 #specific_data = weekend_admissions
-specific_data = weekday_admissions
+#specific_data = weekday_admissions
 #specific_data = pd.read_csv("combined_data.csv")
 #specific_data.loc[admpoint[specific_data['admission_time'] == specific_data['extraid']].index, 'to'] = 'discharge'
 
@@ -349,7 +349,7 @@ transfer_counts = transfer_counts[transfer_counts['ptid'] > 2]
 edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
 edge_weight_data['ptid'] = edge_weight_data['ptid']#/sum_of_all_transfers
-edge_weight_data.to_csv('edge_wdchild1110.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_child2111.csv', header=True, index=False)
 
 weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
 
@@ -377,25 +377,14 @@ print(histdegrees)
 # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
 incentrality = nx.algorithms.centrality.in_degree_centrality(G)
 outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
-#print('in and out centrality')
-#print(incentrality)
-#print(outcentrality)
 
-
-#centrality_overall = defaultdict(list)
-#for k,v in chain(incentrality.items(), outcentrality.items()):
-#    centrality_overall[k].append(v)
-
-#print(centrality_overall)
-#dfcentrality = pd.DataFrame.from_dict(centrality_overall,orient='index')
-#print(dfcentrality)
 
 
 # calculate the degree
 degrees_list = [[n, d] for n, d in degrees]
 degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
 #degrees_data_degree = degrees_data['degree']
-degrees_data.to_csv('degrees_all.csv', header =True, index=False)
+degrees_data.to_csv('degrees_child.csv', header =True, index=False)
 
 #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
 degrees_data.set_index('node', inplace=True)
@@ -533,7 +522,7 @@ all_network_info_df = pd.DataFrame(columns=['number nodes', 'number edges', 'flo
                                          'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average'], data = data_list)
 
 
-all_network_info_df.to_csv('all_network_info.csv', header=True, index=False)
+all_network_info_df.to_csv('child_network_info.csv', header=True, index=False)
 print('all network infor file created')
 
 
