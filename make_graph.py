@@ -348,7 +348,7 @@ transfer_counts = transfer_counts[transfer_counts['ptid'] > 2]
 # Get a list of tuples that contain the values from the rows.
 edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
-edge_weight_data['ptid'] = edge_weight_data['ptid']/sum_of_all_transfers
+edge_weight_data['ptid'] = edge_weight_data['ptid']#/sum_of_all_transfers
 edge_weight_data.to_csv('edge_wdchild1110.csv', header=True, index=False)
 
 weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
