@@ -301,7 +301,8 @@ noweekday_ward_dictionary = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'ns ward',
                    'ADD JB':'weekday',  'ADD SMK': 'weekday', 'ADD CJB': 'weekday',  'CUH PFWON': 'weekday' ,'ADD LMSH': 'weekday', 'ADD JLU': 'weekday',
                    'ADD CONSFOOT': 'weekday', 'ADD HEPNEW': 'weekday', 'ADD KESPB': 'weekday', 'ADD OTHOTNEU': 'weekday', 'ADD SKIN': 'weekday',
                    'ADD GMTS': 'weekday', 'ADD SMCEF': 'weekday', 'ROS PPMD': 'weekday', 'ADD NFLL': 'weekday', 'ADD LTX': 'weekday', 'CUH GPRCN': 'weekday',
-                   'ADD SNSK': 'weekday', 'ADD KV': 'weekday', 'ADD NS': 'weekday', 'CUH NGSHAV': 'weekday', 'ADD SKAMP': 'weekday', 'CCRC Endo':'weekday',  'ADD RDPFP': 'weekday'}
+                   'ADD SNSK': 'weekday', 'ADD KV': 'weekday', 'ADD NS': 'weekday', 'CUH NGSHAV': 'weekday', 'ADD SKAMP': 'weekday', 'CCRC Endo':'weekday',
+                   'ADD RDPFP': 'weekday','ADD IMA':'weekday', 'ADDALCGNLYR3':'weekday', 'ADD JTKMEF':'weekday', 'ADD LUCENTOP': 'weekday', 'ADD PSC': 'weekday', 'ADD SORD': 'weekday'}
 
 
 location_category_map = noweekday_ward_dictionary
