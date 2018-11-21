@@ -163,9 +163,10 @@ med_to_surg_acute = G.get_edge_data('acute medical ward', 'general surgical ward
 med_to_orth_acute = G.get_edge_data('acute medical ward', ' orthopaedic ward', default={}).get('weight', 0)
 acmed_to_ns = G.get_edge_data('acute medical ward', 'ns ward', default={}).get('weight', 0)
 genmed_to_ns = G.get_edge_data('general medical ward', 'ns ward', default={}).get('weight', 0)
-total_medical_ward_transfers = med_to_med_acute + med_to_med_general+med_to_med_acgen+med_to_med_genac+ med_to_ortho+ med_to_surg+ med_to_surg_acute+ med_to_orth_acute+acmed_to_ns+genmed_to_ns
+acmed_to_atc = G.get_edge_data('acute medical ward', 'ATC surgical ward', default={}).get('weight', 0)
+genmed_to_atc = G.get_edge_data('general medical ward', 'ATC surgical ward', default={}).get('weight', 0)
+total_medical_ward_transfers = med_to_med_acute + med_to_med_general+med_to_med_acgen+med_to_med_genac+ med_to_ortho+ med_to_surg+ med_to_surg_acute+ med_to_orth_acute+acmed_to_ns+genmed_to_ns+acmed_to_atc+genmed_to_atc
 #print (total_medical_ward_transfers)
-
 
 ae_surg = G.get_edge_data('AE', 'general surgical ward', default={}).get('weight', 0)+ G.get_edge_data('AE', 'orthopaedic ward', default={}).get('weight', 0) +G.get_edge_data('AE', 'ATC surgical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'gynae ward', default={}).get('weight', 0)+  G.get_edge_data('AE', 'ns ward', default={}).get('weight', 0)
 print(ae_surg)
@@ -246,6 +247,23 @@ print(clustering_average)
 flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
 print('flow hierarchy')
 print(flow_hierarchy)
+
+data_list.append({'month':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy,
+                      'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality,
+                      'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre,
+                      'medical ward transfers': total_medical_ward_transfers, 'med surg ratio': ratio_wards_surg_med, 'eigen_centr_theatre': theatres_eigen_centr,
+                      'eigen_centr_ed': ed_eigen_centr, 'density': density_net, 'transitivity':transitivity_net,'average_breach_percentage': average_breach_perc,
+                      'average bed occupancy': average_bed_occupancy})
+
+all_network_info_df = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed',
+                                         'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers',
+                                         'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'average_breach_percentage', 'average bed occupancy'], data = data_list)
+
+
+all_network_info_df.to_csv('all_network_info.csv', header=True, index=False)
+print('all network infor file created')
+
+
 
 fig = plt.figure(figsize=(7, 5))
 #nx.set_node_attributes(G,'length_of_stay',los)
