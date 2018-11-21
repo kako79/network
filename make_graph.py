@@ -249,16 +249,16 @@ print('flow hierarchy')
 print(flow_hierarchy)
 
 data_list = []
-data_list.append({'month':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy,
+data_list.append({'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy,
                       'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality,
                       'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre,
                       'medical ward transfers': total_medical_ward_transfers, 'med surg ratio': ratio_wards_surg_med, 'eigen_centr_theatre': theatres_eigen_centr,
                       'eigen_centr_ed': ed_eigen_centr, 'density': density_net, 'transitivity':transitivity_net,'average_breach_percentage': average_breach_perc,
-                      'average bed occupancy': average_bed_occupancy})
+                      'average bed occupancy': average_bed_occupancy, 'clustering average': clustering_average})
 
-all_network_info_df = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed',
+all_network_info_df = pd.DataFrame(columns=['number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed',
                                          'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers',
-                                         'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'average_breach_percentage', 'average bed occupancy'], data = data_list)
+                                         'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'average_breach_percentage', 'average bed occupancy', 'clustering average'], data = data_list)
 
 
 all_network_info_df.to_csv('all_network_info.csv', header=True, index=False)
