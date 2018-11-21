@@ -134,7 +134,7 @@ if 'AE' in degrees_dict:
     emergency_degrees = degrees_dict['AE']
     #print('in dict')
     no_data = False
-    else:
+else:
     #print('not in dict')
     no_data = True
     emergency_degrees = 0
