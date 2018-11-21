@@ -415,10 +415,10 @@ else:
     #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
 
 #number of transfers from medical wards to theatre
-acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default={}).get('weight', 0)
-gen_to_theatre = G.get_edge_data('general medical ward', 'theatre', default={}).get('weight', 0)
-card_to_theatre = G.get_edge_data('cardiology ward', 'theatre', default={}).get('weight', 0)
-rehab_to_theatre = G.get_edge_data('rehab', 'theatre', default={}).get('weight', 0)
+acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default={}).get('weight', 1)
+gen_to_theatre = G.get_edge_data('general medical ward', 'theatre', default={}).get('weight', 1)
+card_to_theatre = G.get_edge_data('cardiology ward', 'theatre', default={}).get('weight', 1)
+rehab_to_theatre = G.get_edge_data('rehab', 'theatre', default={}).get('weight', 1)
 total_medical_to_theatre = acute_to_theatre + gen_to_theatre + card_to_theatre + rehab_to_theatre
 
 #number of circular or unnecessary ward transfers
