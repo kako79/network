@@ -273,7 +273,7 @@ flow_h_list = []
 data_list = []
 data_list_stress = []
 data_list_calm = []
-it_is_weekend = False
+it_is_weekend = True
 b=0
 #data seprated by weekend weekday
 
