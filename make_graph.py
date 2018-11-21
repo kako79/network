@@ -338,7 +338,7 @@ specific_data = alldata
 
 #weighted edges first
 #drop the columns that are not needed for the graph, also only adults
-data_only_transfers = specific_data.loc[specific_data['age'] < 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+data_only_transfers = specific_data.loc[specific_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
 
 # count the number of times a specific transfer appears to get edge weight
 transfer_counts = data_only_transfers.groupby(['from', 'to']).count()
@@ -349,7 +349,7 @@ transfer_counts = transfer_counts[transfer_counts['ptid'] > 2]
 edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
 edge_weight_data['ptid'] = edge_weight_data['ptid']#/sum_of_all_transfers
-edge_weight_data.to_csv('edge_child2111.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_adult2111.csv', header=True, index=False)
 
 weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
 
@@ -384,7 +384,7 @@ outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
 degrees_list = [[n, d] for n, d in degrees]
 degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
 #degrees_data_degree = degrees_data['degree']
-degrees_data.to_csv('degrees_child.csv', header =True, index=False)
+degrees_data.to_csv('degrees_adult.csv', header =True, index=False)
 
 #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
 degrees_data.set_index('node', inplace=True)
@@ -522,7 +522,7 @@ all_network_info_df = pd.DataFrame(columns=['number nodes', 'number edges', 'flo
                                          'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average'], data = data_list)
 
 
-all_network_info_df.to_csv('child_network_info.csv', header=True, index=False)
+all_network_info_df.to_csv('adult_network_info.csv', header=True, index=False)
 print('all network infor file created')
 
 
@@ -540,5 +540,5 @@ nx.draw_circular(G)
 #nx.draw_networkx(G, with_labels=True, font_weight='bold' )
 #nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
 #plt.show()
-fig.savefig("weekendchildrennetworkgraph.png")
+fig.savefig("adultrennetworkgraph.png")
 plt.gcf().clear()
