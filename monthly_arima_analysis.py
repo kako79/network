@@ -111,7 +111,7 @@ def get_network_analytics(data_reduced):
 
     degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
     #degrees_data_degree = degrees_data['degree']
-    #degrees_data.to_csv('degrees_weadult%s.csv'%str(i), header =True, index=False)
+    degrees_data.to_csv('deghistadult%s.csv'%str(i), header =True, index=False)
     #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
     degrees_data.set_index('node', inplace=True)
     degrees_dict = degrees_data.to_dict()['degree']
@@ -298,5 +298,5 @@ monthly_arima_df['strain'] = monthly_arima_df.bedsfree * monthly_arima_df.averag
 #now we have a file with all trasnfers and the bestate and ed performance
 #now need to combine wards into categories to allow for daily network construction with enough data
 
-monthly_arima_df.to_csv('monthly_arima_noweekday_nov20.csv', header=True, index=False)
+monthly_arima_df.to_csv('monthly_nov21.csv', header=True, index=False)
 print('performance added on file created')
