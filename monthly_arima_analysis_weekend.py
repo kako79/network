@@ -125,7 +125,7 @@ def get_network_analytics(data_reduced):
 
     degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
     #degrees_data_degree = degrees_data['degree']
-    degrees_data.to_csv('degrees_weadult%s.csv'%str(i), header =True, index=False)
+    degrees_data.to_csv('degrees_wdadult%s.csv'%str(i), header =True, index=False)
     #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
     degrees_data.set_index('node', inplace=True)
     degrees_dict = degrees_data.to_dict()['degree']
@@ -273,7 +273,7 @@ flow_h_list = []
 data_list = []
 data_list_stress = []
 data_list_calm = []
-it_is_weekend = True
+it_is_weekend = False
 b=0
 #data seprated by weekend weekday
 
