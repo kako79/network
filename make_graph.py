@@ -506,7 +506,8 @@ transitivity_net = nx.transitivity(G)
 
 
 #clustering - doesnt work for directed graphs
-clustering_average = nx.algorithms.cluster.clustering(nondiG)
+clustering_average = nx.average_clustering(nondiG,weight = 'weights')
+
 print('clustering in non directed graph')
 print(clustering_average)
 
