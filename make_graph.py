@@ -248,6 +248,7 @@ flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
 print('flow hierarchy')
 print(flow_hierarchy)
 
+data_list = []
 data_list.append({'month':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy,
                       'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality,
                       'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre,
