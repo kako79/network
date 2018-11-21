@@ -309,7 +309,7 @@ location_category_map = noweekday_ward_dictionary
 alldata['from_category'] = alldata['from'].map(location_category_map)
 alldata['to_category'] = alldata['to'].map(location_category_map)
 
-missing_locations = alldata[alldata['from_category'].isnull()]['from_loc'].unique()
+missing_locations = alldata[alldata['from_category'].isnull()]['from'].unique()
 print(missing_locations)
 #drop the old from and to columns and then rename the new ones into from and to
 alldata = alldata.drop(['from','to'], axis=1)
