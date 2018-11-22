@@ -361,6 +361,10 @@ nn=G.number_of_nodes()
 print(en)
 print(nn)
 
+nx.write_pajek(G, 'pajek_adult_weekend_cat.net')
+
+
+
 #undirected graph of the same data
 nondiG = nx.Graph()
 nondiG.add_weighted_edges_from(weighted_edges)
