@@ -331,8 +331,8 @@ weekday_admissions = alldata[~alldata['is_weekend']]
 
 #now make the graph
 #specific_data = alldata
-specific_data = weekend_admissions
-#specific_data = weekday_admissions
+#specific_data = weekend_admissions
+specific_data = weekday_admissions
 #specific_data = pd.read_csv("combined_data.csv")
 #specific_data.loc[admpoint[specific_data['admission_time'] == specific_data['extraid']].index, 'to'] = 'discharge'
 
@@ -349,7 +349,7 @@ transfer_counts = transfer_counts[transfer_counts['ptid'] > 2]
 edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
 edge_weight_data['ptid'] = edge_weight_data['ptid']#/sum_of_all_transfers
-edge_weight_data.to_csv('edge_weekend_adult2211.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_weekday_adult2211.csv', header=True, index=False)
 
 weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
 
@@ -361,7 +361,7 @@ nn=G.number_of_nodes()
 print(en)
 print(nn)
 
-nx.write_pajek(G, 'pajek_adult_weekend_cat.net')
+nx.write_pajek(G, 'pajek_adult_weekday_cat.net')
 
 
 
@@ -388,7 +388,7 @@ outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
 degrees_list = [[n, d] for n, d in degrees]
 degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
 #degrees_data_degree = degrees_data['degree']
-degrees_data.to_csv('degrees_weekend_adult.csv', header =True, index=False)
+degrees_data.to_csv('degrees_weekday_adult.csv', header =True, index=False)
 
 #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
 degrees_data.set_index('node', inplace=True)
@@ -526,7 +526,7 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average'], data = data_list)
 
 
-all_network_info_df.to_csv('adult_weekend_network_info.csv', header=True, index=False)
+all_network_info_df.to_csv('adult_weekday_network_info.csv', header=True, index=False)
 print('all network infor file created')
 
 
