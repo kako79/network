@@ -511,13 +511,13 @@ print('flow hierarchy')
 print(flow_hierarchy)
 
 data_list = []
-data_list.append({'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy,
+data_list.append({'sum of transfers': sum_of_all_transfers,'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy,
                       'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality,
                       'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre,
                       'medical ward transfers': total_medical_ward_transfers, 'med surg ratio': ratio_wards_surg_med, 'eigen_centr_theatre': theatres_eigen_centr,
                       'eigen_centr_ed': ed_eigen_centr, 'density': density_net, 'transitivity':transitivity_net, 'clustering average': clustering_average})
 
-all_network_info_df = pd.DataFrame(columns=['number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed',
+all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed',
                                          'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers',
                                          'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average'], data = data_list)
 
