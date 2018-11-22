@@ -527,12 +527,12 @@ print('all network infor file created')
 
 
 
-fig = plt.figure(figsize=(7, 5))
+#fig = plt.figure(figsize=(7, 5))
 #nx.set_node_attributes(G,'length_of_stay',los)
 #pos = nx.circular_layout(G)
 #widthedge = [d['weight'] *0.1 for _,_,d in G.edges(data=True)]
 #nx.draw_networkx(G, pos=pos, with_labels=True, font_weight='bold', arrows = False, width= widthedge,  node_size=1300)
-nx.draw_circular(G)
+#nx.draw_circular(G)
 #width = [d['weight'] for _,_,d in G.edges(data=True)]
 
 #edge_labels=dict([((u,v,), d['weight'])
@@ -540,5 +540,5 @@ nx.draw_circular(G)
 #nx.draw_networkx(G, with_labels=True, font_weight='bold' )
 #nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
 #plt.show()
-fig.savefig("adultrennetworkgraph.png")
-plt.gcf().clear()
+#fig.savefig("adultrennetworkgraph.png")
+#plt.gcf().clear()
