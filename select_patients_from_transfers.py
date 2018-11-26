@@ -33,8 +33,8 @@ icu_patient_ids = set(alltransfers.loc[alltransfers['from'].isin(wards)]['ptid']
 icu_patient_records = alltransfers.loc[alltransfers['ptid'].isin(icu_patient_ids)]
 icu_patient_records.to_csv('transfers_all_pts_icu.csv', header=True, index=False)
 
-specialities = {'Trauma'}
-trauma_patient_ids = set(alltransfers.loc[alltransfers['spec'].isin(specialities)]['ptid'].unique())
-trauma_patient_records = alltransfers.loc[alltransfers['ptid'].isin(trauma_patient_ids)]
+specialities = {'General Surgery'}
+gensurg_patient_ids = set(alltransfers.loc[alltransfers['spec'].isin(specialities)]['ptid'].unique())
+gensurg_patient_records = alltransfers.loc[alltransfers['ptid'].isin(gensurg_patient_ids)]
 
-trauma_patient_records.to_csv('transfers_all_pts_trauma.csv', header=True, index=False)
+gensurg_patient_records.to_csv('transfers_all_pts_gensurg.csv', header=True, index=False)
