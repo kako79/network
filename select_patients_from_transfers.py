@@ -30,8 +30,11 @@ alltransfers = pd.read_csv("all_transfers_1110.csv")
 #df = pd.DataFrame({'ptid': [1, 1, 1, 2, 2, 3, 3, 3, 3, 4], 'loc': ['a', 'b', 'c', 'a', 'c', 'a', 'b', 'a', 'b', 'd']})
 wards = {'ADD GENERAL ICU', 'ADD NEURO ICU'}
 icu_patient_ids = set(alltransfers.loc[alltransfers['from'].isin(wards)]['ptid'].unique())
-
-#icu_patient_ids = set(alltransfers.loc[alltransfers['loc'] == 'icu']['ptid'].unique())
 icu_patient_records = alltransfers.loc[alltransfers['ptid'].isin(icu_patient_ids)]
 icu_patient_records.to_csv('transfers_all_pts_icu.csv', header=True, index=False)
 
+specialities = {'Trauma'}
+trauma_patient_ids = set(alltransfers.loc[alltransfers['spec'].isin(specialities)]['ptid'].unique())
+trauma_patient_records = alltransfers.loc[alltransfers['ptid'].isin(trauma_patient_ids)]
+
+trauma_patient_records.to_csv('transfers_all_pts_trauma.csv', header=True, index=False)
