@@ -655,12 +655,12 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average'], data = data_list)
 
 
-all_network_info_df.to_csv('info_gensurg_nocat2611.csv', header=True, index=False)
-edge_weight_data.to_csv('edge_gensurg_nocat2611.csv', header=True, index=False)
-nx.write_pajek(G, 'pajek_gensurg_nocat2611.net')
-degrees_data.to_csv('degrees_gensurg_nocat2611.csv', header =True, index=False)
-nx.write_graphml(G,'graphml_gensurg_nocat2611.graphml')
-nx.write_gexf(G,'gexf_gensurg_nocat2611.gexf')
+all_network_info_df.to_csv('info_asa34_nocat2611.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_asa34_nocat2611.csv', header=True, index=False)
+nx.write_pajek(G, 'pajek_asa34_nocat2611.net')
+degrees_data.to_csv('degrees_asa34_nocat2611.csv', header =True, index=False)
+nx.write_graphml(G,'graphml_asa34_nocat2611.graphml')
+nx.write_gexf(G,'gexf_asa34_nocat2611.gexf')
 
 
 
