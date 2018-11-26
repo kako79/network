@@ -26,9 +26,12 @@ from datetime import datetime
 alltransfers = pd.read_csv("all_transfers_1110.csv")
 
 
-
+#select all the patients who at some point in their stay were in icu, nccu
 #df = pd.DataFrame({'ptid': [1, 1, 1, 2, 2, 3, 3, 3, 3, 4], 'loc': ['a', 'b', 'c', 'a', 'c', 'a', 'b', 'a', 'b', 'd']})
-icu_patient_ids = set(alltransfers.loc[alltransfers['loc'] == 'icu']['ptid'].unique())
+wards = {'ADD GENERAL ICU', 'ADD NEURO ICU'}
+icu_patient_ids = set(alltransfers.loc[alltransfers['loc'].isin(wards)]['ptid'].unique())
+
+#icu_patient_ids = set(alltransfers.loc[alltransfers['loc'] == 'icu']['ptid'].unique())
 icu_patient_records = alltransfers.loc[alltransfers['ptid'].isin(icu_patient_ids)]
 
 
