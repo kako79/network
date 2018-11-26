@@ -39,7 +39,7 @@ gensurg_patient_records = alltransfers.loc[alltransfers['ptid'].isin(gensurg_pat
 
 gensurg_patient_records.to_csv('transfers_all_pts_gensurg.csv', header=True, index=False)
 
-asacategory= {'3','4'}
-asa34_patient_ids = set(alltransfers.loc[alltransfers['asa'].isin(asacategory)]['ptid'].unique())
-asa34_patient_records = alltransfers.loc[alltransfers['ptid'].isin(asa34_patient_ids)]
-asa34_patient_records.to_csv('transfers_all_pts_asa34.csv', header=True, index=False)
+asacategory= {'1','2'}
+asa12_patient_ids = set(alltransfers.loc[alltransfers['asa'].isin(asacategory)]['ptid'].unique())
+asa12_patient_records = alltransfers.loc[alltransfers['ptid'].isin(asa12_patient_ids)]
+asa12_patient_records.to_csv('transfers_all_pts_asa12.csv', header=True, index=False)
