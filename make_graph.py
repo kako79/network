@@ -662,6 +662,8 @@ degrees_data.to_csv('degrees_all_cat2611.csv', header =True, index=False)
 nx.write_graphml(G,'graphml_all_cat2611.graphml')
 nx.write_gexf(G,'gexf_all_cat2611.gexf')
 
+
+
 print('all network infor file created')
 
 
