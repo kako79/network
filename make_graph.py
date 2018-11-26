@@ -40,7 +40,7 @@ def is_weekend(date):
 
 
 #read in the data from a combined csv file
-alldata= pd.read_csv("all_transfers_1110.csv")
+alldata= pd.read_csv("transfers_all_pts_isu.csv")
 #adm_data = alldata['dt_adm']
 #adm_data.to_csv('adm_data_only.csv', header=True, index=False)
 
@@ -655,12 +655,12 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average'], data = data_list)
 
 
-all_network_info_df.to_csv('info_all_nocat2611.csv', header=True, index=False)
-edge_weight_data.to_csv('edge_all_nocat2611.csv', header=True, index=False)
-nx.write_pajek(G, 'pajek_all_nocat2611.net')
-degrees_data.to_csv('degrees_all_nocat2611.csv', header =True, index=False)
-nx.write_graphml(G,'graphml_all_nocat2611.graphml')
-nx.write_gexf(G,'gexf_all_nocat2611.gexf')
+all_network_info_df.to_csv('info_icu_nocat2611.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_icu_nocat2611.csv', header=True, index=False)
+nx.write_pajek(G, 'pajek_icu_nocat2611.net')
+degrees_data.to_csv('degrees_icu_nocat2611.csv', header =True, index=False)
+nx.write_graphml(G,'graphml_icu_nocat2611.graphml')
+nx.write_gexf(G,'gexf_icu_nocat2611.gexf')
 
 
 
