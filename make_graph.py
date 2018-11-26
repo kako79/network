@@ -53,7 +53,7 @@ print('reading in done')
 
 
 #this is the main dictionary
-ward_dictionary = {'ADD A3 WARD': 'ns ward', 'ADD A4 WARD': 'ns ward',
+ward_dictionary_cat = {'ADD A3 WARD': 'ns ward', 'ADD A4 WARD': 'ns ward',
                    'ADD A5 WARD': 'ns ward', 'ADD D6 WARD': 'ns ward',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',
@@ -137,7 +137,7 @@ ward_dictionary = {'ADD A3 WARD': 'ns ward', 'ADD A4 WARD': 'ns ward',
                    'ADD DSK': 'medical appt', 'ADD PMT': 'medical appt', 'ROS ROSIE THEATRE 1': 'rosie theatre', 'ROS LADY MARY WARD': 'maternity', 'ADD PACV': 'general surgical appt',
                    'ADD DKNVR': 'other',  'ADD EYE UNIT THEATRE 41': 'theatre eye', 'ADD SURGAMB': 'general surgery appt', 'ADD OTHOTRMC':'ophth appt',
                    'ADD J3 PICU WARD': 'picu', 'ADD NEUROONC': 'medical appt', 'CUH ELY THEATRE 3': 'theatre ely', 'ROS UROG': 'gynae appt',
-                   'ADD FCHEM': 'medical appt', 'ADD RMAC': 'trauma appt', 'ADD C9 DAY UNIT': 'general medicl ward', 'ADD MKTMF': 'general surgical appt',
+                   'ADD FCHEM': 'medical appt', 'ADD RMAC': 'trauma appt', 'ADD C9 DAY UNIT': 'general medical ward', 'ADD MKTMF': 'general surgical appt',
                    'ADD EYE UNIT THEATRE 42': 'theatre', 'ADD ORALCF': 'general surgical appt', 'ADD ALA':'medical appt' , 'ADD ADCA': 'ortho appt', 'ADD DCHIR': 'medical appt',
                    'L4 WARD': 'general surgical ward', 'ADD LITHO': 'urology appt','ADD MLBV': 'ENT appt', 'ADDKKSTPHCL1': 'gastro appt', 'ADD ARNO': 'ortho appt', 'ADD ENT': 'ent appt',
                    'ADD ORALNK': 'maxfax appt', 'ADDSALHSTONE': 'appt', 'ADD DVT': 'appt', 'ADD LEAP': 'ophth appt', 'ADD ANGED': 'neuro appt', 'ADD MP': 'general surgical appt',
@@ -168,7 +168,7 @@ ward_dictionary = {'ADD A3 WARD': 'ns ward', 'ADD A4 WARD': 'ns ward',
                    'ADD AR1F': 'trauma appt', 'ADD AMFU': 'medical appt', 'ADD CATARACT': 'ophth appt', 'ROS SCHDPROC': 'maternity', 'ADD CAMHS': 'medical appt',
                    'ADD OPLAKDA': 'general surgical appt', 'CUH TKKHC': 'medical appt', 'ADD MGEND': 'medical appt', 'ADD GPRC': 'medical appt', 'ALGYDC WARD': 'other',
                    'ADD ALLERGY DAY UNIT': 'medical appt', 'ADD CR': 'other', 'ADD NEUREG': 'neurol appt', 'ADD TXW':'transplant appt', 'CUH HOME BIRTH': 'maternity',
-                   'ADD FCH': 'gynae appt', 'ADD PHG': 'general surgical appt', 'ADD CRJAPSUR': 'paed appt', 'ADD CORNREV': 'ophth appt', 'ADD MKO': 'medical appt', 'ADD CNPHY43': 'neurophysiology',
+                   'ADD FCH': 'gynae appt', 'ADD PHG': 'general surgical appt', 'ADD CRJAPSUR': 'paed appt', 'ADD CORNREV': 'ophth appt', 'ADD MKO': 'medical appt', 'ADD CNPHY43': 'neurophys',
                    'ADD LEAPCON': 'paed appt', 'ADD CAU': 'other', 'ADD AHNR':'ortho appt',  'ADD UROLP': 'urology appt', 'ADDFIBROSCAN': 'medical appt',
                    'ADD VASCSURV':'general surgical appt',  'ADD MBR': 'general surgical appt', 'ADD DE': 'other', 'ROS NURSEPMB': 'maternity', 'ADD PMIC':'paed appt', 'ADD JMW': 'medical appt',
                    'ADD RJW': 'general surgical appt', 'ADD ALCC': 'medical appt', 'ADD UVP': 'cardiology appt', 'ADD AJCGEN': 'medical appt', 'ADD CCH': 'medical appt', 'ADD DMOSVRC': 'cardiolgy appt',
@@ -431,7 +431,7 @@ noweekday_ward_dictionary = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'ns ward',
                    'ADD RDPFP': 'weekday','ADD IMA':'weekday', 'ADDALCGNLYR3':'weekday', 'ADD JTKMEF':'weekday', 'ADD LUCENTOP': 'weekday', 'ADD PSC': 'weekday', 'ADD SORD': 'weekday'}
 
 
-location_category_map = ward_dictionary_nocat
+location_category_map = ward_dictionary_cat
 
 alldata['from_category'] = alldata['from'].map(location_category_map)
 alldata['to_category'] = alldata['to'].map(location_category_map)
@@ -653,12 +653,12 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average'], data = data_list)
 
 
-all_network_info_df.to_csv('info_all_nocat2611.csv', header=True, index=False)
-edge_weight_data.to_csv('edge_all_nocat2611.csv', header=True, index=False)
-nx.write_pajek(G, 'pajek_all_nocat2611.net')
-degrees_data.to_csv('degrees_all_nocat2611.csv', header =True, index=False)
-nx.write_graphml(G,'graphml_all_nocat2611.graphml')
-nx.write_gexf(G,'gexf_all_nocat2611.gexf')
+all_network_info_df.to_csv('info_all_cat2611.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_all_cat2611.csv', header=True, index=False)
+nx.write_pajek(G, 'pajek_all_cat2611.net')
+degrees_data.to_csv('degrees_all_cat2611.csv', header =True, index=False)
+nx.write_graphml(G,'graphml_all_cat2611.graphml')
+nx.write_gexf(G,'gexf_all_cat2611.gexf')
 
 print('all network infor file created')
 
