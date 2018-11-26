@@ -33,6 +33,5 @@ icu_patient_ids = set(alltransfers.loc[alltransfers['loc'].isin(wards)]['ptid'].
 
 #icu_patient_ids = set(alltransfers.loc[alltransfers['loc'] == 'icu']['ptid'].unique())
 icu_patient_records = alltransfers.loc[alltransfers['ptid'].isin(icu_patient_ids)]
-
-
 icu_patient_records.to_csv('transfers_all_pts_icu.csv', header=True, index=False)
+
