@@ -307,7 +307,7 @@ ward_dictionary_nocat = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'A4 ward',
 
 
 #dictionary for removing weekday influence on node numbers
-noweekday_ward_dictionary = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'ns ward',
+collated_cat_ward_dictionary = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'ns ward',
                    'ADD A5 WARD': 'ns ward', 'ADD D6 WARD': 'ns ward',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',
@@ -433,7 +433,7 @@ noweekday_ward_dictionary = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'ns ward',
                    'ADD RDPFP': 'weekday','ADD IMA':'weekday', 'ADDALCGNLYR3':'weekday', 'ADD JTKMEF':'weekday', 'ADD LUCENTOP': 'weekday', 'ADD PSC': 'weekday', 'ADD SORD': 'weekday'}
 
 
-location_category_map = ward_dictionary_nocat
+location_category_map = collated_cat_ward_dictionary
 
 alldata['from_category'] = alldata['from'].map(location_category_map)
 alldata['to_category'] = alldata['to'].map(location_category_map)
@@ -655,12 +655,12 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average'], data = data_list)
 
 
-all_network_info_df.to_csv('info_all_nocat2611.csv', header=True, index=False)
-edge_weight_data.to_csv('edge_all_nocat2611.csv', header=True, index=False)
-nx.write_pajek(G, 'pajek_all_nocat2611.net')
-degrees_data.to_csv('degrees_all_nocat2611.csv', header =True, index=False)
-nx.write_graphml(G,'graphml_all_nocat2611.graphml')
-nx.write_gexf(G,'gexf_all_nocat2611.gexf')
+all_network_info_df.to_csv('info_all_collatedcat2611.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_all_collatedcat2611.csv', header=True, index=False)
+nx.write_pajek(G, 'pajek_all_collatedcat2611.net')
+degrees_data.to_csv('degrees_all_collatedcat2611.csv', header =True, index=False)
+nx.write_graphml(G,'graphml_all_collatedcat2611.graphml')
+nx.write_gexf(G,'gexf_all_collatedcat2611.gexf')
 
 print('all network infor file created')
 
