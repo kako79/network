@@ -637,7 +637,8 @@ print('clustering in non directed graph')
 print(clustering_average)
 
 #shortest path in the directed graph, from a starting point source to a point target
-#shortest_path = nx.algorithms.shortest_paths.generic.shortest_path(G, source = 'ICU', target = 'ER')
+average_shortest_path = nx.average_shortest_path_length(G,weight = 'weights')
+print(average_shortest_path)
 #print('shortest path is')
 #print(shortest_path)
 
