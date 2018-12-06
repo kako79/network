@@ -631,7 +631,7 @@ transitivity_net = nx.transitivity(G)
 clustering_average = nx.average_clustering(nondiG,weight = 'weights')
 clustering_distribution = nx.clustering(nondiG, weight = 'weights')
 print(clustering_distribution)
-clustering_list = [[n, d] for n, d in clustering_distribution]
+clustering_list = [[n, d] for n, d in clustering_distribution.items()]
 clustering_data = pd.DataFrame(clustering_list, columns=['node', 'clustering_coeff'])
 print('clustering in non directed graph')
 print(clustering_average)
