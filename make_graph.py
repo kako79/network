@@ -432,7 +432,7 @@ collated_cat_ward_dictionary = {'ADD A3 WARD': 'neurosurgery HDU', 'ADD A4 WARD'
                    'ADD RDPFP': 'weekday','ADD IMA':'weekday', 'ADDALCGNLYR3':'weekday', 'ADD JTKMEF':'weekday', 'ADD LUCENTOP': 'weekday', 'ADD PSC': 'weekday', 'ADD SORD': 'weekday'}
 
 #read in the data from a combined csv file
-alldata= pd.read_csv("transfers_all_pts_asa34.csv")
+alldata= pd.read_csv("transfers_all_pts_icu.csv")
 location_category_map = ward_dictionary_cat
 
 alldata['from_category'] = alldata['from'].map(location_category_map)
@@ -658,13 +658,13 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average'], data = data_list)
 
 
-all_network_info_df.to_csv('info_asa34_cat0612.csv', header=True, index=False)
-edge_weight_data.to_csv('edge_asa34_cat0612.csv', header=True, index=False)
-nx.write_pajek(G, 'pajek_asa34_cat0612.net')
-degrees_data.to_csv('degrees_asa34_cat0612.csv', header =True, index=False)
-clustering_data.to_csv('clustering_asa34_cat0612.csv', header = True, index = False)
-nx.write_graphml(G,'graphml_asa34_cat0612.graphml')
-nx.write_gexf(G,'gexf_asa34_cat0612.gexf')
+all_network_info_df.to_csv('info_icu_cat0612.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_icu_cat0612.csv', header=True, index=False)
+nx.write_pajek(G, 'pajek_icu_cat0612.net')
+degrees_data.to_csv('degrees_icu_cat0612.csv', header =True, index=False)
+clustering_data.to_csv('clustering_icu_cat0612.csv', header = True, index = False)
+nx.write_graphml(G,'graphml_icu_cat0612.graphml')
+nx.write_gexf(G,'gexf_icu_cat0612.gexf')
 
 
 
