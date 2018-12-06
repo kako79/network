@@ -501,11 +501,11 @@ nondiG.add_weighted_edges_from(weighted_edges)
 
 #calculate the degree
 degrees = nx.classes.function.degree(G)
-print('degrees')
-print(degrees)
+#print('degrees')
+#print(degrees)
 histdegrees = nx.classes.function.degree_histogram(G)
-print('histdegrees')
-print(histdegrees)
+#print('histdegrees')
+#print(histdegrees)
 
 # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
 incentrality = nx.algorithms.centrality.in_degree_centrality(G)
@@ -630,6 +630,7 @@ transitivity_net = nx.transitivity(G)
 #clustering - doesnt work for directed graphs
 clustering_average = nx.average_clustering(nondiG,weight = 'weights')
 clustering_distribution = nx.clustering(nondiG, weight = 'weights')
+print(clustering_distribution)
 clustering_list = [[n, d] for n, d in clustering_distribution]
 clustering_data = pd.DataFrame(clustering_list, columns=['node', 'clustering_coeff'])
 print('clustering in non directed graph')
