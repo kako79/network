@@ -53,24 +53,24 @@ print('reading in done')
 
 
 #this is the main dictionary
-ward_dictionary_cat = {'ADD A3 WARD': 'ns ward', 'ADD A4 WARD': 'ns ward',
-                   'ADD A5 WARD': 'ns ward', 'ADD D6 WARD': 'ns ward',
+ward_dictionary_cat = {'ADD A3 WARD': 'neurosurgical ward', 'ADD A4 WARD': 'neurosurgical ward',
+                   'ADD A5 WARD': 'neurosurgical ward', 'ADD D6 WARD': 'neurosurgical ward',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',
                    'ADD GENRAD': 'radiology', 'ADD IRAD': 'interv rad',
-                   'ADD J2 WARD': 'surgical day ward', 'ADD J2-C3 WARD': 'PICU ward',
+                   'ADD J2 WARD': 'surgical day ward', 'ADD J2-C3 WARD': 'PICU',
                    'ADD MAIN THEATRE': 'theatre', 'ADD MAIN THEATRE 04':'emergency theatre',
                    'ADD MAIN THEATRE 22': 'neuro theatre', 'ADD MRI': 'mri',
-                   'ADD NEURO ICU': 'nncu', 'ADD NEURO THEATRE': 'neuro theatre',
+                   'ADD NEURO ICU': 'NCCU', 'ADD NEURO THEATRE': 'neuro theatre',
                    'ADD NEURO THEATRE 1': 'neuro theatre', 'ADD US': 'us',
-                  'ADD CUH EXT FILM': 'external radiology', 'ADD POST-DISCHARGE': 'post-discharge',
+                  'ADD CUH EXT FILM': 'external radiology', 'ADD POST-DISCHARGE': 'discharge',
                    'discharge': 'discharge', 'ADD C5 WARD': 'general medical ward',
                    'ADD D10': 'general medical ward', 'ADD D8 WARD': 'orthopaedic ward',
                    'ADD D9 WARD': 'general medical ward', 'ADD DISCHARGE LOUNGE': 'disch lounge',
-                   'ADD FLUORO': 'fluoroscopy', 'ADD GENERAL ICU': 'icu',
+                   'ADD FLUORO': 'fluoroscopy', 'ADD GENERAL ICU': 'ICU',
                   'ADD LSFOOT': 'outpatient', 'ADD MAIN THEATRE 20': 'theatre',
                    'ADD NEURO THEATRE 2': 'neuro theatre', 'ADD NEURO THEATRE 3': 'neuro theatre',
-                   'ADD NEUROPHY': 'neurophys', 'ADD PET': 'PET scan',
+                   'ADD NEUROPHY': 'neurophys', 'ADD PET': 'PET',
                    'ADD REHAB UNIT': 'rehab', 'ADD RT TRT': 'RT treatment',
                    'Endo Ward': 'endoscopy', 'ADD D4 IDA UNIT': 'HDU','ADD L2 WARD' : 'surgical day ward',
                    'ADD MAIN THEATRE 16': 'theatre', 'ADD R2 WARD': 'rehab',
@@ -80,7 +80,7 @@ ward_dictionary_cat = {'ADD A3 WARD': 'ns ward', 'ADD A4 WARD': 'ns ward',
                    'ADD ATC THEATRE 31': 'theatre', 'ADD ATC THEATRE 32': 'theatre',
                    'ADD ATC THEATRE 36': 'theatre', 'ADD ATC THEATRE 33': 'theatre',
                    'ADD ATC THEATRE 34': 'theatre', 'ADD M4 WARD': 'ATC surgical ward',
-                   'ROS DAPHNE WARD': 'gynae surgical ward', 'ADD PRE-ADMISSION':'pre-ad',
+                   'ROS DAPHNE WARD': 'gynae surgical ward', 'ADD PRE-ADMISSION':'admission',
                    'ADD ATC THEATRE 35': 'theatre', 'ADD C10 WARD': 'general medical ward','ADD C3 WARD': 'paediatric ward',
                    'ADD D10 WARD': 'general medical ward', 'ADD CATH ROOM': 'angiography',
                    'ADD CORONARY CARE UNIT': 'HDU', 'ADD DIALYSIS UNIT': 'dialysis',
@@ -128,15 +128,15 @@ ward_dictionary_cat = {'ADD A3 WARD': 'ns ward', 'ADD A4 WARD': 'ns ward',
                    'ADD ACF': 'nephro appt', 'ADD DKNAMD':'opth appt', 'ADD EABC':'gastro appt', 'ADD MRDB':'cardiology appt',
                    'ADD UDA':'oral surgery appt', 'ADD POADSU': 'anaesthetic assess', 'ADD POAOSDSU':'anaesthetic assess',
                    'ADD AJCUOCW':'urology appt','ADD SJM':'surgery appt','ADD SMBRECON': 'urology appt', 'ADD SRGAMB': 'surgery appt',
-                   'ADD LVRF':'trauma appt','ADD KDABI':'plastic surgery appt', 'ADD NSGYFC':'ns appt', 'ADD PSUD':'plastic surgery appt',
-                   'ADD BU':'radiology', 'POST-DISCHARGE':'post-discharge', 'PRE-ADMISSION':'pre-ad', 'ADD J3-C3 WARD': 'surgical day ward', 'ADD PAED ICU': 'picu',
+                   'ADD LVRF':'trauma appt','ADD KDABI':'plastic surgery appt', 'ADD NSGYFC':'neurosurgery appt', 'ADD PSUD':'plastic surgery appt',
+                   'ADD BU':'radiology', 'POST-DISCHARGE':'discharge', 'PRE-ADMISSION':'admission', 'ADD J3-C3 WARD': 'surgical day ward', 'ADD PAED ICU': 'PICU',
                    'ADD R3': 'general medical ward', 'ADD PLASTIC SURG UNIT': 'surgical day ward',
                    'ADD KDA': 'weekday', 'ADDFLEXCYSOP': 'urology appt', 'ROS SARA WARD': 'gynae surgical ward', 'ROS MFM': 'maternity', 'ROS DELIVERY UNIT': 'maternity',
                    'ROS ROSIE THEATRE 2': 'rosie theatre', 'ADD GDC': 'medical appt', 'ADD ONCOLOGY DAY UNIT': 'medical appt', 'ADD AECLINIC': 'paed appt',
                    'ROS OBS US': 'us', 'ADD OTHOTESP': 'ophth appt', 'ADD SNSKF': 'trauma appt', 'ADDOPTHIMG14':'ophth appt', 'ADD EMENT': 'other',
                    'ADD DSK': 'medical appt', 'ADD PMT': 'medical appt', 'ROS ROSIE THEATRE 1': 'rosie theatre', 'ROS LADY MARY WARD': 'maternity', 'ADD PACV': 'general surgical appt',
                    'ADD DKNVR': 'other',  'ADD EYE UNIT THEATRE 41': 'theatre eye', 'ADD SURGAMB': 'general surgery appt', 'ADD OTHOTRMC':'ophth appt',
-                   'ADD J3 PICU WARD': 'picu', 'ADD NEUROONC': 'medical appt', 'CUH ELY THEATRE 3': 'theatre ely', 'ROS UROG': 'gynae appt',
+                   'ADD J3 PICU WARD': 'PICU', 'ADD NEUROONC': 'medical appt', 'CUH ELY THEATRE 3': 'theatre ely', 'ROS UROG': 'gynae appt',
                    'ADD FCHEM': 'medical appt', 'ADD RMAC': 'trauma appt', 'ADD C9 DAY UNIT': 'general medical ward', 'ADD MKTMF': 'general surgical appt',
                    'ADD EYE UNIT THEATRE 42': 'theatre', 'ADD ORALCF': 'general surgical appt', 'ADD ALA':'medical appt' , 'ADD ADCA': 'ortho appt', 'ADD DCHIR': 'medical appt',
                    'L4 WARD': 'general surgical ward', 'ADD LITHO': 'urology appt','ADD MLBV': 'ENT appt', 'ADDKKSTPHCL1': 'gastro appt', 'ADD ARNO': 'ortho appt', 'ADD ENT': 'ent appt',
@@ -144,7 +144,7 @@ ward_dictionary_cat = {'ADD A3 WARD': 'ns ward', 'ADD A4 WARD': 'ns ward',
                    'ADD ARNOF': 'ortho appt', 'F3 WARD': 'paediatric ward', 'ADD KKSTF':'general surgical appt',  'ADD SO': 'appt', 'ADD CROPP': 'rehab', 'ADD PJM3': 'appt',
                    'ADD TPBAC': 'other', 'ADD HHSC': 'other', 'ADD PAED DAY UNIT': 'paed day unit', 'ADD JOMR': 'other', 'ADD SM': 'appt',
                    'ADDOPTHIMGVF': 'ophth appt', 'ADD AMBIPN3': 'general surgical appt', 'ADD PAEDAUD': 'paed appt' ,'ADD NASHC': 'hepat appt', 'ADD BPHYT': 'medical appt',
-                   'ADD CARDPP': 'medical appt', 'ADD PDHUF': 'appt', 'NICU WARD': 'picu', 'M5 WARD': 'ATC surgical ward', 'ADD CJGG': 'appt',  'ADD TXT': 'transplant appt',
+                   'ADD CARDPP': 'medical appt', 'ADD PDHUF': 'appt', 'NICU WARD': 'PICU', 'M5 WARD': 'ATC surgical ward', 'ADD CJGG': 'appt',  'ADD TXT': 'transplant appt',
                    'ADD PDCCAP': 'urology appt', 'ADD EIUNET': 'other', 'ADD POAF2F': 'anaesthetic assess ', 'ADD ALC43': 'general surgical appt', 'ADD NSGYPAED': 'paed appt',
                    'ADD EMEWA': 'ophth appt', 'ADD LVA': 'ophth appt', 'ADD RMIL': 'general surgical appt',  'ADD CAUFUTEL': 'appt', 'ADD HMF': 'maternity', 'ADD JTKM': 'other',
                    'PDU WARD': 'paediatric day ward', 'ADD BMUTN': 'other', 'ADD EMSAC': 'appt', 'ADD PPMBS': 'appt', 'ADD ACPRUOC':'appt', 'ADD OPLAOP': 'general surgical appt',
@@ -184,19 +184,19 @@ ward_dictionary_nocat = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'A4 ward',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',
                    'ADD GENRAD': 'radiology', 'ADD IRAD': 'interv rad',
-                   'ADD J2 WARD': 'J2 ward', 'ADD J2-C3 WARD': 'PICU ward',
+                   'ADD J2 WARD': 'J2 ward', 'ADD J2-C3 WARD': 'PICU',
                    'ADD MAIN THEATRE': 'theatre', 'ADD MAIN THEATRE 04':'emergency theatre',
                    'ADD MAIN THEATRE 22': 'neuro theatre', 'ADD MRI': 'mri',
-                   'ADD NEURO ICU': 'nncu', 'ADD NEURO THEATRE': 'neuro theatre',
+                   'ADD NEURO ICU': 'NCCU', 'ADD NEURO THEATRE': 'neuro theatre',
                    'ADD NEURO THEATRE 1': 'neuro theatre', 'ADD US': 'us',
-                  'ADD CUH EXT FILM': 'external radiology', 'ADD POST-DISCHARGE': 'post-discharge',
+                  'ADD CUH EXT FILM': 'external radiology', 'ADD POST-DISCHARGE': 'discharge',
                    'discharge': 'discharge', 'ADD C5 WARD': 'C5 ward',
                    'ADD D10': 'D10 ward', 'ADD D8 WARD': 'D8 ward',
                    'ADD D9 WARD': 'D9 ward', 'ADD DISCHARGE LOUNGE': 'disch lounge',
-                   'ADD FLUORO': 'fluoroscopy', 'ADD GENERAL ICU': 'icu',
+                   'ADD FLUORO': 'fluoroscopy', 'ADD GENERAL ICU': 'ICU',
                   'ADD LSFOOT': 'outpatient', 'ADD MAIN THEATRE 20': 'theatre',
                    'ADD NEURO THEATRE 2': 'neuro theatre', 'ADD NEURO THEATRE 3': 'neuro theatre',
-                   'ADD NEUROPHY': 'neurophys', 'ADD PET': 'PET scan',
+                   'ADD NEUROPHY': 'neurophys', 'ADD PET': 'PET',
                    'ADD REHAB UNIT': 'rehab', 'ADD RT TRT': 'RT treatment',
                    'Endo Ward': 'endoscopy', 'ADD D4 IDA UNIT': 'HDU','ADD L2 WARD' : 'surgical day ward',
                    'ADD MAIN THEATRE 16': 'theatre', 'ADD R2 WARD': 'rehab',
@@ -206,7 +206,7 @@ ward_dictionary_nocat = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'A4 ward',
                    'ADD ATC THEATRE 31': 'theatre', 'ADD ATC THEATRE 32': 'theatre',
                    'ADD ATC THEATRE 36': 'theatre', 'ADD ATC THEATRE 33': 'theatre',
                    'ADD ATC THEATRE 34': 'theatre', 'ADD M4 WARD': 'M4 ward',
-                   'ROS DAPHNE WARD': 'gynae surgical ward', 'ADD PRE-ADMISSION':'pre-ad',
+                   'ROS DAPHNE WARD': 'gynae surgical ward', 'ADD PRE-ADMISSION':'admission',
                    'ADD ATC THEATRE 35': 'theatre', 'ADD C10 WARD': 'C10 ward','ADD C3 WARD': 'paediatric ward',
                    'ADD D10 WARD': 'D10 ward', 'ADD CATH ROOM': 'angiography',
                    'ADD CORONARY CARE UNIT': 'HDU', 'ADD DIALYSIS UNIT': 'dialysis',
@@ -254,15 +254,15 @@ ward_dictionary_nocat = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'A4 ward',
                    'ADD ACF': 'nephro appt', 'ADD DKNAMD':'opth appt', 'ADD EABC':'gastro appt', 'ADD MRDB':'cardiology appt',
                    'ADD UDA':'oral surgery appt', 'ADD POADSU': 'anaesthetic assess', 'ADD POAOSDSU':'anaesthetic assess',
                    'ADD AJCUOCW':'urology appt','ADD SJM':'surgery appt','ADD SMBRECON': 'urology appt', 'ADD SRGAMB': 'surgery appt',
-                   'ADD LVRF':'trauma appt','ADD KDABI':'plastic surgery appt', 'ADD NSGYFC':'ns appt', 'ADD PSUD':'plastic surgery appt',
-                   'ADD BU':'radiology', 'POST-DISCHARGE':'post-discharge', 'PRE-ADMISSION':'pre-ad', 'ADD J3-C3 WARD': 'surgical day ward', 'ADD PAED ICU': 'picu',
+                   'ADD LVRF':'trauma appt','ADD KDABI':'plastic surgery appt', 'ADD NSGYFC':'neurosurgery appt', 'ADD PSUD':'plastic surgery appt',
+                   'ADD BU':'radiology', 'POST-DISCHARGE':'discharge', 'PRE-ADMISSION':'admission', 'ADD J3-C3 WARD': 'surgical day ward', 'ADD PAED ICU': 'PICU',
                    'ADD R3': 'general medical ward', 'ADD PLASTIC SURG UNIT': 'surgical day ward',
                    'ADD KDA': 'weekday', 'ADDFLEXCYSOP': 'urology appt', 'ROS SARA WARD': 'gynae surgical ward', 'ROS MFM': 'maternity', 'ROS DELIVERY UNIT': 'maternity',
                    'ROS ROSIE THEATRE 2': 'rosie theatre', 'ADD GDC': 'medical appt', 'ADD ONCOLOGY DAY UNIT': 'medical appt', 'ADD AECLINIC': 'paed appt',
                    'ROS OBS US': 'us', 'ADD OTHOTESP': 'ophth appt', 'ADD SNSKF': 'trauma appt', 'ADDOPTHIMG14':'ophth appt', 'ADD EMENT': 'other',
                    'ADD DSK': 'medical appt', 'ADD PMT': 'medical appt', 'ROS ROSIE THEATRE 1': 'rosie theatre', 'ROS LADY MARY WARD': 'maternity', 'ADD PACV': 'general surgical appt',
                    'ADD DKNVR': 'other',  'ADD EYE UNIT THEATRE 41': 'theatre eye', 'ADD SURGAMB': 'general surgery appt', 'ADD OTHOTRMC':'ophth appt',
-                   'ADD J3 PICU WARD': 'picu', 'ADD NEUROONC': 'medical appt', 'CUH ELY THEATRE 3': 'theatre ely', 'ROS UROG': 'gynae appt',
+                   'ADD J3 PICU WARD': 'PICU', 'ADD NEUROONC': 'medical appt', 'CUH ELY THEATRE 3': 'theatre ely', 'ROS UROG': 'gynae appt',
                    'ADD FCHEM': 'medical appt', 'ADD RMAC': 'trauma appt', 'ADD C9 DAY UNIT': 'C9 ward', 'ADD MKTMF': 'general surgical appt',
                    'ADD EYE UNIT THEATRE 42': 'theatre', 'ADD ORALCF': 'general surgical appt', 'ADD ALA':'medical appt' , 'ADD ADCA': 'ortho appt', 'ADD DCHIR': 'medical appt',
                    'L4 WARD': 'general surgical ward', 'ADD LITHO': 'urology appt','ADD MLBV': 'ENT appt', 'ADDKKSTPHCL1': 'gastro appt', 'ADD ARNO': 'ortho appt', 'ADD ENT': 'ent appt',
@@ -270,7 +270,7 @@ ward_dictionary_nocat = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'A4 ward',
                    'ADD ARNOF': 'ortho appt', 'F3 WARD': 'paediatric ward', 'ADD KKSTF':'general surgical appt',  'ADD SO': 'appt', 'ADD CROPP': 'rehab', 'ADD PJM3': 'appt',
                    'ADD TPBAC': 'other', 'ADD HHSC': 'other', 'ADD PAED DAY UNIT': 'paed day unit', 'ADD JOMR': 'other', 'ADD SM': 'appt',
                    'ADDOPTHIMGVF': 'ophth appt', 'ADD AMBIPN3': 'general surgical appt', 'ADD PAEDAUD': 'paed appt' ,'ADD NASHC': 'hepat appt', 'ADD BPHYT': 'medical appt',
-                   'ADD CARDPP': 'medical appt', 'ADD PDHUF': 'appt', 'NICU WARD': 'picu', 'M5 WARD': 'ATC surgical ward', 'ADD CJGG': 'appt',  'ADD TXT': 'transplant appt',
+                   'ADD CARDPP': 'medical appt', 'ADD PDHUF': 'appt', 'NICU WARD': 'PICU', 'M5 WARD': 'ATC surgical ward', 'ADD CJGG': 'appt',  'ADD TXT': 'transplant appt',
                    'ADD PDCCAP': 'urology appt', 'ADD EIUNET': 'other', 'ADD POAF2F': 'anaesthetic assess ', 'ADD ALC43': 'general surgical appt', 'ADD NSGYPAED': 'paed appt',
                    'ADD EMEWA': 'ophth appt', 'ADD LVA': 'ophth appt', 'ADD RMIL': 'general surgical appt',  'ADD CAUFUTEL': 'appt', 'ADD HMF': 'maternity', 'ADD JTKM': 'other',
                    'PDU WARD': 'paediatric day ward', 'ADD BMUTN': 'other', 'ADD EMSAC': 'appt', 'ADD PPMBS': 'appt', 'ADD ACPRUOC':'appt', 'ADD OPLAOP': 'general surgical appt',
@@ -307,24 +307,24 @@ ward_dictionary_nocat = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'A4 ward',
 
 
 #dictionary for removing weekday influence on node numbers
-collated_cat_ward_dictionary = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'ns ward',
-                   'ADD A5 WARD': 'ns ward', 'ADD D6 WARD': 'ns ward',
+collated_cat_ward_dictionary = {'ADD A3 WARD': 'neurosurgery HDU', 'ADD A4 WARD': 'neurosurgery ward',
+                   'ADD A5 WARD': 'neurosurgery ward', 'ADD D6 WARD': 'neurosurgery ward',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',
                    'ADD GENRAD': 'radiology', 'ADD IRAD': 'interv rad',
-                   'ADD J2 WARD': 'surgical day ward', 'ADD J2-C3 WARD': 'PICU ward',
+                   'ADD J2 WARD': 'surgical day ward', 'ADD J2-C3 WARD': 'PICU',
                    'ADD MAIN THEATRE': 'theatre', 'ADD MAIN THEATRE 04':'emergency theatre',
                    'ADD MAIN THEATRE 22': 'neuro theatre', 'ADD MRI': 'mri',
-                   'ADD NEURO ICU': 'nncu', 'ADD NEURO THEATRE': 'neuro theatre',
+                   'ADD NEURO ICU': 'NCCU', 'ADD NEURO THEATRE': 'neuro theatre',
                    'ADD NEURO THEATRE 1': 'neuro theatre', 'ADD US': 'us',
-                   'ADD CUH EXT FILM': 'external radiology', 'ADD POST-DISCHARGE': 'post-discharge',
+                   'ADD CUH EXT FILM': 'external radiology', 'ADD POST-DISCHARGE': 'discharge',
                    'discharge': 'discharge', 'ADD C5 WARD': 'general medical ward',
                    'ADD D10': 'general medical ward', 'ADD D8 WARD': 'orthopaedic ward',
                    'ADD D9 WARD': 'general medical ward', 'ADD DISCHARGE LOUNGE': 'disch lounge',
-                   'ADD FLUORO': 'fluoroscopy', 'ADD GENERAL ICU': 'icu',
+                   'ADD FLUORO': 'fluoroscopy', 'ADD GENERAL ICU': 'ICU',
                    'ADD LSFOOT': 'weekday', 'ADD MAIN THEATRE 20': 'theatre',
                    'ADD NEURO THEATRE 2': 'neuro theatre', 'ADD NEURO THEATRE 3': 'neuro theatre',
-                   'ADD NEUROPHY': 'weekday', 'ADD PET': 'PET scan',
+                   'ADD NEUROPHY': 'weekday', 'ADD PET': 'PET',
                    'ADD REHAB UNIT': 'rehab', 'ADD RT TRT': 'weekday',
                    'Endo Ward': 'weekday', 'ADD D4 IDA UNIT': 'HDU','ADD L2 WARD' : 'surgical day ward',
                    'ADD MAIN THEATRE 16': 'theatre', 'ADD R2 WARD': 'rehab',
@@ -334,7 +334,7 @@ collated_cat_ward_dictionary = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'ns war
                    'ADD ATC THEATRE 31': 'theatre', 'ADD ATC THEATRE 32': 'theatre',
                    'ADD ATC THEATRE 36': 'theatre', 'ADD ATC THEATRE 33': 'theatre',
                    'ADD ATC THEATRE 34': 'theatre', 'ADD M4 WARD': 'ATC surgical ward',
-                   'ROS DAPHNE WARD': 'gynae surgical ward', 'ADD PRE-ADMISSION':'pre-ad',
+                   'ROS DAPHNE WARD': 'gynae surgical ward', 'ADD PRE-ADMISSION':'admission',
                    'ADD ATC THEATRE 35': 'theatre', 'ADD C10 WARD': 'general medical ward','ADD C3 WARD': 'paediatric ward',
                    'ADD D10 WARD': 'general medical ward', 'ADD CATH ROOM': 'angiography',
                    'ADD CORONARY CARE UNIT': 'HDU', 'ADD DIALYSIS UNIT': 'weekday',
@@ -383,29 +383,29 @@ collated_cat_ward_dictionary = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'ns war
                    'ADD UDA':'weekday', 'ADD POADSU': 'weekday', 'ADD POAOSDSU':'weekday',
                    'ADD AJCUOCW':'weekday','ADD SJM':'weekday','ADD SMBRECON': 'weekday', 'ADD SRGAMB': 'weekday',
                    'ADD LVRF':'weekday','ADD KDABI':'weekday', 'ADD NSGYFC':'weekday', 'ADD PSUD':'weekday',
-                   'ADD BU':'radiology', 'POST-DISCHARGE':'post-discharge', 'PRE-ADMISSION':'pre-ad',
-                   'ADD J3-C3 WARD': 'surgical day ward', 'ADD PAED ICU': 'picu', 'ADD R3': 'general medical ward', 'ADD PLASTIC SURG UNIT': 'surgical day ward',
+                   'ADD BU':'radiology', 'POST-DISCHARGE':'discharge', 'PRE-ADMISSION':'admission',
+                   'ADD J3-C3 WARD': 'surgical day ward', 'ADD PAED ICU': 'PICU', 'ADD R3': 'general medical ward', 'ADD PLASTIC SURG UNIT': 'surgical day ward',
                    'ADD KDA': 'weekday', 'ADDFLEXCYSOP': 'weekday', 'ROS SARA WARD': 'gynae surgical ward', 'ROS MFM': 'maternity', 'ROS DELIVERY UNIT': 'maternity',
                    'ROS ROSIE THEATRE 2': 'rosie theatre', 'ADD GDC': 'weekday', 'ADD ONCOLOGY DAY UNIT': 'weekday', 'ADD AECLINIC': 'weekday',
                    'ROS OBS US': 'us', 'ADD OTHOTESP': 'weekday', 'ADD SNSKF': 'weekday', 'ADDOPTHIMG14':'weekday', 'ADD EMENT': 'weekday',
                    'ADD DSK': 'weekday', 'ADD PMT': 'weekday', 'ROS ROSIE THEATRE 1': 'rosie theatre', 'ROS LADY MARY WARD': 'maternity', 'ADD PACV': 'general surgical appt',
                    'ADD DKNVR': 'weekday',  'ADD EYE UNIT THEATRE 41': 'weekday', 'ADD SURGAMB': 'general surgery appt', 'ADD OTHOTRMC':'weekday',
-                   'ADD J3 PICU WARD': 'picu', 'ADD NEUROONC': 'weekday', 'CUH ELY THEATRE 3': 'weekday', 'ROS UROG': 'weekday',
+                   'ADD J3 PICU WARD': 'PICU', 'ADD NEUROONC': 'weekday', 'CUH ELY THEATRE 3': 'weekday', 'ROS UROG': 'weekday',
                    'ADD FCHEM': 'weekday', 'ADD RMAC': 'weekday', 'ADD C9 DAY UNIT': 'general medical ward', 'ADD MKTMF': 'general surgical appt','ADD EYE UNIT THEATRE 42': 'theatre', 'ADD ORALCF': 'general surgical appt', 'ADD ALA':'medical appt' , 'ADD ADCA': 'ortho appt', 'ADD DCHIR': 'medical appt',
                    'L4 WARD': 'general surgical ward', 'ADD LITHO': 'weekday','ADD MLBV': 'weekday', 'ADDKKSTPHCL1': 'weekday', 'ADD ARNO': 'weekday', 'ADD ENT': 'weekday',
                    'ADD ORALNK': 'weekday', 'ADDSALHSTONE': 'weekday', 'ADD DVT': 'weekday', 'ADD LEAP': 'weekday', 'ADD ANGED': 'weekday', 'ADD MP': 'weekday',
                    'ADD ARNOF': 'weekday', 'F3 WARD': 'paediatric ward', 'ADD KKSTF':'weekday',  'ADD SO': 'weekday', 'ADD CROPP': 'rehab', 'ADD PJM3': 'weekday',
                    'ADD TPBAC': 'weekday', 'ADD HHSC': 'weekday', 'ADD PAED DAY UNIT': 'weekday', 'ADD JOMR': 'weekday', 'ADD SM': 'weekday',
                    'ADDOPTHIMGVF': 'weekday', 'ADD AMBIPN3': 'weekday', 'ADD PAEDAUD': 'weekday' ,'ADD NASHC': 'weekday', 'ADD BPHYT': 'weekday',
-                   'ADD CARDPP': 'medical appt', 'ADD PDHUF': 'appt', 'NICU WARD': 'picu', 'M5 WARD': 'ATC surgical ward', 'ADD CJGG': 'weekday',  'ADD TXT': 'weekday',
+                   'ADD CARDPP': 'medical appt', 'ADD PDHUF': 'appt', 'NICU WARD': 'PICU', 'M5 WARD': 'ATC surgical ward', 'ADD CJGG': 'weekday',  'ADD TXT': 'weekday',
                    'ADD PDCCAP': 'weekday', 'ADD EIUNET': 'v', 'ADD POAF2F': 'weekday ', 'ADD ALC43': 'weekday', 'ADD NSGYPAED': 'weekday',
                    'ADD EMEWA': 'weekday', 'ADD LVA': 'weekday', 'ADD RMIL': 'weekday',  'ADD CAUFUTEL': 'weekday', 'ADD HMF': 'maternity', 'ADD JTKM': 'weekday',
                    'PDU WARD': 'weekday', 'ADD BMUTN': 'weekday', 'ADD EMSAC': 'weekday', 'ADD PPMBS': 'weekday', 'ADD ACPRUOC':'weekday', 'ADD OPLAOP': 'weekday',
                    'ADD GICH': 'medical appt', 'ADD PENT': 'paediatric appt', 'ADD RATRG': 'neuro appt',  'ADD COLSB': ' general surgical appt', 'ADD CRG': 'weekday', 'ADD LCWVASC': 'weekday',
                    'ROS MADU': 'maternity', 'ADD HAEMOP': 'weekday', 'ADD PRIMARY': 'weekday', 'ADD TNM':'weekday' , 'ADD DXACCESS': 'weekday', 'G2 WARD' : 'general medical ward',
-                   'ADD PPMBSK2': 'weekdayt', 'ADD MAIN RECOVERY': 'recovery', 'ADD PDH': 'weekday', 'ADD AIAD': 'weekday' ,
+                   'ADD PPMBSK2': 'weekday', 'ADD MAIN RECOVERY': 'recovery', 'ADD PDH': 'weekday', 'ADD AIAD': 'weekday' ,
                    'ADD ENDOSCOPY UNIT': 'endoscopy', 'ADD IMPREHAB': 'rehab', 'ADD CDMSLD': 'weekday', 'ADD PJPU': 'weekday', 'ADD YML': 'physio',
-                   'ADD PJNK': 'weekday', 'ADD NEUROTR': 'weekday', 'ADD MSR': 'weekday', 'ADD KRM': 'weekdayt', 'ADD PJ': 'weekday', 'ADD PHYL': 'physio',
+                   'ADD PJNK': 'weekday', 'ADD NEUROTR': 'weekday', 'ADD MSR': 'weekday', 'ADD KRM': 'weekday', 'ADD PJ': 'weekday', 'ADD PHYL': 'physio',
                    'ADD ORALVSAN':'appt',  'ADD MOSOP': 'weekday', 'ADD AJCUOC': 'weekday', 'ADD TKKHL': 'weekday', 'ADD EMSMHC':'weekday',
                    'ADD NEJENT': 'weekday', 'ADD JPF': 'weekday', 'ADD EIACA': 'weekday', 'ADD UROLA': 'weekday', 'E10 WARD': 'general medical ward', 'ADD GMTSEF': 'weekday',
                    'ADD APCCOMB': 'weekday', 'ADD MLEDAR': 'weekday', 'ADD NPDV': 'weekday', 'ADDOTHOTORTH': 'weekday', 'ADD AJM': 'weekday',
@@ -433,7 +433,7 @@ collated_cat_ward_dictionary = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'ns war
                    'ADD RDPFP': 'weekday','ADD IMA':'weekday', 'ADDALCGNLYR3':'weekday', 'ADD JTKMEF':'weekday', 'ADD LUCENTOP': 'weekday', 'ADD PSC': 'weekday', 'ADD SORD': 'weekday'}
 
 
-location_category_map = ward_dictionary_nocat
+location_category_map = ward_dictionary_cat
 
 alldata['from_category'] = alldata['from'].map(location_category_map)
 alldata['to_category'] = alldata['to'].map(location_category_map)
@@ -555,14 +555,14 @@ med_to_surg = G.get_edge_data('general medical ward', 'general surgical ward', d
 med_to_ortho = G.get_edge_data('general medical ward', ' orthopaedic ward', default ={}).get('weight', 1)
 med_to_surg_acute = G.get_edge_data('acute medical ward', 'general surgical ward', default={}).get('weight', 1)
 med_to_orth_acute = G.get_edge_data('acute medical ward', ' orthopaedic ward', default={}).get('weight', 1)
-acmed_to_ns = G.get_edge_data('acute medical ward', 'ns ward', default={}).get('weight', 1)
-genmed_to_ns = G.get_edge_data('general medical ward', 'ns ward', default={}).get('weight', 1)
+acmed_to_ns = G.get_edge_data('acute medical ward', 'neurossurgical ward', default={}).get('weight', 1)
+genmed_to_ns = G.get_edge_data('general medical ward', 'neurosurgical ward', default={}).get('weight', 1)
 acmed_to_atc = G.get_edge_data('acute medical ward', 'ATC surgical ward', default={}).get('weight', 1)
 genmed_to_atc = G.get_edge_data('general medical ward', 'ATC surgical ward', default={}).get('weight', 1)
 total_medical_ward_transfers = med_to_med_acute + med_to_med_general+med_to_med_acgen+med_to_med_genac+ med_to_ortho+ med_to_surg+ med_to_surg_acute+ med_to_orth_acute+acmed_to_ns+genmed_to_ns+acmed_to_atc+genmed_to_atc
 #print (total_medical_ward_transfers)
 
-ae_surg = G.get_edge_data('AE', 'general surgical ward', default={}).get('weight', 0)+ G.get_edge_data('AE', 'orthopaedic ward', default={}).get('weight', 0) +G.get_edge_data('AE', 'ATC surgical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'gynae ward', default={}).get('weight', 0)+  G.get_edge_data('AE', 'ns ward', default={}).get('weight', 0)
+ae_surg = G.get_edge_data('AE', 'general surgical ward', default={}).get('weight', 0)+ G.get_edge_data('AE', 'orthopaedic ward', default={}).get('weight', 0) +G.get_edge_data('AE', 'ATC surgical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'gynae ward', default={}).get('weight', 0)+  G.get_edge_data('AE', 'neurosurgical ward', default={}).get('weight', 0)
 print(ae_surg)
 ae_med = G.get_edge_data('AE', 'acute medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'general medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'cardiology ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'rehab', default={}).get('weight', 0) +  G.get_edge_data('AE', 'cdu', default={}).get('weight', 0)
 if ae_surg == 0:
@@ -629,7 +629,9 @@ transitivity_net = nx.transitivity(G)
 
 #clustering - doesnt work for directed graphs
 clustering_average = nx.average_clustering(nondiG,weight = 'weights')
-
+clustering_distribution = nx.clustering(nondiG, weight = 'weights')
+clustering_list = [[n, d] for n, d in clustering_distribution]
+clustering_data = pd.DataFrame(clustering_list, columns=['node', 'clustering_coeff'])
 print('clustering in non directed graph')
 print(clustering_average)
 
@@ -655,12 +657,13 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average'], data = data_list)
 
 
-all_network_info_df.to_csv('info_asa12_nocat2611.csv', header=True, index=False)
-edge_weight_data.to_csv('edge_asa12_nocat2611.csv', header=True, index=False)
-nx.write_pajek(G, 'pajek_asa12_nocat2611.net')
-degrees_data.to_csv('degrees_asa12_nocat2611.csv', header =True, index=False)
-nx.write_graphml(G,'graphml_asa12_nocat2611.graphml')
-nx.write_gexf(G,'gexf_asa12_nocat2611.gexf')
+all_network_info_df.to_csv('info_asa12_cat0612.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_asa12_cat0612.csv', header=True, index=False)
+nx.write_pajek(G, 'pajek_asa12_cat0612.net')
+degrees_data.to_csv('degrees_asa12_cat0612.csv', header =True, index=False)
+clustering_data.to_csv('clustering_asa12_cat0612.csv', header = True, index = False)
+nx.write_graphml(G,'graphml_asa12_cat0612.graphml')
+nx.write_gexf(G,'gexf_asa12_cat0612.gexf')
 
 
 
