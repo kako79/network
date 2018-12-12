@@ -664,7 +664,8 @@ print(degrees_data)
 
 
 emergency_degrees = degrees_data['']
-t_o_patient_records = alltransfers.loc[alltransfers['ptid'].isin(t_o_patient_ids)]
+
+
     #degrees_list.append(list(degrees.values))
     #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
 
