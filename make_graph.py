@@ -558,8 +558,9 @@ minimal_cat_ward_dictionary = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD'
 
 
 #read in the data from a combined csv file
-alldata= pd.read_csv("transfers_old_t_o.csv")
-location_category_map = ward_dictionary_cat
+alldata = pd.read_csv("all_transfers_1110.csv")
+#alldata= pd.read_csv("transfers_old_t_o.csv")
+location_category_map = minimal_cat_ward_dictionary
 
 alldata['from_category'] = alldata['from'].map(location_category_map)
 alldata['to_category'] = alldata['to'].map(location_category_map)
@@ -756,7 +757,7 @@ transitivity_net = nx.transitivity(G)
 #clustering - doesnt work for directed graphs
 clustering_average = nx.average_clustering(nondiG,weight = 'weights')
 clustering_distribution = nx.clustering(nondiG, weight = 'weights')
-print(clustering_distribution)
+#print(clustering_distribution)
 clustering_list = [[n, d] for n, d in clustering_distribution.items()]
 clustering_data = pd.DataFrame(clustering_list, columns=['node', 'clustering_coeff'])
 print('clustering in non directed graph')
@@ -778,20 +779,20 @@ data_list.append({'sum of transfers': sum_of_all_transfers,'number nodes': nn,'n
                       'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality,
                       'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre,
                       'medical ward transfers': total_medical_ward_transfers, 'med surg ratio': ratio_wards_surg_med, 'eigen_centr_theatre': theatres_eigen_centr,
-                      'eigen_centr_ed': ed_eigen_centr, 'density': density_net, 'transitivity':transitivity_net, 'clustering average': clustering_average})
+                      'eigen_centr_ed': ed_eigen_centr, 'density': density_net, 'transitivity':transitivity_net, 'clustering average': clustering_average, 'average shortest path':average_shortest_path})
 
 all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed',
                                          'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers',
-                                         'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average'], data = data_list)
+                                         'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
 
-all_network_info_df.to_csv('info_cat_old_to0712.csv', header=True, index=False)
-edge_weight_data.to_csv('edge_cat_old_to0712.csv', header=True, index=False)
+all_network_info_df.to_csv('info_mincat_all1212.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_mincat_all1212.csv', header=True, index=False)
 #nx.write_pajek(G, 'pajek_old.net')
-degrees_data.to_csv('degrees_cat_old_to0712.csv', header =True, index=False)
-clustering_data.to_csv('clustering_cat_old_to0712.csv', header = True, index = False)
-nx.write_graphml(G,'graphml_cat_old_to0712.graphml')
-nx.write_gexf(G,'gexf_cat_old_to0712.gexf')
+degrees_data.to_csv('degrees_mincat_all1212.csv', header =True, index=False)
+clustering_data.to_csv('clustering_mincat_all1212.csv', header = True, index = False)
+nx.write_graphml(G,'graphml_mincat_all1212.graphml')
+nx.write_gexf(G,'gexf_mincat_all1212.gexf')
 
 
 
