@@ -727,7 +727,7 @@ if nn == 0:
     print('flowhierarchy is zero as nn zero')
 else:
     flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
-
+print(flow_hierarchy)
 
 bet_centr = nx.algorithms.centrality.betweenness_centrality(G)
 if 'theatre' in bet_centr:
@@ -775,9 +775,9 @@ print(average_shortest_path)
 #print(shortest_path)
 
 #flow hiearchy - finds strongly connected components
-flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
-print('flow hierarchy')
-print(flow_hierarchy)
+#flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
+#print('flow hierarchy')
+#print(flow_hierarchy)
 
 data_list = []
 data_list.append({'sum of transfers': sum_of_all_transfers,'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy,
