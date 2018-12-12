@@ -558,7 +558,7 @@ minimal_cat_ward_dictionary = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD'
 
 
 #read in the data from a combined csv file
-alldata = pd.read_csv("all_transfers_1110.csv")
+alldata = pd.read_csv("transfers_all_pts_icu.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
 location_category_map = minimal_cat_ward_dictionary
 
@@ -792,13 +792,13 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
 
-all_network_info_df.to_csv('info_mincat_all1212.csv', header=True, index=False)
-edge_weight_data.to_csv('edge_mincat_all1212.csv', header=True, index=False)
+all_network_info_df.to_csv('info_mincat_icu1212.csv', header=True, index=False)
+edge_weight_data.to_csv('edge_mincat_icu1212.csv', header=True, index=False)
 #nx.write_pajek(G, 'pajek_old.net')
-degrees_data.to_csv('degrees_mincat_all1212.csv', header =True, index=False)
-clustering_data.to_csv('clustering_mincat_all1212.csv', header = True, index = False)
-nx.write_graphml(G,'graphml_mincat_all1212.graphml')
-nx.write_gexf(G,'gexf_mincat_all1212.gexf')
+degrees_data.to_csv('degrees_mincat_icu1212.csv', header =True, index=False)
+clustering_data.to_csv('clustering_mincat_icu1212.csv', header = True, index = False)
+nx.write_graphml(G,'graphml_mincat_icu1212.graphml')
+nx.write_gexf(G,'gexf_mincat_icu1212.gexf')
 
 
 
