@@ -653,10 +653,10 @@ degrees_dict = degrees_data.to_dict()['degree']
 #check if there is data in this specific subset eg there may not be data in a weekend stress set in summer...
 if 'AE' in degrees_dict:
     emergency_degrees = degrees_dict['AE']
-    #print('in dict')
+    print('AE in dict')
     no_data = False
 else:
-    #print('not in dict')
+    print('AE not in dict')
     no_data = True
     emergency_degrees = 0
 
