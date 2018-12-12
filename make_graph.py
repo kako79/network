@@ -653,16 +653,18 @@ print(degrees_dict)
 print(degrees_data)
 
 #check if there is data in this specific subset eg there may not be data in a weekend stress set in summer...
-if 'AE' in degrees_dict:
-    emergency_degrees = degrees_dict['AE']
-    print('AE in dict')
-    no_data = False
-else:
-    print('AE not in dict')
-    no_data = True
-    emergency_degrees = 0
+#if 'AE' in degrees_dict:
+#    emergency_degrees = degrees_dict['AE']
+#    print('AE in dict')
+#    no_data = False
+#else:
+#    print('AE not in dict')
+#    no_data = True
+#    emergency_degrees = 0
 
 
+emergency_degrees = degrees_data['']
+t_o_patient_records = alltransfers.loc[alltransfers['ptid'].isin(t_o_patient_ids)]
     #degrees_list.append(list(degrees.values))
     #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
 
@@ -722,6 +724,7 @@ else:
 # flow hiearchy - finds strongly connected components
 if nn == 0:
     flow_hierarchy = 0
+    print('flowhierarchy is zero as nn zero')
 else:
     flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
 
