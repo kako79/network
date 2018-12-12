@@ -664,7 +664,7 @@ print(degrees_data)
 
 df_with_node_index = degrees_data.set_index('node')
 emergency_degrees = df_with_node_index.loc['AE','degree']
-
+print(emergency_degrees)
     #degrees_list.append(list(degrees.values))
     #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
 
