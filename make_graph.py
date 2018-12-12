@@ -727,6 +727,7 @@ if nn == 0:
     print('flowhierarchy is zero as nn zero')
 else:
     flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
+print('flow hierarchy')
 print(flow_hierarchy)
 
 bet_centr = nx.algorithms.centrality.betweenness_centrality(G)
