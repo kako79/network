@@ -649,8 +649,8 @@ degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
 #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
 #degrees_data.set_index('node', inplace=True)
 degrees_dict = degrees_data.to_dict()['degree']
-print(degrees_dict)
-print(degrees_data)
+#print(degrees_dict)
+#print(degrees_data)
 
 #check if there is data in this specific subset eg there may not be data in a weekend stress set in summer...
 #if 'AE' in degrees_dict:
