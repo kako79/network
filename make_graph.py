@@ -805,19 +805,17 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers',
                                          'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
-filename = '_mincat_trauma1212.csv'
+filename = '_mincat_trauma1212'
 
-all_network_info_df.to_csv('info_mincat_trauma1212.csv', header=True, index=False)
-edge_weight_data.to_csv('edge_mincat_trauma1212.csv', header=True, index=False)
+all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
+edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
 #nx.write_pajek(G, 'pajek_old.net')
-degrees_data.to_csv('degrees_mincat_trauma1212.csv', header =True, index=False)
-indegrees_data.to_csv('indegrees_mincat_trauma1212.csv', header =True, index=False)
-outdegrees_data.to_csv('outdegrees_mincat_trauma1212.csv', header =True, index=False)
-
-
-clustering_data.to_csv('clustering_mincat_trauma1212.csv', header = True, index = False)
-nx.write_graphml(G,'graphml_mincat_trauma1212.graphml')
-nx.write_gexf(G,'gexf_mincat_trauma1212.gexf')
+degrees_data.to_csv('degrees' + filename + '.csv', header =True, index=False)
+indegrees_data.to_csv('indegrees' + filename + '.csv', header =True, index=False)
+outdegrees_data.to_csv('outdegrees' + filename + '.csv', header =True, index=False)
+clustering_data.to_csv('clustering' + filename + '.csv', header = True, index = False)
+nx.write_graphml(G,'graphml'+ filename + '.graphml')
+nx.write_gexf(G,'gexf' + filename +'.gexf')
 
 
 
