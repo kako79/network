@@ -603,15 +603,21 @@ transfer_counts = transfer_counts.reset_index()
 transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
 # Get a list of tuples that contain the values from the rows.
 edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
+unweighted_edge_data = transfer_counts[['from', 'to']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
 edge_weight_data['ptid'] = edge_weight_data['ptid']#/sum_of_all_transfers
 
 
 weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
+unweighted_edges = list(itertools.starmap(lambda f, t: (f,t), unweighted_edge_data.itertuples(index=False, name = None)))
 
 G = nx.DiGraph()
 #print(weighted_edges)
 G.add_weighted_edges_from(weighted_edges)
+
+unweightednondirG = nx.Graph()
+unweightednondirG.add_edges_from(unweighted_edges)
+
 en=G.number_of_edges()
 nn=G.number_of_nodes()
 print(en)
@@ -765,7 +771,7 @@ transitivity_net = nx.transitivity(G)
 #clustering - doesnt work for directed graphs
 clustering_average = nx.average_clustering(nondiG,weight = 'weights')
 weighted_clustering_distribution = nx.clustering(nondiG, weight = 'weights')
-non_weighted_clustering_distribution = nx.clustering(nondiG)
+non_weighted_clustering_distribution = nx.clustering(unweightednondirG)
 #print(clustering_distribution)
 weighted_clustering_list = [[n, d] for n, d in weighted_clustering_distribution.items()]
 weighted_clustering_data = pd.DataFrame(weighted_clustering_list, columns=['node', 'clustering_coeff'])
