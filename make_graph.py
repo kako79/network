@@ -640,10 +640,10 @@ degrees_list = [[n, d] for n, d in degrees]
 degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
 
 indegreeslist = [[n, d] for n, d in indegrees]
-indegrees_data = pd.DataFrame(indegrees_list, columns=['node', 'degree'])
+indegrees_data = pd.DataFrame(indegreeslist, columns=['node', 'degree'])
 
 outdegrees_list = [[n, d] for n, d in outdegrees]
-outdegrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
+outdegrees_data = pd.DataFrame(degreeslist, columns=['node', 'degree'])
 
 
 #degrees_data_degree = degrees_data['degree']
