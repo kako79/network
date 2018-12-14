@@ -102,9 +102,6 @@ print('full_info created')
 #admpoint = admpoint[admpoint.evttype != 'Patient Update'] # removes all patient update lines
 
 # need to create the transfers list with added in rows when a patient goes back to a ward after an investigation
-#first group the data into individual patients data to be able to figure out any missing rows
-
-grouped = full_info.groupby('ptid')
 
 #'ptid', 'transfer_dt', 'from', 'to', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'
 ##!!! starting the transfers code
@@ -196,9 +193,9 @@ def get_patient_transfers(ptid, patient_data):
 
 def get_transfers(location_data: pd.DataFrame):
     sorted_data = location_data.sort_values(['ptid', 'in_dttm'])
+    sorted_data.to_csv("sorted_data.csv")
     groups = sorted_data.groupby('ptid')
     all_transfers = None
-    print(all_transfers)
     for ptid, group in groups:
         patient_transfers = get_patient_transfers(ptid, group)
         if all_transfers is None:
@@ -207,6 +204,9 @@ def get_transfers(location_data: pd.DataFrame):
             all_transfers = all_transfers.append(patient_transfers)
     print(all_transfers)
     return all_transfers
+
+ptids = {'00145AB3B9A14E53BDE6EBD5B7609E5A869BADB91E9A340695EB9531028F95B5', '000C9903FC66E5482C8799C08670DA23C310248880C2CF301B802A6853983A3C'}
+full_info = full_info.loc[full_info['ptid'].isin(ptids)]
 
 all_transfers = get_transfers(full_info)
 
@@ -225,7 +225,7 @@ all_transfers.drop(before_first_date.index, axis=0, inplace=True)
 
 print("Rows after removing bad dates: %s" % len(all_transfers))
 
-all_transfers.to_csv('all_transfers_1110.csv', header=True, index=False)
+all_transfers.to_csv('bad_transfers_1110.csv', header=True, index=False)
 print('transfers file created')
 ##!!! finish of creating the transfers file
 
