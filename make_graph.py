@@ -645,6 +645,7 @@ indegrees_data = pd.DataFrame(indegreeslist, columns=['node', 'degree'])
 outdegreeslist = [[n, d] for n, d in outdegrees]
 outdegrees_data = pd.DataFrame(outdegreeslist, columns=['node', 'degree'])
 
+print(nx.get_edge_attributes(G))
 
 #degrees_data_degree = degrees_data['degree']
 
