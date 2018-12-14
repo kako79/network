@@ -219,6 +219,10 @@ all_transfers.drop(after_last_date.index, axis=0, inplace=True)
 before_first_date = all_transfers[all_transfers['transfer_dt'] < first_date]
 all_transfers.drop(before_first_date.index, axis=0, inplace=True)
 
+
+
+
+
 print("Rows after removing bad dates: %s" % len(all_transfers))
 
 all_transfers.to_csv('all_transfers_1110.csv', header=True, index=False)

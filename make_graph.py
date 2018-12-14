@@ -628,18 +628,13 @@ nondiG.add_weighted_edges_from(weighted_edges)
 
 #calculate the degree
 degrees = nx.classes.function.degree(G)
+indegrees = G.in_degree
+outdegrees = G.out_degree
 #print('degrees')
 #print(degrees)
 histdegrees = nx.classes.function.degree_histogram(G)
 #print('histdegrees')
 #print(histdegrees)
-
-# calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
-incentrality = nx.algorithms.centrality.in_degree_centrality(G)
-outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
-
-
-
 # calculate the degree
 degrees_list = [[n, d] for n, d in degrees]
 degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
@@ -651,6 +646,17 @@ degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
 degrees_dict = degrees_data.to_dict()['degree']
 #print(degrees_dict)
 #print(degrees_data)
+
+
+
+
+# calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
+incentrality = nx.algorithms.centrality.in_degree_centrality(G)
+outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
+
+
+
+#
 
 #check if there is data in this specific subset eg there may not be data in a weekend stress set in summer...
 #if 'AE' in degrees_dict:
