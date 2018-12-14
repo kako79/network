@@ -663,19 +663,6 @@ incentrality = nx.algorithms.centrality.in_degree_centrality(G)
 outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
 
 
-
-#
-
-#check if there is data in this specific subset eg there may not be data in a weekend stress set in summer...
-#if 'AE' in degrees_dict:
-#    emergency_degrees = degrees_dict['AE']
-#    print('AE in dict')
-#    no_data = False
-#else:
-#    print('AE not in dict')
-#    no_data = True
-#    emergency_degrees = 0
-
 df_with_node_index = degrees_data.set_index('node')
 emergency_degrees = df_with_node_index.loc['AE','degree']
 print(emergency_degrees)
@@ -740,7 +727,7 @@ if nn == 0:
     flow_hierarchy = 0
     print('flowhierarchy is zero as nn zero')
 else:
-    flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
+    flow_hierarchy = nx.flow_hierarchy(G, weight = 'weights')
 print('flow hierarchy')
 print(flow_hierarchy)
 
@@ -786,8 +773,7 @@ print(clustering_average)
 #shortest path in the directed graph, from a starting point source to a point target
 average_shortest_path = nx.average_shortest_path_length(G,weight = 'weights')
 print(average_shortest_path)
-#print('shortest path is')
-#print(shortest_path)
+
 
 #flow hiearchy - finds strongly connected components
 #flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
