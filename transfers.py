@@ -206,7 +206,7 @@ def get_transfers(location_data: pd.DataFrame):
     return all_transfers
 
 ptids = {'00145AB3B9A14E53BDE6EBD5B7609E5A869BADB91E9A340695EB9531028F95B5', '000C9903FC66E5482C8799C08670DA23C310248880C2CF301B802A6853983A3C'}
-full_info = full_info.loc[full_info['ptid'].isin(ptids)]
+full_info = full_info[full_info['ptid'].isin(ptids)]
 
 all_transfers = get_transfers(full_info)
 
@@ -216,8 +216,10 @@ first_date = datetime(2015, 1, 1)
 last_date = datetime(2018, 6, 1)
 after_last_date = all_transfers[all_transfers['transfer_dt'] > last_date]
 all_transfers.drop(after_last_date.index, axis=0, inplace=True)
+
 before_first_date = all_transfers[all_transfers['transfer_dt'] < first_date]
-all_transfers.drop(before_first_date.index, axis=0, inplace=True)
+if len(before_first_date) > 0:
+    all_transfers.drop(before_first_date.index, axis=0, inplace=True)
 
 
 
