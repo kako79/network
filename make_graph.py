@@ -763,10 +763,15 @@ transitivity_net = nx.transitivity(G)
 
 #clustering - doesnt work for directed graphs
 clustering_average = nx.average_clustering(nondiG,weight = 'weights')
-clustering_distribution = nx.clustering(nondiG, weight = 'weights')
+weighted_clustering_distribution = nx.clustering(nondiG, weight = 'weights')
+non_weighted_clustering_distribution = nx.clustering(nondiG)
 #print(clustering_distribution)
-clustering_list = [[n, d] for n, d in clustering_distribution.items()]
-clustering_data = pd.DataFrame(clustering_list, columns=['node', 'clustering_coeff'])
+weighted_clustering_list = [[n, d] for n, d in weighted_clustering_distribution.items()]
+weighted_clustering_data = pd.DataFrame(weighted_clustering_list, columns=['node', 'clustering_coeff'])
+
+non_weighted_clustering_list = [[n, d] for n, d in non_weighted_clustering_distribution.items()]
+non_weighted_clustering_data = pd.DataFrame(non_weighted_clustering_list, columns=['node', 'clustering_coeff'])
+
 print('clustering in non directed graph')
 print(clustering_average)
 
@@ -799,7 +804,8 @@ edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
 degrees_data.to_csv('degrees' + filename + '.csv', header =True, index=False)
 indegrees_data.to_csv('indegrees' + filename + '.csv', header =True, index=False)
 outdegrees_data.to_csv('outdegrees' + filename + '.csv', header =True, index=False)
-clustering_data.to_csv('clustering' + filename + '.csv', header = True, index = False)
+weighted_clustering_data.to_csv('weightedclustering' + filename + '.csv', header = True, index = False)
+non_weighted_clustering_data.to_csv('nonweightedclustering' + filename + '.csv', header = True, index = False)
 nx.write_graphml(G,'graphml'+ filename + '.graphml')
 nx.write_gexf(G,'gexf' + filename +'.gexf')
 
