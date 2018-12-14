@@ -638,6 +638,14 @@ histdegrees = nx.classes.function.degree_histogram(G)
 # calculate the degree
 degrees_list = [[n, d] for n, d in degrees]
 degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
+
+indegreeslist = [[n, d] for n, d in indegrees]
+indegrees_data = pd.DataFrame(indegrees_list, columns=['node', 'degree'])
+
+outdegrees_list = [[n, d] for n, d in outdegrees]
+outdegrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
+
+
 #degrees_data_degree = degrees_data['degree']
 
 
@@ -797,11 +805,16 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers',
                                          'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
+filename = '_mincat_trauma1212.csv'
 
 all_network_info_df.to_csv('info_mincat_trauma1212.csv', header=True, index=False)
 edge_weight_data.to_csv('edge_mincat_trauma1212.csv', header=True, index=False)
 #nx.write_pajek(G, 'pajek_old.net')
 degrees_data.to_csv('degrees_mincat_trauma1212.csv', header =True, index=False)
+indegrees_data.to_csv('indegrees_mincat_trauma1212.csv', header =True, index=False)
+outdegrees_data.to_csv('outdegrees_mincat_trauma1212.csv', header =True, index=False)
+
+
 clustering_data.to_csv('clustering_mincat_trauma1212.csv', header = True, index = False)
 nx.write_graphml(G,'graphml_mincat_trauma1212.graphml')
 nx.write_gexf(G,'gexf_mincat_trauma1212.gexf')
