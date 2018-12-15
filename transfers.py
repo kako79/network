@@ -179,7 +179,7 @@ def clean_patient_data(patient_data: pd.DataFrame):
 def get_patient_transfers(ptid, patient_data):
     patient_data = clean_patient_data(patient_data)
     if len(patient_data) == 0:
-        return []
+        return None
 
     # The stack will contain the previous (location, entry_time, exit_time) tuples.
     location_stack = []
@@ -242,11 +242,12 @@ def get_transfers(location_data: pd.DataFrame):
     all_transfers = None
     for ptid, group in groups:
         patient_transfers = get_patient_transfers(ptid, group)
-        if all_transfers is None:
-            all_transfers = patient_transfers
-        else:
-            all_transfers = all_transfers.append(patient_transfers)
-    print(all_transfers)
+        if patient_transfers is not None:
+            if all_transfers is None:
+                all_transfers = patient_transfers
+            else:
+                all_transfers = all_transfers.append(patient_transfers)
+
     return all_transfers
 
 #ptids = {'00145AB3B9A14E53BDE6EBD5B7609E5A869BADB91E9A340695EB9531028F95B5', '000C9903FC66E5482C8799C08670DA23C310248880C2CF301B802A6853983A3C'}
