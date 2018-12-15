@@ -137,8 +137,8 @@ def get_transfers_out(ptid, location_stack, current_dt):
 
 
 def clean_patient_data(patient_data: pd.DataFrame):
-    # Remove locations: 'ADD FLOURO', 'nan'
-    bad_locations = {'ADD FLOURO', 'nan'}
+    # Remove locations: 'ADD FLUORO', 'nan'
+    bad_locations = {'ADD FLUORO', 'nan', 'CUH EXT FILM'}
     bad_location_data = patient_data[patient_data['adt_department_name'].isin(bad_locations)]
 
     if len(bad_location_data) > 0:
@@ -250,7 +250,7 @@ def get_transfers(location_data: pd.DataFrame):
 
     return all_transfers.reset_index()
 
-#ptids = {'00145AB3B9A14E53BDE6EBD5B7609E5A869BADB91E9A340695EB9531028F95B5', '000C9903FC66E5482C8799C08670DA23C310248880C2CF301B802A6853983A3C'}
+#ptids = {000C9903FC66E5482C8799C08670DA23C310248880C2CF301B802A6853983A3C}
 #full_info = full_info[full_info['ptid'].isin(ptids)]
 
 all_transfers = get_transfers(full_info)
