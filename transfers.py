@@ -172,7 +172,7 @@ def clean_patient_data(patient_data: pd.DataFrame):
             # first row for this location to the out time from this row.
             indices_to_remove.append(i)
             current_loc_dt_out = dt_out
-            good_data.loc[current_loc_index, 'out_dttm'] = row['out_dttm']
+            good_data.loc[current_loc_index, 'out_dttm'] = dt_out
 
     return good_data.drop(indices_to_remove, axis=0)
 
@@ -256,6 +256,7 @@ def get_transfers(location_data: pd.DataFrame):
 all_transfers = get_transfers(full_info)
 
 print("Rows: %s" % len(all_transfers))
+all_transfers.to_csv('transfers_with_bad_dates_2018_12_15.csv', header=True, index=False)
 
 first_date = datetime(2015, 1, 1)
 last_date = datetime(2018, 6, 1)
@@ -265,7 +266,6 @@ all_transfers.drop(after_last_date.index, axis=0, inplace=True)
 before_first_date = all_transfers[all_transfers['transfer_dt'] < first_date]
 if len(before_first_date) > 0:
     all_transfers.drop(before_first_date.index, axis=0, inplace=True)
-
 
 print("Rows after removing bad dates: %s" % len(all_transfers))
 
