@@ -160,11 +160,14 @@ def clean_patient_data(patient_data: pd.DataFrame):
             indices_to_remove.append(i)
             good_data.loc[current_loc_index, 'out_dttm'] = row['out_dttm']
 
+    print("indices to remove", indices_to_remove)
     return good_data.drop(indices_to_remove, axis=0)
 
 def get_patient_transfers(ptid, patient_data):
+    print("before clean")
     print(patient_data)
     patient_data = clean_patient_data(patient_data)
+    print("after clean")
     print(patient_data)
 
     # The stack will contain the previous (location, entry_time, exit_time) tuples.
