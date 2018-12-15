@@ -248,7 +248,7 @@ def get_transfers(location_data: pd.DataFrame):
             else:
                 all_transfers = all_transfers.append(patient_transfers)
 
-    return all_transfers
+    return all_transfers.reset_index()
 
 #ptids = {'00145AB3B9A14E53BDE6EBD5B7609E5A869BADB91E9A340695EB9531028F95B5', '000C9903FC66E5482C8799C08670DA23C310248880C2CF301B802A6853983A3C'}
 #full_info = full_info[full_info['ptid'].isin(ptids)]
