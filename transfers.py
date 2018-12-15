@@ -136,7 +136,35 @@ def get_transfers_out(ptid, location_stack, current_dt):
     return transfer_list
 
 
+def clean_patient_data(patient_data: pd.DataFrame):
+    # Remove locations: 'ADD FLOURO', 'nan'
+    bad_locations = {'ADD FLOURO', 'nan'}
+    bad_location_data = patient_data[patient_data['adt_department_name'].isin(bad_locations)]
+    good_data = patient_data.drop(bad_location_data.index, axis=0)
+
+    # Replicated locations should be collapsed into a single row with in_dttm as the first in_dttm and out_dttm as
+    # the last out_dttm.
+    current_loc_index = None
+    current_loc = None
+    indices_to_remove = []
+
+    for i, row in good_data.iterrows():
+        loc = row['adt_department_name']
+
+        if loc != current_loc:
+            current_loc = loc
+            current_loc_index = i
+        else:
+            # We're already in this location. Remove this duplicate row, and update the out time of the
+            # first row for this location to the out time from this row.
+            indices_to_remove.append(i)
+            good_data.loc[current_loc_index, 'out_dttm'] = row['out_dttm']
+
+    return good_data.drop(indices_to_remove, axis=0)
+
 def get_patient_transfers(ptid, patient_data):
+    patient_data = clean_patient_data(patient_data)
+
     # The stack will contain the previous (location, entry_time, exit_time) tuples.
     location_stack = []
     transfer_list = []
@@ -220,9 +248,6 @@ all_transfers.drop(after_last_date.index, axis=0, inplace=True)
 before_first_date = all_transfers[all_transfers['transfer_dt'] < first_date]
 if len(before_first_date) > 0:
     all_transfers.drop(before_first_date.index, axis=0, inplace=True)
-
-
-
 
 
 print("Rows after removing bad dates: %s" % len(all_transfers))
