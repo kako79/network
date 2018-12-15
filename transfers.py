@@ -163,7 +163,9 @@ def clean_patient_data(patient_data: pd.DataFrame):
     return good_data.drop(indices_to_remove, axis=0)
 
 def get_patient_transfers(ptid, patient_data):
+    print(patient_data)
     patient_data = clean_patient_data(patient_data)
+    print(patient_data)
 
     # The stack will contain the previous (location, entry_time, exit_time) tuples.
     location_stack = []
