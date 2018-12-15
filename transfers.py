@@ -146,18 +146,28 @@ def clean_patient_data(patient_data: pd.DataFrame):
     # the last out_dttm.
     current_loc_index = None
     current_loc = None
+    current_loc_dt_out = None
     indices_to_remove = []
+
+    def is_separate_visit(t1: pd.Timestamp, t2: pd.Timestamp):
+        # Times different by more one hour or more means separate visits.
+        delta_seconds = (t2 - t1).total_seconds()
+        return delta_seconds >= 3600
 
     for i, row in good_data.iterrows():
         loc = row['adt_department_name']
+        dt_in = row['in_dttm']
+        dt_out = row['out_dttm']
 
-        if loc != current_loc:
+        if (loc != current_loc) or is_separate_visit(current_loc_dt_out, dt_in):
             current_loc = loc
             current_loc_index = i
+            current_loc_dt_out = dt_out
         else:
             # We're already in this location. Remove this duplicate row, and update the out time of the
             # first row for this location to the out time from this row.
             indices_to_remove.append(i)
+            current_loc_dt_out = dt_out
             good_data.loc[current_loc_index, 'out_dttm'] = row['out_dttm']
 
     return good_data.drop(indices_to_remove, axis=0)
@@ -233,8 +243,8 @@ def get_transfers(location_data: pd.DataFrame):
     print(all_transfers)
     return all_transfers
 
-ptids = {'00145AB3B9A14E53BDE6EBD5B7609E5A869BADB91E9A340695EB9531028F95B5', '000C9903FC66E5482C8799C08670DA23C310248880C2CF301B802A6853983A3C'}
-full_info = full_info[full_info['ptid'].isin(ptids)]
+#ptids = {'00145AB3B9A14E53BDE6EBD5B7609E5A869BADB91E9A340695EB9531028F95B5', '000C9903FC66E5482C8799C08670DA23C310248880C2CF301B802A6853983A3C'}
+#full_info = full_info[full_info['ptid'].isin(ptids)]
 
 all_transfers = get_transfers(full_info)
 
@@ -252,7 +262,7 @@ if len(before_first_date) > 0:
 
 print("Rows after removing bad dates: %s" % len(all_transfers))
 
-all_transfers.to_csv('bad_transfers_1110.csv', header=True, index=False)
+all_transfers.to_csv('transfers_2018_12_15.csv', header=True, index=False)
 print('transfers file created')
 ##!!! finish of creating the transfers file
 
