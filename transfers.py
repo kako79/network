@@ -140,7 +140,7 @@ def clean_patient_data(patient_data: pd.DataFrame):
     # Remove locations: 'ADD FLOURO', 'nan'
     bad_locations = {'ADD FLOURO', 'nan'}
     bad_location_data = patient_data[patient_data['adt_department_name'].isin(bad_locations)]
-    good_data = patient_data.drop(bad_location_data.index, axis=0)
+    good_data = patient_data.drop(bad_location_data.index, axis=0).reset_index()
 
     # Replicated locations should be collapsed into a single row with in_dttm as the first in_dttm and out_dttm as
     # the last out_dttm.
@@ -160,15 +160,10 @@ def clean_patient_data(patient_data: pd.DataFrame):
             indices_to_remove.append(i)
             good_data.loc[current_loc_index, 'out_dttm'] = row['out_dttm']
 
-    print("indices to remove", indices_to_remove)
     return good_data.drop(indices_to_remove, axis=0)
 
 def get_patient_transfers(ptid, patient_data):
-    print("before clean")
-    print(patient_data)
     patient_data = clean_patient_data(patient_data)
-    print("after clean")
-    print(patient_data)
 
     # The stack will contain the previous (location, entry_time, exit_time) tuples.
     location_stack = []
