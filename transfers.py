@@ -201,33 +201,32 @@ def get_patient_transfers(ptid, patient_data):
         # be adding any transfers yet.
         if len(location_stack) == 0:
             location_stack.append(new_loc)
-        elif loc == 'POST-DISCHARGE':
-            transfer_list += get_transfers_out(ptid, location_stack, new_loc.dt_in)
-            current_loc = location_stack[-1]
-            transfer_list.append(
-                {'ptid': ptid, 'transfer_dt': new_loc.dt_in, 'from': current_loc.name, 'to': 'discharge', 'dt_adm': new_loc.dt_adm, 'dt_dis': new_loc.dt_dis, 'spec': new_loc.spec, 'age': new_loc.age, 'asa': new_loc.asa})
-            location_stack = []
         else:
             # If there are nested locations that the patient is no longer in, we need to transfer out of them.
             transfer_list += get_transfers_out(ptid, location_stack, new_loc.dt_in)
 
             current_loc = location_stack[-1]
 
-            # Check if the patient entered the next location after leaving the current location.
-            # If so, this is a normal transfer, and we need to pop the current location off the stack
-            # so it can be replaced by the new location.
-            if new_loc.dt_in >= current_loc.dt_out:
-                # This is a normal transfer.
-                # Pop the previous location off the stack because we've left it.
-                location_stack.pop()
-
-            # The patient is now in the new location so put it on top of the stack.
-            location_stack.append(new_loc)
-
-            # Add a transfer from the previous location to the new location.
-            if current_loc.name != new_loc.name:
+            if loc == 'POST-DISCHARGE':
                 transfer_list.append(
-                    {'ptid': ptid, 'transfer_dt': new_loc.dt_in, 'from': current_loc.name, 'to': new_loc.name, 'dt_adm': new_loc.dt_adm, 'dt_dis': new_loc.dt_dis, 'spec': new_loc.spec, 'age': new_loc.age, 'asa': new_loc.asa})
+                    {'ptid': ptid, 'transfer_dt': new_loc.dt_in, 'from': current_loc.name, 'to': 'discharge', 'dt_adm': new_loc.dt_adm, 'dt_dis': new_loc.dt_dis, 'spec': new_loc.spec, 'age': new_loc.age, 'asa': new_loc.asa})
+                location_stack = []
+            else:
+                # Check if the patient entered the next location after leaving the current location.
+                # If so, this is a normal transfer, and we need to pop the current location off the stack
+                # so it can be replaced by the new location.
+                if new_loc.dt_in >= current_loc.dt_out:
+                    # This is a normal transfer.
+                    # Pop the previous location off the stack because we've left it.
+                    location_stack.pop()
+
+                # The patient is now in the new location so put it on top of the stack.
+                location_stack.append(new_loc)
+
+                # Add a transfer from the previous location to the new location.
+                if current_loc.name != new_loc.name:
+                    transfer_list.append(
+                        {'ptid': ptid, 'transfer_dt': new_loc.dt_in, 'from': current_loc.name, 'to': new_loc.name, 'dt_adm': new_loc.dt_adm, 'dt_dis': new_loc.dt_dis, 'spec': new_loc.spec, 'age': new_loc.age, 'asa': new_loc.asa})
 
     if len(location_stack) > 0:
         # In case we are inside a bunch of nested locations, we now need to transfer the patient out of them.
@@ -256,8 +255,8 @@ def get_transfers(location_data: pd.DataFrame):
 
     return all_transfers.reset_index()
 
-#ptids = {'003E3448A96A55448E6B5CD4748998A8D2333AAAEFC8DD5ADFB4413E6B0B0235'}
-#full_info = full_info[full_info['ptid'].isin(ptids)]
+ptids = {'0019A04558F1827FCA84EE837099C451D37933C5BE6D1718E96235DC0D448572'}
+full_info = full_info[full_info['ptid'].isin(ptids)]
 
 all_transfers = get_transfers(full_info)
 
