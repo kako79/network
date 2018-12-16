@@ -129,7 +129,6 @@ def get_transfers_out(ptid, location_stack, current_dt):
     while (len(location_stack) > 1) and (location_stack[-1].dt_out < current_dt):
         loc = location_stack.pop()
         next_loc = location_stack[-1]
-        print(loc.dt_adm)
         if loc.name != next_loc.name:
             transfer_list.append({'ptid': ptid, 'transfer_dt': loc.dt_out, 'from': loc.name, 'to': next_loc.name, 'dt_adm': loc.dt_adm, 'dt_dis': loc.dt_dis, 'spec': loc.spec, 'age': loc.age, 'asa': loc.asa})
 
@@ -202,6 +201,12 @@ def get_patient_transfers(ptid, patient_data):
         # be adding any transfers yet.
         if len(location_stack) == 0:
             location_stack.append(new_loc)
+        elif loc == 'POST-DISCHARGE':
+            transfer_list += get_transfers_out(ptid, location_stack, new_loc.dt_in)
+            current_loc = location_stack[-1]
+            transfer_list.append(
+                {'ptid': ptid, 'transfer_dt': new_loc.dt_in, 'from': current_loc.name, 'to': 'discharge', 'dt_adm': new_loc.dt_adm, 'dt_dis': new_loc.dt_dis, 'spec': new_loc.spec, 'age': new_loc.age, 'asa': new_loc.asa})
+            location_stack = []
         else:
             # If there are nested locations that the patient is no longer in, we need to transfer out of them.
             transfer_list += get_transfers_out(ptid, location_stack, new_loc.dt_in)
@@ -224,12 +229,13 @@ def get_patient_transfers(ptid, patient_data):
                 transfer_list.append(
                     {'ptid': ptid, 'transfer_dt': new_loc.dt_in, 'from': current_loc.name, 'to': new_loc.name, 'dt_adm': new_loc.dt_adm, 'dt_dis': new_loc.dt_dis, 'spec': new_loc.spec, 'age': new_loc.age, 'asa': new_loc.asa})
 
-    # In case we are inside a bunch of nested locations, we now need to transfer the patient out of them.
-    transfer_list += get_transfers_out(ptid, location_stack, datetime.max)
+    if len(location_stack) > 0:
+        # In case we are inside a bunch of nested locations, we now need to transfer the patient out of them.
+        transfer_list += get_transfers_out(ptid, location_stack, datetime.max)
 
-    # Finally we need to discharge the patient.
-    last_loc = location_stack[-1]
-    transfer_list.append({'ptid': ptid, 'transfer_dt': last_loc.dt_out, 'from': last_loc.name, 'to': 'discharge','dt_adm': last_loc.dt_adm, 'dt_dis': last_loc.dt_dis, 'spec': last_loc.spec, 'age': last_loc.age, 'asa': last_loc.asa })
+        # Finally we need to discharge the patient.
+        last_loc = location_stack[-1]
+        transfer_list.append({'ptid': ptid, 'transfer_dt': last_loc.dt_out, 'from': last_loc.name, 'to': 'discharge','dt_adm': last_loc.dt_adm, 'dt_dis': last_loc.dt_dis, 'spec': last_loc.spec, 'age': last_loc.age, 'asa': last_loc.asa })
 
     # Return a DataFrame with the transfers.
     return pd.DataFrame(columns=['ptid', 'transfer_dt', 'from', 'to', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], data=transfer_list)
@@ -250,8 +256,8 @@ def get_transfers(location_data: pd.DataFrame):
 
     return all_transfers.reset_index()
 
-ptids = {'000C9903FC66E5482C8799C08670DA23C310248880C2CF301B802A6853983A3C'}
-full_info = full_info[full_info['ptid'].isin(ptids)]
+#ptids = {'003E3448A96A55448E6B5CD4748998A8D2333AAAEFC8DD5ADFB4413E6B0B0235'}
+#full_info = full_info[full_info['ptid'].isin(ptids)]
 
 all_transfers = get_transfers(full_info)
 
