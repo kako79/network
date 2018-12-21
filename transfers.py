@@ -196,7 +196,7 @@ def get_patient_transfers(ptid, patient_data):
     if len(patient_data) == 0:
         return None
 
-    if is_bad_patient(patient_data)
+    if is_bad_patient(patient_data):
         print("Bad data for %s" % ptid)
         return None
 
