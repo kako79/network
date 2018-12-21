@@ -261,7 +261,7 @@ full_info = full_info[full_info['ptid'].isin(ptids)]
 all_transfers = get_transfers(full_info)
 
 print("Rows: %s" % len(all_transfers))
-all_transfers.to_csv('transfers_with_bad_dates_2018_12_16.csv', header=True, index=False)
+all_transfers.to_csv('transfers_with_bad_dates_2018_12_21.csv', header=True, index=False)
 
 first_date = datetime(2015, 1, 1)
 last_date = datetime(2018, 6, 1)
@@ -274,7 +274,7 @@ if len(before_first_date) > 0:
 
 print("Rows after removing bad dates: %s" % len(all_transfers))
 
-all_transfers.to_csv('transfers_2018_12_16.csv', header=True, index=False)
+all_transfers.to_csv('transfers_2018_12_21.csv', header=True, index=False)
 print('transfers file created')
 ##!!! finish of creating the transfers file
 
