@@ -279,10 +279,11 @@ def get_transfers(location_data: pd.DataFrame):
         patient_transfers, patient_data = get_patient_transfers(ptid, group)
         if patient_transfers is None:
             bad_patients += 1
-            if bad_patient_data is None:
-                bad_patient_data = patient_data
-            else:
-                bad_patient_data = pd.concat([bad_patient_data, patient_data], ignore_index=True)
+            if patient_data is not None:
+                if bad_patient_data is None:
+                    bad_patient_data = patient_data
+                else:
+                    bad_patient_data = pd.concat([bad_patient_data, patient_data], ignore_index=True)
         else:
             good_patients += 1
             if all_transfers is None:
