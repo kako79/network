@@ -267,7 +267,7 @@ def get_patient_transfers(ptid, patient_data):
 def get_transfers(location_data: pd.DataFrame):
     good_patients = 0
     bad_patients = 0
-    bad_patient_data = None
+    bad_patient_data = []
 
     sorted_data = location_data.sort_values(['ptid', 'in_dttm'])
 
@@ -282,10 +282,7 @@ def get_transfers(location_data: pd.DataFrame):
         if patient_transfers is None:
             bad_patients += 1
             if patient_data is not None:
-                if bad_patient_data is None:
-                    bad_patient_data = patient_data
-                else:
-                    bad_patient_data = pd.concat([bad_patient_data, patient_data], ignore_index=True)
+                bad_patient_data.append(patient_data)
         else:
             good_patients += 1
             if all_transfers is None:
@@ -297,8 +294,10 @@ def get_transfers(location_data: pd.DataFrame):
         if (i % 100) == 0:
             print("Finished %s of %s patients. Good patients: %s, bad patients: %s." % (i, num_patients, good_patients, bad_patients))
 
-    bad_patient_data.to_csv('bad_patient_data.csv', header=True, index=False)
     print("Good patients: %s. Bad patients: %s." % (good_patients, bad_patients))
+
+    print("Saving bad patient data.")
+    pd.concat(bad_patient_data, ignore_index=True).to_csv('bad_patient_data.csv', header=True, index=False)
 
     return all_transfers.reset_index()
 
