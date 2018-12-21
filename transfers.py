@@ -197,7 +197,7 @@ def get_patient_transfers(ptid, patient_data):
         return None
 
     if is_bad_patient(patient_data):
-        print("Bad data for %s" % ptid)
+        # print("Bad data for %s" % ptid)
         return None
 
     # The stack will contain the previous (location, entry_time, exit_time) tuples.
@@ -284,7 +284,7 @@ def get_transfers(location_data: pd.DataFrame):
                 all_transfers = all_transfers.append(patient_transfers)
 
         i += 1
-        if (i % 1000) == 0:
+        if (i % 100) == 0:
             print("Finished %s of %s patients. Good patients: %s, bad patients: %s." % (i, num_patients, good_patients, bad_patients))
 
     print("Good patients: %s. Bad patients: %s." % (good_patients, bad_patients))
