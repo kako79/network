@@ -255,8 +255,8 @@ def get_transfers(location_data: pd.DataFrame):
 
     return all_transfers.reset_index()
 
-# ptids = {'0019A04558F1827FCA84EE837099C451D37933C5BE6D1718E96235DC0D448572'}
-# full_info = full_info[full_info['ptid'].isin(ptids)]
+ptids = {'0019A04558F1827FCA84EE837099C451D37933C5BE6D1718E96235DC0D448572'}
+full_info = full_info[full_info['ptid'].isin(ptids)]
 
 all_transfers = get_transfers(full_info)
 
