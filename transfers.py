@@ -261,17 +261,33 @@ def get_patient_transfers(ptid, patient_data):
 
 
 def get_transfers(location_data: pd.DataFrame):
+    good_patients = 0
+    bad_patients = 0
+
     sorted_data = location_data.sort_values(['ptid', 'in_dttm'])
+
+    num_patients = len(sorted_data['ptid'].unique())
+    i = 0
+
     sorted_data.to_csv("sorted_data.csv")
     groups = sorted_data.groupby('ptid')
     all_transfers = None
     for ptid, group in groups:
         patient_transfers = get_patient_transfers(ptid, group)
-        if patient_transfers is not None:
+        if patient_transfers is None:
+            bad_patients += 1
+        else:
+            good_patients += 1
             if all_transfers is None:
                 all_transfers = patient_transfers
             else:
                 all_transfers = all_transfers.append(patient_transfers)
+
+        i += 1
+        if (i % 1000) == 0:
+            print("Finished %s of %s patients. Good patients: %s, bad patients: %s." % (i, num_patients, good_patients, bad_patients))
+
+    print("Good patients: %s. Bad patients: %s." % (good_patients, bad_patients))
 
     return all_transfers.reset_index()
 
