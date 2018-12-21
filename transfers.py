@@ -185,6 +185,8 @@ def is_bad_patient(patient_data: pd.DataFrame):
 
         if ('THEATRE' in loc) or ('WARD' in loc):
             shouldnt_go_to_ae = True
+        elif loc == 'POST-DISCHARGE':
+            shouldnt_go_to_ae = False
         elif (loc == 'ADD EMERGENCY DEPT') and shouldnt_go_to_ae:
             return True
 
