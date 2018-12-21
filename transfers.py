@@ -194,11 +194,11 @@ def is_bad_patient(patient_data: pd.DataFrame):
 def get_patient_transfers(ptid, patient_data):
     patient_data = clean_patient_data(patient_data)
     if len(patient_data) == 0:
-        return None
+        return None, None
 
     if is_bad_patient(patient_data):
         # print("Bad data for %s" % ptid)
-        return None
+        return None, patient_data
 
     # The stack will contain the previous (location, entry_time, exit_time) tuples.
     location_stack = []
@@ -257,12 +257,15 @@ def get_patient_transfers(ptid, patient_data):
         transfer_list.append({'ptid': ptid, 'transfer_dt': last_loc.dt_out, 'from': last_loc.name, 'to': 'discharge','dt_adm': last_loc.dt_adm, 'dt_dis': last_loc.dt_dis, 'spec': last_loc.spec, 'age': last_loc.age, 'asa': last_loc.asa })
 
     # Return a DataFrame with the transfers.
-    return pd.DataFrame(columns=['ptid', 'transfer_dt', 'from', 'to', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], data=transfer_list)
+    transfers = pd.DataFrame(columns=['ptid', 'transfer_dt', 'from', 'to', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], data=transfer_list)
+
+    return transfers, patient_data
 
 
 def get_transfers(location_data: pd.DataFrame):
     good_patients = 0
     bad_patients = 0
+    bad_patient_data = None
 
     sorted_data = location_data.sort_values(['ptid', 'in_dttm'])
 
@@ -273,9 +276,13 @@ def get_transfers(location_data: pd.DataFrame):
     groups = sorted_data.groupby('ptid')
     all_transfers = None
     for ptid, group in groups:
-        patient_transfers = get_patient_transfers(ptid, group)
+        patient_transfers, patient_data = get_patient_transfers(ptid, group)
         if patient_transfers is None:
             bad_patients += 1
+            if bad_patient_data is None:
+                bad_patient_data = patient_data
+            else:
+                bad_patient_data = pd.concat([bad_patient_data, patient_data], ignore_index=True)
         else:
             good_patients += 1
             if all_transfers is None:
@@ -287,6 +294,7 @@ def get_transfers(location_data: pd.DataFrame):
         if (i % 100) == 0:
             print("Finished %s of %s patients. Good patients: %s, bad patients: %s." % (i, num_patients, good_patients, bad_patients))
 
+    bad_patient_data.to_csv('bad_patient_data.csv', header=True, index=False)
     print("Good patients: %s. Bad patients: %s." % (good_patients, bad_patients))
 
     return all_transfers.reset_index()
