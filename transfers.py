@@ -175,9 +175,29 @@ def clean_patient_data(patient_data: pd.DataFrame):
 
     return good_data.drop(indices_to_remove, axis=0)
 
+
+def is_bad_patient(patient_data: pd.DataFrame):
+    # If they go from theatre or a ward to A&E, they are no good.
+    shouldnt_go_to_ae = False
+
+    for i, row in patient_data.iterrows():
+        loc = row['adt_department_name']
+
+        if ('THEATRE' in loc) or ('WARD' in loc):
+            shouldnt_go_to_ae = True
+        elif (loc == 'ADD_EMERGENCY_DEPT') and shouldnt_go_to_ae:
+            return True
+
+    return False
+
+
 def get_patient_transfers(ptid, patient_data):
     patient_data = clean_patient_data(patient_data)
     if len(patient_data) == 0:
+        return None
+
+    if is_bad_patient(patient_data)
+        print("Bad data for %s" % ptid)
         return None
 
     # The stack will contain the previous (location, entry_time, exit_time) tuples.
@@ -255,8 +275,8 @@ def get_transfers(location_data: pd.DataFrame):
 
     return all_transfers.reset_index()
 
-ptids = {'0019A04558F1827FCA84EE837099C451D37933C5BE6D1718E96235DC0D448572'}
-full_info = full_info[full_info['ptid'].isin(ptids)]
+# ptids = {'0019A04558F1827FCA84EE837099C451D37933C5BE6D1718E96235DC0D448572'}
+# full_info = full_info[full_info['ptid'].isin(ptids)]
 
 all_transfers = get_transfers(full_info)
 
