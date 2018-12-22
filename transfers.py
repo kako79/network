@@ -14,8 +14,8 @@ def get_separate_date_time(datetimeentry):
 
 
 def simplify_theatre_entries(df: pd.DataFrame):
-    theatre_rows = df['loc'].str.contains('THEATRE')
-    df.loc[theatre_rows.index, 'loc'] = 'THEATRE'
+    theatre_rows = df['adt_department_name'].str.contains('THEATRE')
+    df.loc[theatre_rows.index, 'adt_department_name'] = 'THEATRE'
 
 #admpoint contains the transfers of all the patients between wards
 admpoint = pd.read_csv("ADM_POINT_aug.csv")
