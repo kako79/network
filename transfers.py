@@ -151,6 +151,7 @@ def clean_patient_data(patient_data: pd.DataFrame):
     current_loc = None
     current_loc_dt_out = None
     indices_to_remove = []
+    surg_theatre_index = None
 
     def is_separate_visit(t1: pd.Timestamp, t2: pd.Timestamp):
         # Times different by more one hour or more means separate visits.
@@ -163,6 +164,21 @@ def clean_patient_data(patient_data: pd.DataFrame):
         dt_out = row['out_dttm']
 
         if (loc != current_loc) or is_separate_visit(current_loc_dt_out, dt_in):
+            if (row['data_origin'] == 'surg') and ('THEATRE' in loc):
+                # Sometimes a theatre entry from the surgical data is wrong.
+                # One way to detect these is if the patient goes back to A&E after the theatre entry.
+                # If that happens there is always a correct theatre visit later from the adm source, so
+                # we can remove the bad one.
+                surg_theatre_index = i
+            elif loc == 'POST-DISCHARGE':
+                # If the patient is discharged they are allowed to come to A&E again.
+                surg_theatre_index = None
+            elif (surg_theatre_index is not None) and (loc == 'ADD EMERGENCY DEPT'):
+                # The patient is now in A&E but they were previously in theatre, according to the surgical data.
+                # Delete the previous theatre entry.
+                indices_to_remove.append(surg_theatre_index)
+                surg_theatre_index = None
+
             current_loc = loc
             current_loc_index = i
             current_loc_dt_out = dt_out
