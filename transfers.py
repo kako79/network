@@ -13,8 +13,9 @@ def get_separate_date_time(datetimeentry):
         return separate_date_time
 
 
-
-
+def simplify_theatre_entries(df: pd.DataFrame):
+    theatre_rows = df['loc'].str.contains('THEATRE')
+    df.loc[theatre_rows.index, 'loc'] = 'THEATRE'
 
 #admpoint contains the transfers of all the patients between wards
 admpoint = pd.read_csv("ADM_POINT_aug.csv")
@@ -25,9 +26,9 @@ s_length = len(admpoint['in_dttm'])
 admpoint['data_origin'] = np.repeat('adm', s_length, axis=0)
 # Rename the 'STUDY_SUBJECT_DIGEST' column to 'ptid'.
 admpoint.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
-
-
-
+admpoint['in_dttm'] = pd.to_datetime(admpoint['in_dttm'], format='%Y-%m-%d %H:%S:%M')
+admpoint['out_dttm'] = pd.to_datetime(admpoint['out_dttm'], format='%Y-%m-%d %H:%S:%M')
+simplify_theatre_entries(admpoint)
 
 #surgeriesinfo contains details about the surgery
 surgeriesinfo = pd.read_csv("SURGERIES_aug.csv")
@@ -36,7 +37,7 @@ encinfo = pd.read_csv("ENC_POINT_aug.csv")
 print('reading in done')
 #make the new files into df that look the same so that they can be appended onto admpoint
 
-surg_df= surgeriesinfo[['STUDY_SUBJECT_DIGEST', 'case_start', 'case_end', 'prov_name']]
+surg_df = surgeriesinfo[['STUDY_SUBJECT_DIGEST', 'case_start', 'case_end', 'prov_name']]
 s_length = len(surg_df['case_start']) #length of series that needs to be added into the new columns
 #surg_df['adt_room_id'] = np.repeat(0, s_length, axis=0)
 #surg_df['adt_bed_id'] = np.repeat (0, s_length, axis=0)
@@ -45,6 +46,9 @@ surg_df.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True
 surg_df.rename(index=str, columns={'case_start': 'in_dttm'}, inplace=True)
 surg_df.rename(index=str, columns={'case_end': 'out_dttm'}, inplace=True)
 surg_df.rename(index=str, columns={'prov_name': 'adt_department_name'}, inplace = True)
+surg_df['in_dttm'] = pd.to_datetime(surg_df['in_dttm'], format='%d/%m/%Y %H:%M')
+surg_df['out_dttm'] = pd.to_datetime(surg_df['out_dttm'], format='%d/%m/%Y %H:%M')
+simplify_theatre_entries(surg_df)
 
 enc_df = encinfo[['STUDY_SUBJECT_DIGEST', 'at_time','enctype', 'dep_name']]
 #replace the empty entries in the department name with the encounter type eg operation.
@@ -57,13 +61,15 @@ enc_df['data_origin'] = np.repeat ('enc', s_length, axis = 0)
 enc_df.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
 enc_df.rename(index=str, columns={'at_time': 'in_dttm'}, inplace=True)
 enc_df.rename(index=str, columns={'dep_name': 'adt_department_name'}, inplace = True)
+enc_df['in_dttm'] = pd.to_datetime(enc_df['in_dttm'], format='%Y-%m-%s %H:%M:%S')
 enc_df['out_dttm'] = enc_df['in_dttm']
+simplify_theatre_entries(enc_df)
 
 #make dataframe containing all the information, then sort by patient id
 #convert in_dttm to a datetime object to be able to sort by it later
 full_info = pd.concat([admpoint, enc_df, surg_df], ignore_index=True)
-full_info['in_dttm'] = pd.to_datetime(full_info['in_dttm'])
-full_info['out_dttm'] = pd.to_datetime(full_info['out_dttm'])
+# full_info['in_dttm'] = pd.to_datetime(full_info['in_dttm'])
+# full_info['out_dttm'] = pd.to_datetime(full_info['out_dttm'])
 full_info = full_info.sort_values(by = ['ptid', 'in_dttm'], ascending = [True, True])
 full_info.reset_index(drop=True, inplace=True)
 
