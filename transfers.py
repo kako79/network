@@ -26,8 +26,8 @@ s_length = len(admpoint['in_dttm'])
 admpoint['data_origin'] = np.repeat('adm', s_length, axis=0)
 # Rename the 'STUDY_SUBJECT_DIGEST' column to 'ptid'.
 admpoint.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
-admpoint['in_dttm'] = pd.to_datetime(admpoint['in_dttm'], format='%Y-%m-%d %H:%S:%M')
-admpoint['out_dttm'] = pd.to_datetime(admpoint['out_dttm'], format='%Y-%m-%d %H:%S:%M')
+admpoint['in_dttm'] = pd.to_datetime(admpoint['in_dttm'])
+admpoint['out_dttm'] = pd.to_datetime(admpoint['out_dttm'])
 simplify_theatre_entries(admpoint)
 
 #surgeriesinfo contains details about the surgery
@@ -46,8 +46,8 @@ surg_df.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True
 surg_df.rename(index=str, columns={'case_start': 'in_dttm'}, inplace=True)
 surg_df.rename(index=str, columns={'case_end': 'out_dttm'}, inplace=True)
 surg_df.rename(index=str, columns={'prov_name': 'adt_department_name'}, inplace = True)
-surg_df['in_dttm'] = pd.to_datetime(surg_df['in_dttm'], format='%d/%m/%Y %H:%M')
-surg_df['out_dttm'] = pd.to_datetime(surg_df['out_dttm'], format='%d/%m/%Y %H:%M')
+surg_df['in_dttm'] = pd.to_datetime(surg_df['in_dttm'], dayfirst=True)
+surg_df['out_dttm'] = pd.to_datetime(surg_df['out_dttm'], dayfirst=True)
 simplify_theatre_entries(surg_df)
 
 enc_df = encinfo[['STUDY_SUBJECT_DIGEST', 'at_time','enctype', 'dep_name']]
@@ -61,7 +61,7 @@ enc_df['data_origin'] = np.repeat ('enc', s_length, axis = 0)
 enc_df.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
 enc_df.rename(index=str, columns={'at_time': 'in_dttm'}, inplace=True)
 enc_df.rename(index=str, columns={'dep_name': 'adt_department_name'}, inplace = True)
-enc_df['in_dttm'] = pd.to_datetime(enc_df['in_dttm'], format='%Y-%m-%s %H:%M:%S')
+enc_df['in_dttm'] = pd.to_datetime(enc_df['in_dttm'])
 enc_df['out_dttm'] = enc_df['in_dttm']
 simplify_theatre_entries(enc_df)
 
