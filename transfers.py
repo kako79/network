@@ -323,8 +323,9 @@ def get_transfers(location_data: pd.DataFrame):
 
     print("Good patients: %s. Bad patients: %s." % (num_good_patients, num_bad_patients))
 
-    print("Saving bad patient data.")
-    pd.concat(bad_patient_data, ignore_index=True).to_csv('bad_patient_data.csv', header=True, index=False)
+    if num_bad_patients > 0:
+        print("Saving bad patient data.")
+        pd.concat(bad_patient_data, ignore_index=True).to_csv('bad_patient_data.csv', header=True, index=False)
 
     return all_transfers.reset_index()
 
