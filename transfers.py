@@ -147,9 +147,9 @@ def clean_patient_data(patient_data: pd.DataFrame):
     bad_location_data = patient_data[patient_data['adt_department_name'].isin(bad_locations)]
 
     if len(bad_location_data) > 0:
-        good_data = patient_data.drop(bad_location_data.index, axis=0).reset_index()
+        good_data = patient_data.drop(bad_location_data.index, axis=0).reset_index(drop=True)
     else:
-        good_data = patient_data.reset_index()
+        good_data = patient_data.reset_index(drop=True)
 
     # Replicated locations should be collapsed into a single row with in_dttm as the first in_dttm and out_dttm as
     # the last out_dttm.
@@ -324,7 +324,7 @@ def get_transfers(location_data: pd.DataFrame):
         print("Saving bad patient data.")
         pd.concat(bad_patient_data, ignore_index=True).to_csv('bad_patient_data.csv', header=True, index=False)
 
-    return pd.concat(all_transfers, ignore_index=True).reset_index()
+    return pd.concat(all_transfers, ignore_index=True).sort_values(by=['ptid', 'in_dttm'], axis=0).reset_index(drop=True)
 
 # ptids = {'0019A04558F1827FCA84EE837099C451D37933C5BE6D1718E96235DC0D448572'}
 # full_info = full_info[full_info['ptid'].isin(ptids)]
