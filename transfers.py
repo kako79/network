@@ -196,11 +196,13 @@ def clean_patient_data(patient_data: pd.DataFrame):
             good_data.loc[current_loc_index, 'out_dttm'] = dt_out
 
     clean_data = good_data.drop(indices_to_remove, axis=0)
+
     if len(clean_data) == 0:
         ptid = patient_data['ptid'].iloc[0]
         print("Writing %s.csv for patient with no cleaned data." % ptid)
         patient_data.to_csv("%s.csv" % ptid)
 
+    return clean_data
 
 def is_bad_patient(patient_data: pd.DataFrame):
     # If they go from theatre or a ward to A&E, they are no good.
