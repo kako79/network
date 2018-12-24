@@ -170,20 +170,20 @@ def clean_patient_data(patient_data: pd.DataFrame):
         dt_out = row['out_dttm']
 
         if (loc != current_loc) or is_separate_visit(current_loc_dt_out, dt_in):
-            if (row['data_origin'] == 'surg') and ('THEATRE' in loc):
-                # Sometimes a theatre entry from the surgical data is wrong.
-                # One way to detect these is if the patient goes back to A&E after the theatre entry.
-                # If that happens there is always a correct theatre visit later from the adm source, so
-                # we can remove the bad one.
-                surg_theatre_index = i
-            elif loc == 'POST-DISCHARGE':
-                # If the patient is discharged they are allowed to come to A&E again.
-                surg_theatre_index = None
-            elif (surg_theatre_index is not None) and (loc == 'ADD EMERGENCY DEPT'):
-                # The patient is now in A&E but they were previously in theatre, according to the surgical data.
-                # Delete the previous theatre entry.
-                indices_to_remove.append(surg_theatre_index)
-                surg_theatre_index = None
+            # if (row['data_origin'] == 'surg') and ('THEATRE' in loc):
+            #     # Sometimes a theatre entry from the surgical data is wrong.
+            #     # One way to detect these is if the patient goes back to A&E after the theatre entry.
+            #     # If that happens there is always a correct theatre visit later from the adm source, so
+            #     # we can remove the bad one.
+            #     surg_theatre_index = i
+            # elif loc == 'POST-DISCHARGE':
+            #     # If the patient is discharged they are allowed to come to A&E again.
+            #     surg_theatre_index = None
+            # elif (surg_theatre_index is not None) and (loc == 'ADD EMERGENCY DEPT'):
+            #     # The patient is now in A&E but they were previously in theatre, according to the surgical data.
+            #     # Delete the previous theatre entry.
+            #     indices_to_remove.append(surg_theatre_index)
+            #     surg_theatre_index = None
 
             current_loc = loc
             current_loc_index = i
@@ -287,8 +287,8 @@ def get_patient_transfers(ptid, patient_data):
 
 
 def get_transfers(location_data: pd.DataFrame):
-    good_patients = 0
-    bad_patients = 0
+    num_good_patients = 0
+    num_bad_patients = 0
     bad_patient_data = []
 
     sorted_data = location_data.sort_values(['ptid', 'in_dttm'])
@@ -302,11 +302,11 @@ def get_transfers(location_data: pd.DataFrame):
     for ptid, group in groups:
         patient_transfers, patient_data = get_patient_transfers(ptid, group)
         if patient_transfers is None:
-            bad_patients += 1
+            num_bad_patients += 1
             if patient_data is not None:
                 bad_patient_data.append(patient_data)
         else:
-            good_patients += 1
+            num_good_patients += 1
             if all_transfers is None:
                 all_transfers = patient_transfers
             else:
@@ -314,9 +314,9 @@ def get_transfers(location_data: pd.DataFrame):
 
         i += 1
         if (i % 100) == 0:
-            print("Finished %s of %s patients. Good patients: %s, bad patients: %s." % (i, num_patients, good_patients, bad_patients))
+            print("Finished %s of %s patients. Good patients: %s, bad patients: %s." % (i, num_patients, num_good_patients, num_bad_patients))
 
-    print("Good patients: %s. Bad patients: %s." % (good_patients, bad_patients))
+    print("Good patients: %s. Bad patients: %s." % (num_good_patients, num_bad_patients))
 
     print("Saving bad patient data.")
     pd.concat(bad_patient_data, ignore_index=True).to_csv('bad_patient_data.csv', header=True, index=False)
