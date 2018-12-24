@@ -324,7 +324,7 @@ def get_transfers(location_data: pd.DataFrame):
         print("Saving bad patient data.")
         pd.concat(bad_patient_data, ignore_index=True).to_csv('bad_patient_data.csv', header=True, index=False)
 
-    return pd.concat(all_transfers, ignore_index=True).sort_values(by=['ptid', 'in_dttm'], axis=0).reset_index(drop=True)
+    return pd.concat(all_transfers, ignore_index=True).sort_values(by=['ptid', 'transfer_dt'], axis=0).reset_index(drop=True)
 
 # ptids = {'0019A04558F1827FCA84EE837099C451D37933C5BE6D1718E96235DC0D448572'}
 # full_info = full_info[full_info['ptid'].isin(ptids)]
