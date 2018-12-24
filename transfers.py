@@ -149,7 +149,7 @@ def clean_patient_data(patient_data: pd.DataFrame):
     if len(bad_location_data) > 0:
         good_data = patient_data.drop(bad_location_data.index, axis=0).reset_index()
     else:
-        good_data = patient_data.copy()
+        good_data = patient_data.reset_index()
 
     # Replicated locations should be collapsed into a single row with in_dttm as the first in_dttm and out_dttm as
     # the last out_dttm.
@@ -199,8 +199,8 @@ def clean_patient_data(patient_data: pd.DataFrame):
 
     if len(clean_data) == 0:
         ptid = patient_data['ptid'].iloc[0]
-        print("Writing %s.csv for patient with no cleaned data." % ptid)
-        patient_data.to_csv("%s.csv" % ptid)
+        print("Writing pt_%s.csv for patient with no cleaned data." % ptid)
+        patient_data.to_csv("pt_%s.csv" % ptid)
 
     return clean_data
 
