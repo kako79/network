@@ -195,7 +195,11 @@ def clean_patient_data(patient_data: pd.DataFrame):
             current_loc_dt_out = dt_out
             good_data.loc[current_loc_index, 'out_dttm'] = dt_out
 
-    return good_data.drop(indices_to_remove, axis=0)
+    clean_data = good_data.drop(indices_to_remove, axis=0)
+    if len(clean_data) == 0:
+        ptid = patient_data['ptid'].iloc[0]
+        print("Writing %s.csv for patient with no cleaned data." % ptid)
+        patient_data.to_csv("%s.csv" % ptid)
 
 
 def is_bad_patient(patient_data: pd.DataFrame):
@@ -233,7 +237,6 @@ def get_patient_transfers(ptid, patient_data):
         loc = row['adt_department_name']
         dt_in = row['in_dttm']
         dt_out = row['out_dttm']
-        #dt_adm = row['adm_hosp']
         dt_dis = row['dis_hosp']
         spec = row['specialty']
         age = row['admAge']
