@@ -227,7 +227,6 @@ def get_patient_transfers(ptid, patient_data):
         return None, None
 
     if is_bad_patient(patient_data):
-        # print("Bad data for %s" % ptid)
         return None, patient_data
 
     # The stack will contain the previous (location, entry_time, exit_time) tuples.
@@ -303,7 +302,8 @@ def get_transfers(location_data: pd.DataFrame):
 
     sorted_data.to_csv("sorted_data.csv")
     groups = sorted_data.groupby('ptid')
-    all_transfers = None
+    all_transfers = []
+
     for ptid, group in groups:
         patient_transfers, patient_data = get_patient_transfers(ptid, group)
         if patient_transfers is None:
@@ -312,10 +312,7 @@ def get_transfers(location_data: pd.DataFrame):
                 bad_patient_data.append(patient_data)
         else:
             num_good_patients += 1
-            if all_transfers is None:
-                all_transfers = patient_transfers
-            else:
-                all_transfers = all_transfers.append(patient_transfers)
+            all_transfers.append(patient_transfers)
 
         i += 1
         if (i % 100) == 0:
@@ -327,7 +324,7 @@ def get_transfers(location_data: pd.DataFrame):
         print("Saving bad patient data.")
         pd.concat(bad_patient_data, ignore_index=True).to_csv('bad_patient_data.csv', header=True, index=False)
 
-    return all_transfers.reset_index()
+    return pd.concat(all_transfers, ignore_index=True).reset_index()
 
 # ptids = {'0019A04558F1827FCA84EE837099C451D37933C5BE6D1718E96235DC0D448572'}
 # full_info = full_info[full_info['ptid'].isin(ptids)]
