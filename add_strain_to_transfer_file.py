@@ -1,6 +1,12 @@
-matplotlib.use('agg')
-import matplotlib.pyplot as plt
+import pandas as pd
+from datetime import datetime
+import numpy as np
+from collections import deque, namedtuple
 
+
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('agg')
 import pandas as pd
 #from mpl_toolkits import mplot3d
 #from matplotlib import cm
