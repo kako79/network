@@ -944,7 +944,7 @@ nx.write_gexf(G,'gexf' + filename +'.gexf')
 
 
 
-print('all network infor file created')
+print('all network information file created')
 
 
 
