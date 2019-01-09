@@ -49,7 +49,7 @@ bedstate_info['date'] = pd.to_datetime(bedstate_info['Date'], format='%Y-%m-%d')
 bedstate_info['date_number'] = bedstate_info['date'].map(get_date_number)
 bedstate_info.drop(['date'], axis = 1, inplace = True)
 bedstate_info.set_index('date_number', drop = True, inplace = True)
-transfer_data_beded= transfer_data_beded.join(bedstate_info, on = 'date_as_number', how = 'left')
+transfer_data_beded= transfer_data_ed.join(bedstate_info, on = 'date_as_number', how = 'left')
 
 
 transfer_strain = transfer_data_beded.drop(['date_as_number','date'], axis=1)
