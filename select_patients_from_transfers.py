@@ -23,7 +23,7 @@ from datetime import datetime
 
 
 
-alltransfers = pd.read_csv("all_transfers_1110.csv")
+alltransfers = pd.read_csv("transfers_2018_12_21.csv")
 
 
 #select all the patients who at some point in their stay were in icu, nccu
@@ -40,7 +40,7 @@ t_o_patient_records = alltransfers.loc[alltransfers['ptid'].isin(t_o_patient_ids
 age_old = {'80','81','82','83','84','85','86','87','88','89','90','91','92','93','94','95'}
 t_o_old_patient_ids = set(t_o_patient_records.loc[t_o_patient_records['age'].isin(age_old)]['ptid'].unique())
 t_o_old_patient_records = t_o_patient_records.loc[t_o_patient_records['ptid'].isin(t_o_old_patient_ids)]
-t_o_old_patient_records.to_csv('transfers_old_t_o.csv', header=True, index=False)
+t_o_old_patient_records.to_csv('transfers_old_to_1221.csv', header=True, index=False)
 
 #asacategory= {'3','4'}
 #asa34_patient_ids = set(alltransfers.loc[alltransfers['asa'].isin(asacategory)]['ptid'].unique())
