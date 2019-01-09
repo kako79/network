@@ -31,7 +31,8 @@ def get_transfer_day(date):
 
 
 transfer_data = pd.read_csv("transfers_2019_01_09.csv")
-transfer_data['date_as_number'] = transfer_data['transfer_dt'].map(get_date_number)
+transfer_data['date'] = pd.to_datetime(transfer_data['transfer_dt'], format='%d/%m/%Y')
+transfer_data['date_as_number'] = transfer_data['date'].map(get_date_number)
 
 ed_performance = pd.read_csv("ed_performance_all.csv")
 # need transfer date only in a separate column
@@ -51,7 +52,7 @@ bedstate_info.set_index('date_number', drop = True, inplace = True)
 transfer_data_beded= transfer_data_beded.join(bedstate_info, on = 'date_as_number', how = 'left')
 
 
-transfer_strain = transfer_data_beded.drop(['date_as_number'], axis=1)
+transfer_strain = transfer_data_beded.drop(['date_as_number','date'], axis=1)
 max_beds = 1154 # maximal number of beds
 
 def get_free_beds(beds_occupied):
