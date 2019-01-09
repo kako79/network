@@ -30,7 +30,7 @@ admpoint['data_origin'] = np.repeat('adm', s_length, axis=0)
 admpoint.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
 admpoint['in_dttm'] = pd.to_datetime(admpoint['in_dttm'])
 admpoint['out_dttm'] = pd.to_datetime(admpoint['out_dttm'])
-simplify_theatre_entries(admpoint)
+amdpoint = simplify_theatre_entries(admpoint)
 
 #surgeriesinfo contains details about the surgery
 surgeriesinfo = pd.read_csv("SURGERIES_aug.csv")
@@ -65,7 +65,7 @@ enc_df.rename(index=str, columns={'at_time': 'in_dttm'}, inplace=True)
 enc_df.rename(index=str, columns={'dep_name': 'adt_department_name'}, inplace = True)
 enc_df['in_dttm'] = pd.to_datetime(enc_df['in_dttm'])
 enc_df['out_dttm'] = enc_df['in_dttm']
-simplify_theatre_entries(enc_df)
+enc_df = simplify_theatre_entries(enc_df)
 
 #make dataframe containing all the information, then sort by patient id
 #convert in_dttm to a datetime object to be able to sort by it later
@@ -172,20 +172,20 @@ def clean_patient_data(patient_data: pd.DataFrame):
         dt_out = row['out_dttm']
 
         if (loc != current_loc) or is_separate_visit(current_loc_dt_out, dt_in):
-            # if (row['data_origin'] == 'surg') and ('THEATRE' in loc):
-            #     # Sometimes a theatre entry from the surgical data is wrong.
-            #     # One way to detect these is if the patient goes back to A&E after the theatre entry.
-            #     # If that happens there is always a correct theatre visit later from the adm source, so
-            #     # we can remove the bad one.
-            #     surg_theatre_index = i
-            # elif loc == 'POST-DISCHARGE':
-            #     # If the patient is discharged they are allowed to come to A&E again.
-            #     surg_theatre_index = None
-            # elif (surg_theatre_index is not None) and (loc == 'ADD EMERGENCY DEPT'):
-            #     # The patient is now in A&E but they were previously in theatre, according to the surgical data.
-            #     # Delete the previous theatre entry.
-            #     indices_to_remove.append(surg_theatre_index)
-            #     surg_theatre_index = None
+            if (row['data_origin'] == 'surg') and ('THEATRE' in loc):
+                # Sometimes a theatre entry from the surgical data is wrong.
+                # One way to detect these is if the patient goes back to A&E after the theatre entry.
+                # If that happens there is always a correct theatre visit later from the adm source, so
+                # we can remove the bad one.
+                surg_theatre_index = i
+            elif loc == 'POST-DISCHARGE':
+                # If the patient is discharged they are allowed to come to A&E again.
+                surg_theatre_index = None
+            elif (surg_theatre_index is not None) and (loc == 'ADD EMERGENCY DEPT'):
+                # The patient is now in A&E but they were previously in theatre, according to the surgical data.
+                # Delete the previous theatre entry.
+                indices_to_remove.append(surg_theatre_index)
+                surg_theatre_index = None
 
             current_loc = loc
             current_loc_index = i
@@ -334,7 +334,7 @@ def get_transfers(location_data: pd.DataFrame):
 all_transfers = get_transfers(full_info)
 
 print("Rows: %s" % len(all_transfers))
-all_transfers.to_csv('transfers_with_bad_dates_2018_12_21.csv', header=True, index=False)
+all_transfers.to_csv('transfers_with_bad_dates_2019_01_09.csv', header=True, index=False)
 
 first_date = datetime(2015, 1, 1)
 last_date = datetime(2018, 6, 1)
@@ -347,7 +347,7 @@ if len(before_first_date) > 0:
 
 print("Rows after removing bad dates: %s" % len(all_transfers))
 
-all_transfers.to_csv('transfers_2018_12_21.csv', header=True, index=False)
+all_transfers.to_csv('transfers_2019_01_09.csv', header=True, index=False)
 print('transfers file created')
 ##!!! finish of creating the transfers file
 
