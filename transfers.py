@@ -14,6 +14,7 @@ def get_separate_date_time(datetimeentry):
 
 
 def simplify_theatre_entries(df: pd.DataFrame):
+    df = df.dropna(axis=0)
     theatre_rows = df[df['adt_department_name'].str.contains('THEATRE')]
     df.loc[theatre_rows.index, 'adt_department_name'] = 'THEATRE'
 
