@@ -55,7 +55,7 @@ bedstate_info.set_index('date_number', drop = True, inplace = True)
 transfer_data_beded= transfer_data_ed.join(bedstate_info, on = 'date_as_number', how = 'left')
 
 transfer_data_beded['bedsfree'] = transfer_data_beded['Total Occupied'].map(get_free_beds)
-transfer_data_beded['strain'] = transfer_data_beded.bedsfree * transfer_data_beded.breach_percentage
+transfer_data_beded['strain'] = 1.0/transfer_data_beded.bedsfree * transfer_data_beded.breach_percentage *100
 transfer_strain = transfer_data_beded.drop(['date_as_number','date', 'day', 'Total Occupied'], axis=1)
 
 
