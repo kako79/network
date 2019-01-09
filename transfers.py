@@ -14,9 +14,10 @@ def get_separate_date_time(datetimeentry):
 
 
 def simplify_theatre_entries(df: pd.DataFrame):
-    df = df.dropna(axis=0)
-    theatre_rows = df[df['adt_department_name'].str.contains('THEATRE')]
-    df.loc[theatre_rows.index, 'adt_department_name'] = 'THEATRE'
+    df_nonan = df[df['adt_department_name'].isna()]
+    theatre_rows = df_nonan[df_nonan['adt_department_name'].str.contains('THEATRE')]
+    df_nonan.loc[theatre_rows.index, 'adt_department_name'] = 'THEATRE'
+    return df_nonan
 
 #admpoint contains the transfers of all the patients between wards
 admpoint = pd.read_csv("ADM_POINT_aug.csv")
@@ -49,7 +50,7 @@ surg_df.rename(index=str, columns={'case_end': 'out_dttm'}, inplace=True)
 surg_df.rename(index=str, columns={'prov_name': 'adt_department_name'}, inplace = True)
 surg_df['in_dttm'] = pd.to_datetime(surg_df['in_dttm'], dayfirst=True)
 surg_df['out_dttm'] = pd.to_datetime(surg_df['out_dttm'], dayfirst=True)
-simplify_theatre_entries(surg_df)
+surg_df = simplify_theatre_entries(surg_df)
 
 enc_df = encinfo[['STUDY_SUBJECT_DIGEST', 'at_time','enctype', 'dep_name']]
 #replace the empty entries in the department name with the encounter type eg operation.
