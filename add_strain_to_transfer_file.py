@@ -28,7 +28,10 @@ def get_transfer_day(date):
     return d
 
 
+max_beds = 1154 # maximal number of beds
 
+def get_free_beds(beds_occupied):
+    return max_beds - beds_occupied
 
 transfer_data = pd.read_csv("transfers_2019_01_09.csv")
 transfer_data['date'] = pd.to_datetime(transfer_data['transfer_dt'], format="%Y-%m-%d %H:%M")
@@ -51,11 +54,9 @@ bedstate_info.drop(['date'], axis = 1, inplace = True)
 bedstate_info.set_index('date_number', drop = True, inplace = True)
 transfer_data_beded= transfer_data_ed.join(bedstate_info, on = 'date_as_number', how = 'left')
 
+transfer_data_beded['bedsfree'] = transfer_data_beded['Total Occupied'].map(get_free_beds)
+transfer_data_beded['strain'] = transfer_data_beded.bedsfree * transfer_data_beded.breach_percentage
+transfer_strain = transfer_data_beded.drop(['date_as_number','date', 'day', 'Total Occupied'], axis=1)
 
-transfer_strain = transfer_data_beded.drop(['date_as_number','date'], axis=1)
-max_beds = 1154 # maximal number of beds
-
-def get_free_beds(beds_occupied):
-    return max_beds - beds_occupied
 
 transfer_strain.to_csv('transfer_strain.csv', header=True, index=False)
