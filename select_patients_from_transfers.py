@@ -37,6 +37,8 @@ specialities = {'Trauma', 'Orthopaedics'}
 t_o_patient_ids = set(alltransfers.loc[alltransfers['spec'].isin(specialities)]['ptid'].unique())
 t_o_patient_records = alltransfers.loc[alltransfers['ptid'].isin(t_o_patient_ids)]
 
+
+
 age_old = {'80','81','82','83','84','85','86','87','88','89','90','91','92','93','94','95'}
 t_o_old_patient_ids = set(t_o_patient_records.loc[t_o_patient_records['age'].isin(age_old)]['ptid'].unique())
 t_o_old_patient_records = t_o_patient_records.loc[t_o_patient_records['ptid'].isin(t_o_old_patient_ids)]
