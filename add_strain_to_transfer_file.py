@@ -31,7 +31,7 @@ def get_transfer_day(date):
 
 
 transfer_data = pd.read_csv("transfers_2019_01_09.csv")
-transfer_data['date'] = pd.to_datetime(transfer_data['transfer_dt'], format='%d/%m/%Y')
+transfer_data['date'] = pd.to_datetime(transfer_data['transfer_dt'], format='%d/%m/%Y H:M:S')
 transfer_data['date_as_number'] = transfer_data['date'].map(get_date_number)
 
 ed_performance = pd.read_csv("ed_performance_all.csv")
