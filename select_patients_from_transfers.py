@@ -23,7 +23,7 @@ from datetime import datetime
 
 
 
-alltransfers = pd.read_csv("transfers_2019_01_09.csv")
+alltransfers = pd.read_csv("transfers_strain.csv")
 
 
 #select all the patients who at some point in their stay were in icu, nccu
