@@ -37,9 +37,10 @@ def get_transfer_day(date):
         if ulr:
             d = datetime.strptime(strdate[:-ulr], fmt)
             date_day = d.date()
+            dd = date_day.strftime('%Y-%m-%d')
         else:
             raise v
-    return date_day
+    return dd
 
 
 
