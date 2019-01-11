@@ -48,6 +48,7 @@ def get_transfer_day(date):
 def get_previous_day(date):
     date_in_date_format = get_transfer_day(date)
     prev_day = datetime.date(date_in_date_format) - dt.timedelta(1)
+    prev_day = prev_day.strftime('%Y-%m-%d')
     return prev_day
 
 
