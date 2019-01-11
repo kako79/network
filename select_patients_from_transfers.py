@@ -16,6 +16,8 @@ import networkx as nx
 #from itertools import chain
 #from collections import defaultdict
 from datetime import datetime
+import datetime as dt
+
 
 def get_separate_date_time(datetimeentry):
     print(datetimeentry)
@@ -45,7 +47,7 @@ def get_transfer_day(date):
 
 def get_previous_day(date):
     date_in_date_format = get_transfer_day(date)
-    prev_day = datetime.date(date_in_date_format) - datetime.timedelta(1).isoformat()
+    prev_day = datetime.date(date_in_date_format) - dt.timedelta(1)
     return prev_day
 
 
