@@ -66,8 +66,8 @@ low_ed_prev_day = []
 j=0
 for i in low_ed_perc_dates:
     print(j,i)
-    low_ed_prev_day[j] = get_previous_day(i)
-    print(j,i)
+    prev_day= get_previous_day(i)
+    print(j,i, prev_day)
     j=j+1
 
 print(low_ed_perc_dates)
