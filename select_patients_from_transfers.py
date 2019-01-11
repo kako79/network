@@ -36,9 +36,10 @@ def get_transfer_day(date):
         ulr = len(v.args[0].partition('unconverted data remains: ')[2])
         if ulr:
             d = datetime.strptime(strdate[:-ulr], fmt)
+            date_day = d.date()
         else:
             raise v
-    return d
+    return date_day
 
 
 
