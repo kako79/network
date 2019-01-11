@@ -17,13 +17,48 @@ import networkx as nx
 #from collections import defaultdict
 from datetime import datetime
 
+def get_separate_date_time(datetimeentry):
+    print(datetimeentry)
+    if type(datetimeentry) == float:
+        return datetime.max
+    else:
+        #this returns the date in a format where the hours and days can be accessed eg d.year or d.minute
+        separate_date_time = datetime.strptime(datetimeentry,"%Y-%m-%d %H:%M:%S")
+        return separate_date_time
 
 
+def get_transfer_day(date):
+    strdate = str(date)
+    fmt = "%Y-%m-%d"
+    try:
+        d = datetime.strptime(strdate, fmt)
+    except ValueError as v:
+        ulr = len(v.args[0].partition('unconverted data remains: ')[2])
+        if ulr:
+            d = datetime.strptime(strdate[:-ulr], fmt)
+        else:
+            raise v
+    return d
 
 
 
 
 alltransfers = pd.read_csv("transfer_strain.csv")
+
+#select transfers on specific dates with low breach percentage ie days where A&E was very full
+transfers_lowed = alltransfers[alltransfers['breach_percentage'] < 0.6955]
+#transfers_lowed.to_csv('transfers_lowedpercentage.csv')
+
+#select patients for the day before, the day of and the day after a full A&E
+#find the days with low ED percentage
+transfers_lowed['day_of_transfer'] = transfers_lowed['transfer_dt'].map(get_transfer_day)
+low_ed_perc_dates = transfers_lowed['day_of_transfer'].unique()
+
+print(low_ed_perc_dates)
+
+
+
+
 
 
 #select all the patients who at some point in their stay were in icu, nccu
@@ -47,11 +82,4 @@ alltransfers = pd.read_csv("transfer_strain.csv")
 #asa34_patient_records = alltransfers.loc[alltransfers['ptid'].isin(asa34_patient_ids)]
 #asa34_patient_records.to_csv('transfers_all_pts_asa34.csv', header=True, index=False)
 
-#select transfers on specific dates with low breach percentage ie days where A&E was very full
-transfers_lowed = alltransfers[alltransfers['breach_percentage'] < 0.6955]
-#transfers_lowed.to_csv('transfers_lowedpercentage.csv')
 
-#select patients for the day before, the day of and the day after a full A&E
-#find the days with low ED percentage
-low_ed_perc_dates = transfers_lowed['transfer_dt'].unique()
-print(low_ed_perc_dates)
