@@ -63,8 +63,10 @@ transfers_lowed = alltransfers[alltransfers['breach_percentage'] < 0.6955]
 transfers_lowed['day_of_transfer'] = transfers_lowed['transfer_dt'].map(get_transfer_day)
 low_ed_perc_dates = transfers_lowed['day_of_transfer'].unique()
 low_ed_prev_day = []
+j=0
 for i in low_ed_perc_dates:
-    low_ed_prev_day[i] = get_previous_day(i)
+    low_ed_prev_day[j] = get_previous_day(i)
+    j=j+1
 
 print(low_ed_perc_dates)
 print(low_ed_prev_day)
