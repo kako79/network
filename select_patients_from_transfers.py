@@ -44,7 +44,8 @@ def get_transfer_day(date):
 
 
 def get_previous_day(date):
-    prev_day = datetime.date(date) - datetime.timedelta(1).isoformat()
+    date_in_date_format = get_transfer_day(date)
+    prev_day = datetime.date(date_in_date_format) - datetime.timedelta(1).isoformat()
     return prev_day
 
 
