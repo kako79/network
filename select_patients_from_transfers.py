@@ -78,9 +78,11 @@ for i in low_ed_perc_dates:
     low_ed_next_day.append(next_day)
     j=j+1
 
-print(low_ed_perc_dates)
-print(low_ed_prev_day)
-print(low_ed_next_day)
+all_dates_low_ed = low_ed_prev_day+low_ed_perc_dates+low_ed_next_day
+
+print(all_dates_low_ed)
+#print(low_ed_prev_day)
+#print(low_ed_next_day)
 
 
 
