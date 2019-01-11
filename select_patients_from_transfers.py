@@ -31,7 +31,7 @@ def get_transfer_day(date):
     strdate = str(date)
     fmt = "%Y-%m-%d"
     try:
-        d = datetime.strptime(strdate, fmt)
+        dd = datetime.strptime(strdate, fmt)
     except ValueError as v:
         ulr = len(v.args[0].partition('unconverted data remains: ')[2])
         if ulr:
