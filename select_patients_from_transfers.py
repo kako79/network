@@ -51,6 +51,11 @@ def get_previous_day(date):
     prev_day = prev_day.strftime('%Y-%m-%d')
     return prev_day
 
+def get_next_day(date_n):
+    date_in_date_format = get_transfer_day(date_n)
+    next_day = datetime.date(date_in_date_format) + dt.timedelta(1)
+    next_day = next_day.strftime('%Y-%m-%d')
+    return next_day
 
 
 alltransfers = pd.read_csv("transfer_strain.csv")
@@ -64,16 +69,18 @@ transfers_lowed = alltransfers[alltransfers['breach_percentage'] < 0.6955]
 transfers_lowed['day_of_transfer'] = transfers_lowed['transfer_dt'].map(get_transfer_day)
 low_ed_perc_dates = transfers_lowed['day_of_transfer'].unique()
 low_ed_prev_day = []
+low_ed_next_day = []
 j=0
 for i in low_ed_perc_dates:
-    print(j,i)
     prev_day = get_previous_day(i)
+    next_day = get_next_day(i)
     low_ed_prev_day.append(prev_day)
-    print(j,i, prev_day)
+    low_ed_next_day.append(next_day)
     j=j+1
 
 print(low_ed_perc_dates)
 print(low_ed_prev_day)
+print(low_ed_next_day)
 
 
 
