@@ -43,6 +43,10 @@ def get_transfer_day(date):
     return dd
 
 
+def get_previous_day(date):
+    prev_day = datetime.date(date) - datetime.timedelta(1).isoformat()
+    return prev_day
+
 
 
 alltransfers = pd.read_csv("transfer_strain.csv")
@@ -55,8 +59,9 @@ transfers_lowed = alltransfers[alltransfers['breach_percentage'] < 0.6955]
 #find the days with low ED percentage
 transfers_lowed['day_of_transfer'] = transfers_lowed['transfer_dt'].map(get_transfer_day)
 low_ed_perc_dates = transfers_lowed['day_of_transfer'].unique()
-
+low_ed_prev_day = low_ed_perc_dates.map(get_previous_day)
 print(low_ed_perc_dates)
+print(low_ed_prev_day)
 
 
 
