@@ -47,6 +47,11 @@ alltransfers = pd.read_csv("transfer_strain.csv")
 #asa34_patient_records = alltransfers.loc[alltransfers['ptid'].isin(asa34_patient_ids)]
 #asa34_patient_records.to_csv('transfers_all_pts_asa34.csv', header=True, index=False)
 
-#select transfers on specific dates
+#select transfers on specific dates with low breach percentage ie days where A&E was very full
 transfers_lowed = alltransfers[alltransfers['breach_percentage'] < 0.6955]
-transfers_lowed.to_csv('transfers_lowedpercentage.csv')
+#transfers_lowed.to_csv('transfers_lowedpercentage.csv')
+
+#select patients for the day before, the day of and the day after a full A&E
+#find the days with low ED percentage
+low_ed_perc_dates = transfers_lowed['transfer_dt'].unique()
+print(low_ed_perc_dates)
