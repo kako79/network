@@ -88,7 +88,9 @@ all_dates_low_ed = [low_ed_prev_day]+[low_ed_perc_dates]+[low_ed_next_day]
 print(all_dates_low_ed)
 
 alltransfers['day_of_transfer'] = alltransfers['transfer_dt'].map(get_transfer_day)
+print(alltransfers['day_of_transfer'])
 transfers_around_low_ed = alltransfers[alltransfers['day_of_transfer'].isin(all_dates_low_ed)]
+print(transfers_around_low_ed)
 transfers_around_low_ed.to_csv('transfers_around_low_ed_perc.csv')
 
 
