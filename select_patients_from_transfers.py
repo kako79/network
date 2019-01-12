@@ -85,10 +85,9 @@ for i in low_ed_perc_dates:
 
 #import pdb; pdb.set_trace()
 all_dates_low_ed = [low_ed_prev_day]+[low_ed_perc_dates]+[low_ed_next_day]
-print(all_dates_low_ed)
-
 alltransfers['day_of_transfer'] = alltransfers['transfer_dt'].map(get_transfer_day)
-transfers_around_low_ed = alltransfers.loc[alltransfers['day_of_transfer'].isin(all_dates_low_ed)]
+print(alltransfers['day_of_transfer'])
+transfers_around_low_ed_ind = set(alltransfers['day_of_transfer'].isin(all_dates_low_ed))
 print(transfers_around_low_ed)
 transfers_around_low_ed.to_csv('transfers_around_low_ed_perc.csv')
 
