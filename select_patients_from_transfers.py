@@ -28,6 +28,11 @@ def get_separate_date_time(datetimeentry):
         separate_date_time = datetime.strptime(datetimeentry,"%Y-%m-%d %H:%M:%S")
         return separate_date_time
 
+def make_into_time(dt_entry):
+    dt = datetime.strptime(dt_entry, "%Y-%m-%d")
+    return dt
+
+
 
 def get_transfer_day(date):
     strdate = str(date)
@@ -80,6 +85,8 @@ for i in low_ed_perc_dates:
 
 #import pdb; pdb.set_trace()
 all_dates_low_ed = [low_ed_prev_day]+[low_ed_perc_dates]+[low_ed_next_day]
+print(all_dates_low_ed)
+
 alltransfers['day_of_transfer'] = alltransfers['transfer_dt'].map(get_transfer_day)
 transfers_around_low_ed = alltransfers[alltransfers['day_of_transfer'].isin(all_dates_low_ed)]
 transfers_around_low_ed.to_csv('transfers_around_low_ed_perc.csv')
