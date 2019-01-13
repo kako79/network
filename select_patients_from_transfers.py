@@ -75,21 +75,19 @@ transfers_lowed['day_of_transfer'] = transfers_lowed['transfer_dt'].map(get_tran
 low_ed_perc_dates = transfers_lowed['day_of_transfer'].unique()
 low_ed_prev_day = []
 low_ed_next_day = []
-j=0
 for i in low_ed_perc_dates:
     prev_day = get_previous_day(i)
     next_day = get_next_day(i)
     low_ed_prev_day.append(prev_day)
     low_ed_next_day.append(next_day)
-    j=j+1
 
 #import pdb; pdb.set_trace()
-all_dates_low_ed = [low_ed_prev_day]+[low_ed_perc_dates]+[low_ed_next_day]
+all_dates_low_ed = set(low_ed_prev_day + list(low_ed_perc_dates) + low_ed_next_day)
 alltransfers['day_of_transfer'] = alltransfers['transfer_dt'].map(get_transfer_day)
-print(alltransfers['day_of_transfer'])
+#print(alltransfers['day_of_transfer'])
 transfers_around_low_ed_ind = set(alltransfers['day_of_transfer'].isin(all_dates_low_ed))
 print(transfers_around_low_ed_ind)
-transfers_around_low_ed.to_csv('transfers_around_low_ed_perc.csv')
+transfers_around_low_ed_ind.to_csv('transfers_around_low_ed_perc.csv')
 
 
 
