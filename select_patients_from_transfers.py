@@ -137,6 +137,6 @@ asa34_patient_records.to_csv('transfers_all_pts_asa34.csv', header=True, index=F
 
 #paeds patients
 paeds_transfers = alltransfers.loc[alltransfers['age'] < 16]
-paeds_transfers.to_csv('transfers_paeds_all.csv', header=Truem index=False)
+paeds_transfers.to_csv('transfers_paeds_all.csv', header=True, index=False)
 
 
