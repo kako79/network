@@ -86,10 +86,31 @@ all_dates_low_ed = set(low_ed_prev_day + list(low_ed_perc_dates) + low_ed_next_d
 alltransfers['day_of_transfer'] = alltransfers['transfer_dt'].map(get_transfer_day)
 #print(alltransfers['day_of_transfer'])
 transfers_around_low_ed_ind = alltransfers[alltransfers['day_of_transfer'].isin(all_dates_low_ed)]
-print(transfers_around_low_ed_ind)
+print(len(transfers_around_low_ed_ind))
 transfers_around_low_ed_ind.to_csv('transfers_around_low_ed_perc.csv')
 
+#select transfers on specific dates with low breach percentage ie days where A&E was very empty
+transfers_highed = alltransfers[alltransfers['breach_percentage'] >0.9685]
+#transfers_lowed.to_csv('transfers_lowedpercentage.csv')
 
+#select patients for the day before, the day of and the day after a full A&E
+#find the days with low ED percentage
+transfers_highed['day_of_transfer'] = transfers_highed['transfer_dt'].map(get_transfer_day)
+high_ed_perc_dates = transfers_highed['day_of_transfer'].unique()
+high_ed_prev_day = []
+high_ed_next_day = []
+for i in high_ed_perc_dates:
+    prev_day = get_previous_day(i)
+    next_day = get_next_day(i)
+    high_ed_prev_day.append(prev_day)
+    high_ed_next_day.append(next_day)
+
+#import pdb; pdb.set_trace()
+all_dates_high_ed = set(high_ed_prev_day + list(high_ed_perc_dates) + high_ed_next_day)
+#print(alltransfers['day_of_transfer'])
+transfers_around_high_ed_ind = alltransfers[alltransfers['day_of_transfer'].isin(all_dates_high_ed)]
+print(len(transfers_around_high_ed_ind))
+transfers_around_high_ed_ind.to_csv('transfers_around_high_ed_perc.csv')
 
 
 
