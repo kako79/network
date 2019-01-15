@@ -52,7 +52,7 @@ print('reading in done')
 
 
 #this is the main dictionary
-ward_dictionary_cat = {'ADD A3 WARD': 'neurosurgical ward', 'ADD A4 WARD': 'neurosurgical ward',
+ward_dict_cat = {'ADD A3 WARD': 'neurosurgical ward', 'ADD A4 WARD': 'neurosurgical ward',
                    'ADD A5 WARD': 'neurosurgical ward', 'ADD D6 WARD': 'neurosurgical ward',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',
@@ -178,7 +178,7 @@ ward_dictionary_cat = {'ADD A3 WARD': 'neurosurgical ward', 'ADD A4 WARD': 'neur
                    'ADD SNSK': 'ortho appt', 'ADD KV': 'general surgical appt', 'ADD NS': 'medical appt', 'CUH NGSHAV': 'medical appt', 'ADD SKAMP': 'other', 'CCRC Endo':'other',  'ADD RDPFP': 'other',
                     'ADD IMA': 'gastro appt', 'ADDALCGNLYR3': 'neurol appt', 'ADD JTKMEF': 'trauma appt', 'ADD LUCENTOP': 'ophth appt', 'ADD PSC': 'cardiology appt', 'ADD SORD': 'medical appt'}
 
-ward_dictionary_nocat = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'A4 ward',
+ward_dict_nocat = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'A4 ward',
                     'ADD A5 WARD': 'A5 ward', 'ADD D6 WARD': 'D6 ward',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',
@@ -306,7 +306,7 @@ ward_dictionary_nocat = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'A4 ward',
 
 
 #dictionary for removing weekday influence on node numbers
-collated_cat_ward_dictionary = {'ADD A3 WARD': 'neurosurgery HDU', 'ADD A4 WARD': 'neurosurgery ward',
+collated_cat_ward_dict = {'ADD A3 WARD': 'neurosurgery HDU', 'ADD A4 WARD': 'neurosurgery ward',
                    'ADD A5 WARD': 'neurosurgery ward', 'ADD D6 WARD': 'neurosurgery ward',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',
@@ -557,7 +557,7 @@ nocat_ward_weekday = {'ADD A3 WARD': 'A3', 'ADD A4 WARD': 'A4',
                    'ADD RDPFP': 'weekday','ADD IMA':'weekday', 'ADDALCGNLYR3':'weekday', 'ADD JTKMEF':'weekday', 'ADD LUCENTOP': 'weekday', 'ADD PSC': 'weekday', 'ADD SORD': 'weekday'}
 
 
-minimal_cat_ward_dictionary = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neurosurgery ward',
+minimal_cat_ward_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neurosurgery ward',
                    'ADD A5 WARD': 'neurosurgery ward', 'ADD D6 WARD': 'neurosurgery ward',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',
@@ -684,7 +684,7 @@ minimal_cat_ward_dictionary = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD'
 
 
 #read in the data from a combined csv file
-alldata = pd.read_csv("transfers_2019_01_09.csv")
+alldata = pd.read_csv("transfers_around_high_ed_perc.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
 location_category_map = nocat_ward_weekday
 
@@ -929,7 +929,7 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers',
                                          'med surg ratio','eigen_centr_theatre','eigen_centr_ed', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
-filename = '_nocatwd_0901_all'
+filename = '_nocatwd_1501_highed'
 
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
 edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
