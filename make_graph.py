@@ -763,8 +763,11 @@ degrees = nx.classes.function.degree(G)
 in_degrees = G.in_degree
 out_degrees = G.out_degree
 
+print(in_degrees)
+
 weighted_degrees = nx.degree(G,weight = 'weights')
-weighted_in_degrees = nx.DiGraph.in_degree(G,weight = 'weights')
+#weighted_in_degrees = nx.DiGraph.in_degree(G,weight = 'weights')
+weighted_in_degrees = G.in_degree(weight = 'weights')
 weighted_out_degrees = nx.DiGraph.out_degree(G, weight = 'weights')
 #print('degrees')
 #print(degrees)
