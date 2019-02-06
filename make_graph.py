@@ -848,6 +848,7 @@ else:
 
 # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
 incentrality = nx.algorithms.centrality.in_degree_centrality(G)
+in_centr_df = pd.DataFrame.from_dict(incentrality, orient = 'index')
 # check if the theatre node exists in this data subset
 if 'theatre' in incentrality:
     in_theatre_centrality = incentrality['theatre']
@@ -855,6 +856,7 @@ else:
     in_theatre_centrality = 0
 
 outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
+out_centr_df = pd.DataFrame.from_dict(outcentrality, orient = 'index')
 if 'theatre' in outcentrality:
     out_theatre_centrality = outcentrality['theatre']
 else:
@@ -979,6 +981,8 @@ weighted_clustering_data.to_csv('weightedclustering' + filename + '.csv', header
 non_weighted_clustering_data.to_csv('nonweightedclustering' + filename + '.csv', header = True, index = False)
 knn_df.to_csv('knndata'+ filename+'.csv', header = True, index = True)
 eigen_centr_df.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = True)
+in_centr_df.to_csv('incentrdata'+ filename+'.csv', header = True, index = True)
+out_centr_df.to_csv('outcentrdata'+ filename+'.csv', header = True, index = True)
 bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = True)
 nx.write_graphml(G,'graphml'+ filename + '.graphml')
 nx.write_gexf(G,'gexf' + filename +'.gexf')
