@@ -867,6 +867,7 @@ else:
 
 
 bet_centr = nx.algorithms.centrality.betweenness_centrality(G)
+print(bet_centr)
 between_centrality_list = [[n, b] for n, b in bet_centr]
 between_centr_data = pd.DataFrame(between_centrality_list, columns=['node', 'betweencentrality'])
 if 'theatre' in bet_centr:
