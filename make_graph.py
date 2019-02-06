@@ -896,7 +896,7 @@ else:
     #knn_list = [[n, k] for n, k in k_nearest_n]
     #knn_data = pd.DataFrame(knn_list, columns=['node', 'knn'])
     #knn_df = pd.DataFrame.from_dict(k_nearest_n, orient='index')
-    knn_df = pd.DataFrame(list(k_nearest_n.items()), index=['ward', 'knn'])
+    knn_df = pd.DataFrame(k_nearest_n, index=['ward', 'knn'])
     if 'theatre' in eigen_centr:
         theatres_eigen_centr = eigen_centr['theatre']
     else:
