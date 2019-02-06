@@ -885,10 +885,8 @@ if en == 0:
     k_nearest_n = 0
 else:
     eigen_centr = nx.eigenvector_centrality_numpy(G)
-    eigencentrality_list = [[n, e] for n, e in eigen_centr]
-    eigencentr_data = pd.DataFrame(eigencentrality_list, columns=['node', 'eigencentrality'])
-    #eigen_centr_df = pd.DataFrame.from_dict(eigen_centr, orient = 'index')
-
+    eigen_centr_df = pd.DataFrame.from_dict(eigen_centr, orient = 'index')
+    print(eigen_centr_df)
 
 
     assortativity_net_inout = nx.degree_assortativity_coefficient(G, x='out', y='in', weight='weights')
