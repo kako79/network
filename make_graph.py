@@ -867,6 +867,8 @@ else:
 
 
 bet_centr = nx.algorithms.centrality.betweenness_centrality(G)
+between_centrality_list = [[n, b] for n, b in bet_centr]
+between_centr_data = pd.DataFrame(between_centrality_list, columns=['node', 'betweencentrality'])
 if 'theatre' in bet_centr:
     theatres_bet_centrality = bet_centr['theatre']
 else:
@@ -881,12 +883,19 @@ if en == 0:
     k_nearest_n = 0
 else:
     eigen_centr = nx.eigenvector_centrality_numpy(G)
-    eigen_centr_df = pd.DataFrame.from_dict(eigen_centr, orient = 'index')
+    eigencentrality_list = [[n, e] for n, e in eigen_centr]
+    eigencentr_data = pd.DataFrame(eigencentrality_list, columns=['node', 'eigencentrality'])
+    #eigen_centr_df = pd.DataFrame.from_dict(eigen_centr, orient = 'index')
+
+
+
     assortativity_net_inout = nx.degree_assortativity_coefficient(G, x='out', y='in', weight='weights')
     print('assortativity=')
     print(assortativity_net_inout)
     k_nearest_n = nx.k_nearest_neighbors(G,source='out',target='in', weight='weights')
-    knn_df = pd.DataFrame.from_dict(k_nearest_n, orient='index')
+    knn_list = [[n, k] for n, k in k_nearest_n]
+    knn_data = pd.DataFrame(knn_list, columns=['node', 'knn'])
+    #knn_df = pd.DataFrame.from_dict(k_nearest_n, orient='index')
     if 'theatre' in eigen_centr:
         theatres_eigen_centr = eigen_centr['theatre']
     else:
@@ -962,8 +971,8 @@ weighted_outdegrees_data.to_csv('weightedoutdegrees' + filename + '.csv', header
 
 weighted_clustering_data.to_csv('weightedclustering' + filename + '.csv', header = True, index = False)
 non_weighted_clustering_data.to_csv('nonweightedclustering' + filename + '.csv', header = True, index = False)
-knn_df.to_csv('knndata'+ filename+'.csv', header = True, index = False)
-eigen_centr_df.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = False)
+knn_data.to_csv('knndata'+ filename+'.csv', header = True, index = False)
+eigen_centr_data.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = False)
 nx.write_graphml(G,'graphml'+ filename + '.graphml')
 nx.write_gexf(G,'gexf' + filename +'.gexf')
 
