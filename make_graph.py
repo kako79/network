@@ -763,9 +763,9 @@ degrees = nx.classes.function.degree(G)
 in_degrees = G.in_degree
 out_degrees = G.out_degree
 
-weighted_degrees = degree(G,weight = 'weights')
-weighted_in_degrees = indegrees(G,weight = 'weights')
-weighted_out_degrees = outdegrees(G, weight = 'weights')
+weighted_degrees = nx.degree(G,weight = 'weights')
+weighted_in_degrees = nx.in_degree(G,weight = 'weights')
+weighted_out_degrees = nx.out_degree(G, weight = 'weights')
 #print('degrees')
 #print(degrees)
 histdegrees = nx.classes.function.degree_histogram(G)
