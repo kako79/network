@@ -899,8 +899,8 @@ else:
 
     #knn_list = [[n, k] for n, k in k_nearest_n]
     #knn_data = pd.DataFrame(knn_list, columns=['node', 'knn'])
-    #knn_df = pd.DataFrame.from_dict(k_nearest_n, orient='index')
-    knn_df = pd.DataFrame(k_nearest_n, index=['ward', 'knn'])
+    knn_df = pd.DataFrame.from_dict(k_nearest_n, orient='index')
+    #knn_df = pd.DataFrame(k_nearest_n, index=['ward', 'knn'])
     print(knn_df)
     if 'theatre' in eigen_centr:
         theatres_eigen_centr = eigen_centr['theatre']
@@ -977,7 +977,8 @@ weighted_outdegrees_data.to_csv('weightedoutdegrees' + filename + '.csv', header
 
 weighted_clustering_data.to_csv('weightedclustering' + filename + '.csv', header = True, index = False)
 non_weighted_clustering_data.to_csv('nonweightedclustering' + filename + '.csv', header = True, index = False)
-knn_df.to_csv('knndata'+ filename+'.csv', header = True, index = True)
+knn_df.to_csv('knndata'+ filename+'.csv', header = True, index = False)
+knn_df.to_csv('knndatatrueindex'+ filename+'.csv', header = True, index = True)
 eigen_centr_df.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = True)
 bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = False)
 nx.write_graphml(G,'graphml'+ filename + '.graphml')
