@@ -763,12 +763,12 @@ degrees = nx.classes.function.degree(G)
 in_degrees = G.in_degree
 out_degrees = G.out_degree
 
-print(in_degrees)
+#print(in_degrees)
 
 weighted_degrees = nx.degree(G,weight = 'weights')
 #weighted_in_degrees = nx.DiGraph.in_degree(G,weight = 'weights')
 weighted_in_degrees = G.in_degree(weight = 'weights')
-print(weighted_in_degrees)
+#print(weighted_in_degrees)
 weighted_out_degrees = G.out_degree(weight = 'weights')
 #print('degrees')
 #print(degrees)
@@ -808,7 +808,7 @@ outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
 
 df_with_node_index = degrees_data.set_index('node')
 emergency_degrees = df_with_node_index.loc['AE','degree']
-print(emergency_degrees)
+#print(emergency_degrees)
     #degrees_list.append(list(degrees.values))
     #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
 
@@ -838,7 +838,7 @@ total_medical_ward_transfers = med_to_med_acute + med_to_med_general+med_to_med_
 #print (total_medical_ward_transfers)
 
 ae_surg = G.get_edge_data('AE', 'general surgical ward', default={}).get('weight', 0)+ G.get_edge_data('AE', 'orthopaedic ward', default={}).get('weight', 0) +G.get_edge_data('AE', 'ATC surgical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'gynae ward', default={}).get('weight', 0)+  G.get_edge_data('AE', 'neurosurgical ward', default={}).get('weight', 0)
-print(ae_surg)
+#print(ae_surg)
 ae_med = G.get_edge_data('AE', 'acute medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'general medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'cardiology ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'rehab', default={}).get('weight', 0) +  G.get_edge_data('AE', 'cdu', default={}).get('weight', 0)
 if ae_surg == 0:
     ratio_wards_surg_med = 0
@@ -868,8 +868,8 @@ else:
 
 bet_centr = nx.algorithms.centrality.betweenness_centrality(G)
 bet_centr_df = pd.DataFrame.from_dict(bet_centr, orient = 'index')
-print(bet_centr)
-print(bet_centr_df)
+#print(bet_centr)
+#print(bet_centr_df)
 
 if 'theatre' in bet_centr:
     theatres_bet_centrality = bet_centr['theatre']
@@ -886,17 +886,22 @@ if en == 0:
 else:
     eigen_centr = nx.eigenvector_centrality_numpy(G)
     eigen_centr_df = pd.DataFrame.from_dict(eigen_centr, orient = 'index')
-    print(eigen_centr_df)
+    #print(eigen_centr_df)
 
 
     assortativity_net_inout = nx.degree_assortativity_coefficient(G, x='out', y='in', weight='weights')
     print('assortativity=')
     print(assortativity_net_inout)
     k_nearest_n = nx.k_nearest_neighbors(G,source='out',target='in', weight='weights')
+    print('knn')
+    print(k_nearest_n)
+    print('knn data frame')
+
     #knn_list = [[n, k] for n, k in k_nearest_n]
     #knn_data = pd.DataFrame(knn_list, columns=['node', 'knn'])
     #knn_df = pd.DataFrame.from_dict(k_nearest_n, orient='index')
     knn_df = pd.DataFrame(k_nearest_n, index=['ward', 'knn'])
+    print(knn_df)
     if 'theatre' in eigen_centr:
         theatres_eigen_centr = eigen_centr['theatre']
     else:
