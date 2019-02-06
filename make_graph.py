@@ -977,10 +977,9 @@ weighted_outdegrees_data.to_csv('weightedoutdegrees' + filename + '.csv', header
 
 weighted_clustering_data.to_csv('weightedclustering' + filename + '.csv', header = True, index = False)
 non_weighted_clustering_data.to_csv('nonweightedclustering' + filename + '.csv', header = True, index = False)
-knn_df.to_csv('knndata'+ filename+'.csv', header = True, index = False)
-knn_df.to_csv('knndatatrueindex'+ filename+'.csv', header = True, index = True)
+knn_df.to_csv('knndata'+ filename+'.csv', header = True, index = True)
 eigen_centr_df.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = True)
-bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = False)
+bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = True)
 nx.write_graphml(G,'graphml'+ filename + '.graphml')
 nx.write_gexf(G,'gexf' + filename +'.gexf')
 
