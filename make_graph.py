@@ -895,7 +895,7 @@ else:
     k_nearest_n = nx.k_nearest_neighbors(G,source='out',target='in', weight='weights')
     #knn_list = [[n, k] for n, k in k_nearest_n]
     #knn_data = pd.DataFrame(knn_list, columns=['node', 'knn'])
-    knn_df = pd.DataFrame.from_dict(k_nearest_n, orient='index')
+    knn_df = pd.DataFrame.from_dict(k_nearest_n, orient='index', columns = ['degree','knn'])
     if 'theatre' in eigen_centr:
         theatres_eigen_centr = eigen_centr['theatre']
     else:
