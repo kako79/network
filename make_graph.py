@@ -930,7 +930,7 @@ density_net = nx.density(G)
 transitivity_net = nx.transitivity(G)
 #clustering - doesnt work for directed graphs
 clustering_average = nx.average_clustering(nondiG,weight = 'weights')
-weighted_clustering_distribution = nx.clustering(nondiG, weight = 'weights')
+weighted_clustering_distribution = nx.clustering(nondiG, weight = 'weight')
 non_weighted_clustering_distribution = nx.clustering(unweightednondirG)
 #print(clustering_distribution)
 weighted_clustering_list = [[n, d] for n, d in weighted_clustering_distribution.items()]
