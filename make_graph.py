@@ -765,11 +765,11 @@ out_degrees = G.out_degree
 
 #print(in_degrees)
 
-weighted_degrees = nx.degree(G,weight = 'weights')
+weighted_degrees = nx.degree(G,weight = 'weight')
 #weighted_in_degrees = nx.DiGraph.in_degree(G,weight = 'weights')
-weighted_in_degrees = G.in_degree(weight = 'weights')
+weighted_in_degrees = G.in_degree(weight = 'weight')
 #print(weighted_in_degrees)
-weighted_out_degrees = G.out_degree(weight = 'weights')
+weighted_out_degrees = G.out_degree(weight = 'weight')
 #print('degrees')
 #print(degrees)
 histdegrees = nx.classes.function.degree_histogram(G)
