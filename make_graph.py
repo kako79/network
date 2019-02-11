@@ -968,8 +968,8 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','eigen_centr_theatre','medical to theatre','medical ward transfers',
                                          'med surg ratio', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
+#set the filename for all output files
 filename = '_mincat_1102_asa34'
-
 
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
 edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
