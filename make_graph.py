@@ -684,7 +684,7 @@ minimal_cat_ward_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
 
 
 #read in the data from a combined csv file
-alldata = pd.read_csv("transfers_adult_asa34.csv")
+alldata = pd.read_csv("transfers_all_pts_icu.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
 #location_category_map = minimal_cat_ward_dict
 location_category_map = nocat_ward_weekday
@@ -944,8 +944,8 @@ print('clustering in non directed graph')
 print(clustering_average)
 
 #shortest path in the directed graph, from a starting point source to a point target
-#average_shortest_path = nx.average_shortest_path_length(G,weight = 'weights')
-average_shortest_path = 0
+average_shortest_path = nx.average_shortest_path_length(G,weight = 'weights')
+#average_shortest_path = 0
 print(average_shortest_path)
 
 
@@ -966,7 +966,7 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','eigen_centr_theatre','medical to theatre','medical ward transfers',
                                          'med surg ratio', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
-filename = '_nocatwd_1102_asa34'
+filename = '_nocatwd_1102_icu'
 
 
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
