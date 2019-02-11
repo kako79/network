@@ -687,7 +687,7 @@ minimal_cat_ward_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
 alldata = pd.read_csv("transfer_strain.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
 #location_category_map = minimal_cat_ward_dict
-location_category_map = ward_dict_nocat
+location_category_map = nocat_ward_weekday
 
 alldata['from_category'] = alldata['from'].map(location_category_map)
 alldata['to_category'] = alldata['to'].map(location_category_map)
@@ -965,7 +965,7 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','eigen_centr_theatre','medical to theatre','medical ward transfers',
                                          'med surg ratio', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
-filename = '_nocat_0702_all'
+filename = '_nocatwd_1102_all'
 
 
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
