@@ -684,7 +684,7 @@ minimal_cat_ward_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
 
 
 #read in the data from a combined csv file
-alldata = pd.read_csv("transfer_around_high_ed_perc.csv")
+alldata = pd.read_csv("transfers_around_high_ed_perc.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
 #location_category_map = minimal_cat_ward_dict
 location_category_map = nocat_ward_weekday
