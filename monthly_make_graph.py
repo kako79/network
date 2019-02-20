@@ -950,7 +950,7 @@ monthly_arima_df = pd.DataFrame(columns=['month', 'number of transfers', 'number
 #set the filename for all output files
 filename = '_monthbymonth_all'
 
-all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
+monthly_arima_df.to_csv('info' + filename + '.csv', header=True, index=False)
 #edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
 #nx.write_pajek(G, 'pajek_old.net')
 #degrees_data.to_csv('degrees' + filename + '.csv', header =True, index=False)
