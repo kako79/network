@@ -746,7 +746,7 @@ weekday_admissions = alldata[~alldata['is_weekend']]
 
 def get_network_analytics(specific_data):
     # now make the graph
-    specific_data = alldata
+    #specific_data = alldata
     #weighted edges first
     #drop the columns that are not needed for the graph, also only adults
     data_only_transfers = specific_data.loc[specific_data['age']>16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
@@ -912,7 +912,7 @@ def get_network_analytics(specific_data):
     #shortest path in the directed graph, from a starting point source to a point target
     average_shortest_path = nx.average_shortest_path_length(G,weight = 'weights')
     data_list.append(
-        {'month': i, 'number of transfers': len(data_reduced['transfer_day']), 'number nodes': nn, 'number edges': en,
+        {'month': i, 'number of transfers': len(specific_data['transfer_day']), 'number nodes': nn, 'number edges': en,
          'emergency degrees': emergency_degrees, 'outcentrality ed': out_ed_centrality,
          'incentrality theatres': in_theatre_centrality,
          'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality,
