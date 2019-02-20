@@ -936,7 +936,7 @@ b=0
 for i in monthlist:
     b+=1
     print(b)
-    month_data = monthly_arima_data_all[monthly_arima_data_all['transfer_month'] == i]
+    month_data = alldata[alldata['transfer_month'] == i]
     number_of_transfers = len(month_data['transfer_month'])
     get_network_analytics(month_data_reduced)
     print(i, number_of_transfers)
