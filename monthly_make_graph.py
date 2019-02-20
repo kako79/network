@@ -956,7 +956,6 @@ def get_network_analytics(specific_data):
          'average_ae_percentage': average_ae_perc,
          'average_beds_free': average_beds_free})
     return data_list
-
 #monthlist=[1,2,3,4,5,6,7,8,9,10,11,12]
 monthlist = []
 en_list = []
