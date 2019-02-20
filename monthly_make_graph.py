@@ -69,7 +69,7 @@ def get_month(date):
 
 
 #this is the main dictionary
-ward_dict_cat = {'ADD A3 WARD': 'neurosurgical ward', 'ADD A4 WARD': 'neurosurgical ward',
+ward_dict_cat = {'THEATRE':'theatre','ADD A3 WARD': 'neurosurgical ward', 'ADD A4 WARD': 'neurosurgical ward',
                    'ADD A5 WARD': 'neurosurgical ward', 'ADD D6 WARD': 'neurosurgical ward',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',
@@ -195,7 +195,7 @@ ward_dict_cat = {'ADD A3 WARD': 'neurosurgical ward', 'ADD A4 WARD': 'neurosurgi
                    'ADD SNSK': 'ortho appt', 'ADD KV': 'general surgical appt', 'ADD NS': 'medical appt', 'CUH NGSHAV': 'medical appt', 'ADD SKAMP': 'other', 'CCRC Endo':'other',  'ADD RDPFP': 'other',
                     'ADD IMA': 'gastro appt', 'ADDALCGNLYR3': 'neurol appt', 'ADD JTKMEF': 'trauma appt', 'ADD LUCENTOP': 'ophth appt', 'ADD PSC': 'cardiology appt', 'ADD SORD': 'medical appt'}
 
-ward_dict_nocat = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'A4 ward',
+ward_dict_nocat = {'THEATRE':'theatre','ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'A4 ward',
                     'ADD A5 WARD': 'A5 ward', 'ADD D6 WARD': 'D6 ward',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',
@@ -323,7 +323,7 @@ ward_dict_nocat = {'ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 'A4 ward',
 
 
 #dictionary for removing weekday influence on node numbers
-collated_cat_ward_dict = {'ADD A3 WARD': 'neurosurgery HDU', 'ADD A4 WARD': 'neurosurgery ward',
+collated_cat_ward_dict = {'THEATRE':'theatre','ADD A3 WARD': 'neurosurgery HDU', 'ADD A4 WARD': 'neurosurgery ward',
                    'ADD A5 WARD': 'neurosurgery ward', 'ADD D6 WARD': 'neurosurgery ward',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',
@@ -697,7 +697,7 @@ minimal_cat_ward_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
                    'ADD CONSFOOT': 'weekday', 'ADD HEPNEW': 'weekday', 'ADD KESPB': 'weekday', 'ADD OTHOTNEU': 'weekday', 'ADD SKIN': 'weekday',
                    'ADD GMTS': 'weekday', 'ADD SMCEF': 'weekday', 'ROS PPMD': 'weekday', 'ADD NFLL': 'weekday', 'ADD LTX': 'weekday', 'CUH GPRCN': 'weekday',
                    'ADD SNSK': 'weekday', 'ADD KV': 'weekday', 'ADD NS': 'weekday', 'CUH NGSHAV': 'weekday', 'ADD SKAMP': 'weekday', 'CCRC Endo':'weekday',
-                   'ADD RDPFP': 'weekday','ADD IMA':'weekday', 'ADDALCGNLYR3':'weekday', 'ADD JTKMEF':'weekday', 'ADD LUCENTOP': 'weekday', 'ADD PSC': 'weekday', 'ADD SORD': 'weekday'}
+                   'ADD RDPFP': 'weekday','ADD IMA':'weekday', 'ADDALCGNLYR3':'weekday', 'ADD JTKMEF':'weekday', 'ADD LUCENTOP': 'weekday', 'ADD PSC': 'weekday', 'ADD SORD': 'weekday','THEATRE':'theatre'}
 
 
 #read in the data from a combined csv file
