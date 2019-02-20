@@ -721,8 +721,8 @@ minimal_cat_ward_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
 #alldata = pd.read_csv("transfers_around_high_ed_perc.csv")
 alldata = pd.read_csv("transfer_strain.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
-#location_category_map = minimal_cat_ward_dict
-location_category_map = nocat_ward_weekday
+location_category_map = minimal_cat_ward_dict
+#location_category_map = nocat_ward_weekday
 
 alldata['from_category'] = alldata['from'].map(location_category_map)
 alldata['to_category'] = alldata['to'].map(location_category_map)
@@ -870,6 +870,13 @@ def get_network_analytics(specific_data):
     else:
         theatres_bet_centrality = 0
 
+    if 'general medical ward' in bet_centr:
+        gm_bet_centrality = bet_centr['general medical ward']
+    else:
+        gm_bet_centrality = 0
+
+
+
     #specialised centralities and the assortativity and nearest neightbor fucntions
 
     if en == 0:
@@ -932,7 +939,7 @@ def get_network_analytics(specific_data):
          'emergency degrees': emergency_degrees, 'outcentrality ed': out_ed_centrality,
          'incentrality theatres': in_theatre_centrality,
          'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality,
-         'eigen_centr_theatre': theatres_eigen_centr,
+         'eigen_centr_theatre': theatres_eigen_centr,'bet_centr_gm':gm_bet_centrality,
          'eigen_centr_ed': ed_eigen_centr,'flow hierarchy': flow_hierarchy, 'density': density_net, 'transitivity': transitivity_net,
          'average_ae_percentage': average_ae_perc,
          'average_beds_free': average_beds_free})
@@ -972,10 +979,10 @@ for i in monthlist:
     print(i, number_of_transfers)
 
 monthly_arima_df = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'emergency degrees', 'outcentrality ed',
-                                         'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','eigen_centr_theatre',
+                                         'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','eigen_centr_theatre','bet_centr_gm',
                                          'eigen_centr_ed','flow hierarchy', 'density', 'transitivity', 'average_ae_percentage', 'average_beds_free'], data = data_list)
 #set the filename for all output files
-filename = '_month_individual_all'
+filename = '_month_individual_mincat'
 
 monthly_arima_df.to_csv('info' + filename + '.csv', header=True, index=False)
 #edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
