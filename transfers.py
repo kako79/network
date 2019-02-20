@@ -152,7 +152,6 @@ def clean_patient_data(patient_data: pd.DataFrame):
         good_data = patient_data.drop(bad_location_data.index, axis=0).reset_index(drop=True)
     else:
         good_data = patient_data.reset_index(drop=True)
-
     # Replicated locations should be collapsed into a single row with in_dttm as the first in_dttm and out_dttm as
     # the last out_dttm.
     current_loc_index = None
@@ -175,8 +174,7 @@ def clean_patient_data(patient_data: pd.DataFrame):
             if (row['data_origin'] == 'surg') and ('THEATRE' in loc):
                 # Sometimes a theatre entry from the surgical data is wrong.
                 # One way to detect these is if the patient goes back to A&E after the theatre entry.
-                # If that happens there is always a correct theatre visit later from the adm source, so
-                # we can remove the bad one.
+                # If that happens there is always a correct theatre visit later from the adm source, so remove the bad one.
                 surg_theatre_index = i
             elif loc == 'POST-DISCHARGE':
                 # If the patient is discharged they are allowed to come to A&E again.
