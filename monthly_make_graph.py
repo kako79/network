@@ -912,7 +912,7 @@ def get_network_analytics(specific_data):
     non_weighted_clustering_data = pd.DataFrame(non_weighted_clustering_list, columns=['node', 'clustering_coeff'])
 
     #shortest path in the directed graph, from a starting point source to a point target
-    average_shortest_path = nx.average_shortest_path_length(G,weight = 'weights')
+    #average_shortest_path = nx.average_shortest_path_length(G,weight = 'weights')
     data_list.append(
         {'month': i, 'number of transfers': len(specific_data['transfer_day']), 'number nodes': nn, 'number edges': en,
          'emergency degrees': emergency_degrees, 'outcentrality ed': out_ed_centrality,
