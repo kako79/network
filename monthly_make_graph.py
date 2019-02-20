@@ -812,7 +812,7 @@ def get_network_analytics(specific_data):
     weighted_outdegrees_list = [[n, d] for n, d in weighted_out_degrees]
     weighted_outdegrees_data = pd.DataFrame(weighted_outdegrees_list, columns=['node', 'degree'])
 
-    print(nx.get_edge_attributes(G, 'weight'))
+    #print(nx.get_edge_attributes(G, 'weight'))
 
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
     incentrality = nx.algorithms.centrality.in_degree_centrality(G)
