@@ -951,7 +951,7 @@ def get_network_analytics(specific_data):
          'emergency degrees': emergency_degrees, 'outcentrality ed': out_ed_centrality,
          'incentrality theatres': in_theatre_centrality,
          'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality,
-         'eigen_centr_theatre': theatres_eigen_centr,'bet_centr_gm':gm_bet_centrality,'bet_centr_am':am_bet_centrality,'bet_centr_cdu':cdu_bet_centrality,'cet_centr_card':card_bet_centrality,
+         'eigen_centr_theatre': theatres_eigen_centr,'bet_centr_gm':gm_bet_centrality,'bet_centr_am':am_bet_centrality,'bet_centr_cdu':cdu_bet_centrality,'bet_centr_card':card_bet_centrality,
          'eigen_centr_ed': ed_eigen_centr,'flow hierarchy': flow_hierarchy, 'density': density_net, 'transitivity': transitivity_net,
          'average_ae_percentage': average_ae_perc,
          'average_beds_free': average_beds_free})
