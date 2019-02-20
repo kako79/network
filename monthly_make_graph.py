@@ -975,7 +975,7 @@ monthly_arima_df = pd.DataFrame(columns=['month', 'number of transfers', 'number
                                          'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','eigen_centr_theatre',
                                          'eigen_centr_ed','flow hierarchy', 'density', 'transitivity', 'average_ae_percentage', 'average_beds_free'], data = data_list)
 #set the filename for all output files
-filename = '_monthbymonth_all'
+filename = '_month_individual_all'
 
 monthly_arima_df.to_csv('info' + filename + '.csv', header=True, index=False)
 #edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
