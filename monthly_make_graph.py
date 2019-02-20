@@ -938,7 +938,7 @@ for i in monthlist:
     print(b)
     month_data = alldata[alldata['transfer_month'] == i]
     number_of_transfers = len(month_data['transfer_month'])
-    get_network_analytics(month_data_reduced)
+    get_network_analytics(month_data)
     print(i, number_of_transfers)
 
 
