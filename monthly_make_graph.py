@@ -67,6 +67,20 @@ def get_month(date):
             raise v
     return d.month
 
+def get_year_month(date):
+    strdate = str(date)
+    fmt = "%Y-%m-%d %H:%M"
+    try:
+        d = datetime.strptime(strdate, fmt)
+    except ValueError as v:
+        ulr = len(v.args[0].partition('unconverted data remains: ')[2])
+        if ulr:
+            d = datetime.strptime(strdate[:-ulr], fmt)
+        else:
+            raise v
+    return d.year * 100 + d.month
+
+
 
 #this is the main dictionary
 ward_dict_cat = {'THEATRE':'theatre','ADD A3 WARD': 'neurosurgical ward', 'ADD A4 WARD': 'neurosurgical ward',
@@ -924,7 +938,8 @@ def get_network_analytics(specific_data):
          'average_beds_free': average_beds_free})
     return data_list
 
-monthlist=[1,2,3,4,5,6,7,8,9,10,11,12]
+#monthlist=[1,2,3,4,5,6,7,8,9,10,11,12]
+monthlist = []
 en_list = []
 nn_list = []
 degrees_list = []
@@ -935,14 +950,26 @@ data_list_calm = []
 it_is_weekend = False
 b=0
 #data seprated by weekend weekday
+#for i in monthlist:
+#    b+=1
+#    print(b)
+#    month_data = alldata[alldata['transfer_month'] == i]
+#    number_of_transfers = len(month_data['transfer_month'])
+#    get_network_analytics(month_data)
+#    print(i, number_of_transfers)
+
+
+
+alldata['year_month'] = alldata['transfer_dt'].map(get_year_month)
+monthlist = np.sort(alldata['year_month'].unique())
+
 for i in monthlist:
     b+=1
     print(b)
-    month_data = alldata[alldata['transfer_month'] == i]
-    number_of_transfers = len(month_data['transfer_month'])
+    month_data = alldata[alldata['year_month'] == i]
+    number_of_transfers = len(month_data['year_month'])
     get_network_analytics(month_data)
     print(i, number_of_transfers)
-
 
 monthly_arima_df = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'emergency degrees', 'outcentrality ed',
                                          'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','eigen_centr_theatre',
