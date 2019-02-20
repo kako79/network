@@ -751,8 +751,8 @@ def get_network_analytics(specific_data):
     #drop the columns that are not needed for the graph, also only adults
     data_only_transfers = specific_data.loc[specific_data['age']>16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
     #data_only_transfers = specific_data.loc[specific_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
-    average_breach_perc = data_reduced['breach_percentage'].mean()
-    average_bed_occupancy = data_reduced['Total Occupied'].mean()
+    average_ae_perc = specific_data['breach_percentage'].mean()
+    average_beds_free = specific_data['bedsfree'].mean()
 
     # count the number of times a specific transfer appears to get edge weight
     transfer_counts = data_only_transfers.groupby(['from', 'to']).count()
@@ -920,8 +920,8 @@ def get_network_analytics(specific_data):
          'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality,
          'eigen_centr_theatre': theatres_eigen_centr,
          'eigen_centr_ed': ed_eigen_centr,'flow hierarchy': flow_hierarchy, 'density': density_net, 'transitivity': transitivity_net,
-         'average_breach_percentage': average_breach_perc,
-         'average bed occupancy': average_bed_occupancy})
+         'average_ae_percentage': average_ae_perc,
+         'average_beds_free': average_beds_free})
     return data_list
 
 monthlist=[1,2,3,4,5,6,7,8,9,10,11,12]
@@ -946,7 +946,7 @@ for i in monthlist:
 
 monthly_arima_df = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'emergency degrees', 'outcentrality ed',
                                          'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','eigen_centr_theatre',
-                                         'eigen_centr_ed','flow hierarchy', 'density', 'transitivity', 'average_breach_percentage', 'average bed occupancy'], data = data_list)
+                                         'eigen_centr_ed','flow hierarchy', 'density', 'transitivity', 'average_ae_percentage', 'average_beds_free'], data = data_list)
 #set the filename for all output files
 filename = '_monthbymonth_all'
 
