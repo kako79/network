@@ -751,6 +751,8 @@ def get_network_analytics(specific_data):
     #drop the columns that are not needed for the graph, also only adults
     data_only_transfers = specific_data.loc[specific_data['age']>16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
     #data_only_transfers = specific_data.loc[specific_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+    average_breach_perc = data_reduced['breach_percentage'].mean()
+    average_bed_occupancy = data_reduced['Total Occupied'].mean()
 
     # count the number of times a specific transfer appears to get edge weight
     transfer_counts = data_only_transfers.groupby(['from', 'to']).count()

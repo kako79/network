@@ -28,7 +28,7 @@ def get_transfer_day(date):
     return d
 
 
-max_beds = 1154 # maximal number of beds
+max_beds = 1155 # maximal number of beds +1 to not end up with infinite strain
 
 def get_free_beds(beds_occupied):
     return max_beds - beds_occupied
