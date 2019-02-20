@@ -448,7 +448,7 @@ collated_cat_ward_dict = {'ADD A3 WARD': 'neurosurgery HDU', 'ADD A4 WARD': 'neu
                    'ADD SNSK': 'weekday', 'ADD KV': 'weekday', 'ADD NS': 'weekday', 'CUH NGSHAV': 'weekday', 'ADD SKAMP': 'weekday', 'CCRC Endo':'weekday',
                    'ADD RDPFP': 'weekday','ADD IMA':'weekday', 'ADDALCGNLYR3':'weekday', 'ADD JTKMEF':'weekday', 'ADD LUCENTOP': 'weekday', 'ADD PSC': 'weekday', 'ADD SORD': 'weekday'}
 
-nocat_ward_weekday = {'ADD A3 WARD': 'A3', 'ADD A4 WARD': 'A4',
+nocat_ward_weekday = {'THEATRE': 'theatre','ADD A3 WARD': 'A3', 'ADD A4 WARD': 'A4',
                    'ADD A5 WARD': 'A5', 'ADD D6 WARD': 'D6',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT scan',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',
