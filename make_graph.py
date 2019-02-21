@@ -1012,7 +1012,7 @@ all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
 #eigen_centr_df.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = True)
 #in_centr_df.to_csv('incentrdata'+ filename+'.csv', header = True, index = True)
 #out_centr_df.to_csv('outcentrdata'+ filename+'.csv', header = True, index = True)
-#bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = True)
+bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = True)
 #nx.write_graphml(G,'graphml'+ filename + '.graphml')
 #nx.write_gexf(G,'gexf' + filename +'.gexf')
 
