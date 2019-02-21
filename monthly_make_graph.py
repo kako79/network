@@ -993,7 +993,7 @@ monthly_arima_df = pd.DataFrame(columns=['month', 'number of transfers', 'number
                                          'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','eigen_centr_theatre','bet_centr_gm','bet_centr_am','bet_centr_cdu', 'bet_centr_card',
                                          'eigen_centr_ed','flow hierarchy', 'density', 'transitivity', 'av_shortest_path','average_ae_percentage', 'average_beds_free'], data = data_list)
 #set the filename for all output files
-filename = '_month_individual_mincat'
+filename = '_month_indiv_mincat_2102'
 
 monthly_arima_df.to_csv('info' + filename + '.csv', header=True, index=False)
 edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
