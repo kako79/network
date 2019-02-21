@@ -687,8 +687,8 @@ minimal_cat_ward_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
 #alldata = pd.read_csv("transfers_old_tando.csv")
 #alldata = pd.read_csv("transfers_all_pts_icu.csv")
 #alldata = pd.read_csv("transfers_adult_asa34.csv")
-#alldata = pd.read_csv("transfers_around_high_ed_perc.csv")
-alldata = pd.read_csv("transfer_strain.csv")
+alldata = pd.read_csv("transfers_around_high_ed_perc.csv")
+#alldata = pd.read_csv("transfer_strain.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
 location_category_map = minimal_cat_ward_dict
 #location_category_map = nocat_ward_weekday
@@ -994,27 +994,27 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'med surg ratio', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
 #set the filename for all output files
-filename = '_mincat_2102_all'
+filename = '_mincat_2102_highed'
 
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
-edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
+#edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
 #nx.write_pajek(G, 'pajek_old.net')
-degrees_data.to_csv('degrees' + filename + '.csv', header =True, index=False)
-indegrees_data.to_csv('indegrees' + filename + '.csv', header =True, index=False)
-outdegrees_data.to_csv('outdegrees' + filename + '.csv', header =True, index=False)
-weighted_degrees_data.to_csv('weighteddegrees' + filename + '.csv', header =True, index=False)
-weighted_indegrees_data.to_csv('weightedindegrees' + filename + '.csv', header =True, index=False)
-weighted_outdegrees_data.to_csv('weightedoutdegrees' + filename + '.csv', header =True, index=False)
+#degrees_data.to_csv('degrees' + filename + '.csv', header =True, index=False)
+#indegrees_data.to_csv('indegrees' + filename + '.csv', header =True, index=False)
+#outdegrees_data.to_csv('outdegrees' + filename + '.csv', header =True, index=False)
+#weighted_degrees_data.to_csv('weighteddegrees' + filename + '.csv', header =True, index=False)
+#weighted_indegrees_data.to_csv('weightedindegrees' + filename + '.csv', header =True, index=False)
+#weighted_outdegrees_data.to_csv('weightedoutdegrees' + filename + '.csv', header =True, index=False)
 
-weighted_clustering_data.to_csv('weightedclustering' + filename + '.csv', header = True, index = False)
-non_weighted_clustering_data.to_csv('nonweightedclustering' + filename + '.csv', header = True, index = False)
-knn_df.to_csv('knndata'+ filename+'.csv', header = True, index = True)
-eigen_centr_df.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = True)
-in_centr_df.to_csv('incentrdata'+ filename+'.csv', header = True, index = True)
-out_centr_df.to_csv('outcentrdata'+ filename+'.csv', header = True, index = True)
-bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = True)
-nx.write_graphml(G,'graphml'+ filename + '.graphml')
-nx.write_gexf(G,'gexf' + filename +'.gexf')
+#weighted_clustering_data.to_csv('weightedclustering' + filename + '.csv', header = True, index = False)
+#non_weighted_clustering_data.to_csv('nonweightedclustering' + filename + '.csv', header = True, index = False)
+#knn_df.to_csv('knndata'+ filename+'.csv', header = True, index = True)
+#eigen_centr_df.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = True)
+#in_centr_df.to_csv('incentrdata'+ filename+'.csv', header = True, index = True)
+#out_centr_df.to_csv('outcentrdata'+ filename+'.csv', header = True, index = True)
+#bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = True)
+#nx.write_graphml(G,'graphml'+ filename + '.graphml')
+#nx.write_gexf(G,'gexf' + filename +'.gexf')
 
 
 
