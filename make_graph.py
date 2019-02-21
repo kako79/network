@@ -983,7 +983,7 @@ data_list = []
 data_list.append({'sum of transfers': sum_of_all_transfers,'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy,
                       'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality,'eigen_centr_ed': ed_eigen_centr, 'incentrality theatres': in_theatre_centrality,
                       'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality,'bet centrality gm': gm_bet_centrality,'bet centrality am': am_bet_centrality,
-'                   bet centrality cdu': cdu_bet_centrality,'bet centrality cardiology': card_bet_centrality,
+                    'bet centrality cdu': cdu_bet_centrality,'bet centrality cardiology': card_bet_centrality,
                   'eigen_centr_theatre': theatres_eigen_centr,
                   'medical to theatre': total_medical_to_theatre,
                       'medical ward transfers': total_medical_ward_transfers, 'med surg ratio': ratio_wards_surg_med,
