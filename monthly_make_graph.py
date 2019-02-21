@@ -996,7 +996,7 @@ monthly_arima_df = pd.DataFrame(columns=['month', 'number of transfers', 'number
 filename = '_month_indiv_mincat_2102'
 
 monthly_arima_df.to_csv('info' + filename + '.csv', header=True, index=False)
-edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
+#edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
 #nx.write_pajek(G, 'pajek_old.net')
 #degrees_data.to_csv('degrees' + filename + '.csv', header =True, index=False)
 #indegrees_data.to_csv('indegrees' + filename + '.csv', header =True, index=False)
@@ -1011,7 +1011,7 @@ edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
 #eigen_centr_df.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = True)
 #in_centr_df.to_csv('incentrdata'+ filename+'.csv', header = True, index = True)
 #out_centr_df.to_csv('outcentrdata'+ filename+'.csv', header = True, index = True)
-bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = True)
+#bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = True)
 #nx.write_graphml(G,'graphml'+ filename + '.graphml')
 #nx.write_gexf(G,'gexf' + filename +'.gexf')
 print('all network information file created')
