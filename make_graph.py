@@ -882,6 +882,27 @@ if 'theatre' in bet_centr:
     theatres_bet_centrality = bet_centr['theatre']
 else:
     theatres_bet_centrality = 0
+#for mincat only
+if 'general medical ward' in bet_centr:
+    gm_bet_centrality = bet_centr['general medical ward']
+else:
+    gm_bet_centrality = 0
+if 'acute medical ward' in bet_centr:
+    am_bet_centrality = bet_centr['acute medical ward']
+else:
+    am_bet_centrality = 0
+if 'CDU ward' in bet_centr:
+    cdu_bet_centrality = bet_centr['CDU ward']
+else:
+    cdu_bet_centrality = 0
+if 'cardiology ward' in bet_centr:
+    card_bet_centrality = bet_centr['cardiology ward']
+else:
+    card_bet_centrality = 0
+
+
+
+
 
 #specialised centralities and the assortativity and nearest neightbor fucntions
 
@@ -961,17 +982,19 @@ print(average_shortest_path)
 data_list = []
 data_list.append({'sum of transfers': sum_of_all_transfers,'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy,
                       'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality,'eigen_centr_ed': ed_eigen_centr, 'incentrality theatres': in_theatre_centrality,
-                      'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality,'eigen_centr_theatre': theatres_eigen_centr,
+                      'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality,'bet centrality gm': gm_bet_centrality,'bet centrality am': am_bet_centrality,
+'                   bet centrality cdu': cdu_bet_centrality,'bet centrality cardiology': card_bet_centrality,
+                  'eigen_centr_theatre': theatres_eigen_centr,
                   'medical to theatre': total_medical_to_theatre,
                       'medical ward transfers': total_medical_ward_transfers, 'med surg ratio': ratio_wards_surg_med,
                        'density': density_net, 'transitivity':transitivity_net, 'clustering average': clustering_average, 'average shortest path':average_shortest_path})
 
 all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed', 'eigen_centr_ed',
-                                         'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','eigen_centr_theatre','medical to theatre','medical ward transfers',
+                                         'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','bet centrality gm','bet centrality am','bet centrality cdu','bet centrality cardiology','eigen_centr_theatre','medical to theatre','medical ward transfers',
                                          'med surg ratio', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
 #set the filename for all output files
-filename = '_mincat_1102_all'
+filename = '_mincat_2102_all'
 
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
 edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
