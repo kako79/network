@@ -945,14 +945,14 @@ def get_network_analytics(specific_data):
     non_weighted_clustering_data = pd.DataFrame(non_weighted_clustering_list, columns=['node', 'clustering_coeff'])
 
     #shortest path in the directed graph, from a starting point source to a point target
-    #average_shortest_path = nx.average_shortest_path_length(G,weight = 'weights')
+    average_shortest_path = nx.average_shortest_path_length(G,weight = 'weights')
     data_list.append(
         {'month': i, 'number of transfers': len(specific_data['transfer_day']), 'number nodes': nn, 'number edges': en,
          'emergency degrees': emergency_degrees, 'outcentrality ed': out_ed_centrality,
          'incentrality theatres': in_theatre_centrality,
          'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality,
          'eigen_centr_theatre': theatres_eigen_centr,'bet_centr_gm':gm_bet_centrality,'bet_centr_am':am_bet_centrality,'bet_centr_cdu':cdu_bet_centrality,'bet_centr_card':card_bet_centrality,
-         'eigen_centr_ed': ed_eigen_centr,'flow hierarchy': flow_hierarchy, 'density': density_net, 'transitivity': transitivity_net,
+         'eigen_centr_ed': ed_eigen_centr,'flow hierarchy': flow_hierarchy, 'density': density_net, 'transitivity': transitivity_net,'av_shortest_path': average_shortest_path,
          'average_ae_percentage': average_ae_perc,
          'average_beds_free': average_beds_free})
     return data_list
@@ -991,12 +991,12 @@ for i in monthlist:
 
 monthly_arima_df = pd.DataFrame(columns=['month', 'number of transfers', 'number nodes', 'number edges', 'emergency degrees', 'outcentrality ed',
                                          'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','eigen_centr_theatre','bet_centr_gm','bet_centr_am','bet_centr_cdu', 'bet_centr_card',
-                                         'eigen_centr_ed','flow hierarchy', 'density', 'transitivity', 'average_ae_percentage', 'average_beds_free'], data = data_list)
+                                         'eigen_centr_ed','flow hierarchy', 'density', 'transitivity', 'av_shortest_path','average_ae_percentage', 'average_beds_free'], data = data_list)
 #set the filename for all output files
 filename = '_month_individual_mincat'
 
 monthly_arima_df.to_csv('info' + filename + '.csv', header=True, index=False)
-#edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
+edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
 #nx.write_pajek(G, 'pajek_old.net')
 #degrees_data.to_csv('degrees' + filename + '.csv', header =True, index=False)
 #indegrees_data.to_csv('indegrees' + filename + '.csv', header =True, index=False)
@@ -1011,7 +1011,7 @@ monthly_arima_df.to_csv('info' + filename + '.csv', header=True, index=False)
 #eigen_centr_df.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = True)
 #in_centr_df.to_csv('incentrdata'+ filename+'.csv', header = True, index = True)
 #out_centr_df.to_csv('outcentrdata'+ filename+'.csv', header = True, index = True)
-#bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = True)
+bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = True)
 #nx.write_graphml(G,'graphml'+ filename + '.graphml')
 #nx.write_gexf(G,'gexf' + filename +'.gexf')
 print('all network information file created')
