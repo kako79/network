@@ -687,7 +687,7 @@ minimal_cat_ward_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
 #alldata = pd.read_csv("transfers_old_tando.csv")
 #alldata = pd.read_csv("transfers_all_pts_icu.csv")
 #alldata = pd.read_csv("transfers_adult_asa34.csv")
-alldata = pd.read_csv("transfers_around_low_ed_perc.csv")
+alldata = pd.read_csv("transfers_around_high_ed_perc.csv")
 #alldata = pd.read_csv("transfer_strain.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
 location_category_map = minimal_cat_ward_dict
@@ -994,7 +994,7 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'med surg ratio', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
 #set the filename for all output files
-filename = '_mincat_2102_lowed'
+filename = '_mincat_2102_highed'
 
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
 #edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
