@@ -79,7 +79,7 @@ ward_dict_cat = {'THEATRE':'theatre','ADD A3 WARD': 'neurosurgical ward', 'ADD A
                    'ADD ATC THEATRE 31': 'theatre', 'ADD ATC THEATRE 32': 'theatre',
                    'ADD ATC THEATRE 36': 'theatre', 'ADD ATC THEATRE 33': 'theatre',
                    'ADD ATC THEATRE 34': 'theatre', 'ADD M4 WARD': 'ATC surgical ward',
-                   'ROS DAPHNE WARD': 'gynae surgical ward', 'ADD PRE-ADMISSION':'admission',
+                   'ROS DAPHNE WARD': 'gynae surgical ward', 'ADD PRE-ADMISSION':'AE',
                    'ADD ATC THEATRE 35': 'theatre', 'ADD C10 WARD': 'general medical ward','ADD C3 WARD': 'paediatric ward',
                    'ADD D10 WARD': 'general medical ward', 'ADD CATH ROOM': 'angiography',
                    'ADD CORONARY CARE UNIT': 'HDU', 'ADD DIALYSIS UNIT': 'dialysis',
@@ -128,7 +128,7 @@ ward_dict_cat = {'THEATRE':'theatre','ADD A3 WARD': 'neurosurgical ward', 'ADD A
                    'ADD UDA':'oral surgery appt', 'ADD POADSU': 'anaesthetic assess', 'ADD POAOSDSU':'anaesthetic assess',
                    'ADD AJCUOCW':'urology appt','ADD SJM':'surgery appt','ADD SMBRECON': 'urology appt', 'ADD SRGAMB': 'surgery appt',
                    'ADD LVRF':'trauma appt','ADD KDABI':'plastic surgery appt', 'ADD NSGYFC':'neurosurgery appt', 'ADD PSUD':'plastic surgery appt',
-                   'ADD BU':'radiology', 'POST-DISCHARGE':'discharge', 'PRE-ADMISSION':'admission', 'ADD J3-C3 WARD': 'surgical day ward', 'ADD PAED ICU': 'PICU',
+                   'ADD BU':'radiology', 'POST-DISCHARGE':'discharge', 'PRE-ADMISSION':'AE', 'ADD J3-C3 WARD': 'surgical day ward', 'ADD PAED ICU': 'PICU',
                    'ADD R3': 'general medical ward', 'ADD PLASTIC SURG UNIT': 'surgical day ward',
                    'ADD KDA': 'weekday', 'ADDFLEXCYSOP': 'urology appt', 'ROS SARA WARD': 'gynae surgical ward', 'ROS MFM': 'maternity', 'ROS DELIVERY UNIT': 'maternity',
                    'ROS ROSIE THEATRE 2': 'rosie theatre', 'ADD GDC': 'medical appt', 'ADD ONCOLOGY DAY UNIT': 'medical appt', 'ADD AECLINIC': 'paed appt',
@@ -205,7 +205,7 @@ ward_dict_nocat = {'THEATRE':'theatre','ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 
                    'ADD ATC THEATRE 31': 'theatre', 'ADD ATC THEATRE 32': 'theatre',
                    'ADD ATC THEATRE 36': 'theatre', 'ADD ATC THEATRE 33': 'theatre',
                    'ADD ATC THEATRE 34': 'theatre', 'ADD M4 WARD': 'M4 ward',
-                   'ROS DAPHNE WARD': 'gynae surgical ward', 'ADD PRE-ADMISSION':'admission',
+                   'ROS DAPHNE WARD': 'gynae surgical ward', 'ADD PRE-ADMISSION':'AE',
                    'ADD ATC THEATRE 35': 'theatre', 'ADD C10 WARD': 'C10 ward','ADD C3 WARD': 'paediatric ward',
                    'ADD D10 WARD': 'D10 ward', 'ADD CATH ROOM': 'angiography',
                    'ADD CORONARY CARE UNIT': 'HDU', 'ADD DIALYSIS UNIT': 'dialysis',
@@ -254,7 +254,7 @@ ward_dict_nocat = {'THEATRE':'theatre','ADD A3 WARD': 'A3 ward', 'ADD A4 WARD': 
                    'ADD UDA':'oral surgery appt', 'ADD POADSU': 'anaesthetic assess', 'ADD POAOSDSU':'anaesthetic assess',
                    'ADD AJCUOCW':'urology appt','ADD SJM':'surgery appt','ADD SMBRECON': 'urology appt', 'ADD SRGAMB': 'surgery appt',
                    'ADD LVRF':'trauma appt','ADD KDABI':'plastic surgery appt', 'ADD NSGYFC':'neurosurgery appt', 'ADD PSUD':'plastic surgery appt',
-                   'ADD BU':'radiology', 'POST-DISCHARGE':'discharge', 'PRE-ADMISSION':'admission', 'ADD J3-C3 WARD': 'surgical day ward', 'ADD PAED ICU': 'PICU',
+                   'ADD BU':'radiology', 'POST-DISCHARGE':'discharge', 'PRE-ADMISSION':'AE', 'ADD J3-C3 WARD': 'surgical day ward', 'ADD PAED ICU': 'PICU',
                    'ADD R3': 'general medical ward', 'ADD PLASTIC SURG UNIT': 'surgical day ward',
                    'ADD KDA': 'weekday', 'ADDFLEXCYSOP': 'urology appt', 'ROS SARA WARD': 'gynae surgical ward', 'ROS MFM': 'maternity', 'ROS DELIVERY UNIT': 'maternity',
                    'ROS ROSIE THEATRE 2': 'rosie theatre', 'ADD GDC': 'medical appt', 'ADD ONCOLOGY DAY UNIT': 'medical appt', 'ADD AECLINIC': 'paed appt',
@@ -333,7 +333,7 @@ collated_cat_ward_dict = {'THEATRE':'theatre','ADD A3 WARD': 'neurosurgery HDU',
                    'ADD ATC THEATRE 31': 'theatre', 'ADD ATC THEATRE 32': 'theatre',
                    'ADD ATC THEATRE 36': 'theatre', 'ADD ATC THEATRE 33': 'theatre',
                    'ADD ATC THEATRE 34': 'theatre', 'ADD M4 WARD': 'ATC surgical ward',
-                   'ROS DAPHNE WARD': 'gynae surgical ward', 'ADD PRE-ADMISSION':'admission',
+                   'ROS DAPHNE WARD': 'gynae surgical ward', 'ADD PRE-ADMISSION':'AE',
                    'ADD ATC THEATRE 35': 'theatre', 'ADD C10 WARD': 'general medical ward','ADD C3 WARD': 'paediatric ward',
                    'ADD D10 WARD': 'general medical ward', 'ADD CATH ROOM': 'angiography',
                    'ADD CORONARY CARE UNIT': 'HDU', 'ADD DIALYSIS UNIT': 'weekday',
@@ -382,7 +382,7 @@ collated_cat_ward_dict = {'THEATRE':'theatre','ADD A3 WARD': 'neurosurgery HDU',
                    'ADD UDA':'weekday', 'ADD POADSU': 'weekday', 'ADD POAOSDSU':'weekday',
                    'ADD AJCUOCW':'weekday','ADD SJM':'weekday','ADD SMBRECON': 'weekday', 'ADD SRGAMB': 'weekday',
                    'ADD LVRF':'weekday','ADD KDABI':'weekday', 'ADD NSGYFC':'weekday', 'ADD PSUD':'weekday',
-                   'ADD BU':'radiology', 'POST-DISCHARGE':'discharge', 'PRE-ADMISSION':'admission',
+                   'ADD BU':'radiology', 'POST-DISCHARGE':'discharge', 'PRE-ADMISSION':'AE',
                    'ADD J3-C3 WARD': 'surgical day ward', 'ADD PAED ICU': 'PICU', 'ADD R3': 'general medical ward', 'ADD PLASTIC SURG UNIT': 'surgical day ward',
                    'ADD KDA': 'weekday', 'ADDFLEXCYSOP': 'weekday', 'ROS SARA WARD': 'gynae surgical ward', 'ROS MFM': 'maternity', 'ROS DELIVERY UNIT': 'maternity',
                    'ROS ROSIE THEATRE 2': 'rosie theatre', 'ADD GDC': 'weekday', 'ADD ONCOLOGY DAY UNIT': 'weekday', 'ADD AECLINIC': 'weekday',
@@ -458,7 +458,7 @@ nocat_ward_weekday = {'THEATRE':'theatre','ADD A3 WARD': 'A3', 'ADD A4 WARD': 'A
                    'ADD ATC THEATRE 31': 'theatre', 'ADD ATC THEATRE 32': 'theatre',
                    'ADD ATC THEATRE 36': 'theatre', 'ADD ATC THEATRE 33': 'theatre',
                    'ADD ATC THEATRE 34': 'theatre', 'ADD M4 WARD': 'M4',
-                   'ROS DAPHNE WARD': 'Daphne', 'ADD PRE-ADMISSION':'admission',
+                   'ROS DAPHNE WARD': 'Daphne', 'ADD PRE-ADMISSION':'AE',
                    'ADD ATC THEATRE 35': 'theatre', 'ADD C10 WARD': 'C10','ADD C3 WARD': 'C3',
                    'ADD D10 WARD': 'D10', 'ADD CATH ROOM': 'angiography',
                    'ADD CORONARY CARE UNIT': 'coronary HDU', 'ADD DIALYSIS UNIT': 'weekday',
@@ -507,7 +507,7 @@ nocat_ward_weekday = {'THEATRE':'theatre','ADD A3 WARD': 'A3', 'ADD A4 WARD': 'A
                    'ADD UDA':'weekday', 'ADD POADSU': 'weekday', 'ADD POAOSDSU':'weekday',
                    'ADD AJCUOCW':'weekday','ADD SJM':'weekday','ADD SMBRECON': 'weekday', 'ADD SRGAMB': 'weekday',
                    'ADD LVRF':'weekday','ADD KDABI':'weekday', 'ADD NSGYFC':'weekday', 'ADD PSUD':'weekday',
-                   'ADD BU':'radiology', 'POST-DISCHARGE':'discharge', 'PRE-ADMISSION':'admission',
+                   'ADD BU':'radiology', 'POST-DISCHARGE':'discharge', 'PRE-ADMISSION':'AE',
                    'ADD J3-C3 WARD': 'J3 day', 'ADD PAED ICU': 'PICU', 'ADD R3': 'R3', 'ADD PLASTIC SURG UNIT': 'surgical day ward',
                    'ADD KDA': 'weekday', 'ADDFLEXCYSOP': 'weekday', 'ROS SARA WARD': 'sara', 'ROS MFM': 'maternity', 'ROS DELIVERY UNIT': 'maternity',
                    'ROS ROSIE THEATRE 2': 'rosie theatre', 'ADD GDC': 'weekday', 'ADD ONCOLOGY DAY UNIT': 'weekday', 'ADD AECLINIC': 'weekday',
@@ -584,7 +584,7 @@ minimal_cat_ward_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
                    'ADD ATC THEATRE 31': 'theatre', 'ADD ATC THEATRE 32': 'theatre',
                    'ADD ATC THEATRE 36': 'theatre', 'ADD ATC THEATRE 33': 'theatre',
                    'ADD ATC THEATRE 34': 'theatre', 'ADD M4 WARD': 'ATC surgical ward',
-                   'ROS DAPHNE WARD': 'gynae surgical ward', 'ADD PRE-ADMISSION':'admission',
+                   'ROS DAPHNE WARD': 'gynae surgical ward', 'ADD PRE-ADMISSION':'AE',
                    'ADD ATC THEATRE 35': 'theatre', 'ADD C10 WARD': 'general medical ward','ADD C3 WARD': 'paediatric ward',
                    'ADD D10 WARD': 'general medical ward', 'ADD CATH ROOM': 'angiography',
                    'ADD CORONARY CARE UNIT': 'HDU', 'ADD DIALYSIS UNIT': 'weekday',
@@ -633,7 +633,7 @@ minimal_cat_ward_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
                    'ADD UDA':'weekday', 'ADD POADSU': 'weekday', 'ADD POAOSDSU':'weekday',
                    'ADD AJCUOCW':'weekday','ADD SJM':'weekday','ADD SMBRECON': 'weekday', 'ADD SRGAMB': 'weekday',
                    'ADD LVRF':'weekday','ADD KDABI':'weekday', 'ADD NSGYFC':'weekday', 'ADD PSUD':'weekday',
-                   'ADD BU':'radiology', 'POST-DISCHARGE':'discharge', 'PRE-ADMISSION':'admission',
+                   'ADD BU':'radiology', 'POST-DISCHARGE':'discharge', 'PRE-ADMISSION':'AE',
                    'ADD J3-C3 WARD': 'surgical day ward', 'ADD PAED ICU': 'PICU', 'ADD R3': 'general medical ward', 'ADD PLASTIC SURG UNIT': 'general surgical ward',
                    'ADD KDA': 'weekday', 'ADDFLEXCYSOP': 'weekday', 'ROS SARA WARD': 'gynae surgical ward', 'ROS MFM': 'maternity', 'ROS DELIVERY UNIT': 'maternity',
                    'ROS ROSIE THEATRE 2': 'theatre', 'ADD GDC': 'weekday', 'ADD ONCOLOGY DAY UNIT': 'weekday', 'ADD AECLINIC': 'weekday',
@@ -687,11 +687,11 @@ minimal_cat_ward_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
 #alldata = pd.read_csv("transfers_old_tando.csv")
 #alldata = pd.read_csv("transfers_all_pts_icu.csv")
 #alldata = pd.read_csv("transfers_adult_asa34.csv")
-alldata = pd.read_csv("transfers_around_low_ed_perc.csv")
-#alldata = pd.read_csv("transfer_strain.csv")
+#alldata = pd.read_csv("transfers_around_low_ed_perc.csv")
+alldata = pd.read_csv("transfer_strain.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
-location_category_map = minimal_cat_ward_dict
-#location_category_map = nocat_ward_weekday
+#location_category_map = minimal_cat_ward_dict
+location_category_map = nocat_ward_weekday
 
 alldata['from_category'] = alldata['from'].map(location_category_map)
 alldata['to_category'] = alldata['to'].map(location_category_map)
@@ -994,26 +994,26 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'med surg ratio', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
 #set the filename for all output files
-filename = '_mincat_2102_lowed'
+filename = '_nocatwd_all_2304'
 
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
-#edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
+edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
 #nx.write_pajek(G, 'pajek_old.net')
-#degrees_data.to_csv('degrees' + filename + '.csv', header =True, index=False)
-#indegrees_data.to_csv('indegrees' + filename + '.csv', header =True, index=False)
-#outdegrees_data.to_csv('outdegrees' + filename + '.csv', header =True, index=False)
-#weighted_degrees_data.to_csv('weighteddegrees' + filename + '.csv', header =True, index=False)
-#weighted_indegrees_data.to_csv('weightedindegrees' + filename + '.csv', header =True, index=False)
-#weighted_outdegrees_data.to_csv('weightedoutdegrees' + filename + '.csv', header =True, index=False)
+degrees_data.to_csv('degrees' + filename + '.csv', header =True, index=False)
+indegrees_data.to_csv('indegrees' + filename + '.csv', header =True, index=False)
+outdegrees_data.to_csv('outdegrees' + filename + '.csv', header =True, index=False)
+weighted_degrees_data.to_csv('weighteddegrees' + filename + '.csv', header =True, index=False)
+weighted_indegrees_data.to_csv('weightedindegrees' + filename + '.csv', header =True, index=False)
+weighted_outdegrees_data.to_csv('weightedoutdegrees' + filename + '.csv', header =True, index=False)
 
-#weighted_clustering_data.to_csv('weightedclustering' + filename + '.csv', header = True, index = False)
-#non_weighted_clustering_data.to_csv('nonweightedclustering' + filename + '.csv', header = True, index = False)
-#knn_df.to_csv('knndata'+ filename+'.csv', header = True, index = True)
-#eigen_centr_df.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = True)
-#in_centr_df.to_csv('incentrdata'+ filename+'.csv', header = True, index = True)
-#out_centr_df.to_csv('outcentrdata'+ filename+'.csv', header = True, index = True)
+weighted_clustering_data.to_csv('weightedclustering' + filename + '.csv', header = True, index = False)
+non_weighted_clustering_data.to_csv('nonweightedclustering' + filename + '.csv', header = True, index = False)
+knn_df.to_csv('knndata'+ filename+'.csv', header = True, index = True)
+eigen_centr_df.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = True)
+in_centr_df.to_csv('incentrdata'+ filename+'.csv', header = True, index = True)
+out_centr_df.to_csv('outcentrdata'+ filename+'.csv', header = True, index = True)
 bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = True)
-#nx.write_graphml(G,'graphml'+ filename + '.graphml')
+nx.write_graphml(G,'graphml'+ filename + '.graphml')
 #nx.write_gexf(G,'gexf' + filename +'.gexf')
 
 
