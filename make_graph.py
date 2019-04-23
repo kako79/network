@@ -1006,6 +1006,8 @@ weighted_degrees_data.to_csv('weighteddegrees' + filename + '.csv', header =True
 weighted_indegrees_data.to_csv('weightedindegrees' + filename + '.csv', header =True, index=False)
 weighted_outdegrees_data.to_csv('weightedoutdegrees' + filename + '.csv', header =True, index=False)
 
+
+
 weighted_clustering_data.to_csv('weightedclustering' + filename + '.csv', header = True, index = False)
 non_weighted_clustering_data.to_csv('nonweightedclustering' + filename + '.csv', header = True, index = False)
 knn_df.to_csv('knndata'+ filename+'.csv', header = True, index = True)
