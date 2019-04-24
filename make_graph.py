@@ -1053,6 +1053,7 @@ print('all network information file created')
 #nx.draw_circular(G)
 #width = [d['weight'] for _,_,d in G.edges(data=True)]
 
+
 #edge_labels=dict([((u,v,), d['weight'])
 #             for u,v,d in G.edges(data=True)])
 #nx.draw_networkx(G, with_labels=True, font_weight='bold' )
