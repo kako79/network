@@ -967,7 +967,7 @@ non_weighted_clustering_list = [[n, d] for n, d in non_weighted_clustering_distr
 non_weighted_clustering_data = pd.DataFrame(non_weighted_clustering_list, columns=['node', 'clustering_coeff'])
 
 weighted_dir_clust_list = [[n,d] for n,d in weighted_directional_clustering_distribution.items()]
-weighted_dir_clust_data = pd.DataFrame(weighted_directional_clustering_list, columns= ['node', 'clusterin_coeff_dir_w'])
+weighted_dir_clust_data = pd.DataFrame(weighted_dir_clust_list, columns= ['node', 'clusterin_coeff_dir_w'])
 
 print('clustering in non directed graph')
 print(clustering_average)
