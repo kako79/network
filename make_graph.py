@@ -958,12 +958,16 @@ transitivity_net = nx.transitivity(G)
 clustering_average = nx.average_clustering(nondiG,weight = 'weights')
 weighted_clustering_distribution = nx.clustering(nondiG, weight = 'weight')
 non_weighted_clustering_distribution = nx.clustering(unweightednondirG)
+weighted_directional_clustering_distribution = nx.clustering(G, weight = 'weights')
 #print(clustering_distribution)
 weighted_clustering_list = [[n, d] for n, d in weighted_clustering_distribution.items()]
 weighted_clustering_data = pd.DataFrame(weighted_clustering_list, columns=['node', 'clustering_coeff'])
 
 non_weighted_clustering_list = [[n, d] for n, d in non_weighted_clustering_distribution.items()]
 non_weighted_clustering_data = pd.DataFrame(non_weighted_clustering_list, columns=['node', 'clustering_coeff'])
+
+weighted_dir_clust_list = [[n,d] for n,d in weighted_directional_clustering_distribution.items()]
+weighted_dir_clust_data = pd.DataFrame(weighted_directional_clustering_list, columns= ['node', 'clusterin_coeff_dir_w'])
 
 print('clustering in non directed graph')
 print(clustering_average)
@@ -1010,6 +1014,7 @@ weighted_outdegrees_data.to_csv('weightedoutdegrees' + filename + '.csv', header
 
 weighted_clustering_data.to_csv('weightedclustering' + filename + '.csv', header = True, index = False)
 non_weighted_clustering_data.to_csv('nonweightedclustering' + filename + '.csv', header = True, index = False)
+weighted_dir_clust_data.to_csv('weighted_dir_clustering' + filename + '.csv', header = True, index = False)
 knn_df.to_csv('knndata'+ filename+'.csv', header = True, index = True)
 eigen_centr_df.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = True)
 in_centr_df.to_csv('incentrdata'+ filename+'.csv', header = True, index = True)
