@@ -963,16 +963,24 @@ non_weighted_directional_clustering_distribution = nx.clustering(G)
 
 #print(clustering_distribution)
 weighted_clustering_list = [[n, d] for n, d in weighted_clustering_distribution.items()]
-weighted_clustering_data = pd.DataFrame(weighted_clustering_list, columns=['node', 'clustering_coeff'])
+weighted_clustering_data = pd.DataFrame(weighted_clustering_list, columns=['node', 'w_nondir_cc'])
 
 non_weighted_clustering_list = [[n, d] for n, d in non_weighted_clustering_distribution.items()]
-non_weighted_clustering_data = pd.DataFrame(non_weighted_clustering_list, columns=['node', 'clustering_coeff'])
+non_weighted_clustering_data = pd.DataFrame(non_weighted_clustering_list, columns=['node', 'nonw_nondir_cc'])
 
 weighted_dir_clust_list = [[n,d] for n,d in weighted_directional_clustering_distribution.items()]
-weighted_dir_clust_data = pd.DataFrame(weighted_dir_clust_list, columns= ['node', 'clusterin_coeff_dir_w'])
+weighted_dir_clust_data = pd.DataFrame(weighted_dir_clust_list, columns= ['node', 'w_dir_cc'])
 
 non_weighted_dir_clust_list = [[n,d] for n,d in non_weighted_directional_clustering_distribution.items()]
-non_weighted_dir_clust_data = pd.DataFrame(weighted_dir_clust_list, columns= ['node', 'clusterin_coeff_dir_nonw'])
+non_weighted_dir_clust_data = pd.DataFrame(non_weighted_dir_clust_list, columns= ['node', 'nonw_dir_cc'])
+
+a=non_weighted_clustering_data.set_index("node")
+b=weighted_clustering_data.set_index("node")
+c=weighted_dir_clust_data.set_index("node")
+d=non_weighted_dir_clust_data.set_index("node")
+
+all_clustering_df = a.join(b).join(c).join(d).reset_index()
+
 
 print('clustering in non directed graph')
 print(clustering_average)
@@ -1021,7 +1029,7 @@ weighted_clustering_data.to_csv('weightedclustering' + filename + '.csv', header
 non_weighted_clustering_data.to_csv('nonweightedclustering' + filename + '.csv', header = True, index = False)
 weighted_dir_clust_data.to_csv('weighted_dir_clustering' + filename + '.csv', header = True, index = False)
 non_weighted_dir_clust_data.to_csv('non_weighted_dir_clustering' + filename + '.csv', header = True, index = False)
-
+all_clustering_df.to_csv('all_clustering' +filename + '.csv', header = True, index=False)
 
 knn_df.to_csv('knndata'+ filename+'.csv', header = True, index = True)
 eigen_centr_df.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = True)
