@@ -117,10 +117,19 @@ adult_transfers= alltransfers.loc[alltransfers['age']>15]
 
 #select all the patients who at some point in their stay were in icu, nccu
 #df = pd.DataFrame({'ptid': [1, 1, 1, 2, 2, 3, 3, 3, 3, 4], 'loc': ['a', 'b', 'c', 'a', 'c', 'a', 'b', 'a', 'b', 'd']})
-wards = {'ADD GENERAL ICU', 'ADD NEURO ICU'}
+wards = {'ADD GENERAL ICU', 'ADD NEURO ICU', }
 icu_patient_ids = set(alltransfers.loc[alltransfers['from'].isin(wards)]['ptid'].unique())
 icu_patient_records = alltransfers.loc[alltransfers['ptid'].isin(icu_patient_ids)]
 icu_patient_records.to_csv('transfers_all_icu.csv', header=True, index=False)
+
+#all adult HDU or ICU patients
+wards = {'ADD GENERAL ICU', 'ADD NEURO ICU', 'ADD D4 IDA UNIT', 'ADD CORONARY CARE UNIT', 'ADD TRANSPLANT HDU'}
+icu_patient_ids = set(alltransfers.loc[alltransfers['from'].isin(wards)]['ptid'].unique())
+icu_patient_records = alltransfers.loc[alltransfers['ptid'].isin(icu_patient_ids)]
+icu_patient_records.to_csv('transfers_hdu.csv', header=True, index=False)
+
+
+
 
 specialities = {'Trauma', 'Orthopaedics'}
 t_o_patient_ids = set(alltransfers.loc[alltransfers['spec'].isin(specialities)]['ptid'].unique())
