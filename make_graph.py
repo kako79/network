@@ -746,6 +746,9 @@ G = nx.DiGraph()
 #print(weighted_edges)
 G.add_weighted_edges_from(weighted_edges)
 
+unweighteddirG = nx.DiGraph()
+unweighteddirG.add_edges_from(unweighted_edges)
+
 unweightednondirG = nx.Graph()
 unweightednondirG.add_edges_from(unweighted_edges)
 
@@ -958,9 +961,9 @@ transitivity_net = nx.transitivity(G)
 clustering_average = nx.average_clustering(nondiG,weight = 'weights')
 
 weighted_clustering_distribution = nx.clustering(nondiG, weight = 'weight')
-non_weighted_clustering_distribution = nx.clustering(nondiG)
+non_weighted_clustering_distribution = nx.clustering(unweightednondirG)
 weighted_directional_clustering_distribution = nx.clustering(G, weight = 'weights')
-non_weighted_directional_clustering_distribution = nx.clustering(G)
+non_weighted_directional_clustering_distribution = nx.clustering(unweighteddirG)
 
 #print(clustering_distribution)
 weighted_clustering_list = [[n, d] for n, d in weighted_clustering_distribution.items()]
