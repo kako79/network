@@ -682,7 +682,7 @@ minimal_cat_ward_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
                    'ADD SNSK': 'clinic', 'ADD KV': 'clinic', 'ADD NS': 'clinic', 'CUH NGSHAV': 'clinic', 'ADD SKAMP': 'clinic', 'CCRC Endo':'clinic',
                    'ADD RDPFP': 'clinic','ADD IMA':'clinic', 'ADDALCGNLYR3':'clinic', 'ADD JTKMEF':'clinic', 'ADD LUCENTOP': 'clinic', 'ADD PSC': 'clinic', 'ADD SORD': 'clinic', 'THEATRE':'theatre'}
 
-ICU combined_min_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neurosurgery ward',
+ICU_combined_min_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neurosurgery ward',
                    'ADD A5 WARD': 'neurosurgery ward', 'ADD D6 WARD': 'neurosurgery ward',
                    'ADD CLINICAL DECN UNIT': 'CDU ward', 'ADD CT': 'CT',
                    'ADD ECHO1': 'echo', 'ADD EMERGENCY DEPT': 'AE',
@@ -813,11 +813,12 @@ ICU combined_min_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
 #alldata = pd.read_csv("transfers_adult_asa34.csv")
 #alldata = pd.read_csv("transfers_around_low_ed_perc.csv")
 #alldata = pd.read_csv("transfer_strain.csv")
-#alldata = pd.read_csv("transfers_hdu.csv")
-alldata = pd.read_csv("transfers_lowed_hdu.csv")
+alldata = pd.read_csv("transfers_hdu.csv")
+#alldata = pd.read_csv("transfers_lowed_hdu.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
-location_category_map = minimal_cat_ward_dict
+#location_category_map = minimal_cat_ward_dict
 #location_category_map = nocat_ward_weekday
+location_category_map = ICU_combined_min_dict
 
 alldata['from_category'] = alldata['from'].map(location_category_map)
 alldata['to_category'] = alldata['to'].map(location_category_map)
@@ -1141,7 +1142,7 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'med surg ratio', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
 #set the filename for all output files
-filename = '_min_hdu_lowed2504'
+filename = '_icucombined_hdu_2604'
 
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
 edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
