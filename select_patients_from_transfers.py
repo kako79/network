@@ -114,7 +114,7 @@ transfers_around_high_ed_ind.to_csv('transfers_around_high_ed_perc.csv')
 
 #select all adult patients 16 and above
 adult_transfers= alltransfers.loc[alltransfers['age']>16]
-adult_transfers.tocsv('all_adult_transfers.csv')
+adult_transfers.to_csv('all_adult_transfers.csv')
 
 #select all the patients who at some point in their stay were in icu, nccu
 #df = pd.DataFrame({'ptid': [1, 1, 1, 2, 2, 3, 3, 3, 3, 4], 'loc': ['a', 'b', 'c', 'a', 'c', 'a', 'b', 'a', 'b', 'd']})
