@@ -813,7 +813,7 @@ ICU_combined_min_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
 #alldata = pd.read_csv("transfers_adult_asa34.csv")
 #alldata = pd.read_csv("transfers_around_low_ed_perc.csv")
 alldata = pd.read_csv("transfer_strain.csv")
-print("Rows after removing bad dates: %s" % len(all_transfers))
+print("Rows after removing bad dates: %s" % len(alldata))
 #alldata = pd.read_csv("all_adult_transfers.csv")
 #alldata = pd.read_csv("transfers_hdu.csv")
 #alldata = pd.read_csv("transfers_highed_hdu.csv")
