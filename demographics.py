@@ -25,6 +25,8 @@ num_patients = len(sorted_data['ptid'].unique())
 
 
 groups = sorted_data.groupby('ptid')
+print(groups)
+
 all_transfers = []
 num_bad_patients = 0
 num_good_patients = 0
@@ -32,7 +34,7 @@ good_patient_data =[]
 bad_patient_data = []
 
 for ptid, group in groups:
-    patient_transfers, patient_data = get_patient_transfers(ptid, group)
+    #patient_transfers, patient_data = get_patient_transfers(ptid, group)
     if patient_transfers is None:
         num_bad_patients += 1
         if patient_data is not None:
