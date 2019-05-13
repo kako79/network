@@ -17,10 +17,19 @@ import networkx as nx
 #from collections import defaultdict
 from datetime import datetime
 import datetime as dt
+import statistics
 
 alltransfers = pd.read_csv("transfer_strain.csv")
 sorted_data = alltransfers.sort_values(['ptid', 'transfer_dt'])
 num_patients = len(sorted_data['ptid'].unique())
+print("number of patient", num_patients)
+
+ptids_unique = sorted_data['ptid'].unique()
+ages_ptids = alltransfers.loc[ptids_unique]['age']
+ASA_ptids = alltransfers.loc[ptids_unique]['age']
+
+
+mean_age = statistics.mean()
 
 
 
@@ -46,7 +55,7 @@ bad_patient_data = []
 #    if (i % 100) == 0:
 #        print("Finished %s of %s patients. Good patients: %s, bad patients: %s." % (i, num_patients, num_good_patients, num_bad_patients))
 
-print("Good patients: %s. Bad patients: %s." % (num_good_patients, num_bad_patients))
+#print("Good patients: %s. Bad patients: %s." % (num_good_patients, num_bad_patients))
 
 
 #good_patient_data.to_csv('good_patient_130519.csv', header=True, index=False)
