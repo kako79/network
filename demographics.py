@@ -48,5 +48,5 @@ bad_patient_data = []
 
 print("Good patients: %s. Bad patients: %s." % (num_good_patients, num_bad_patients))
 
-good_patient_data.to_csv('good_patient_130519.csv', header=True, index=False)
-bad_patient_data.to_csv('bad_patient_130519.csv', header = True, index=False)
+#good_patient_data.to_csv('good_patient_130519.csv', header=True, index=False)
+#bad_patient_data.to_csv('bad_patient_130519.csv', header = True, index=False)
