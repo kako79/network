@@ -29,8 +29,12 @@ surg_extra.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 
 demographics_data = reduced_data.join(surg_extra, on='ptid', how='left')
 
-mean_age = statistics.mean(demographics_data['age'])
+mean_age = statistics.mean(demographics_data['admAge'])
 
+print(mean_age)
+print(len(demographics_data['admAge']))
+
+demographics_data.to_csv('demographics_data.csv', header=True, index=False)
 
 
 #sorted_data = alltransfers.sort_values(['ptid', 'transfer_dt'])
