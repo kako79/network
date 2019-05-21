@@ -44,18 +44,18 @@ all_demographics_data = reduced_data.join(surg_extra, on='ptid', how='left')
 #    unique_demographics.append({'ptid':unique_row.ptid, 'age': unique_row.admAge, 'asa' : unique_row.asa_rating_c})
 
 df_demo= all_demographics_data.set_index('ptid')
-df_demo.sort_index().groupby(level=0).first()
+df_demo_first = df_demo.sort_index().groupby(level=0).first()
 
 
-print(df_demo)
+print(df_demo_first)
 #unique_demographics = all_demographics_data.loc[all_demographics_data['ptid'].isin(unique_demographics_set)]
 
 
-mean_age = statistics.mean(df_demo['admAge'])
+mean_age = statistics.mean(df_demo_first['admAge'])
 print(mean_age)
-print(len(df_demo['admAge']))
-print('mean ASA', statistics.mean(df_demo['asa_rating_c']))
-df_demo.to_csv('demographics_data.csv', header=True, index=False)
+print(len(df_demo_first['admAge']))
+print('mean ASA', statistics.mean(df_demo_first['asa_rating_c']))
+df_demo_first.to_csv('demographics_data.csv', header=True, index=False)
 
 
 #sorted_data = alltransfers.sort_values(['ptid', 'transfer_dt'])
