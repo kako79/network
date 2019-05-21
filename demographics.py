@@ -19,7 +19,19 @@ from datetime import datetime
 import datetime as dt
 import statistics
 
-alltransfers = pd.read_csv("transfer_strain.csv")
+allpatients = pd.read_csv("ADM_INFO_aug.csv")
+
+reduced_data = allpatients[['STUDY_SUBJECT_DIGEST','adm_hosp','dis_hosp','specialty','admAge']]
+reduced_data.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True
+
+surg_extra = surgeriesinfo[['asa_rating_c', 'STUDY_SUBJECT_DIGEST']]
+surg_extra.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
+
+demographics_data = reduced_data.join(surg_extra, on='ptid', how='left')
+
+
+
+
 sorted_data = alltransfers.sort_values(['ptid', 'transfer_dt'])
 num_patients = len(sorted_data['ptid'].unique())
 print("number of patient", num_patients)
