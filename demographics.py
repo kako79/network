@@ -24,6 +24,7 @@ allpatients = pd.read_csv("ADM_INFO_aug.csv")
 reduced_data = allpatients[['STUDY_SUBJECT_DIGEST','adm_hosp','dis_hosp','specialty','admAge']]
 reduced_data.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
 
+surgeriesinfo = pd.read_csv("SURGERIES_aug.csv")
 surg_extra = surgeriesinfo[['asa_rating_c', 'STUDY_SUBJECT_DIGEST']]
 surg_extra.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 
