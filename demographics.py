@@ -28,8 +28,8 @@ surgeriesinfo = pd.read_csv("SURGERIES_aug.csv")
 surg_extra = surgeriesinfo[['asa_rating_c', 'STUDY_SUBJECT_DIGEST']]
 
 #replace the empty asa entries with
-dataframe[column] = dataframe[column].replace(r'\s+', np.nan, regex=True)
-      dataframe[column] = dataframe[column].fillna(0)
+surg_extra['asa_rating_c'] = surg_extra['asa_rating_c'].replace("", np.nan, regex=True)
+surg_extra['asa_rating_c'] = surg_extra['asa_rating_c'].fillna(0)
 
 surg_extra.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 
