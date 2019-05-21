@@ -31,6 +31,7 @@ surg_extra.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 all_demographics_data = reduced_data.join(surg_extra, on='ptid', how='left')
 
 unique_demographics_set = set(all_demographics_data['ptid'].unique())
+print(unique_demographics_set)
 unique_demographics = all_demographics_data.loc[all_demographics_data['ptid'].isin(unique_demographics_set)]
 
 
