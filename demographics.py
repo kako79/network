@@ -22,37 +22,38 @@ import statistics
 allpatients = pd.read_csv("ADM_INFO_aug.csv")
 
 reduced_data = allpatients[['STUDY_SUBJECT_DIGEST','adm_hosp','dis_hosp','specialty','admAge']]
-reduced_data.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True
+reduced_data.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
 
 surg_extra = surgeriesinfo[['asa_rating_c', 'STUDY_SUBJECT_DIGEST']]
 surg_extra.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 
 demographics_data = reduced_data.join(surg_extra, on='ptid', how='left')
 
+mean_age = statistics.mean(demographics_data['age'])
 
 
 
-sorted_data = alltransfers.sort_values(['ptid', 'transfer_dt'])
-num_patients = len(sorted_data['ptid'].unique())
-print("number of patient", num_patients)
+#sorted_data = alltransfers.sort_values(['ptid', 'transfer_dt'])
+#num_patients = len(sorted_data['ptid'].unique())
+#print("number of patient", num_patients)
 
-ptids_unique = sorted_data['ptid'].unique()
-ages_ptids = alltransfers.loc[ptids_unique]['age']
-ASA_ptids = alltransfers.loc[ptids_unique]['age']
-
-
-mean_age = statistics.mean()
+#ptids_unique = sorted_data['ptid'].unique()
+#ages_ptids = alltransfers.loc[ptids_unique]['age']
+#ASA_ptids = alltransfers.loc[ptids_unique]['age']
 
 
+#mean_age = statistics.mean()
 
-groups = sorted_data.groupby('ptid')
-print(groups)
 
-all_transfers = []
-num_bad_patients = 0
-num_good_patients = 0
-good_patient_data =[]
-bad_patient_data = []
+
+#groups = sorted_data.groupby('ptid')
+#print(groups)
+
+#all_transfers = []
+#num_bad_patients = 0
+#num_good_patients = 0
+#good_patient_data =[]
+#bad_patient_data = []
 
 #for ptid, group in groups:
 #    #patient_transfers, patient_data = get_patient_transfers(ptid, group)
