@@ -26,20 +26,37 @@ reduced_data.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace
 
 surgeriesinfo = pd.read_csv("SURGERIES_aug.csv")
 surg_extra = surgeriesinfo[['asa_rating_c', 'STUDY_SUBJECT_DIGEST']]
+
+#replace the empty asa entries with
+dataframe[column] = dataframe[column].replace(r'\s+', np.nan, regex=True)
+      dataframe[column] = dataframe[column].fillna(0)
+
 surg_extra.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
+
+
 
 all_demographics_data = reduced_data.join(surg_extra, on='ptid', how='left')
 
-unique_demographics_set = set(all_demographics_data['ptid'].unique())
-print(unique_demographics_set)
-unique_demographics = all_demographics_data.loc[all_demographics_data['ptid'].isin(unique_demographics_set)]
+#unique_pt_set = set(all_demographics_data['ptid'].unique())
+
+#unique_demographics=[]
+#for n in unique_pt_set:
+#    unique_row = all_demographics_data[all_demographics_data['ptid'] == n].iloc[0]
+#    unique_demographics.append({'ptid':unique_row.ptid, 'age': unique_row.admAge, 'asa' : unique_row.asa_rating_c})
+
+df_demo= all_demographics_data.set_index('ptid')
+df_demo.sort_index().groupby(level=0).first()
 
 
-mean_age = statistics.mean(unique_demographics['admAge'])
+print(df_demo)
+#unique_demographics = all_demographics_data.loc[all_demographics_data['ptid'].isin(unique_demographics_set)]
+
+
+mean_age = statistics.mean(df_demo['admAge'])
 print(mean_age)
-print(len(unique_demographics['admAge']))
-print('mean ASA', statistics.mean(unique_demographics['asa_rating_c']))
-unique_demographics.to_csv('demographics_data.csv', header=True, index=False)
+print(len(df_demo['admAge']))
+print('mean ASA', statistics.mean(df_demo['asa_rating_c']))
+df_demo.to_csv('demographics_data.csv', header=True, index=False)
 
 
 #sorted_data = alltransfers.sort_values(['ptid', 'transfer_dt'])
