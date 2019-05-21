@@ -31,10 +31,9 @@ surg_extra.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 demographics_data = reduced_data.join(surg_extra, on='ptid', how='left')
 
 mean_age = statistics.mean(demographics_data['admAge'])
-
 print(mean_age)
 print(len(demographics_data['admAge']))
-
+print('mean ASA', statistics.mean(demographics_data['asa_rating_c']))
 demographics_data.to_csv('demographics_data.csv', header=True, index=False)
 
 
