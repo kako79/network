@@ -34,7 +34,6 @@ surg_extra['asa_rating_c'] = surg_extra['asa_rating_c'].fillna(0)
 surg_extra.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 
 
-
 all_demographics_data = reduced_data.join(surg_extra, on='ptid', how='left')
 
 #unique_pt_set = set(all_demographics_data['ptid'].unique())
