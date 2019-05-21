@@ -28,13 +28,17 @@ surgeriesinfo = pd.read_csv("SURGERIES_aug.csv")
 surg_extra = surgeriesinfo[['asa_rating_c', 'STUDY_SUBJECT_DIGEST']]
 surg_extra.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 
-demographics_data = reduced_data.join(surg_extra, on='ptid', how='left')
+all_demographics_data = reduced_data.join(surg_extra, on='ptid', how='left')
 
-mean_age = statistics.mean(demographics_data['admAge'])
+unique_demographics_set = set(all_demographics_data['ptid'].unique())
+unique_demographics = all_demographics_data.loc[all_demographics_data['ptid'].isin(unique_demographics_set)]
+
+
+mean_age = statistics.mean(unique_demographics['admAge'])
 print(mean_age)
-print(len(demographics_data['admAge']))
-print('mean ASA', statistics.mean(demographics_data['asa_rating_c']))
-demographics_data.to_csv('demographics_data.csv', header=True, index=False)
+print(len(unique_demographics['admAge']))
+print('mean ASA', statistics.mean(unique_demographics['asa_rating_c']))
+unique_demographics.to_csv('demographics_data.csv', header=True, index=False)
 
 
 #sorted_data = alltransfers.sort_values(['ptid', 'transfer_dt'])
