@@ -1168,6 +1168,11 @@ in_centr_df.to_csv('incentrdata'+ filename+'.csv', header = True, index = True)
 out_centr_df.to_csv('outcentrdata'+ filename+'.csv', header = True, index = True)
 bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = True)
 nx.write_graphml(G,'graphml'+ filename + '.graphml')
+
+
+print("omega",networkx.algorithms.smallworld.omega(G))
+print("sigma",networkx.algorithms.smallworld.sigma(G))
+
 #nx.write_gexf(G,'gexf' + filename +'.gexf')
 
 
