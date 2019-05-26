@@ -1170,8 +1170,8 @@ bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = 
 nx.write_graphml(G,'graphml'+ filename + '.graphml')
 
 
-print("omega",networkx.algorithms.smallworld.omega(G))
-print("sigma",networkx.algorithms.smallworld.sigma(G))
+print("omega",nx.algorithms.smallworld.omega(G))
+print("sigma",nx.algorithms.smallworld.sigma(G))
 
 #nx.write_gexf(G,'gexf' + filename +'.gexf')
 
