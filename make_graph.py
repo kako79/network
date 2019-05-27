@@ -1171,6 +1171,7 @@ nx.write_graphml(G,'graphml'+ filename + '.graphml')
 
 
 print("omega",nx.algorithms.smallworld.omega(nondiG, niter = 1, nrand = 1))
+
 print("sigma",nx.algorithms.smallworld.sigma(nondiG, niter = 1, nrand =1 ))
 
 #nx.write_gexf(G,'gexf' + filename +'.gexf')
