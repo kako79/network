@@ -1169,10 +1169,15 @@ out_centr_df.to_csv('outcentrdata'+ filename+'.csv', header = True, index = True
 bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = True)
 nx.write_graphml(G,'graphml'+ filename + '.graphml')
 
+print("out in", nx.algorithms.assortativity.degree_assortativity_coefficient(G,x='out', y='in', weight='weight'))
+print("out out", nx.algorithms.assortativity.degree_assortativity_coefficient(G,x='out', y='out', weight='weight'))
+print("in in", nx.algorithms.assortativity.degree_assortativity_coefficient(G,x='in', y='in', weight='weight'))
+print("in out", nx.algorithms.assortativity.degree_assortativity_coefficient(G,x='in', y='out', weight='weight'))
 
-print("omega",nx.algorithms.smallworld.omega(nondiG, niter = 2, nrand = 2))
 
-print("sigma",nx.algorithms.smallworld.sigma(nondiG, niter = 2, nrand =2 ))
+#print("omega",nx.algorithms.smallworld.omega(nondiG, niter = 2, nrand = 2))
+
+#print("sigma",nx.algorithms.smallworld.sigma(nondiG, niter = 2, nrand =2 ))
 
 #nx.write_gexf(G,'gexf' + filename +'.gexf')
 
