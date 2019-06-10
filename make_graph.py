@@ -818,8 +818,8 @@ print("Rows after removing bad dates: %s" % len(alldata))
 #alldata = pd.read_csv("transfers_hdu.csv")
 #alldata = pd.read_csv("transfers_highed_hdu.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
-#location_category_map = minimal_cat_ward_dict
-location_category_map = nocat_ward_clinic
+location_category_map = minimal_cat_ward_dict
+#location_category_map = nocat_ward_clinic
 #location_category_map = ICU_combined_min_dict
 
 alldata['from_category'] = alldata['from'].map(location_category_map)
@@ -1091,7 +1091,7 @@ clustering_average = nx.average_clustering(nondiG,weight = 'weights')
 
 weighted_clustering_distribution = nx.clustering(nondiG, weight = 'weight')
 non_weighted_clustering_distribution = nx.clustering(unweightednondirG)
-weighted_directional_clustering_distribution = nx.clustering(G, weight = 'weights')
+weighted_directional_clustering_distribution = nx.clustering(G, weight = 'weight')
 non_weighted_directional_clustering_distribution = nx.clustering(unweighteddirG)
 
 #print(clustering_distribution)
@@ -1144,7 +1144,7 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'med surg ratio', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
 #set the filename for all output files
-filename = '_all_nocat_260519'
+filename = '_all_mincat_100619'
 
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
 edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
