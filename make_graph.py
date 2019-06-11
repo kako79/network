@@ -818,8 +818,8 @@ print("Rows after removing bad dates: %s" % len(alldata))
 #alldata = pd.read_csv("transfers_hdu.csv")
 #alldata = pd.read_csv("transfers_highed_hdu.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
-location_category_map = minimal_cat_ward_dict
-#location_category_map = nocat_ward_clinic
+#location_category_map = minimal_cat_ward_dict
+location_category_map = nocat_ward_clinic
 #location_category_map = ICU_combined_min_dict
 
 alldata['from_category'] = alldata['from'].map(location_category_map)
@@ -1144,7 +1144,7 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'med surg ratio', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
 #set the filename for all output files
-filename = '_all_mincat_100619'
+filename = '_all_nocat_110619'
 
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
 edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
@@ -1175,9 +1175,9 @@ nx.write_graphml(G,'graphml'+ filename + '.graphml')
 #print("in out", nx.algorithms.assortativity.degree_assortativity_coefficient(G,x='in', y='out', weight='weight'))
 
 
-print("omega",nx.algorithms.smallworld.omega(nondiG, niter = 50, nrand = 10))
+print("omega",nx.algorithms.smallworld.omega(nondiG, niter = 20, nrand = 10))
 
-print("sigma",nx.algorithms.smallworld.sigma(nondiG, niter = 50, nrand =10 ))
+print("sigma",nx.algorithms.smallworld.sigma(nondiG, niter = 20, nrand =10 ))
 
 #nx.write_gexf(G,'gexf' + filename +'.gexf')
 
