@@ -1175,9 +1175,9 @@ nx.write_graphml(G,'graphml'+ filename + '.graphml')
 #print("in out", nx.algorithms.assortativity.degree_assortativity_coefficient(G,x='in', y='out', weight='weight'))
 
 
-print("omega",nx.algorithms.smallworld.omega(nondiG, niter = 20, nrand = 10))
+print("omega",nx.algorithms.smallworld.omega(nondiG, niter = 20, nrand = 2))
 
-print("sigma",nx.algorithms.smallworld.sigma(nondiG, niter = 20, nrand =10 ))
+print("sigma",nx.algorithms.smallworld.sigma(nondiG, niter = 20, nrand =2 ))
 
 #nx.write_gexf(G,'gexf' + filename +'.gexf')
 
