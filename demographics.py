@@ -25,9 +25,14 @@ reduced_data = allpatients[['STUDY_SUBJECT_DIGEST','adm_hosp','dis_hosp','specia
 reduced_data.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
 reduced_data = reduced_data.loc[reduced_data['admAge']>16]
 print("all admissions", len(reduced_data['admAge']))
-spec_count=[]
-spec_count['adm_specialty'] = reduced_data['specialty'].unique()
-spec_count['count'] = reduced_data['specialty'].value_counts()
+print(reduced_data.groupby(['specialty']).count())
+
+
+
+#spec_count['adm_specialty'] =
+print( reduced_data['specialty'].unique())
+
+#spec_count['count'] = reduced_data['specialty'].value_counts()
 
 
 #surgeriesinfo = pd.read_csv("SURGERIES_aug.csv")
