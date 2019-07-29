@@ -26,6 +26,7 @@ reduced_data.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace
 reduced_data = reduced_data.loc[reduced_data['admAge']>16]
 print("all admissions", len(reduced_data['admAge']))
 grouped_data = reduced_data.groupby(['specialty']).count()
+print(grouped_data)
 grouped_data.reset_index()
 print(grouped_data)
 
