@@ -56,19 +56,19 @@ print( reduced_data['specialty'].unique())
 #    unique_row = all_demographics_data[all_demographics_data['ptid'] == n].iloc[0]
 #    unique_demographics.append({'ptid':unique_row.ptid, 'age': unique_row.admAge, 'asa' : unique_row.asa_rating_c})
 
-df_demo= all_demographics_data.set_index('ptid')
-df_demo_first = df_demo.sort_index().groupby(level=0).first()
+#df_demo= all_demographics_data.set_index('ptid')
+#df_demo_first = df_demo.sort_index().groupby(level=0).first()
 
 
-print(df_demo_first)
+#print(df_demo_first)
 #unique_demographics = all_demographics_data.loc[all_demographics_data['ptid'].isin(unique_demographics_set)]
 
 
-mean_age = statistics.mean(df_demo_first['admAge'])
-print(mean_age)
-print(len(df_demo_first['admAge']))
-print('mean ASA', statistics.mean(df_demo_first['asa_rating_c']))
-df_demo_first.to_csv('demographics_data.csv', header=True, index=False)
+#mean_age = statistics.mean(df_demo_first['admAge'])
+#print(mean_age)
+#print(len(df_demo_first['admAge']))
+#print('mean ASA', statistics.mean(df_demo_first['asa_rating_c']))
+#df_demo_first.to_csv('demographics_data.csv', header=True, index=False)
 
 
 #sorted_data = alltransfers.sort_values(['ptid', 'transfer_dt'])
