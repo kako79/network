@@ -21,11 +21,13 @@ import statistics
 
 allpatients = pd.read_csv("ADM_INFO_aug.csv")
 
-reduced_data = allpatients[['STUDY_SUBJECT_DIGEST','adm_hosp','dis_hosp','specialty','admAge']]
+reduced_data = allpatients[['STUDY_SUBJECT_DIGEST','specialty','admAge']]
 reduced_data.rename(index=str, columns={'STUDY_SUBJECT_DIGEST': 'ptid'}, inplace=True)
 reduced_data = reduced_data.loc[reduced_data['admAge']>16]
 print("all admissions", len(reduced_data['admAge']))
-print(reduced_data.groupby(['specialty']).count())
+grouped_data = reduced_data.groupby(['specialty']).count()
+grouped_data.reset_index()
+print(grouped_data)
 
 
 
