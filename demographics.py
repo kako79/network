@@ -27,7 +27,7 @@ reduced_data = reduced_data.loc[reduced_data['admAge']>16]
 print("all admissions", len(reduced_data['admAge']))
 grouped_data = reduced_data.groupby(['specialty']).count()
 print(grouped_data)
-grouped_data.reset_index()
+grouped_data.reset_index(inplace=True)
 print(grouped_data)
 
 
