@@ -812,7 +812,7 @@ ICU_combined_min_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
 #alldata = pd.read_csv("transfers_all_pts_icu.csv")
 #alldata = pd.read_csv("transfers_adult_asa34.csv")
 #alldata = pd.read_csv("transfers_around_low_ed_perc.csv")
-alldata = pd.read_csv("transfers_lowed_hdu.csv")
+alldata = pd.read_csv("transfers_highed_hdu.csv")
 print("Rows after removing bad dates: %s" % len(alldata))
 #alldata = pd.read_csv("all_adult_transfers.csv")
 #alldata = pd.read_csv("transfers_hdu.csv")
@@ -1144,7 +1144,7 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                          'med surg ratio', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
 
 #set the filename for all output files
-filename = '_icucomb_lowed_1309'
+filename = '_icucomb_highed_1309'
 
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
 edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
