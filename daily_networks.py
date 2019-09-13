@@ -1,5 +1,6 @@
 #now make networks for each day
-# to follow from perf_categories
+# to follow from perf_categories that places wards into categories
+#outputs a file that has the daily informations
 import pandas as pd
 import numpy as np
 from collections import deque, namedtuple
