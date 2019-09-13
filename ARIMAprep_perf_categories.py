@@ -83,15 +83,15 @@ ed_performance.set_index('date_number', drop=True, inplace=True)
 all_transfers_with_edperf = all_transfers.join(ed_performance, on='transfer_date_number', how='left', lsuffix="abbv", rsuffix="arrv")
 
 #add on bedstate information - all beds
-bedstate_info = pd.read_csv("all_beds_info.csv")
-bedstate_info['date'] = pd.to_datetime(bedstate_info['Date'], format='%Y-%m-%d')
-bedstate_info['date_number'] = bedstate_info['date'].map(get_date_number)
-bedstate_info.drop(['date'], axis = 1, inplace = True)
-bedstate_info.set_index('date_number', drop = True, inplace = True)
-all_transfers_with_ed_beds= all_transfers_with_edperf.join(bedstate_info, on = 'transfer_date_number', how = 'left')
+#bedstate_info = pd.read_csv("all_beds_info.csv")
+#bedstate_info['date'] = pd.to_datetime(bedstate_info['Date'], format='%Y-%m-%d')
+#bedstate_info['date_number'] = bedstate_info['date'].map(get_date_number)
+#bedstate_info.drop(['date'], axis = 1, inplace = True)
+#bedstate_info.set_index('date_number', drop = True, inplace = True)
+#all_transfers_with_ed_beds= all_transfers_with_edperf.join(bedstate_info, on = 'transfer_date_number', how = 'left')
 
 
-all_t_strain = all_transfers_with_ed_beds.drop(['transfer_date_number'], axis=1)
+all_t_strain = all_transfers_with_edperf.drop(['transfer_date_number'], axis=1)
 #now we have a file with all trasnfers and the bestate and ed performance
 #now need to combine wards into categories to allow for daily network construction with enough data
 
