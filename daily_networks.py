@@ -50,7 +50,7 @@ def get_transfer_day(date):
             raise v
     return d
 
-data_t_strain_cat = pd.read_csv("transfers_strain_cat_noweekday.csv")
+data_t_strain_cat = pd.read_csv("transfers_strain_icu.csv")
 data_t_strain_cat = data_t_strain_cat.drop(['from_loc','to_loc'], axis=1)
 data_t_strain_cat.rename(index=str, columns={'from_category': 'from'}, inplace = True)
 data_t_strain_cat.rename(index=str, columns={'to_category': 'to'}, inplace = True)
@@ -106,7 +106,13 @@ def get_network_analytics(data_reduced):
         #print('not in dict')
         no_data = True
         emergency_degrees = 0
+    if 'ICU' in degrees_dict:
+        icu_degrees = degrees_dict['ICU']
+        #print('in dict')
 
+    else:
+        #print('not in dict')
+        icu_degrees = 0
 
     #degrees_list.append(list(degrees.values))
     #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
@@ -114,38 +120,47 @@ def get_network_analytics(data_reduced):
 
 
     #number of transfers from medical wards to theatre
-    acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default={}).get('weight', 0)
-    gen_to_theatre = G.get_edge_data('general medical ward', 'theatre', default={}).get('weight', 0)
-    card_to_theatre = G.get_edge_data('cardiology ward', 'theatre', default={}).get('weight', 0)
-    rehab_to_theatre = G.get_edge_data('rehab', 'theatre', default={}).get('weight', 0)
-    total_medical_to_theatre = acute_to_theatre + gen_to_theatre + card_to_theatre + rehab_to_theatre
+    #acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default={}).get('weight', 0)
+    #gen_to_theatre = G.get_edge_data('general medical ward', 'theatre', default={}).get('weight', 0)
+    #card_to_theatre = G.get_edge_data('cardiology ward', 'theatre', default={}).get('weight', 0)
+    #rehab_to_theatre = G.get_edge_data('rehab', 'theatre', default={}).get('weight', 0)
+    total_medical_ward_transfers = G.get_edge_data('medical ward', 'theatre', default={}).get('weight',0)
+    #total_medical_to_theatre = acute_to_theatre + gen_to_theatre + card_to_theatre + rehab_to_theatre
 
     #number of circular or unnecessary ward transfers
-    med_to_med_acute = G.get_edge_data('acute medical ward', 'acute medical ward', default = {}).get('weight', 0)
-    med_to_med_acgen = G.get_edge_data('acute medical ward', 'general medical ward', default={}).get('weight', 0)
-    med_to_med_genac = G.get_edge_data('general medical ward', 'acute medical ward', default={}).get('weight', 0)
-    med_to_med_general = G.get_edge_data('general medical ward', 'general medical ward', default={}).get('weight', 0)
+    #med_to_med_acute = G.get_edge_data('acute medical ward', 'acute medical ward', default = {}).get('weight', 0)
+    #med_to_med_acgen = G.get_edge_data('acute medical ward', 'general medical ward', default={}).get('weight', 0)
+    #med_to_med_genac = G.get_edge_data('general medical ward', 'acute medical ward', default={}).get('weight', 0)
+    #med_to_med_general = G.get_edge_data('general medical ward', 'general medical ward', default={}).get('weight', 0)
+    medical_medical_transfers = G.get_edge_data('medical ward', 'medical ward', default={}).get('weight',0)
 
 
-    med_to_surg = G.get_edge_data('general medical ward', 'general surgical ward', default ={}).get('weight', 0)
-    med_to_ortho = G.get_edge_data('general medical ward', ' orthopaedic ward', default ={}).get('weight', 0)
-    med_to_surg_acute = G.get_edge_data('acute medical ward', 'general surgical ward', default={}).get('weight', 0)
-    med_to_orth_acute = G.get_edge_data('acute medical ward', ' orthopaedic ward', default={}).get('weight', 0)
-    acmed_to_ns = G.get_edge_data('acute medical ward', 'ns ward', default={}).get('weight', 0)
-    genmed_to_ns = G.get_edge_data('general medical ward', 'ns ward', default={}).get('weight', 0)
-    total_medical_ward_transfers = med_to_med_acute + med_to_med_general+med_to_med_acgen+med_to_med_genac+ med_to_ortho+ med_to_surg+ med_to_surg_acute+ med_to_orth_acute+acmed_to_ns+genmed_to_ns
-    #print (total_medical_ward_transfers)
+    #med_to_surg = G.get_edge_data('general medical ward', 'general surgical ward', default ={}).get('weight', 0)
+    #med_to_ortho = G.get_edge_data('general medical ward', ' orthopaedic ward', default ={}).get('weight', 0)
+    #med_to_surg_acute = G.get_edge_data('acute medical ward', 'general surgical ward', default={}).get('weight', 0)
+    #med_to_orth_acute = G.get_edge_data('acute medical ward', ' orthopaedic ward', default={}).get('weight', 0)
+    #acmed_to_ns = G.get_edge_data('acute medical ward', 'ns ward', default={}).get('weight', 0)
+    #genmed_to_ns = G.get_edge_data('general medical ward', 'ns ward', default={}).get('weight', 0)
+    #total_medical_ward_transfers = med_to_med_acute + med_to_med_general+med_to_med_acgen+med_to_med_genac+ med_to_ortho+ med_to_surg+ med_to_surg_acute+ med_to_orth_acute+acmed_to_ns+genmed_to_ns
+    med_surg_transfers = G.get_edge_data('medical ward', 'surgical ward', default={}).get('weight', 0)+G.get_edge_data('medical ward', 'neurosurgery ward', default={}).get('weight',0)+G.get_edge_data('medical ward', 'orthopaedic ward', default={}).get('weight',0)
+    print(total_medical_ward_transfers)
+    print(med_surg_transfers)
+    print(medical_medical_transfers)
+
+    ae_surg = G.get_edge_data('AE', 'surgical ward', default={}).get('weight',0)+G.get_edge_data('AE', 'neurosurgery ward', default={}).get('weight',0)+G.get_edge_data('AE', 'orthopaedic ward', default={}).get('weight',0)+G.get_edge_data('AE', 'gynae surgical ward', default={}).get('weight',0)+G.get_edge_data('AE', 'surgical day ward', default={}).get('weight',0)
 
 
-    ae_surg = G.get_edge_data('AE', 'general surgical ward', default={}).get('weight', 0)+ G.get_edge_data('AE', 'orthopaedic ward', default={}).get('weight', 0) +G.get_edge_data('AE', 'ATC surgical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'gynae ward', default={}).get('weight', 0)+  G.get_edge_data('AE', 'ns ward', default={}).get('weight', 0)
-   # print(ae_surg)
-    ae_med = G.get_edge_data('AE', 'acute medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'general medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'cardiology ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'rehab', default={}).get('weight', 0) +  G.get_edge_data('AE', 'cdu', default={}).get('weight', 0)
+    #ae_surg = G.get_edge_data('AE', 'general surgical ward', default={}).get('weight', 0)+ G.get_edge_data('AE', 'orthopaedic ward', default={}).get('weight', 0) +G.get_edge_data('AE', 'ATC surgical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'gynae ward', default={}).get('weight', 0)+  G.get_edge_data('AE', 'ns ward', default={}).get('weight', 0)
+    print(ae_surg)
+    ae_med = G.get_edge_data('AE', 'medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'rehab', default={}).get('weight', 0)
     if ae_surg == 0:
         ratio_wards_surg_med = 0
     else:
         ratio_wards_surg_med = ae_med/ae_surg
 
-
+    #inter icu transfers
+    inter_icu = G.get_edge_data('ICU', 'ICU', default={}).get('weight',0)
+    icu_hdu = G.get_edge_data('ICU', 'HDU', default={}).get('weight',0)
     # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
     incentrality = nx.algorithms.centrality.in_degree_centrality(G)
     # check if the theatre node exists in this data subset
@@ -177,6 +192,10 @@ def get_network_analytics(data_reduced):
         theatres_bet_centrality = bet_centr['theatre']
     else:
         theatres_bet_centrality = 0
+    if 'ICU' in bet_centr:
+        icu_bet_centrality = bet_centr['ICU']
+    else:
+        icu_bet_centrality = 0
 
     if en == 0:
         theatres_eigen_centr = 0
@@ -195,6 +214,35 @@ def get_network_analytics(data_reduced):
 
         else:
             ed_eigen_centr = 0
+
+    weighted_degrees = nx.degree(G, weight='weight')
+    # weighted_in_degrees = nx.DiGraph.in_degree(G,weight = 'weights')
+    weighted_in_degrees = G.in_degree(weight='weight')
+    # print(weighted_in_degrees)
+    weighted_out_degrees = G.out_degree(weight='weight')
+    # print('degrees')
+    # print(degrees)
+    histdegrees = nx.classes.function.degree_histogram(G)
+    # print('histdegrees')
+    # print(histdegrees)
+    # calculate the degree
+    degrees_list = [[n, d] for n, d in degrees]
+    degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
+
+    indegreeslist = [[n, d] for n, d in in_degrees]
+    indegrees_data = pd.DataFrame(indegreeslist, columns=['node', 'degree'])
+
+    outdegreeslist = [[n, d] for n, d in out_degrees]
+    outdegrees_data = pd.DataFrame(outdegreeslist, columns=['node', 'degree'])
+
+    weighted_degrees_list = [[n, d] for n, d in weighted_degrees]
+    weighted_degrees_data = pd.DataFrame(weighted_degrees_list, columns=['node', 'degree'])
+
+    weighted_indegrees_list = [[n, d] for n, d in weighted_in_degrees]
+    weighted_indegrees_data = pd.DataFrame(weighted_indegrees_list, columns=['node', 'degree'])
+
+    weighted_outdegrees_list = [[n, d] for n, d in weighted_out_degrees]
+    weighted_outdegrees_data = pd.DataFrame(weighted_outdegrees_list, columns=['node', 'degree'])
 
 
     #for c in nx.connected_component_subgraphs(G):
@@ -217,7 +265,8 @@ def get_network_analytics(data_reduced):
                       'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality,
                       'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers,
                       'med surg ratio': ratio_wards_surg_med, 'eigen_centr_theatre': theatres_eigen_centr,'eigen_centr_ed': ed_eigen_centr,
-                      'density': density_net, 'transitivity': transitivity_net, 'assortativity coeff': assortativity_net_inout, 'inter_icu_transfers':, 'icu_bet_centr', 'icu_indeg', 'icu_outdeg', 'icu_instrength', 'icu_outstrength'})
+                      'density': density_net, 'transitivity': transitivity_net, 'assortativity coeff': assortativity_net_inout, 'inter_icu_transfers':inter_icu,
+                      'icu_hdu_transfers':icu_hdu, 'icu_bet_centr':icu_bet_centrality,'icu_degrees':icu_degrees, 'icu_indeg':, 'icu_outdeg','icu_instrength', 'icu_outstrength'})
     #degrees_hist_file.append(degrees_data_degree)
 
 

@@ -501,7 +501,7 @@ all_t_strain['to_category'] = all_t_strain['to_loc'].map(location_category_map)
 
 list_from_wards = all_t_strain.from_category.unique()
 print(list_from_wards)
-all_t_strain.to_csv('transfers_strain_icu_.csv', header=True, index=False)
+all_t_strain.to_csv('transfers_strain_icu.csv', header=True, index=False)
 print('transfer file with cat and strain written')
 
 #
