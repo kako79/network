@@ -54,7 +54,7 @@ def get_transfer_day(date):
 all_transfers = pd.read_csv("transfers_all_icu.csv")
 all_transfers['transfer_dt'] = all_transfers['transfer_dt'].map(get_separate_date_time)
 all_transfers['transfer_date_number'] = all_transfers['transfer_dt'].map(get_date_number)
-
+print(min(all_transfers['transfer_date_number']))
 
 print("Rows: %s" % len(all_transfers))
 
