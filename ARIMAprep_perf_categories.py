@@ -54,7 +54,7 @@ def get_transfer_day(date):
 all_transfers = pd.read_csv("transfers_all_icu.csv")
 all_transfers['transfer_dt'] = all_transfers['transfer_dt'].map(get_separate_date_time)
 all_transfers['transfer_date_number'] = all_transfers['transfer_dt'].map(get_date_number)
-print(all_transfers['transfer_date_number'])
+
 
 print("Rows: %s" % len(all_transfers))
 
@@ -65,8 +65,9 @@ all_transfers.drop(after_last_date.index, axis=0, inplace=True)
 before_first_date = all_transfers[all_transfers['transfer_dt'] < first_date]
 all_transfers.drop(before_first_date.index, axis=0, inplace=True)
 
-print("Rows after removing bad dates: %s" % len(all_transfers))
 
+print("Rows after removing bad dates: %s" % len(all_transfers))
+print("transfer date number %s"% all_transfers['transfer_date_number'])
 
 #add on the information about the hospital state from the ED performance file
 ed_performance = pd.read_csv("ed_performance_all.csv")
@@ -75,6 +76,7 @@ ed_performance['date'] = pd.to_datetime(ed_performance['day'], format='%d/%m/%Y'
 ed_performance['date_number'] = ed_performance['date'].map(get_date_number)
 ed_performance.drop(['date'], axis=1, inplace=True)
 ed_performance.set_index('date_number', drop=True, inplace=True)
+print("ed date number %s" %ed_performance['date number'])
 all_transfers_with_edperf = all_transfers.join(ed_performance, on='transfer_date_number', how='left')
 
 #add on bedstate information - all beds
