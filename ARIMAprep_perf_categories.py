@@ -61,6 +61,7 @@ print("Rows: %s" % len(all_transfers))
 first_date = datetime(2015, 1, 1)
 last_date = datetime(2018, 7, 1)
 after_last_date = all_transfers[all_transfers['transfer_dt'] > last_date]
+print("after last date",after_last_date)
 all_transfers.drop(after_last_date.index, axis=0, inplace=True)
 before_first_date = all_transfers[all_transfers['transfer_dt'] < first_date]
 all_transfers.drop(before_first_date.index, axis=0, inplace=True)
