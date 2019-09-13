@@ -81,6 +81,8 @@ print(ed_performance['date_number'])
 ed_performance.set_index('date_number', drop=True, inplace=True)
 
 all_transfers_with_edperf = all_transfers.join(ed_performance, on='transfer_date_number', how='left', lsuffix="abbv", rsuffix="arrv")
+all_transfers_with_edperf.drop(['breach_percentageabbv'], axis=1, inplace=True)
+all_transfers_with_edperf.rename(index=str, columns={'breach_percentagearrv': 'breach_percentage'}, inplace=True)
 
 #add on bedstate information - all beds
 #bedstate_info = pd.read_csv("all_beds_info.csv")
