@@ -77,7 +77,7 @@ ed_performance['date_number'] = ed_performance['date'].map(get_date_number)
 ed_performance.drop(['date'], axis=1, inplace=True)
 ed_performance.set_index('date_number', drop=True, inplace=True)
 print("ed performance")
-print(ed_performance)
+print(ed_performance['date_number'])
 all_transfers_with_edperf = all_transfers.join(ed_performance, on='transfer_date_number', how='left')
 
 #add on bedstate information - all beds
