@@ -225,6 +225,7 @@ def get_network_analytics(data_reduced):
 
     density_net = nx.density(G)
     transitivity_net = nx.transitivity(G)
+    print()
     day = get_transfer_day(data_reduced['date'].max())
 
     data_list.append({'date':day,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,
