@@ -200,17 +200,17 @@ def get_network_analytics(data_reduced, day):
     weighted_icu_out_deg = weighted_out_degrees.get('ICU',0)
 
     # calculate the degree
-    degrees_list = [[n, d] for n, d in degrees]
-    degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
+   # degrees_list = [[n, d] for n, d in degrees]
+    #degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
 
-    weighted_degrees_list = [[n, d] for n, d in weighted_degrees]
-    weighted_degrees_data = pd.DataFrame(weighted_degrees_list, columns=['node', 'degree'])
+    #weighted_degrees_list = [[n, d] for n, d in weighted_degrees]
+    #weighted_degrees_data = pd.DataFrame(weighted_degrees_list, columns=['node', 'degree'])
 
-    weighted_indegrees_list = [[n, d] for n, d in weighted_in_degrees]
-    weighted_indegrees_data = pd.DataFrame(weighted_indegrees_list, columns=['node', 'degree'])
+    #weighted_indegrees_list = [[n, d] for n, d in weighted_in_degrees]
+    #weighted_indegrees_data = pd.DataFrame(weighted_indegrees_list, columns=['node', 'degree'])
 
-    weighted_outdegrees_list = [[n, d] for n, d in weighted_out_degrees]
-    weighted_outdegrees_data = pd.DataFrame(weighted_outdegrees_list, columns=['node', 'degree'])
+    #weighted_outdegrees_list = [[n, d] for n, d in weighted_out_degrees]
+    #weighted_outdegrees_data = pd.DataFrame(weighted_outdegrees_list, columns=['node', 'degree'])
 
 
     #for c in nx.connected_component_subgraphs(G):
