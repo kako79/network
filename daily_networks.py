@@ -311,5 +311,5 @@ arimaprep['strain'] = arimaprep.bedsfree * arimaprep.breach_percentage
 #now need to combine wards into categories to allow for daily network construction with enough data
 
 #degree_hist_df.to_csv('degreehist_nov8.csv', header = False, index = False)
-arimaprep.to_csv('arima_prep_noweekday_nov20.csv', header=True, index=False)
+arimaprep.to_csv('daily_network_1509.csv', header=True, index=False)
 print('performance added on file created')
