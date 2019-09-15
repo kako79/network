@@ -51,7 +51,8 @@ def get_transfer_day(date):
     return d
 
 
-all_transfers = pd.read_csv("transfers_all_icu.csv")
+#all_transfers = pd.read_csv("transfers_all_icu.csv")
+all_transfers = pd.read_csv("transfers_all_adult_transfers.csv")
 all_transfers['transfer_dt'] = all_transfers['transfer_dt'].map(get_separate_date_time)
 all_transfers['transfer_date_number'] = all_transfers['transfer_dt'].map(get_date_number)
 print(min(all_transfers['transfer_date_number']))
@@ -501,7 +502,8 @@ all_t_strain['to_category'] = all_t_strain['to_loc'].map(location_category_map)
 
 list_from_wards = all_t_strain.from_category.unique()
 print(list_from_wards)
-all_t_strain.to_csv('transfers_strain_icu.csv', header=True, index=False)
+#all_t_strain.to_csv('transfers_strain_icu.csv', header=True, index=False)
+all_t_strain.to_csv('transfers_strain_all_adult.csv', header=True, index=False)
 print('transfer file with cat and strain written')
 
 #
