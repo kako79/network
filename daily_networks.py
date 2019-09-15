@@ -20,6 +20,7 @@ import networkx as nx
 #from itertools import chain
 #from collections import defaultdict
 from datetime import datetime
+from numpy import timedelta64
 
 
 def get_diameter(network):
@@ -83,36 +84,9 @@ def get_network_analytics(data_reduced):
     nn = G.number_of_nodes()
     # calculate the degree
     degrees = nx.classes.function.degree(G)
+    emergency_degrees = degrees.get('AE', 0)
+    icu_degrees = degrees.get('ICU', 0)
 
-
-    degrees_list = [[n, d] for n, d in degrees]
-    #if b ==1000:
-    #    print(degrees_list)
-
-
-    degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
-    degrees_data_degree = degrees_data['degree']
-    #degrees_data.to_csv('degrees_weadult%s.csv'%str(i), header =True, index=False)
-    #look at degrees of the emergency department, need to change it to a dictionary to be able to look up the degree value for this node
-    degrees_data.set_index('node', inplace=True)
-    degrees_dict = degrees_data.to_dict()['degree']
-
-    #check if there is data in this specific subset eg there may not be data in a weekend stress set in summer...
-    if 'AE' in degrees_dict:
-        emergency_degrees = degrees_dict['AE']
-        #print('in dict')
-        no_data = False
-    else:
-        #print('not in dict')
-        no_data = True
-        emergency_degrees = 0
-    if 'ICU' in degrees_dict:
-        icu_degrees = degrees_dict['ICU']
-        #print('in dict')
-
-    else:
-        #print('not in dict')
-        icu_degrees = 0
 
     #degrees_list.append(list(degrees.values))
     #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
@@ -216,10 +190,14 @@ def get_network_analytics(data_reduced):
             ed_eigen_centr = 0
 
     weighted_degrees = nx.degree(G, weight='weight')
+    weighted_emergency_degrees = weighted_degrees.get('AE', 0)
+    weighted_icu_degrees = weighted_degrees.get('ICU', 0)
     # weighted_in_degrees = nx.DiGraph.in_degree(G,weight = 'weights')
     weighted_in_degrees = G.in_degree(weight='weight')
+    weighted_icu_in_deg = weighted_in_degrees.get('ICU',0)
     # print(weighted_in_degrees)
     weighted_out_degrees = G.out_degree(weight='weight')
+    weighted_icu_out_deg = weighted_out_degrees.get('ICU',0)
     # print('degrees')
     # print(degrees)
     histdegrees = nx.classes.function.degree_histogram(G)
@@ -228,12 +206,6 @@ def get_network_analytics(data_reduced):
     # calculate the degree
     degrees_list = [[n, d] for n, d in degrees]
     degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
-
-    indegreeslist = [[n, d] for n, d in in_degrees]
-    indegrees_data = pd.DataFrame(indegreeslist, columns=['node', 'degree'])
-
-    outdegreeslist = [[n, d] for n, d in out_degrees]
-    outdegrees_data = pd.DataFrame(outdegreeslist, columns=['node', 'degree'])
 
     weighted_degrees_list = [[n, d] for n, d in weighted_degrees]
     weighted_degrees_data = pd.DataFrame(weighted_degrees_list, columns=['node', 'degree'])
@@ -263,10 +235,11 @@ def get_network_analytics(data_reduced):
 
     data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,
                       'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality,
-                      'bet centrality theatres': theatres_bet_centrality, 'medical to theatre': total_medical_to_theatre, 'medical ward transfers': total_medical_ward_transfers,
+                      'bet centrality theatres': theatres_bet_centrality, 'medical ward transfers': total_medical_ward_transfers,
                       'med surg ratio': ratio_wards_surg_med, 'eigen_centr_theatre': theatres_eigen_centr,'eigen_centr_ed': ed_eigen_centr,
                       'density': density_net, 'transitivity': transitivity_net, 'assortativity coeff': assortativity_net_inout, 'inter_icu_transfers':inter_icu,
-                      'icu_hdu_transfers':icu_hdu, 'icu_bet_centr':icu_bet_centrality,'icu_degrees':icu_degrees, 'icu_indeg':, 'icu_outdeg','icu_instrength', 'icu_outstrength'})
+                      'icu_hdu_transfers':icu_hdu, 'icu_bet_centr':icu_bet_centrality,'icu_degrees':icu_degrees, 'icu_weight': weighted_icu_degrees,'icu_instrength':weighted_icu_in_deg,
+                      'icu_outstrength':weighted_icu_out_deg})
     #degrees_hist_file.append(degrees_data_degree)
 
 
@@ -286,10 +259,13 @@ dates_list['date'] = pd.to_datetime(dates_list['day'], format='%d/%m/%Y')
 all_datesdf = dates_list['date'].map(get_transfer_day)
 #load ed_performance and bedstate
 
+window_size = 3
 b = 0
-for i in all_datesdf:
+for d in dates_list['date']:
+    window_dates = {d - timedelta64(i, 'D') for i in range(0, window_size)}
+    window_date_strings = {get_transfer_day(wd) for wd in window_dates}
     b+=1
-    day_data = data_t_strain_cat[data_t_strain_cat['transfer_day'] == i]
+    day_data = data_t_strain_cat[data_t_strain_cat['transfer_day'].isin(window_date_strings)]
     number_of_transfers = len(day_data['transfer_day'])
     # drop the columns that are not needed for the graph, also select adults or children
     day_data_reduced = day_data.loc[day_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
@@ -300,9 +276,7 @@ for i in all_datesdf:
 
 #degree_hist_df = pd.DataFrame(data = degree_hist_file)
 
-arimaprep_data = pd.DataFrame(columns=['date', 'number of transfers', 'number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed','incentrality theatres',
-                                       'outcentrality theatres', 'bet centrality theatres','medical to theatre','medical ward transfers', 'med surg ratio', 'eigen_centr_theatre',
-                                       'eigen_centr_ed','density', 'transitivity', 'assortativity coeff'], data = data_list)
+arimaprep_data = pd.DataFrame(data = data_list)
 
 arimaprep_data['date_number'] =  arimaprep_data['date'].map(get_date_number)
 
