@@ -56,7 +56,7 @@ data_t_strain_cat = data_t_strain_cat.drop(['from_loc','to_loc'], axis=1)
 data_t_strain_cat.rename(index=str, columns={'from_category': 'from'}, inplace = True)
 data_t_strain_cat.rename(index=str, columns={'to_category': 'to'}, inplace = True)
 
-def get_network_analytics(data_reduced):
+def get_network_analytics(data_reduced, day):
     # weighted edges first
     # count the number of times a specific transfer appears to get edge weight
     transfer_counts = data_reduced.groupby(['from', 'to']).count()
@@ -225,23 +225,17 @@ def get_network_analytics(data_reduced):
 
     density_net = nx.density(G)
     transitivity_net = nx.transitivity(G)
-    print()
-    day = get_transfer_day(data_reduced['date'].max())
 
-    data_list.append({'date':day,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,
+    return {'date':day,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,
                       'emergency_strength':weighted_emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality,
                       'bet centrality theatres': theatres_bet_centrality, 'medical ward transfers': total_medical_ward_transfers,
                       'med surg ratio': ratio_wards_surg_med, 'eigen_centr_theatre': theatres_eigen_centr,'eigen_centr_ed': ed_eigen_centr,
                       'density': density_net, 'transitivity': transitivity_net, 'assortativity coeff': assortativity_net_inout, 'inter_icu_transfers':inter_icu,
                       'icu_hdu_transfers':icu_hdu, 'icu_bet_centr':icu_bet_centrality,'icu_degrees':icu_degrees, 'icu_strengtht': weighted_icu_degrees,'icu_instrength':weighted_icu_in_deg,
-                      'icu_outstrength':weighted_icu_out_deg})
+                      'icu_outstrength':weighted_icu_out_deg}
     #degrees_hist_file.append(degrees_data_degree)
 
-
-    return data_list
-
 data_t_strain_cat['transfer_dt'] = pd.to_datetime(data_t_strain_cat['transfer_dt'], format="%Y-%m-%d %H:%M")
-data_list = []
 degree_hist_file = []
 
 #get the specific date in a column
@@ -255,19 +249,18 @@ all_datesdf = dates_list['date'].map(get_transfer_day)
 #load ed_performance and bedstate
 
 window_size = 3
-b = 0
-for d in dates_list['date']:
+
+def get_row_for_day(d):
     window_dates = {d - timedelta64(i, 'D') for i in range(0, window_size)}
     window_date_strings = {get_transfer_day(wd) for wd in window_dates}
-    b+=1
     day_data = data_t_strain_cat[data_t_strain_cat['transfer_day'].isin(window_date_strings)]
     number_of_transfers = len(day_data['transfer_day'])
     # drop the columns that are not needed for the graph, also select adults or children
     day_data_reduced = day_data.loc[day_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
-    get_network_analytics(day_data_reduced)
-    #print(i, number_of_transfers)
+    return get_network_analytics(day_data_reduced, get_transfer_day(d))
 
 
+data_list = [get_row_for_day(d) for d in dates_list['date']]
 
 #degree_hist_df = pd.DataFrame(data = degree_hist_file)
 
