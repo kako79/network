@@ -198,11 +198,7 @@ def get_network_analytics(data_reduced):
     # print(weighted_in_degrees)
     weighted_out_degrees = dict(G.out_degree(weight='weight'))
     weighted_icu_out_deg = weighted_out_degrees.get('ICU',0)
-    # print('degrees')
-    # print(degrees)
-    histdegrees = nx.classes.function.degree_histogram(G)
-    # print('histdegrees')
-    # print(histdegrees)
+
     # calculate the degree
     degrees_list = [[n, d] for n, d in degrees]
     degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
