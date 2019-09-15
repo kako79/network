@@ -83,7 +83,7 @@ def get_network_analytics(data_reduced):
     print(en)
     nn = G.number_of_nodes()
     # calculate the degree
-    degrees = nx.classes.function.degree(G)
+    degrees = dict(nx.classes.function.degree(G))
     emergency_degrees = degrees.get('AE', 0)
     icu_degrees = degrees.get('ICU', 0)
 
@@ -189,14 +189,14 @@ def get_network_analytics(data_reduced):
         else:
             ed_eigen_centr = 0
 
-    weighted_degrees = nx.degree(G, weight='weight')
+    weighted_degrees = dict(nx.degree(G, weight='weight'))
     weighted_emergency_degrees = weighted_degrees.get('AE', 0)
     weighted_icu_degrees = weighted_degrees.get('ICU', 0)
     # weighted_in_degrees = nx.DiGraph.in_degree(G,weight = 'weights')
-    weighted_in_degrees = G.in_degree(weight='weight')
+    weighted_in_degrees = dict(G.in_degree(weight='weight'))
     weighted_icu_in_deg = weighted_in_degrees.get('ICU',0)
     # print(weighted_in_degrees)
-    weighted_out_degrees = G.out_degree(weight='weight')
+    weighted_out_degrees = dict(G.out_degree(weight='weight'))
     weighted_icu_out_deg = weighted_out_degrees.get('ICU',0)
     # print('degrees')
     # print(degrees)
@@ -234,11 +234,11 @@ def get_network_analytics(data_reduced):
 
 
     data_list.append({'date':i,'number of transfers': len(data_reduced['transfer_day']),'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy, 'emergency degrees': emergency_degrees,
-                      'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality,
+                      'emergency_strength':weighted_emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality, 'outcentrality theatres': out_theatre_centrality,
                       'bet centrality theatres': theatres_bet_centrality, 'medical ward transfers': total_medical_ward_transfers,
                       'med surg ratio': ratio_wards_surg_med, 'eigen_centr_theatre': theatres_eigen_centr,'eigen_centr_ed': ed_eigen_centr,
                       'density': density_net, 'transitivity': transitivity_net, 'assortativity coeff': assortativity_net_inout, 'inter_icu_transfers':inter_icu,
-                      'icu_hdu_transfers':icu_hdu, 'icu_bet_centr':icu_bet_centrality,'icu_degrees':icu_degrees, 'icu_weight': weighted_icu_degrees,'icu_instrength':weighted_icu_in_deg,
+                      'icu_hdu_transfers':icu_hdu, 'icu_bet_centr':icu_bet_centrality,'icu_degrees':icu_degrees, 'icu_strengtht': weighted_icu_degrees,'icu_instrength':weighted_icu_in_deg,
                       'icu_outstrength':weighted_icu_out_deg})
     #degrees_hist_file.append(degrees_data_degree)
 
