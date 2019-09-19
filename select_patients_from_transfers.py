@@ -152,7 +152,7 @@ t_o_patient_records = alltransfers.loc[alltransfers['ptid'].isin(t_o_patient_ids
 
 trauma_spec={'Trauma'}
 trauma_ids = set(alltransfers.loc[alltransfers['spec'].isin(trauma_spec)]['ptid'].unique())
-trauma_records = alltransfers.loc[alltransfers['ptid'].isin(trauma_adult_ids)]
+trauma_records = alltransfers.loc[alltransfers['ptid'].isin(trauma_ids)]
 trauma_adult_records = trauma_records.loc[trauma_records['age'] >16]
 trauma_adult_records.to_csv('transfers_trauma_adult.csv', header = True, index = False)
 
