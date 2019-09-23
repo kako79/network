@@ -812,11 +812,11 @@ ICU_combined_min_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
 #alldata = pd.read_csv("transfers_all_pts_icu.csv")
 #alldata = pd.read_csv("transfers_adult_asa34.csv")
 #alldata = pd.read_csv("transfers_around_low_ed_perc.csv")
-alldata = pd.read_csv("transfers_icu.csv")
+#alldata = pd.read_csv("transfers_icu.csv")
 print("Rows after removing bad dates: %s" % len(alldata))
 #alldata = pd.read_csv("all_adult_transfers.csv")
 #alldata = pd.read_csv("transfers_hdu.csv")
-#alldata = pd.read_csv("transfers_highed_hdu.csv")
+alldata = pd.read_csv("transfers_lowed_hdu.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
 location_category_map = ICU_combined_min_dict
 #location_category_map = nocat_ward_clinic
@@ -899,7 +899,8 @@ nondiG.add_weighted_edges_from(weighted_edges)
 degrees = nx.classes.function.degree(G)
 in_degrees = G.in_degree
 out_degrees = G.out_degree
-
+emergency_degrees = degrees.get('AE', 0)
+icu_degrees = degrees.get('ICU', 0)
 #print(in_degrees)
 
 weighted_degrees = nx.degree(G,weight = 'weight')
@@ -944,34 +945,39 @@ outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
 
 
 df_with_node_index = degrees_data.set_index('node')
-emergency_degrees = df_with_node_index.loc['AE','degree']
+#emergency_degrees = df_with_node_index.loc['AE','degree']
 #print(emergency_degrees)
     #degrees_list.append(list(degrees.values))
     #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
 
 #number of transfers from medical wards to theatre
-acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default={}).get('weight', 1)
-gen_to_theatre = G.get_edge_data('general medical ward', 'theatre', default={}).get('weight', 1)
-card_to_theatre = G.get_edge_data('cardiology ward', 'theatre', default={}).get('weight', 1)
-rehab_to_theatre = G.get_edge_data('rehab', 'theatre', default={}).get('weight', 1)
-total_medical_to_theatre = acute_to_theatre + gen_to_theatre + card_to_theatre + rehab_to_theatre
+#acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default={}).get('weight', 1)
+#gen_to_theatre = G.get_edge_data('general medical ward', 'theatre', default={}).get('weight', 1)
+#card_to_theatre = G.get_edge_data('cardiology ward', 'theatre', default={}).get('weight', 1)
+#rehab_to_theatre = G.get_edge_data('rehab', 'theatre', default={}).get('weight', 1)
+#total_medical_to_theatre = acute_to_theatre + gen_to_theatre + card_to_theatre + rehab_to_theatre
 
 #number of circular or unnecessary ward transfers
-med_to_med_acute = G.get_edge_data('acute medical ward', 'acute medical ward', default = {}).get('weight', 1)
-med_to_med_acgen = G.get_edge_data('acute medical ward', 'general medical ward', default={}).get('weight', 1)
-med_to_med_genac = G.get_edge_data('general medical ward', 'acute medical ward', default={}).get('weight', 1)
-med_to_med_general = G.get_edge_data('general medical ward', 'general medical ward', default={}).get('weight', 1)
+#med_to_med_acute = G.get_edge_data('acute medical ward', 'acute medical ward', default = {}).get('weight', 1)
+#med_to_med_acgen = G.get_edge_data('acute medical ward', 'general medical ward', default={}).get('weight', 1)
+#med_to_med_genac = G.get_edge_data('general medical ward', 'acute medical ward', default={}).get('weight', 1)
+#med_to_med_general = G.get_edge_data('general medical ward', 'general medical ward', default={}).get('weight', 1)
 
 
-med_to_surg = G.get_edge_data('general medical ward', 'general surgical ward', default ={}).get('weight', 1)
-med_to_ortho = G.get_edge_data('general medical ward', ' orthopaedic ward', default ={}).get('weight', 1)
-med_to_surg_acute = G.get_edge_data('acute medical ward', 'general surgical ward', default={}).get('weight', 1)
-med_to_orth_acute = G.get_edge_data('acute medical ward', ' orthopaedic ward', default={}).get('weight', 1)
-acmed_to_ns = G.get_edge_data('acute medical ward', 'neurossurgical ward', default={}).get('weight', 1)
-genmed_to_ns = G.get_edge_data('general medical ward', 'neurosurgical ward', default={}).get('weight', 1)
-acmed_to_atc = G.get_edge_data('acute medical ward', 'ATC surgical ward', default={}).get('weight', 1)
-genmed_to_atc = G.get_edge_data('general medical ward', 'ATC surgical ward', default={}).get('weight', 1)
-total_medical_ward_transfers = med_to_med_acute + med_to_med_general+med_to_med_acgen+med_to_med_genac+ med_to_ortho+ med_to_surg+ med_to_surg_acute+ med_to_orth_acute+acmed_to_ns+genmed_to_ns+acmed_to_atc+genmed_to_atc
+#med_to_surg = G.get_edge_data('general medical ward', 'general surgical ward', default ={}).get('weight', 1)
+#med_to_ortho = G.get_edge_data('general medical ward', ' orthopaedic ward', default ={}).get('weight', 1)
+#med_to_surg_acute = G.get_edge_data('acute medical ward', 'general surgical ward', default={}).get('weight', 1)
+#med_to_orth_acute = G.get_edge_data('acute medical ward', ' orthopaedic ward', default={}).get('weight', 1)
+#acmed_to_ns = G.get_edge_data('acute medical ward', 'neurossurgical ward', default={}).get('weight', 1)
+#genmed_to_ns = G.get_edge_data('general medical ward', 'neurosurgical ward', default={}).get('weight', 1)
+#acmed_to_atc = G.get_edge_data('acute medical ward', 'ATC surgical ward', default={}).get('weight', 1)
+#genmed_to_atc = G.get_edge_data('general medical ward', 'ATC surgical ward', default={}).get('weight', 1)
+#total_medical_ward_transfers = med_to_med_acute + med_to_med_general+med_to_med_acgen+med_to_med_genac+ med_to_ortho+ med_to_surg+ med_to_surg_acute+ med_to_orth_acute+acmed_to_ns+genmed_to_ns+acmed_to_atc+genmed_to_atc
+
+
+total_medical_ward_transfers = G.get_edge_data('medical ward', 'theatre', default={}).get('weight',0)
+med_surg_transfers = G.get_edge_data('medical ward', 'surgical ward', default={}).get('weight', 0)+G.get_edge_data('medical ward', 'neurosurgery ward', default={}).get('weight',0)+\
+                     G.get_edge_data('medical ward', 'orthopaedic ward', default={}).get('weight',0)
 #print (total_medical_ward_transfers)
 
 ae_surg = G.get_edge_data('AE', 'general surgical ward', default={}).get('weight', 0)+ G.get_edge_data('AE', 'orthopaedic ward', default={}).get('weight', 0) +G.get_edge_data('AE', 'ATC surgical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'gynae ward', default={}).get('weight', 0)+  G.get_edge_data('AE', 'neurosurgical ward', default={}).get('weight', 0)
@@ -982,6 +988,8 @@ if ae_surg == 0:
 else:
     ratio_wards_surg_med = ae_med/ae_surg
 
+inter_icu = G.get_edge_data('ICU', 'ICU', default={}).get('weight',0)
+icu_hdu = G.get_edge_data('ICU', 'HDU', default={}).get('weight',0)
 
 # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
 incentrality = nx.algorithms.centrality.in_degree_centrality(G)
@@ -1014,6 +1022,12 @@ if 'theatre' in bet_centr:
     theatres_bet_centrality = bet_centr['theatre']
 else:
     theatres_bet_centrality = 0
+if 'ICU' in bet_centr:
+    icu_bet_centrality = bet_centr['ICU']
+else:
+    icu_bet_centrality = 0
+
+
 #for mincat only
 if 'general medical ward' in bet_centr:
     gm_bet_centrality = bet_centr['general medical ward']
@@ -1082,41 +1096,54 @@ else:
 print('flow hierarchy')
 print(flow_hierarchy)
 
+weighted_degrees = dict(nx.degree(G, weight='weight'))
+weighted_emergency_degrees = weighted_degrees.get('AE', 0)
+weighted_icu_degrees = weighted_degrees.get('ICU', 0)
+# weighted_in_degrees = nx.DiGraph.in_degree(G,weight = 'weights')
+weighted_in_degrees = dict(G.in_degree(weight='weight'))
+weighted_icu_in_deg = weighted_in_degrees.get('ICU', 0)
+# print(weighted_in_degrees)
+weighted_out_degrees = dict(G.out_degree(weight='weight'))
+weighted_icu_out_deg = weighted_out_degrees.get('ICU', 0)
+
+
+
+
 
 #other network measures that apply to the whole network
 density_net = nx.density(G)
 transitivity_net = nx.transitivity(G)
 #clustering - doesnt work for directed graphs
-clustering_average = nx.average_clustering(nondiG,weight = 'weights')
+#clustering_average = nx.average_clustering(nondiG,weight = 'weights')
 
-weighted_clustering_distribution = nx.clustering(nondiG, weight = 'weight')
-non_weighted_clustering_distribution = nx.clustering(unweightednondirG)
-weighted_directional_clustering_distribution = nx.clustering(G, weight = 'weight')
-non_weighted_directional_clustering_distribution = nx.clustering(unweighteddirG)
+#weighted_clustering_distribution = nx.clustering(nondiG, weight = 'weight')
+#non_weighted_clustering_distribution = nx.clustering(unweightednondirG)
+#weighted_directional_clustering_distribution = nx.clustering(G, weight = 'weight')
+#non_weighted_directional_clustering_distribution = nx.clustering(unweighteddirG)
 
 #print(clustering_distribution)
-weighted_clustering_list = [[n, d] for n, d in weighted_clustering_distribution.items()]
-weighted_clustering_data = pd.DataFrame(weighted_clustering_list, columns=['node', 'w_nondir_cc'])
+#weighted_clustering_list = [[n, d] for n, d in weighted_clustering_distribution.items()]
+#weighted_clustering_data = pd.DataFrame(weighted_clustering_list, columns=['node', 'w_nondir_cc'])
 
-non_weighted_clustering_list = [[n, d] for n, d in non_weighted_clustering_distribution.items()]
-non_weighted_clustering_data = pd.DataFrame(non_weighted_clustering_list, columns=['node', 'nonw_nondir_cc'])
+#non_weighted_clustering_list = [[n, d] for n, d in non_weighted_clustering_distribution.items()]
+#non_weighted_clustering_data = pd.DataFrame(non_weighted_clustering_list, columns=['node', 'nonw_nondir_cc'])
 
-weighted_dir_clust_list = [[n,d] for n,d in weighted_directional_clustering_distribution.items()]
-weighted_dir_clust_data = pd.DataFrame(weighted_dir_clust_list, columns= ['node', 'w_dir_cc'])
+#weighted_dir_clust_list = [[n,d] for n,d in weighted_directional_clustering_distribution.items()]
+#weighted_dir_clust_data = pd.DataFrame(weighted_dir_clust_list, columns= ['node', 'w_dir_cc'])
 
-non_weighted_dir_clust_list = [[n,d] for n,d in non_weighted_directional_clustering_distribution.items()]
-non_weighted_dir_clust_data = pd.DataFrame(non_weighted_dir_clust_list, columns= ['node', 'nonw_dir_cc'])
+#non_weighted_dir_clust_list = [[n,d] for n,d in non_weighted_directional_clustering_distribution.items()]
+#non_weighted_dir_clust_data = pd.DataFrame(non_weighted_dir_clust_list, columns= ['node', 'nonw_dir_cc'])
 
-a=non_weighted_clustering_data.set_index("node")
-b=weighted_clustering_data.set_index("node")
-c=weighted_dir_clust_data.set_index("node")
-d=non_weighted_dir_clust_data.set_index("node")
+#a=non_weighted_clustering_data.set_index("node")
+#b=weighted_clustering_data.set_index("node")
+#c=weighted_dir_clust_data.set_index("node")
+#d=non_weighted_dir_clust_data.set_index("node")
 
-all_clustering_df = a.join(b).join(c).join(d).reset_index()
+#all_clustering_df = a.join(b).join(c).join(d).reset_index()
 
 
-print('clustering in non directed graph')
-print(clustering_average)
+#print('clustering in non directed graph')
+#print(clustering_average)
 
 #shortest path in the directed graph, from a starting point source to a point target
 average_shortest_path = nx.average_shortest_path_length(G,weight = 'weights')
@@ -1130,21 +1157,24 @@ print(average_shortest_path)
 #print(flow_hierarchy)
 
 data_list = []
-data_list.append({'sum of transfers': sum_of_all_transfers,'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy,
-                      'emergency degrees': emergency_degrees,'outcentrality ed': out_ed_centrality,'eigen_centr_ed': ed_eigen_centr, 'incentrality theatres': in_theatre_centrality,
-                      'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality,'bet centrality gm': gm_bet_centrality,'bet centrality am': am_bet_centrality,
-                    'bet centrality cdu': cdu_bet_centrality,'bet centrality cardiology': card_bet_centrality,
-                  'eigen_centr_theatre': theatres_eigen_centr,
-                  'medical to theatre': total_medical_to_theatre,
-                      'medical ward transfers': total_medical_ward_transfers, 'med surg ratio': ratio_wards_surg_med,
-                       'density': density_net, 'transitivity':transitivity_net, 'clustering average': clustering_average, 'average shortest path':average_shortest_path})
 
-all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'outcentrality ed', 'eigen_centr_ed',
-                                         'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','bet centrality gm','bet centrality am','bet centrality cdu','bet centrality cardiology','eigen_centr_theatre','medical to theatre','medical ward transfers',
-                                         'med surg ratio', 'density', 'transitivity', 'clustering average', 'average shortest path'], data = data_list)
+
+data_list.append({'sum of transfers': sum_of_all_transfers,'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy,
+                      'emergency degrees': emergency_degrees, 'emergency_strength': weighted_emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality,
+                      'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical ward transfers': total_medical_ward_transfers,
+                  'med surg ratio': ratio_wards_surg_med,'eigen_centr_theatre': theatres_eigen_centr,'eigen_centr_ed': ed_eigen_centr,
+                       'density': density_net, 'transitivity':transitivity_net, 'assortativity coeff': assortativity_net_inout, 'inter_icu_transfers':inter_icu,
+                      'icu_hdu_transfers':icu_hdu, 'icu_bet_centr':icu_bet_centrality,'icu_degrees':icu_degrees, 'icu_strengtht': weighted_icu_degrees,'icu_instrength':weighted_icu_in_deg,
+                      'icu_outstrength':weighted_icu_out_deg, 'average shortest path':average_shortest_path})
+
+all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', 'number edges', 'flow hierarchy', 'emergency degrees', 'emergency strength','outcentrality ed',
+                                         'incentrality theatres', 'outcentrality theatres', 'bet centrality theatres','medical ward transfers',
+                                         'med surg ratio', 'eigen_centr_theatre','eigen_centr_ed','density', 'transitivity','assortativity coeff',
+                                            'inter_icu_transfers','icu_hdu_transfers', 'icu_bet_centr','icu_degrees', 'icu_strengtht','icu_instrength',
+                                            'icu_outstrength', 'average shortest path'], data = data_list)
 
 #set the filename for all output files
-filename = '_icu_adult_2209'
+filename = '_icu_lowed_2309'
 
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
 edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
@@ -1186,20 +1216,3 @@ print("sigma",nx.algorithms.smallworld.sigma(nondiG, niter = 30, nrand =5 ))
 print('all network information file created')
 
 
-
-#fig = plt.figure(figsize=(7, 5))
-#nx.set_node_attributes(G,'length_of_stay',los)
-#pos = nx.circular_layout(G)
-#widthedge = [d['weight'] *0.1 for _,_,d in G.edges(data=True)]
-#nx.draw_networkx(G, pos=pos, with_labels=True, font_weight='bold', arrows = False, width= widthedge,  node_size=1300)
-#nx.draw_circular(G)
-#width = [d['weight'] for _,_,d in G.edges(data=True)]
-
-
-#edge_labels=dict([((u,v,), d['weight'])
-#             for u,v,d in G.edges(data=True)])
-#nx.draw_networkx(G, with_labels=True, font_weight='bold' )
-#nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
-#plt.show()
-#fig.savefig("adultrennetworkgraph.png")
-#plt.gcf().clear()
