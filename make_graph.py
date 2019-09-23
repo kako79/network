@@ -902,18 +902,15 @@ icu_degrees = degrees.get('ICU', 0)
 
 in_degrees = G.in_degree
 out_degrees = G.out_degree
-#print(in_degrees)
 
 weighted_degrees = nx.degree(G,weight = 'weight')
 #weighted_in_degrees = nx.DiGraph.in_degree(G,weight = 'weights')
 weighted_in_degrees = G.in_degree(weight = 'weight')
 #print(weighted_in_degrees)
 weighted_out_degrees = G.out_degree(weight = 'weight')
-#print('degrees')
-#print(degrees)
+
 histdegrees = nx.classes.function.degree_histogram(G)
-#print('histdegrees')
-#print(histdegrees)
+
 # calculate the degree
 degrees = nx.classes.function.degree(G)
 degrees_list = [[n, d] for n, d in degrees]
@@ -1185,11 +1182,11 @@ weighted_degrees_data.to_csv('weighteddegrees' + filename + '.csv', header =True
 weighted_indegrees_data.to_csv('weightedindegrees' + filename + '.csv', header =True, index=False)
 weighted_outdegrees_data.to_csv('weightedoutdegrees' + filename + '.csv', header =True, index=False)
 
-weighted_clustering_data.to_csv('weightedclustering' + filename + '.csv', header = True, index = False)
-non_weighted_clustering_data.to_csv('nonweightedclustering' + filename + '.csv', header = True, index = False)
-weighted_dir_clust_data.to_csv('weighted_dir_clustering' + filename + '.csv', header = True, index = False)
-non_weighted_dir_clust_data.to_csv('non_weighted_dir_clustering' + filename + '.csv', header = True, index = False)
-all_clustering_df.to_csv('all_clustering' +filename + '.csv', header = True, index=False)
+#weighted_clustering_data.to_csv('weightedclustering' + filename + '.csv', header = True, index = False)
+#non_weighted_clustering_data.to_csv('nonweightedclustering' + filename + '.csv', header = True, index = False)
+#weighted_dir_clust_data.to_csv('weighted_dir_clustering' + filename + '.csv', header = True, index = False)
+#non_weighted_dir_clust_data.to_csv('non_weighted_dir_clustering' + filename + '.csv', header = True, index = False)
+#all_clustering_df.to_csv('all_clustering' +filename + '.csv', header = True, index=False)
 
 knn_df.to_csv('knndata'+ filename+'.csv', header = True, index = True)
 eigen_centr_df.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = True)
