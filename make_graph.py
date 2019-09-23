@@ -813,7 +813,7 @@ ICU_combined_min_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
 #alldata = pd.read_csv("transfers_adult_asa34.csv")
 #alldata = pd.read_csv("transfers_around_low_ed_perc.csv")
 #alldata = pd.read_csv("transfers_icu.csv")
-print("Rows after removing bad dates: %s" % len(alldata))
+
 #alldata = pd.read_csv("all_adult_transfers.csv")
 #alldata = pd.read_csv("transfers_hdu.csv")
 alldata = pd.read_csv("transfers_lowed_hdu_2309.csv")
@@ -821,7 +821,7 @@ alldata = pd.read_csv("transfers_lowed_hdu_2309.csv")
 location_category_map = ICU_combined_min_dict
 #location_category_map = nocat_ward_clinic
 #location_category_map = ICU_combined_min_dict
-
+print("Rows after removing bad dates: %s" % len(alldata))
 alldata['from_category'] = alldata['from'].map(location_category_map)
 alldata['to_category'] = alldata['to'].map(location_category_map)
 
