@@ -896,11 +896,12 @@ nondiG.add_weighted_edges_from(weighted_edges)
 
 
 #calculate the degree
-degrees = nx.classes.function.degree(G)
-in_degrees = G.in_degree
-out_degrees = G.out_degree
+degrees = dict(nx.classes.function.degree(G))
 emergency_degrees = degrees.get('AE', 0)
 icu_degrees = degrees.get('ICU', 0)
+
+in_degrees = G.in_degree
+out_degrees = G.out_degree
 #print(in_degrees)
 
 weighted_degrees = nx.degree(G,weight = 'weight')
