@@ -915,6 +915,7 @@ histdegrees = nx.classes.function.degree_histogram(G)
 #print('histdegrees')
 #print(histdegrees)
 # calculate the degree
+degrees = nx.classes.function.degree(G)
 degrees_list = [[n, d] for n, d in degrees]
 degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
 
