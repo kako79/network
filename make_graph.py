@@ -816,7 +816,7 @@ ICU_combined_min_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
 
 #alldata = pd.read_csv("all_adult_transfers.csv")
 #alldata = pd.read_csv("transfers_hdu.csv")
-alldata = pd.read_csv("transfers_lowed_hdu_2309.csv")
+alldata = pd.read_csv("transfers_highed_hdu_2309.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
 location_category_map = ICU_combined_min_dict
 #location_category_map = nocat_ward_clinic
@@ -1170,7 +1170,7 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                             'icu_outstrength', 'average shortest path'], data = data_list)
 
 #set the filename for all output files
-filename = '_icu_lowed_2309'
+filename = '_icu_highed_2309'
 
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
 edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
