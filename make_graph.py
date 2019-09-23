@@ -1107,9 +1107,6 @@ weighted_out_degrees = dict(G.out_degree(weight='weight'))
 weighted_icu_out_deg = weighted_out_degrees.get('ICU', 0)
 
 
-
-
-
 #other network measures that apply to the whole network
 density_net = nx.density(G)
 transitivity_net = nx.transitivity(G)
