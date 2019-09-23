@@ -138,13 +138,13 @@ icu_patient_records.to_csv('transfers_icu.csv', header=True, index=False)
 wards = {'ADD GENERAL ICU', 'ADD NEURO ICU', 'ADD D4 IDA UNIT', 'ADD CORONARY CARE UNIT', 'ADD TRANSPLANT HDU'}
 icu_patient_ids = set(transfers_around_low_ed_ind.loc[transfers_around_low_ed_ind['from'].isin(wards)]['ptid'].unique())
 icu_patient_records = transfers_around_low_ed_ind.loc[transfers_around_low_ed_ind['ptid'].isin(icu_patient_ids)]
-icu_patient_records.to_csv('transfers_lowed_hdu.csv', header=True, index=False)
+icu_patient_records.to_csv('transfers_lowed_hdu_2309.csv', header=True, index=False)
 
 #calm ED
 wards = {'ADD GENERAL ICU', 'ADD NEURO ICU', 'ADD D4 IDA UNIT', 'ADD CORONARY CARE UNIT', 'ADD TRANSPLANT HDU'}
 icu_patient_ids = set(transfers_around_high_ed_ind.loc[transfers_around_high_ed_ind['from'].isin(wards)]['ptid'].unique())
 icu_patient_records = transfers_around_high_ed_ind.loc[transfers_around_high_ed_ind['ptid'].isin(icu_patient_ids)]
-icu_patient_records.to_csv('transfers_highd_hdu.csv', header=True, index=False)
+icu_patient_records.to_csv('transfers_high_hdu_2309.csv', header=True, index=False)
 
 
 
