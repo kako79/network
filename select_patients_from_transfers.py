@@ -75,8 +75,11 @@ transfers_lowed = adult_transfers[adult_transfers['breach_percentage'] < 0.6955]
 #select patients for the day before, the day of and the day after a full A&E
 #find the days with low ED percentage
 print(transfers_lowed['transfer_dt'].map(get_transfer_day))
-print(check)
+print("check")
 transfers_lowed['day_of_transfer'] = transfers_lowed['transfer_dt'].map(get_transfer_day)
+
+print("check2")
+
 low_ed_perc_dates = transfers_lowed['day_of_transfer'].unique()
 low_ed_prev_day = []
 low_ed_next_day = []
