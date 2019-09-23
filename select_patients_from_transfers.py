@@ -64,9 +64,12 @@ def get_next_day(date_n):
 
 
 alltransfers = pd.read_csv("transfer_strain.csv")
-
+#select all adult patients 16 and above
+adult_transfers= alltransfers.loc[alltransfers['age']>16]
+adult_transfers.to_csv('all_adult_transfers.csv')
 #select transfers on specific dates with low breach percentage ie days where A&E was very full
 transfers_lowed = alltransfers[alltransfers['breach_percentage'] < 0.6955]
+transfers_lowed = adult_transfers[adult_transfers['breach_percentage'] < 0.6955]
 #transfers_lowed.to_csv('transfers_lowedpercentage.csv')
 
 #select patients for the day before, the day of and the day after a full A&E
@@ -85,12 +88,13 @@ for i in low_ed_perc_dates:
 all_dates_low_ed = set(low_ed_prev_day + list(low_ed_perc_dates) + low_ed_next_day)
 alltransfers['day_of_transfer'] = alltransfers['transfer_dt'].map(get_transfer_day)
 #print(alltransfers['day_of_transfer'])
-transfers_around_low_ed_ind = alltransfers[alltransfers['day_of_transfer'].isin(all_dates_low_ed)]
+transfers_around_low_ed_ind = adult_transfers[adult_transfers['day_of_transfer'].isin(all_dates_low_ed)]
 print(len(transfers_around_low_ed_ind))
 transfers_around_low_ed_ind.to_csv('transfers_around_low_ed_perc.csv')
 
 #select transfers on specific dates with low breach percentage ie days where A&E was very empty
 transfers_highed = alltransfers[alltransfers['breach_percentage'] >0.9685]
+transfers_highed = adult_transfers[adult_transfers['breach_percentage'] >0.9685]
 #transfers_lowed.to_csv('transfers_lowedpercentage.csv')
 
 #select patients for the day before, the day of and the day after a full A&E
@@ -108,13 +112,11 @@ for i in high_ed_perc_dates:
 #import pdb; pdb.set_trace()
 all_dates_high_ed = set(high_ed_prev_day + list(high_ed_perc_dates) + high_ed_next_day)
 #print(alltransfers['day_of_transfer'])
-transfers_around_high_ed_ind = alltransfers[alltransfers['day_of_transfer'].isin(all_dates_high_ed)]
+transfers_around_high_ed_ind = adult_transfers[adult_transfers['day_of_transfer'].isin(all_dates_high_ed)]
 print(len(transfers_around_high_ed_ind))
 transfers_around_high_ed_ind.to_csv('transfers_around_high_ed_perc.csv')
 
-#select all adult patients 16 and above
-adult_transfers= alltransfers.loc[alltransfers['age']>16]
-adult_transfers.to_csv('all_adult_transfers.csv')
+
 
 
 #select all the patients who at some point in their stay were in icu, nccu
@@ -132,16 +134,16 @@ icu_patient_records.to_csv('transfers_icu.csv', header=True, index=False)
 
 #select the patients who got to HDU but on busy and non busy days
 #busy
-#wards = {'ADD GENERAL ICU', 'ADD NEURO ICU', 'ADD D4 IDA UNIT', 'ADD CORONARY CARE UNIT', 'ADD TRANSPLANT HDU'}
-#icu_patient_ids = set(transfers_around_low_ed_ind.loc[transfers_around_low_ed_ind['from'].isin(wards)]['ptid'].unique())
-#icu_patient_records = transfers_around_low_ed_ind.loc[transfers_around_low_ed_ind['ptid'].isin(icu_patient_ids)]
-#icu_patient_records.to_csv('transfers_lowed_hdu.csv', header=True, index=False)
+wards = {'ADD GENERAL ICU', 'ADD NEURO ICU', 'ADD D4 IDA UNIT', 'ADD CORONARY CARE UNIT', 'ADD TRANSPLANT HDU'}
+icu_patient_ids = set(transfers_around_low_ed_ind.loc[transfers_around_low_ed_ind['from'].isin(wards)]['ptid'].unique())
+icu_patient_records = transfers_around_low_ed_ind.loc[transfers_around_low_ed_ind['ptid'].isin(icu_patient_ids)]
+icu_patient_records.to_csv('transfers_lowed_hdu.csv', header=True, index=False)
 
 #calm ED
-#wards = {'ADD GENERAL ICU', 'ADD NEURO ICU', 'ADD D4 IDA UNIT', 'ADD CORONARY CARE UNIT', 'ADD TRANSPLANT HDU'}
-#icu_patient_ids = set(transfers_around_high_ed_ind.loc[transfers_around_high_ed_ind['from'].isin(wards)]['ptid'].unique())
-#icu_patient_records = transfers_around_high_ed_ind.loc[transfers_around_high_ed_ind['ptid'].isin(icu_patient_ids)]
-#icu_patient_records.to_csv('transfers_highed_hdu.csv', header=True, index=False)
+wards = {'ADD GENERAL ICU', 'ADD NEURO ICU', 'ADD D4 IDA UNIT', 'ADD CORONARY CARE UNIT', 'ADD TRANSPLANT HDU'}
+icu_patient_ids = set(transfers_around_high_ed_ind.loc[transfers_around_high_ed_ind['from'].isin(wards)]['ptid'].unique())
+icu_patient_records = transfers_around_high_ed_ind.loc[transfers_around_high_ed_ind['ptid'].isin(icu_patient_ids)]
+icu_patient_records.to_csv('transfers_highd_hdu.csv', header=True, index=False)
 
 
 
