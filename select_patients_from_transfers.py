@@ -136,11 +136,12 @@ wards = {'ADD GENERAL ICU', 'ADD NEURO ICU', 'ADD D4 IDA UNIT', 'ADD CORONARY CA
 icu_patient_ids = set(adult_transfers.loc[adult_transfers['from'].isin(wards)]['ptid'].unique())
 icu_patient_records = adult_transfers.loc[adult_transfers['ptid'].isin(icu_patient_ids)]
 icu_patient_records.to_csv('transfers_icu.csv', header=True, index=False)
-
+print(len(icu_patient_ids))
 #select the patients who got to HDU but on busy and non busy days
 #busy
 
 wards = {'ADD GENERAL ICU', 'ADD NEURO ICU', 'ADD D4 IDA UNIT', 'ADD CORONARY CARE UNIT', 'ADD TRANSPLANT HDU'}
+
 icu_patient_ids = set(transfers_around_low_ed_ind.loc[transfers_around_low_ed_ind['from'].isin(wards)]['ptid'].unique())
 icu_patient_records = transfers_around_low_ed_ind.loc[transfers_around_low_ed_ind['ptid'].isin(icu_patient_ids)]
 icu_patient_records.to_csv('transfers_lowed_hdu_2309.csv', header=True, index=False)
