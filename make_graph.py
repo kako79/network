@@ -814,11 +814,12 @@ ICU_combined_min_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
 #alldata = pd.read_csv("transfers_around_low_ed_perc.csv")
 #alldata = pd.read_csv("transfers_icu.csv")
 
-#alldata = pd.read_csv("all_adult_transfers.csv")
+alldata = pd.read_csv("all_adult_transfers.csv")
 #alldata = pd.read_csv("transfers_hdu.csv")
-alldata = pd.read_csv("transfers_high_hdu_2309.csv")
+#alldata = pd.read_csv("transfers_high_hdu_2309.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
-location_category_map = ICU_combined_min_dict
+#location_category_map = ICU_combined_min_dict
+location_category_map = minimal_cat_ward_dict
 #location_category_map = nocat_ward_clinic
 #location_category_map = ICU_combined_min_dict
 print("Rows after removing bad dates: %s" % len(alldata))
@@ -832,7 +833,7 @@ alldata = alldata.drop(['from','to'], axis=1)
 alldata.rename(index=str, columns={'from_category': 'from'}, inplace = True)
 alldata.rename(index=str, columns={'to_category': 'to'}, inplace = True)
 
-
+alldata.to_csv('categorised_transfers.csv')
 
 # now develop the network based on the transfer data
 print('now doing the network calculations')
@@ -1170,7 +1171,7 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
                                             'icu_outstrength', 'average shortest path'], data = data_list)
 
 #set the filename for all output files
-filename = '_icu_highed_2309'
+filename = '_all_131019'
 
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
 edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
