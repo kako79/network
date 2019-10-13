@@ -27,7 +27,7 @@ tx_adult = adult_transfers[['from','to','ptid']]
 
 tx = tx_adult.copy()
 tx['transfer'] = tx['from'] + ' -> ' + tx['to']
-tx = tx.drop(columns=['from_loc', 'to_loc'])
+tx = tx.drop(columns=['from', 'to'])
 tx_sorted = tx.sort_values(by=['ptid', 'transfer']).reset_index(drop=True)
 tx_sorted['count'] = pd.Series(np.ones(shape=len(tx_sorted)))
 tx_grouped = tx_sorted.groupby(by=['ptid', 'transfer']).count()
