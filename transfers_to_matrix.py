@@ -17,7 +17,7 @@ import networkx as nx
 from datetime import datetime
 import datetime as dt
 
-alltransfers = pd.read_csv("transfer_strain.csv")
+alltransfers = pd.read_csv("categorised_transfers.csv")
 #select all adult patients 16 and above
 adult_transfers= alltransfers.loc[alltransfers['age']>16]
 adult_transfers.to_csv('all_adult_transfers.csv')
