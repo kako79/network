@@ -33,6 +33,7 @@ tx_sorted['count'] = pd.Series(np.ones(shape=len(tx_sorted)))
 tx_grouped = tx_sorted.groupby(by=['ptid', 'transfer']).count()
 
 #the unstack puts the named index (1) into separate columns, here the grouped bit had two indeces (ptid and transfer (which is the set of wards from and to))
-tx_grouped.unstack(1).fillna(0)
+tx_matrix = tx_grouped.unstack(1).fillna(0)
 
-tx_grouped.to_csv('transfers_matrix.csv')
+#save to csv
+tx_matrix.to_csv('transfers_matrix.csv')
