@@ -200,9 +200,10 @@ def get_data_for_window(data, d,window_size):
 #Now start of the actual work
 #prepare the data set
 data_full = pd.read_csv("adult_transfers.csv")
-data_full = data_full.drop(['from_loc','to_loc'], axis=1)
-data_full.rename(index=str, columns={'from_category': 'from'}, inplace = True)
-data_full.rename(index=str, columns={'to_category': 'to'}, inplace = True)
+#data_full = data_full.drop(['from_loc','to_loc'], axis=1)
+#data_full.rename(index=str, columns={'from_category': 'from'}, inplace = True)
+#data_full.rename(index=str, columns={'to_category': 'to'}, inplace = True)
+data_full = data_full[['ptid', 'transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age','asa', 'breach_percentage', 'strain', 'bedsfree', 'from','to']]
 data_full['transfer_dt'] = pd.to_datetime(data_full['transfer_dt'], format="%Y-%m-%d %H:%M")
 degree_hist_file = []
 #put the day of transfer into a specific column for selecting later
@@ -224,6 +225,7 @@ for d in dates_list:
         data_for_window[m] = get_data_for_window(data_full, d , m)
 
     data_for_day[d] = data_for_window[0] + data_for_window[1] + data_for_window [2] + data_for_window[3] + data_for_window [4]
+    print (data_for_day[d])
 
 
 
