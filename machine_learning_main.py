@@ -17,8 +17,6 @@ from collections import defaultdict
 from datetime import datetime
 
 
-data_full = pd.read_csv("transfers_adult.csv")
-
 def get_separate_date_time(datetimeentry):
     print(datetimeentry)
     if type(datetimeentry) == float:
@@ -101,10 +99,50 @@ def get_network_parameters(G):
 
     density_net = nx.density(G)
     transitivity_net = nx.transitivity(G)
+    assortativity_net_inout = nx.degree_assortativity_coefficient(G, x='out', y='in', weight='weights')
+
+    #voterank ranked list of nodes that are important in the network
+    vote_rank_list = nx.algorithms.centrality.voterank(G, number_of_nodes = 5, max_iter = 1000)
+    first_vr_node = vote_rank_list[0]
+    second_vr_node = vote_rank_list[1]
+    third_vr_node = vote_rank_list[2]
+    fourth_vr_node = vote_rank_list[3]
+    fifth_vr_node = vote_rank_list[4]
+
+    #betweenness centrality
+    bet_centr = nx.algorithms.centrality.betweenness_centrality(G)
+    if 'theatre' in bet_centr:
+        theatres_bet_centrality = bet_centr['theatre']
+    else:
+        theatres_bet_centrality = 0
+    if 'ICU' in bet_centr:
+        icu_bet_centrality = bet_centr['ICU']
+    else:
+        icu_bet_centrality = 0
+
+    if 'HDU' in bet_centr:
+        hdu_bet_centrality = bet_centr['HDU']
+    else:
+        hdu_bet_centrality = 0
+
+    #weighted degrees
+    weighted_degrees = dict(nx.degree(G, weight='weight'))
+    weighted_emergency_degree = weighted_degrees.get('AE', 0)
+    weighted_ct_degree = weighted_degrees.get('CT',0)
+    weighted_xr_degree = weighted_degrees.get('XR',0)
+    weighted_icu_degree = weighted_degrees.get('ICU', 0)
+    weighted_theatres_degree = weighted_degrees.get('theatre', 0)
+    weighted_emergency_degree = weighted_degrees.get('AE',0)
+
+    # weighted_in_degrees = nx.DiGraph.in_degree(G,weight = 'weights')
+    weighted_in_degrees = dict(G.in_degree(weight='weight'))
+    weighted_icu_in_deg = weighted_in_degrees.get('ICU', 0)
+    weighted_theatres_in_deg = weighted_in_degrees('theatre', 0)
 
 
-
-
+    weighted_out_degrees = dict(G.out_degree(weight='weight'))
+    weighted_icu_out_deg = weighted_out_degrees.get('ICU', 0)
+    weighted_theatres_out_deg = weighted_out_degrees.get('theatre', 0)
 
 
     #transfer counts between certain areas
@@ -119,21 +157,81 @@ def get_network_parameters(G):
     else:
         ratio_wards_surg_med = ae_med/ae_surg
 
-
-
-
-    data_list.append(
-        {'number nodes': nn, 'number edges': en, 'emergency degrees': emergency_degrees, 'outcentrality ed': out_ed_centrality,
-         'incentrality theatres': in_theatre_centrality,
-         'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality,
-         'eigen_centr_theatre': theatres_eigen_centr, 'bet_centr_gm': gm_bet_centrality,
-         'bet_centr_am': am_bet_centrality, 'bet_centr_cdu': cdu_bet_centrality, 'bet_centr_card': card_bet_centrality,
-         'eigen_centr_ed': ed_eigen_centr, 'flow hierarchy': flow_hierarchy, 'density': density_net,
-         'transitivity': transitivity_net, 'av_shortest_path': average_shortest_path,
-         'average_ae_percentage': average_ae_perc,
-         'average_beds_free': average_beds_free})
-    return
-
+    return {'number_nodes': nn,'number_edges': en,
+            'emergency_degrees': emergency_degree, 'emergency_strength': weighted_emergency_degree,
+            'ct_degrees': ct_degree, 'ct_strength': weighted_ct_degree, 'xr_degrees': xr_degree, 'xr_strength': weighted_xr_degree,
+            'theatre_degrees':theatres_degree, 'theatre_strength': weighted_theatres_degree,'theatres_instrength':weighted_theatres_in_deg,
+            'theatres_outstrength':weighted_theatres_out_deg, 'theatre_bet_centr': theatres_bet_centrality,
+            'medical_theatre_transfers': medical_theatre_transfers,'med_med_transfers': medical_medical_transfers, 'med_surg_ratio': ratio_wards_surg_med,
+            'inter_icu_transfers': inter_icu, 'icu_hdu_transfers': icu_hdu,
+            'density': density_net, 'transitivity': transitivity_net,  'flow_hierarchy': flow_hierarchy,'assortativity':assortativity_net_inout,
+            'icu_bet_centr': icu_bet_centrality, 'icu_degrees': icu_degree, 'icu_strength': weighted_icu_degree, 'icu_instrength': weighted_icu_in_deg,
+            'icu_outstrength': weighted_icu_out_deg}
 
 
 #need to calculate all transfers into ICU, all out of ICU, all into theatres
+def get_other_params(day_data):
+    #calculate all ICU transfers in and out, theatre transfers
+    icu_in_number = len(day_data[day_data['to' == 'ICU']])
+    icu_out_number = len(day_data[day_data['from' == 'ICU']])
+
+    theatre_in_number = len(day_data[day_data['to' == 'theatre']])
+    theatre_out_number = len(day_data[day_data['from' == 'theatre']])
+    return {'icu_in_number': icu_in_number, 'icu_out_number': icu_out_number, 'theatre_in_number': theatre_in_number, 'theatre_out_number':theatre_out_number}
+
+#runs the analysis for one set of dates ie one window
+def get_data_for_window(data, d,window_size):
+    window_dates = {d - timedelta64(i, 'D') for i in range(0, window_size)}
+    window_date_strings = {get_transfer_day(wd) for wd in window_dates}
+    #day_data = data_t_strain_cat[data_t_strain_cat['transfer_day'].isin(window_date_strings)]
+    day_data = select_entries_by_date(data, window_date_strings)
+    #number_of_transfers = len(day_data['transfer_day'])
+    # drop the columns that are not needed for the graph, also select adults or children
+    day_data_reduced = day_data.loc[day_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+    nw = make_network_for_selected_days(day_data_reduced)
+    nw_analytics = get_network_parameters(nw)
+    other_params = get_other_params(day_data_reduced)
+    #join the two lists together
+    output = nw_analytics+ other_params
+    return output
+
+
+
+#Now start of the actual work
+#prepare the data set
+data_full = pd.read_csv("transfers_adult.csv")
+data_full = data_full.drop(['from_loc','to_loc'], axis=1)
+data_full.rename(index=str, columns={'from_category': 'from'}, inplace = True)
+data_full.rename(index=str, columns={'to_category': 'to'}, inplace = True)
+data_full['transfer_dt'] = pd.to_datetime(data_full['transfer_dt'], format="%Y-%m-%d %H:%M")
+degree_hist_file = []
+#put the day of transfer into a specific column for selecting later
+data_full['transfer_day'] = data_full['transfer_dt'].map(get_transfer_day)
+#get the list of dates in ed performance to loop over
+dates_list = pd.read_csv("ed_performance_all.csv")
+dates_list['date'] = pd.to_datetime(dates_list['day'], format='%d/%m/%Y')
+all_datesdf = dates_list['date'].map(get_transfer_day)
+
+window_sizes= [0,1,3,7,10]
+
+data_for_day = []
+
+for d in dates_list:
+    data_for_window=[]
+
+    for m in window_sizes:
+        #data_for_window[m] = [get_data_for_window(data_full, d, m) for d in dates_list['date']]
+        data_for_window[m] = get_data_for_window(data_full, d , m)
+
+    data_for_day[d] = data_for_window[0] + data_for_window[1] + data_for_window [2] + data_for_window[3] + data_for_window [4]
+
+
+
+
+
+
+
+
+
+
+

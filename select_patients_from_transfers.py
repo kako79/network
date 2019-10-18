@@ -66,7 +66,7 @@ def get_next_day(date_n):
 alltransfers = pd.read_csv("transfer_strain.csv")
 #select all adult patients 16 and above
 adult_transfers= alltransfers.loc[alltransfers['age']>16]
-adult_transfers.to_csv('all_adult_transfers.csv')
+adult_transfers.to_csv('adult_transfers.csv')
 #select transfers on specific dates with low breach percentage ie days where A&E was very full
 transfers_lowed = alltransfers[alltransfers['breach_percentage'] < 0.6955]
 #transfers_lowed = adult_transfers[adult_transfers['breach_percentage'] < 0.6955]
