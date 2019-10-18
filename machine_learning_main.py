@@ -217,7 +217,7 @@ dates_list = pd.read_csv("ed_performance_all.csv")
 dates_list['date'] = pd.to_datetime(dates_list['day'], format='%d/%m/%Y')
 all_datesdf = dates_list['date'].map(get_transfer_day)
 
-window_sizes= [0,1,3,7,10]
+window_sizes= [1,3,7,10]
 
 data_for_day = []
 
