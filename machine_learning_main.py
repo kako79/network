@@ -183,6 +183,9 @@ def get_other_params(day_data):
 def get_data_for_window(data, d,window_size):
     window_dates = {d - timedelta64(i, 'D') for i in range(0, window_size)}
     window_date_strings = {get_transfer_day(wd) for wd in window_dates}
+    print(window_date_strings)
+    print("window")
+    print(window_dates)
     #day_data = data_t_strain_cat[data_t_strain_cat['transfer_day'].isin(window_date_strings)]
     day_data = select_entries_by_date(data, window_date_strings)
     #number_of_transfers = len(day_data['transfer_day'])
