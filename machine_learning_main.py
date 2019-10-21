@@ -183,7 +183,7 @@ def get_other_params(day_data):
 #runs the analysis for one set of dates ie one window
 def get_data_for_window(data, d,window_size):
     print('window size',window_size)
-    window_dates = {d - timedelta64(i, 'D') for i in range(0, window_size)}
+    window_dates = {d - timedelta(i, 'D') for i in range(0, window_size)}
     window_date_strings = {get_transfer_day(wd) for wd in window_dates}
     print(window_date_strings)
     print("window")
