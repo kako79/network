@@ -171,14 +171,14 @@ def get_network_parameters(G):
 
 
 #need to calculate all transfers into ICU, all out of ICU, all into theatres
-def get_other_params(day_data):
+def get_other_params(day_data, window_size):
     #calculate all ICU transfers in and out, theatre transfers
     icu_in_number = len(day_data[day_data['to' == 'ICU']])
     icu_out_number = len(day_data[day_data['from' == 'ICU']])
 
     theatre_in_number = len(day_data[day_data['to' == 'theatre']])
     theatre_out_number = len(day_data[day_data['from' == 'theatre']])
-    return {'icu_in_number': icu_in_number, 'icu_out_number': icu_out_number, 'theatre_in_number': theatre_in_number, 'theatre_out_number':theatre_out_number}
+    return {f'icu_in_number_{window_size}': icu_in_number, f'icu_out_number_{window_size}': icu_out_number, f'theatre_in_number_{window_size}': theatre_in_number, f'theatre_out_number_{window_size}':theatre_out_number}
 
 #runs the analysis for one set of dates ie one window
 def get_data_for_window(data, d,window_size):
@@ -197,8 +197,9 @@ def get_data_for_window(data, d,window_size):
     nw_analytics = get_network_parameters(nw)
     other_params = get_other_params(day_data_reduced)
     #join the two lists together
-    output = nw_analytics+ other_params
-    return output
+    #output = nw_analytics+ other_params
+    nw_analytics.update(other_params)
+    return nw_analytics
 
 
 
