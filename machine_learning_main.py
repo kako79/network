@@ -222,7 +222,7 @@ window_sizes= [1,3,7,10]
 
 row_data_for_day = []
 
-for d in dates_list:
+for d in dates_list['date']:
     data_for_window=[]
 
     for m in window_sizes:
