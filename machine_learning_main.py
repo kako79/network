@@ -220,7 +220,7 @@ all_datesdf = dates_list['date'].map(get_transfer_day)
 
 window_sizes= [1,3,7,10]
 
-data_for_day = []
+row_data_for_day = []
 
 for d in dates_list:
     data_for_window=[]
@@ -229,9 +229,11 @@ for d in dates_list:
         #data_for_window[m] = [get_data_for_window(data_full, d, m) for d in dates_list['date']]
         data_for_window[m] = get_data_for_window(data_full, d , m)
 
-    data_for_day[d] = data_for_window[0] + data_for_window[1] + data_for_window [2] + data_for_window[3] + data_for_window [4]
-    print (data_for_day[d])
+    row_data_for_day[d] = data_for_window[0] + data_for_window[1] + data_for_window [2] + data_for_window[3] + data_for_window [4]
+    print (row_data_for_day[d])
 
+ML_data = row_data_for_day
+ML_data.to_csv('ML_data.csv', header=True, index=False)
 
 
 
