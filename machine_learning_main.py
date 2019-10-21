@@ -158,27 +158,27 @@ def get_network_parameters(G):
     else:
         ratio_wards_surg_med = ae_med/ae_surg
 
-    return {'number_nodes': nn,'number_edges': en,
-            'emergency_degrees': emergency_degree, 'emergency_strength': weighted_emergency_degree,
-            'ct_degrees': ct_degree, 'ct_strength': weighted_ct_degree, 'xr_degrees': xr_degree, 'xr_strength': weighted_xr_degree,
-            'theatre_degrees':theatres_degree, 'theatre_strength': weighted_theatres_degree,'theatres_instrength':weighted_theatres_in_deg,
-            'theatres_outstrength':weighted_theatres_out_deg, 'theatre_bet_centr': theatres_bet_centrality,
-            'medical_theatre_transfers': medical_theatre_transfers,'med_med_transfers': medical_medical_transfers, 'med_surg_ratio': ratio_wards_surg_med,
-            'inter_icu_transfers': inter_icu, 'icu_hdu_transfers': icu_hdu,
-            'density': density_net, 'transitivity': transitivity_net,  'flow_hierarchy': flow_hierarchy,'assortativity':assortativity_net_inout,
-            'icu_bet_centr': icu_bet_centrality, 'icu_degrees': icu_degree, 'icu_strength': weighted_icu_degree, 'icu_instrength': weighted_icu_in_deg,
-            'icu_outstrength': weighted_icu_out_deg}
+    return {f'number_nodes_{window_size}': nn,f'number_edges_{window_size}': en,
+            f'emergency_degrees_{window_size}': emergency_degree, f'emergency_strength_{window_size}': weighted_emergency_degree,
+            f'ct_degrees_{window_size}': ct_degree, f'ct_strength_{window_size}': weighted_ct_degree, f'xr_degrees_{window_size}': xr_degree, f'xr_strength_{window_size}': weighted_xr_degree,
+            f'theatre_degrees_{window_size}':theatres_degree, f'theatre_strength_{window_size}': weighted_theatres_degree,f'theatres_instrength_{window_size}':weighted_theatres_in_deg,
+            f'theatres_outstrength_{window_size}':weighted_theatres_out_deg, f'theatre_bet_centr_{window_size}': theatres_bet_centrality,
+            f'medical_theatre_transfers_{window_size}': medical_theatre_transfers,f'med_med_transfers_{window_size}': medical_medical_transfers, f'med_surg_ratio_{window_size}': ratio_wards_surg_med,
+            f'inter_icu_transfers_{window_size}': inter_icu, f'icu_hdu_transfers_{window_size}': icu_hdu,
+            f'density_{window_size}': density_net, f'transitivity_{window_size}': transitivity_net,  f'flow_hierarchy_{window_size}': flow_hierarchy, f'assortativity_{window_size}':assortativity_net_inout,
+            f'icu_bet_centr_{window_size}': icu_bet_centrality, f'icu_degrees_{window_size}': icu_degree, f'icu_strength_{window_size}': weighted_icu_degree, f'icu_instrength_{window_size}': weighted_icu_in_deg,
+            f'icu_outstrength_{window_size}': weighted_icu_out_deg}
 
 
 #need to calculate all transfers into ICU, all out of ICU, all into theatres
-def get_other_params(day_data):
+def get_other_params(day_data, window_size):
     #calculate all ICU transfers in and out, theatre transfers
     icu_in_number = len(day_data[day_data['to' == 'ICU']])
     icu_out_number = len(day_data[day_data['from' == 'ICU']])
 
     theatre_in_number = len(day_data[day_data['to' == 'theatre']])
     theatre_out_number = len(day_data[day_data['from' == 'theatre']])
-    return {'icu_in_number': icu_in_number, 'icu_out_number': icu_out_number, 'theatre_in_number': theatre_in_number, 'theatre_out_number':theatre_out_number}
+    return {f'icu_in_number_{window_size}': icu_in_number, f'icu_out_number_{window_size}': icu_out_number, f'theatre_in_number_{window_size}': theatre_in_number, f'theatre_out_number_{window_size}':theatre_out_number}
 
 #runs the analysis for one set of dates ie one window
 def get_data_for_window(data, d,window_size):
@@ -197,8 +197,9 @@ def get_data_for_window(data, d,window_size):
     nw_analytics = get_network_parameters(nw)
     other_params = get_other_params(day_data_reduced)
     #join the two lists together
-    output = nw_analytics+ other_params
-    return output
+    #output = nw_analytics+ other_params
+    nw_analytics.update(other_params)
+    return nw_analytics
 
 
 
@@ -222,7 +223,7 @@ window_sizes= [1,3,7,10]
 
 row_data_for_day = []
 
-for d in dates_list:
+for d in dates_list['date']:
     data_for_window=[]
 
     for m in window_sizes:
