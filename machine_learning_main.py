@@ -15,7 +15,7 @@ from collections import Counter
 from itertools import chain
 from collections import defaultdict
 from datetime import datetime
-from numpy import timedelta
+from datetime import timedelta
 
 
 def get_separate_date_time(datetimeentry):
