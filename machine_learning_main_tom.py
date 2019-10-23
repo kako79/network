@@ -82,6 +82,7 @@ def get_network_parameters(G, ws):
     # returns the network analysis parameters for the given G
     en = G.number_of_edges()
     nn = G.number_of_nodes()
+    print("nn=", nn)
 
     # specific ICU measures - only works with dictionary that combines all the ICU together
     inter_icu = G.get_edge_data('ICU', 'ICU', default={}).get('weight', 0)
@@ -89,6 +90,9 @@ def get_network_parameters(G, ws):
 
     # degrees, weighted degrees, bet centrality, flow hierarchy, density, transitivity, av shortest path,
     degrees = dict(nx.classes.function.degree(G))
+    if ws == 1:
+        print(degrees(G))
+
     emergency_degree = degrees.get('AE', 0)
     print(emergency_degree)
     icu_degree = degrees.get('ICU', 0)
