@@ -253,7 +253,7 @@ def get_data_for_window(data, d, window_size):
 
 # Now start of the actual work
 # prepare the data set
-data_full = pd.read_csv("adult_transfers.csv")
+data_full = pd.read_csv("categorised_transfers.csv")
 # data_full = data_full.drop(['from_loc','to_loc'], axis=1)
 # data_full.rename(index=str, columns={'from_category': 'from'}, inplace = True)
 # data_full.rename(index=str, columns={'to_category': 'to'}, inplace = True)
