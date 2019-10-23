@@ -91,7 +91,7 @@ def get_network_parameters(G, ws):
     # degrees, weighted degrees, bet centrality, flow hierarchy, density, transitivity, av shortest path,
     degrees = dict(nx.classes.function.degree(G))
     if ws == 1:
-        print(degrees(G))
+        print(nx.classes.fucntion.degree(G))
 
     emergency_degree = degrees.get('AE', 0)
     print(emergency_degree)
