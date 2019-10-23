@@ -64,8 +64,8 @@ def make_network_for_selected_days(selected_entries):
     transfer_counts = transfer_counts.reset_index()
     transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
     # Get a list of tuples that contain the values from the rows.
-    transfer_counts.rename(columns={"ptid": "e_weight"}, inplace=True)
-    edge_weight_data = transfer_counts[['from', 'to', 'e_weight']]
+    transfer_counts.rename(columns={"ptid": "weight"}, inplace=True)
+    edge_weight_data = transfer_counts[['from', 'to', 'weight']]
     # unweighted_edge_data = transfer_counts[['from', 'to']]
     # sum_of_all_transfers = edge_weight_data['e_weight'].sum()
     weighted_edges = list(
@@ -90,6 +90,7 @@ def get_network_parameters(G, ws):
     # degrees, weighted degrees, bet centrality, flow hierarchy, density, transitivity, av shortest path,
     degrees = dict(nx.classes.function.degree(G))
     emergency_degree = degrees.get('AE', 0)
+    print(emergency_degree)
     icu_degree = degrees.get('ICU', 0)
     ct_degree = degrees.get('CT', 0)
     xr_degree = degrees.get('XR', 0)
