@@ -818,13 +818,13 @@ alldata = pd.read_csv("all_adult_transfers.csv")
 #alldata = pd.read_csv("transfers_hdu.csv")
 #alldata = pd.read_csv("transfers_high_hdu_2309.csv")
 #alldata= pd.read_csv("transfers_old_t_o.csv")
-location_category_map = ICU_combined_min_dict
-#location_category_map = minimal_cat_ward_dict
-#location_category_map = nocat_ward_clinic
-#location_category_map = ICU_combined_min_dict
+location_category_map_cat = ICU_combined_min_dict
+location_map_nocat = nocat_ward_clinic
 print("Rows after removing bad dates: %s" % len(alldata))
-alldata['from_category'] = alldata['from'].map(location_category_map)
-alldata['to_category'] = alldata['to'].map(location_category_map)
+alldata['from_category'] = alldata['from'].map(location_category_map_cat)
+alldata['to_category'] = alldata['to'].map(location_category_map_cat)
+alldata['from'] = alldata['from'].map(location_map_nocat)
+alldata['to'] = alldata['to'].map(location_map_nocat)
 
 missing_locations = alldata[alldata['from_category'].isnull()]['from'].unique()
 print(missing_locations)

@@ -21,5 +21,5 @@ transfers = transfers.drop(['from','to'], axis=1) # we dont need these anymore
 groups = transfers.groupby('ptid')
 for ptid, group in groups:
     for row_index, row in group.iterrows():
-        print(row)
+
 
