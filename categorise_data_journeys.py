@@ -829,7 +829,7 @@ alldata['to_category'] = alldata['to'].map(location_category_map)
 missing_locations = alldata[alldata['from_category'].isnull()]['from'].unique()
 print(missing_locations)
 #drop the old from and to columns and then rename the new ones into from and to
-alldata = alldata.drop(['from','to'], axis=1)
+#alldata = alldata.drop(['from','to'], axis=1)
 alldata.rename(index=str, columns={'from_category': 'from_cat'}, inplace = True)
 alldata.rename(index=str, columns={'to_category': 'to_cat'}, inplace = True)
 
