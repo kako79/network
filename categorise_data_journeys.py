@@ -842,3 +842,5 @@ alldata['los'] = (alldata['dt_adm'] - alldata['dt_dis']).dt.days
 categorised_data = alldata[['ptid','from_cat', 'to_cat', 'from', 'to', 'spec', 'age', 'asa', 'dt_adm','los' ]]
 
 alldata.to_csv('cat_data_journeys.csv')
+
+
