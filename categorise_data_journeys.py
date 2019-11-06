@@ -837,9 +837,11 @@ alldata.rename(index=str, columns={'to_category': 'to_cat'}, inplace = True)
 
 alldata['dt_adm'] = pd.to_datetime(alldata['dt_adm'])
 alldata['dt_dis'] = pd.to_datetime(alldata['dt_dis'])
-alldata['los'] = (alldata['dt_adm'] - alldata['dt_dis']).dt.days
+alldata['los'] = (alldata['dt_dis'] - alldata['dt_adm']).dt.days
 
 categorised_data = alldata[['ptid','from_cat', 'to_cat', 'from', 'to', 'spec', 'age', 'asa', 'dt_adm','los' ]]
+
+print(max(alldata['los']))
 
 alldata.to_csv('cat_data_journeys.csv')
 

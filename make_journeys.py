@@ -18,8 +18,17 @@ transfers['combined_from'] = transfers['from_cat'] +  transfers['from']
 transfers['combined_to'] = transfers['to_cat'] + transfers['to']
 transfers = transfers.drop(['from','to'], axis=1) # we dont need these anymore
 
+
+
 groups = transfers.groupby('ptid')
+
+df_journeys =
+
 for ptid, group in groups:
+    journey = []
     for row_index, row in group.iterrows():
+        journey.append('from_cat')
+
+
 
 
