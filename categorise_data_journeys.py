@@ -835,8 +835,8 @@ alldata.rename(index=str, columns={'to_category': 'to_cat'}, inplace = True)
 
 #compute length of stay
 
-alldata['dt_adm'] = pd.to_datetime(df['dt_adm'])
-alldata['dt_dis'] = pd.to_datetime(df['dt_dis'])
+alldata['dt_adm'] = pd.to_datetime(alldata['dt_adm'])
+alldata['dt_dis'] = pd.to_datetime(alldata['dt_dis'])
 alldata['los'] = (alldata['dt_adm'] - alldata['dt_dis']).dt.days
 
 categorised_data = alldata[['ptid','from_cat', 'to_cat', 'from', 'to', 'spec', 'age', 'asa', 'dt_adm','los' ]]
