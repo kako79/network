@@ -45,12 +45,14 @@ for ptid, group in groups:
         numbers.append(number_loc)
         journey.append(row['from_cat'])
         if len(journey) > maxLen:
-            print('long journey', len(journey))
+            #print('long journey', len(journey))
+            longest_journey = len(journey)
+            print(longest_journey)
 
     journey = journey + [0] * (maxLen - len(journey))
     numbers = numbers + [0] * (maxLen - len(numbers))
     full = [str(i) + str(j) for i, j in zip(journey, numbers)]
-    print(full)
+    #print(full)
 
 
 
