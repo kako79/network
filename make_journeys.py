@@ -26,7 +26,7 @@ COLUMN_NAMES = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '
 
 #df_journeys = pd.DataFrame(columns=COLUMN_NAMES)
 
-locations_not_needed = ['XR', 'clinic', 'PET', 'IR', 'CT']
+locations_not_needed = ['XR', 'clinic', 'PET', 'IR', 'CT', 'echo']
 #longest_journey = maxLen
 
 
@@ -36,7 +36,8 @@ def get_patient_journey(ptid, group):
 
     for i, row in group.iterrows():
         loc = row['from_cat']
-        if not (loc in locations_not_needed):
+        if (not (loc in locations_not_needed)) and (loc != last_loc):
+            last_loc = loc
             num = counts.get(loc, 1)
             counts[loc] = num + 1
             loc_name = f"{loc}{num}"
