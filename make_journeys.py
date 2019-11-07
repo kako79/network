@@ -29,11 +29,11 @@ COLUMN_NAMES = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '
 locations_not_needed = ['XR', 'clinic', 'PET', 'IR', 'CT', 'echo']
 #longest_journey = maxLen
 
-last_loc = ""
 
 def get_patient_journey(ptid, group):
     counts = dict()
     journey_row = {'ptid': ptid}
+    last_loc = ""
 
     for i, row in group.iterrows():
         loc = row['from_cat']
