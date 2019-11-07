@@ -19,13 +19,6 @@ transfers['combined_to'] = transfers['to_cat'] + transfers['to']
 transfers = transfers.drop(['from','to'], axis=1) # we dont need these anymore
 
 
-COLUMN_NAMES = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19',
-                '20', '21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40']
-#maxLen = len(COLUMN_NAMES)
-#groups = transfers.groupby('ptid')
-
-#df_journeys = pd.DataFrame(columns=COLUMN_NAMES)
-
 locations_not_needed = ['XR', 'clinic', 'PET', 'CT', 'echo']
 #longest_journey = maxLen
 
@@ -57,9 +50,19 @@ adminfo = pd.read_csv("ADM_INFO_aug.csv")
 adminfo = adminfo[['adm_hosp', 'dis_hosp', 'specialty', 'admAge', 'STUDY_SUBJECT_DIGEST']]
 # Set the index of the adminfo dataframe to the value we want to join to.
 adminfo.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
+adminfo['adm_hosp'] = pd.to_datetime(adminfo['adm_hosp'])
+alldata['dishosp'] = pd.to_datetime(alldata['dis_hosp'])
+alldata['los'] = (alldata['dis_hosp'] - alldata['adm_hosp']).dt.days
+
+adminfo = adminfo[['adm_hosp', 'dis_hosp', 'specialty', 'admAge','los', 'STUDY_SUBJECT_DIGEST']]
+
+
 # Join the columns in adminfo onto the admpoint dataframe based on patient ID.
 full_journeys = df_journeys.join(adminfo, on='ptid', how='left')
 
+
+
+full_journeys.to_csv('journeys_plain.csv', header = True, index = True)
 
 
 #
@@ -90,7 +93,6 @@ full_journeys = df_journeys.join(adminfo, on='ptid', how='left')
 #    df_journeys.append(full)
     #print(full)
 
-df_journeys.to_csv('journeys_plain.csv', header = True, index = True)
 
 
 
