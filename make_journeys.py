@@ -48,7 +48,7 @@ def get_patient_journey(ptid, group):
 
 journey_data = [get_patient_journey(ptid, group) for ptid, group in transfers.groupby('ptid')]
 
-df_journeys = pd.DataFrame(data=journey_data).fillna('dc')
+df_journeys = pd.DataFrame(data=journey_data).fillna('')
 
 
 
