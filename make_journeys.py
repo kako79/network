@@ -27,6 +27,7 @@ groups = transfers.groupby('ptid')
 df_journeys = pd.DataFrame(columns=COLUMN_NAMES)
 
 locations_not_needed = ['XR', 'clinic', 'PET', 'IR', 'CT']
+longest_journey = maxLen
 
 for ptid, group in groups:
     journey = []
@@ -44,7 +45,7 @@ for ptid, group in groups:
             number_loc = 1
         numbers.append(number_loc)
         journey.append(row['from_cat'])
-        if len(journey) > maxLen:
+        if len(journey) > longest_journey:
             #print('long journey', len(journey))
             longest_journey = len(journey)
             print(longest_journey)
@@ -52,7 +53,10 @@ for ptid, group in groups:
     journey = journey + [0] * (maxLen - len(journey))
     numbers = numbers + [0] * (maxLen - len(numbers))
     full = [str(i) + str(j) for i, j in zip(journey, numbers)]
+    df_journeys.append(full)
     #print(full)
+
+df_journeys.to_csv('journeys_plain.csv', header = True, index = True)
 
 
 
