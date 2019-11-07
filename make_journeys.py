@@ -26,7 +26,7 @@ COLUMN_NAMES = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '
 
 #df_journeys = pd.DataFrame(columns=COLUMN_NAMES)
 
-locations_not_needed = ['XR', 'clinic', 'PET', 'IR', 'CT', 'echo']
+locations_not_needed = ['XR', 'clinic', 'PET', 'CT', 'echo']
 #longest_journey = maxLen
 
 
