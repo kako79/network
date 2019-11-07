@@ -51,7 +51,7 @@ adminfo = adminfo[['adm_hosp', 'dis_hosp', 'specialty', 'admAge', 'STUDY_SUBJECT
 # Set the index of the adminfo dataframe to the value we want to join to.
 adminfo.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 adminfo['adm_hosp'] = pd.to_datetime(adminfo['adm_hosp'])
-adminfo['dishosp'] = pd.to_datetime(adminfo['dis_hosp'])
+adminfo['dis_hosp'] = pd.to_datetime(adminfo['dis_hosp'])
 adminfo['los'] = (adminfo['dis_hosp'] - adminfo['adm_hosp']).dt.days
 
 adminfo = adminfo[['adm_hosp', 'dis_hosp', 'specialty', 'admAge','los', 'STUDY_SUBJECT_DIGEST']]
