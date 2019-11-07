@@ -52,7 +52,13 @@ journey_data = [get_patient_journey(ptid, group) for ptid, group in transfers.gr
 
 df_journeys = pd.DataFrame(data=journey_data).fillna('')
 
-
+adminfo = pd.read_csv("ADM_INFO_aug.csv")
+#pick the columns in the secondary files that are actually needed.
+adminfo = adminfo[['adm_hosp', 'dis_hosp', 'specialty', 'admAge', 'STUDY_SUBJECT_DIGEST']]
+# Set the index of the adminfo dataframe to the value we want to join to.
+adminfo.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
+# Join the columns in adminfo onto the admpoint dataframe based on patient ID.
+full_journeys = df_journeys.join(adminfo, on='ptid', how='left')
 
 
 
