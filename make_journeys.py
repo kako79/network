@@ -19,7 +19,7 @@ transfers['combined_to'] = transfers['to_cat'] + transfers['to']
 transfers = transfers.drop(['from','to'], axis=1) # we dont need these anymore
 
 
-locations_not_needed = ['XR', 'clinic', 'PET', 'CT', 'echo']
+locations_not_needed = ['XR', 'clinic', 'PET', 'CT', 'echo', 'US', 'angio', 'TOE']
 #longest_journey = maxLen
 
 
