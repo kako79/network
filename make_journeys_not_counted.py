@@ -20,6 +20,7 @@ transfers = transfers.drop(['from','to'], axis=1) # we dont need these anymore
 
 
 locations_not_needed = ['XR', 'clinic','clinic ', 'PET', 'CT', 'echo', 'US', 'angio', 'TOE','NP', 'physio', 'recovery','endoscopy']
+
 #longest_journey = maxLen
 
 
