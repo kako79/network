@@ -19,7 +19,7 @@ transfers['combined_to'] = transfers['to_cat'] + transfers['to']
 transfers = transfers.drop(['from','to'], axis=1) # we dont need these anymore
 
 
-locations_not_needed = ['XR', 'clinic','clinic ', 'PET', 'CT', 'echo', 'US', 'angio', 'TOE','NP', 'physio', 'recovery','endoscopy']
+locations_not_needed = ['XR', 'clinic','clinic ', 'PET', 'CT', 'echo', 'US', 'angio', 'TOE','NP', 'physio', 'recovery','endoscopy', 'AE']
 
 #longest_journey = maxLen
 
@@ -31,7 +31,15 @@ def get_patient_journey(ptid, group):
 
     for i, row in group.iterrows():
         loc = row['from_cat']
-        if (not (loc in locations_not_needed)) and (loc != last_loc):
+        if i==1:
+            last_loc = loc
+            # num = counts.get(loc, 1)
+            # counts[loc] = num + 1
+            num = 0
+            loc_name = f"{loc}{num}"
+            column_name = f"loc_{str(len(journey_row)).rjust(2, '0')}"
+            journey_row[column_name] = loc_name
+        if (not (loc in locations_not_needed)) and (loc != last_loc) and (i>1):
             last_loc = loc
             #num = counts.get(loc, 1)
             #counts[loc] = num + 1
