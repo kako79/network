@@ -12,7 +12,7 @@ import datetime as dt
 #file containing all the categorised and uncategorised locations
 transfers = pd.read_csv("cat_data_journeys.csv")
 
-t_into_pivot = transfers[['ptid','to']]
+t_into_pivot = transfers[['ptid','from']]
 
 
 pivotdf = t_into_pivot.pivot_table(index='ptid', columns='from', aggfunc=len)
