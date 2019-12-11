@@ -17,5 +17,7 @@ t_into_pivot = transfers[['ptid','from']]
 
 pivotdf = t_into_pivot.pivot_table(index='ptid', columns='from', aggfunc=len)
 
+pivotdf.fillna(0, inplace=True)
+
 pivotdf.to_csv('pivotdf', header = True, index = True)
 
