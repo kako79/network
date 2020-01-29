@@ -909,27 +909,29 @@ print(nn)
 
 
 
-
-#calculate the degree
+#Now we continue to calculate important measures of the network and specifically ones for improtant nodes.
+#calculate the degrees of each node
 degrees = dict(nx.classes.function.degree(G))
-emergency_degrees = degrees.get('AE', 0)
-icu_degrees = degrees.get('ICU', 0)
+emergency_degrees = degrees.get('AE', 0) #degree of ED as an example of a degree calculation
 
+#in degree and out degree as this is a directional network
 in_degrees = G.in_degree
 out_degrees = G.out_degree
 
+#weighted degrees which are also called strength (weight * degree)
 weighted_degrees = nx.degree(G,weight = 'weight')
-#weighted_in_degrees = nx.DiGraph.in_degree(G,weight = 'weights')
-weighted_in_degrees = G.in_degree(weight = 'weight')
-#print(weighted_in_degrees)
-weighted_out_degrees = G.out_degree(weight = 'weight')
 
+#now we can calculate a histogram for the degrees - this turned out to be not terribly useful and the degree distribution calculationw as later done in R separately.
 histdegrees = nx.classes.function.degree_histogram(G)
 
-# calculate the degree
+#reformatting the dedgrees information to be able to export it into csv at the end
 degrees = nx.classes.function.degree(G)
 degrees_list = [[n, d] for n, d in degrees]
 degrees_data = pd.DataFrame(degrees_list, columns=['node', 'degree'])
+
+#reformatting the in out and weighted degrees data
+weighted_in_degrees = G.in_degree(weight = 'weight')
+weighted_out_degrees = G.out_degree(weight = 'weight')
 
 indegreeslist = [[n, d] for n, d in in_degrees]
 indegrees_data = pd.DataFrame(indegreeslist, columns=['node', 'degree'])
@@ -950,7 +952,6 @@ weighted_outdegrees_data = pd.DataFrame(weighted_outdegrees_list, columns=['node
 
 print(nx.get_edge_attributes(G, 'weight'))
 
-#degrees_data_degree = degrees_data['degree']
 
 
 # calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
@@ -959,25 +960,23 @@ outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
 
 
 df_with_node_index = degrees_data.set_index('node')
-#emergency_degrees = df_with_node_index.loc['AE','degree']
-#print(emergency_degrees)
-    #degrees_list.append(list(degrees.values))
-    #degrees_list.to_csv('degrees%s.csv' % str(i), header=True, index=False)
 
+#Now comes a set of calculations that may or may not be useful: We looked at specific transfers between areas that we thought may reflect stress on the system
+#eg the transfers between medical wards and theatres - this could reflect the amount of patients that were initially badged to the incorrect care area and then come to theatre from these locations
 #number of transfers from medical wards to theatre
+
 #acute_to_theatre = G.get_edge_data('acute medical ward', 'theatre', default={}).get('weight', 1)
 #gen_to_theatre = G.get_edge_data('general medical ward', 'theatre', default={}).get('weight', 1)
 #card_to_theatre = G.get_edge_data('cardiology ward', 'theatre', default={}).get('weight', 1)
 #rehab_to_theatre = G.get_edge_data('rehab', 'theatre', default={}).get('weight', 1)
 #total_medical_to_theatre = acute_to_theatre + gen_to_theatre + card_to_theatre + rehab_to_theatre
 
-#number of circular or unnecessary ward transfers
+
+#number of circular or unnecessary ward transfers - going between areas that are the same from a care perspective may reflect the stress on the system as they are non-medical transfers
 #med_to_med_acute = G.get_edge_data('acute medical ward', 'acute medical ward', default = {}).get('weight', 1)
 #med_to_med_acgen = G.get_edge_data('acute medical ward', 'general medical ward', default={}).get('weight', 1)
 #med_to_med_genac = G.get_edge_data('general medical ward', 'acute medical ward', default={}).get('weight', 1)
 #med_to_med_general = G.get_edge_data('general medical ward', 'general medical ward', default={}).get('weight', 1)
-
-
 #med_to_surg = G.get_edge_data('general medical ward', 'general surgical ward', default ={}).get('weight', 1)
 #med_to_ortho = G.get_edge_data('general medical ward', ' orthopaedic ward', default ={}).get('weight', 1)
 #med_to_surg_acute = G.get_edge_data('acute medical ward', 'general surgical ward', default={}).get('weight', 1)
@@ -988,32 +987,35 @@ df_with_node_index = degrees_data.set_index('node')
 #genmed_to_atc = G.get_edge_data('general medical ward', 'ATC surgical ward', default={}).get('weight', 1)
 #total_medical_ward_transfers = med_to_med_acute + med_to_med_general+med_to_med_acgen+med_to_med_genac+ med_to_ortho+ med_to_surg+ med_to_surg_acute+ med_to_orth_acute+acmed_to_ns+genmed_to_ns+acmed_to_atc+genmed_to_atc
 
-
+#this is the same code for the categorised data, the above was for the uncategorised network where there are multiple types of medical wards.
 total_medical_ward_transfers = G.get_edge_data('medical ward', 'theatre', default={}).get('weight',0)
 med_surg_transfers = G.get_edge_data('medical ward', 'surgical ward', default={}).get('weight', 0)+G.get_edge_data('medical ward', 'neurosurgery ward', default={}).get('weight',0)+\
                      G.get_edge_data('medical ward', 'orthopaedic ward', default={}).get('weight',0)
-#print (total_medical_ward_transfers)
 
+#calculating the number of transfers from ER to a surgical ward
 ae_surg = G.get_edge_data('AE', 'general surgical ward', default={}).get('weight', 0)+ G.get_edge_data('AE', 'orthopaedic ward', default={}).get('weight', 0) +G.get_edge_data('AE', 'ATC surgical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'gynae ward', default={}).get('weight', 0)+  G.get_edge_data('AE', 'neurosurgical ward', default={}).get('weight', 0)
-#print(ae_surg)
+#calculating the number of transfers from ER a medical ward
 ae_med = G.get_edge_data('AE', 'acute medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'general medical ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'cardiology ward', default={}).get('weight', 0) + G.get_edge_data('AE', 'rehab', default={}).get('weight', 0) +  G.get_edge_data('AE', 'cdu', default={}).get('weight', 0)
 if ae_surg == 0:
     ratio_wards_surg_med = 0
 else:
     ratio_wards_surg_med = ae_med/ae_surg
 
+#calculating the transfers between our ICU areas (this works only for data that was created with the "ICU" dicitonary. These transfers reflect the non-medical transfers between ICU areas due to bed pressures.
 inter_icu = G.get_edge_data('ICU', 'ICU', default={}).get('weight',0)
 icu_hdu = G.get_edge_data('ICU', 'HDU', default={}).get('weight',0)
 
-# calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to
+# calculate the centrality of each node - fraction of nodes the incoming/outgoing edges are connected to. Centrality gives a measure of the importance of a node
 incentrality = nx.algorithms.centrality.in_degree_centrality(G)
 in_centr_df = pd.DataFrame.from_dict(incentrality, orient = 'index')
-# check if the theatre node exists in this data subset
+
+# check if the theatre node exists in this data subset - this was mainly useful when trying to calculate small subsets of the network where there wasn't always a theatre node
 if 'theatre' in incentrality:
     in_theatre_centrality = incentrality['theatre']
 else:
     in_theatre_centrality = 0
 
+#outcentrality is similar to inceantrality
 outcentrality = nx.algorithms.centrality.out_degree_centrality(G)
 out_centr_df = pd.DataFrame.from_dict(outcentrality, orient = 'index')
 if 'theatre' in outcentrality:
@@ -1026,11 +1028,10 @@ if 'AE' in outcentrality:
 else:
     out_ed_centrality = 0
 
+#betweenness centrality is a useful measure of importance of a node to the overall network. It looks at the number of paths passing through a node
+bet_centr = nx.algorithms.centrality.betweenness_centrality(G) #betweenness centrality for each node in the network
+bet_centr_df = pd.DataFrame.from_dict(bet_centr, orient = 'index') # - change this to a dataframe which can then be used to export to csv
 
-bet_centr = nx.algorithms.centrality.betweenness_centrality(G)
-bet_centr_df = pd.DataFrame.from_dict(bet_centr, orient = 'index')
-#print(bet_centr)
-#print(bet_centr_df)
 
 if 'theatre' in bet_centr:
     theatres_bet_centrality = bet_centr['theatre']
@@ -1042,7 +1043,7 @@ else:
     icu_bet_centrality = 0
 
 
-#for mincat only
+#for the minimal category dictionary only as these node labels don't exist in all circumstances
 if 'general medical ward' in bet_centr:
     gm_bet_centrality = bet_centr['general medical ward']
 else:
@@ -1061,35 +1062,23 @@ else:
     card_bet_centrality = 0
 
 
-
-
-
+#continue to calculate network measures.
 #specialised centralities and the assortativity and nearest neightbor fucntions
-
+#the if check is inserted again for the occasions where small subsets of data are analysed where not all nodes exist.
+# We check whether there are any edges created to avoid crashing the code.
 if en == 0:
     theatres_eigen_centr = 0
     ed_eigen_centr = 0
     assortativity_net_inout = 0
     k_nearest_n = 0
 else:
+    #eigencentrality is another measure that looks at importance of the nodes to the network
     eigen_centr = nx.eigenvector_centrality_numpy(G)
     eigen_centr_df = pd.DataFrame.from_dict(eigen_centr, orient = 'index')
-    #print(eigen_centr_df)
-
-
+    #assortativity calculates the relation of nodes to each other and gives information about the underlying architecture of the network
     assortativity_net_inout = nx.degree_assortativity_coefficient(G, x='out', y='in', weight='weights')
-    print('assortativity=')
-    print(assortativity_net_inout)
     k_nearest_n = nx.k_nearest_neighbors(G,source='out',target='in', weight='weights')
-    print('knn')
-    print(k_nearest_n)
-    print('knn data frame')
-
-    #knn_list = [[n, k] for n, k in k_nearest_n]
-    #knn_data = pd.DataFrame(knn_list, columns=['node', 'knn'])
-    knn_df = pd.DataFrame.from_dict(k_nearest_n, orient='index')
-    #knn_df = pd.DataFrame(k_nearest_n, index=['ward', 'knn'])
-    print(knn_df)
+    knn_df = pd.DataFrame.from_dict(k_nearest_n, orient='index') #reformatting knn to allow export to a csv
     if 'theatre' in eigen_centr:
         theatres_eigen_centr = eigen_centr['theatre']
     else:
@@ -1101,75 +1090,34 @@ else:
         ed_eigen_centr = 0
 
 
-# flow hiearchy - finds strongly connected components
+# flow hiearchy - finds strongly connected components and describes how much forward flow there is in a network.
+# The goal was to relate a measure of stress to flow hierarchy
 if nn == 0:
     flow_hierarchy = 0
     print('flowhierarchy is zero as nn zero')
 else:
     flow_hierarchy = nx.flow_hierarchy(G, weight = 'weights')
-print('flow hierarchy')
-print(flow_hierarchy)
-
-weighted_degrees = dict(nx.degree(G, weight='weight'))
-weighted_emergency_degrees = weighted_degrees.get('AE', 0)
-weighted_icu_degrees = weighted_degrees.get('ICU', 0)
-# weighted_in_degrees = nx.DiGraph.in_degree(G,weight = 'weights')
-weighted_in_degrees = dict(G.in_degree(weight='weight'))
-weighted_icu_in_deg = weighted_in_degrees.get('ICU', 0)
-# print(weighted_in_degrees)
-weighted_out_degrees = dict(G.out_degree(weight='weight'))
-weighted_icu_out_deg = weighted_out_degrees.get('ICU', 0)
 
 
 #other network measures that apply to the whole network
-density_net = nx.density(G)
-transitivity_net = nx.transitivity(G)
-#clustering - doesnt work for directed graphs
-#clustering_average = nx.average_clustering(nondiG,weight = 'weights')
+density_net = nx.density(G) # calculates the density of connections
+transitivity_net = nx.transitivity(G) # calculates the transitivity of the network
 
+
+
+#clustering - this was a difficult area to investigate as the clustering functions don't work well for directed networks. We decided to exclude this type of analysis from our investigation for now
+#clustering_average = nx.average_clustering(nondiG,weight = 'weights')
 #weighted_clustering_distribution = nx.clustering(nondiG, weight = 'weight')
 #non_weighted_clustering_distribution = nx.clustering(unweightednondirG)
-#weighted_directional_clustering_distribution = nx.clustering(G, weight = 'weight')
-#non_weighted_directional_clustering_distribution = nx.clustering(unweighteddirG)
-
-#print(clustering_distribution)
-#weighted_clustering_list = [[n, d] for n, d in weighted_clustering_distribution.items()]
-#weighted_clustering_data = pd.DataFrame(weighted_clustering_list, columns=['node', 'w_nondir_cc'])
-
-#non_weighted_clustering_list = [[n, d] for n, d in non_weighted_clustering_distribution.items()]
-#non_weighted_clustering_data = pd.DataFrame(non_weighted_clustering_list, columns=['node', 'nonw_nondir_cc'])
-
-#weighted_dir_clust_list = [[n,d] for n,d in weighted_directional_clustering_distribution.items()]
-#weighted_dir_clust_data = pd.DataFrame(weighted_dir_clust_list, columns= ['node', 'w_dir_cc'])
-
-#non_weighted_dir_clust_list = [[n,d] for n,d in non_weighted_directional_clustering_distribution.items()]
-#non_weighted_dir_clust_data = pd.DataFrame(non_weighted_dir_clust_list, columns= ['node', 'nonw_dir_cc'])
-
-#a=non_weighted_clustering_data.set_index("node")
-#b=weighted_clustering_data.set_index("node")
-#c=weighted_dir_clust_data.set_index("node")
-#d=non_weighted_dir_clust_data.set_index("node")
-
-#all_clustering_df = a.join(b).join(c).join(d).reset_index()
 
 
-#print('clustering in non directed graph')
-#print(clustering_average)
 
 #shortest path in the directed graph, from a starting point source to a point target
 average_shortest_path = nx.average_shortest_path_length(G,weight = 'weights')
-#average_shortest_path = 0
-print(average_shortest_path)
-
-
-#flow hiearchy - finds strongly connected components
-#flow_hierarchy = nx.algorithms.hierarchy.flow_hierarchy(G)
-#print('flow hierarchy')
-#print(flow_hierarchy)
 
 data_list = []
 
-
+#output of all the measures we wanted to look at into a datalist - this can then be run as a loop if we are looking at consecutive dates or other sets of data
 data_list.append({'sum of transfers': sum_of_all_transfers,'number nodes': nn,'number edges': en,'flow hierarchy': flow_hierarchy,
                       'emergency degrees': emergency_degrees, 'emergency_strength': weighted_emergency_degrees,'outcentrality ed': out_ed_centrality, 'incentrality theatres': in_theatre_centrality,
                       'outcentrality theatres': out_theatre_centrality, 'bet centrality theatres': theatres_bet_centrality, 'medical ward transfers': total_medical_ward_transfers,
@@ -1187,21 +1135,15 @@ all_network_info_df = pd.DataFrame(columns=['sum of transfers','number nodes', '
 #set the filename for all output files
 filename = '_all_231019'
 
+#output to a range of files for each type of network measure
 all_network_info_df.to_csv('info' + filename + '.csv', header=True, index=False)
 edge_weight_data.to_csv('edge' + filename + '.csv', header=True, index=False)
-#nx.write_pajek(G, 'pajek_old.net')
 degrees_data.to_csv('degrees' + filename + '.csv', header =True, index=False)
 indegrees_data.to_csv('indegrees' + filename + '.csv', header =True, index=False)
 outdegrees_data.to_csv('outdegrees' + filename + '.csv', header =True, index=False)
 weighted_degrees_data.to_csv('weighteddegrees' + filename + '.csv', header =True, index=False)
 weighted_indegrees_data.to_csv('weightedindegrees' + filename + '.csv', header =True, index=False)
 weighted_outdegrees_data.to_csv('weightedoutdegrees' + filename + '.csv', header =True, index=False)
-
-#weighted_clustering_data.to_csv('weightedclustering' + filename + '.csv', header = True, index = False)
-#non_weighted_clustering_data.to_csv('nonweightedclustering' + filename + '.csv', header = True, index = False)
-#weighted_dir_clust_data.to_csv('weighted_dir_clustering' + filename + '.csv', header = True, index = False)
-#non_weighted_dir_clust_data.to_csv('non_weighted_dir_clustering' + filename + '.csv', header = True, index = False)
-#all_clustering_df.to_csv('all_clustering' +filename + '.csv', header = True, index=False)
 
 knn_df.to_csv('knndata'+ filename+'.csv', header = True, index = True)
 eigen_centr_df.to_csv('eigencentrdata'+ filename+'.csv', header = True, index = True)
@@ -1210,12 +1152,7 @@ out_centr_df.to_csv('outcentrdata'+ filename+'.csv', header = True, index = True
 bet_centr_df.to_csv('betweencentrdata'+ filename+'.csv', header = True, index = True)
 nx.write_graphml(G,'graphml'+ filename + '.graphml')
 
-#print("out in", nx.algorithms.assortativity.degree_assortativity_coefficient(G,x='out', y='in', weight='weight'))
-#print("out out", nx.algorithms.assortativity.degree_assortativity_coefficient(G,x='out', y='out', weight='weight'))
-#print("in in", nx.algorithms.assortativity.degree_assortativity_coefficient(G,x='in', y='in', weight='weight'))
-#print("in out", nx.algorithms.assortativity.degree_assortativity_coefficient(G,x='in', y='out', weight='weight'))
-
-
+#calculation of the small world network parameters. The niter and nrand can be adjusted - increasing them gives better accuracy but also increases the time to runt he code significantly
 print("omega",nx.algorithms.smallworld.omega(nondiG, niter = 30, nrand = 5))
 
 print("sigma",nx.algorithms.smallworld.sigma(nondiG, niter = 30, nrand =5 ))
