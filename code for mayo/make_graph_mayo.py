@@ -857,46 +857,57 @@ specific_data = alldata
 #compute the weighted graph first - edges are weighted by the number of transfers that occur along it
 #drop the columns that are not needed for the graph - this allows the networkx function to work with a minimal data set
 data_only_transfers = specific_data.drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
+
 # we can also select specific patient groups such as selecting only the adults >16 years old - or other selections of subgroups
 #data_only_transfers = specific_data.loc[specific_data['age'] > 16].drop(['transfer_dt', 'dt_adm', 'dt_dis', 'spec', 'age', 'asa'], axis=1)
 
-# count the number of times a specific transfer appears to get edge weight
+#count the number of times a specific transfer appears to get edge weight
 transfer_counts = data_only_transfers.groupby(['from', 'to']).count()
+
 #add the old index as a column - in the above the count became the index.
 transfer_counts = transfer_counts.reset_index()
-transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
-# Get a list of tuples that contain the values from the rows.
+transfer_counts = transfer_counts[transfer_counts['ptid'] > 1] # removes the edges that only have one transfer along the edge - this can be adjusted to suit the project and may be set higher if only the most important edges matter
+
+# Get a list of tuples that contain the values from the rows - the "ptid" term now changes to become the weight of the edge
 edge_weight_data = transfer_counts[['from', 'to', 'ptid']]
 unweighted_edge_data = transfer_counts[['from', 'to']]
 sum_of_all_transfers = edge_weight_data['ptid'].sum()
+
+#we can change the edge weight to become the proportion of transfers that go along an edge, however this is best suited for categorised networks where we only look at the most frequently used edges
 edge_weight_data['ptid'] = edge_weight_data['ptid']#/sum_of_all_transfers
 
-
+#sets up the list of edges for the network creation
 weighted_edges = list(itertools.starmap(lambda f, t, w: (f, t, int(w)), edge_weight_data.itertuples(index=False, name=None)))
 unweighted_edges = list(itertools.starmap(lambda f, t: (f,t), unweighted_edge_data.itertuples(index=False, name = None)))
 
+#creates the graph (network) - direectional as we care which directiont he patient is travelling in eg from ward to xray or return
 G = nx.DiGraph()
-#print(weighted_edges)
+#add the edges
 G.add_weighted_edges_from(weighted_edges)
 
+#undirected graph of the same data
+nondiG = nx.Graph()
+nondiG.add_weighted_edges_from(weighted_edges)
+
+
+#create an unweighted network - this is only partially useful but can be used to calculate certain clustering coefficiencts later on
 unweighteddirG = nx.DiGraph()
 unweighteddirG.add_edges_from(unweighted_edges)
 
+#create an unweighted and nondirectional network - again can be used for certain types of analysis regarding clusterin coefficients
 unweightednondirG = nx.Graph()
 unweightednondirG.add_edges_from(unweighted_edges)
 
+#most of the analysis is now done on the directed and weighted network
+
+
+#calculate the number of edges and the number of nodes in the network
 en=G.number_of_edges()
 nn=G.number_of_nodes()
 print(en)
 print(nn)
 
 
-
-
-
-#undirected graph of the same data
-nondiG = nx.Graph()
-nondiG.add_weighted_edges_from(weighted_edges)
 
 
 #calculate the degree
