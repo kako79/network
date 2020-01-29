@@ -778,7 +778,7 @@ ICU_combined_min_dict = {'ADD A3 WARD': 'neurosurgery ward', 'ADD A4 WARD': 'neu
                    'PDU WARD': 'clinic', 'ADD BMUTN': 'clinic', 'ADD EMSAC': 'clinic', 'ADD PPMBS': 'clinic', 'ADD ACPRUOC':'clinic', 'ADD OPLAOP': 'clinic',
                    'ADD GICH': 'clinic', 'ADD PENT': 'clinic', 'ADD RATRG': 'clinic',  'ADD COLSB': 'clinic', 'ADD CRG': 'clinic', 'ADD LCWVASC': 'clinic',
                    'ROS MADU': 'maternity', 'ADD HAEMOP': 'clinic', 'ADD PRIMARY': 'clinic', 'ADD TNM':'clinic' , 'ADD DXACCESS': 'clinic', 'G2 WARD' : 'medical ward',
-                   'ADD PPMBSK2': 'clinic', 'ADD MAIN RECOVERY': 'recovery', 'ADD PDH': 'clinic', 'ADD AIAD': 'clinic' ,
+                   'ADD PPMBSK2': 'clinic', 'ADD MAIN RECOVERY': 'recovery', 'ADD PDH': 'clinic', 'ADD AIAD': 'clinic',
                    'ADD ENDOSCOPY UNIT': 'endoscopy', 'ADD IMPREHAB': 'rehab', 'ADD CDMSLD': 'clinic', 'ADD PJPU': 'clinic', 'ADD YML': 'physio',
                    'ADD PJNK': 'clinic', 'ADD NEUROTR': 'clinic', 'ADD MSR': 'clinic', 'ADD KRM': 'clinic', 'ADD PJ': 'clinic', 'ADD PHYL': 'physio',
                    'ADD ORALVSAN':'clinic',  'ADD MOSOP': 'clinic', 'ADD AJCUOC': 'clinic', 'ADD TKKHL': 'clinic', 'ADD EMSMHC':'clinic',
