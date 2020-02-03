@@ -83,8 +83,8 @@ surg_extra = surgeriesinfo[['asa_rating_c', 'STUDY_SUBJECT_DIGEST']]
 surg_extra.set_index('STUDY_SUBJECT_DIGEST', drop=True, inplace=True)
 full_info = full_journeys.join(surg_extra, on='ptid', how='left')
 
-full_info.to_csv('journeys_notcounted_asa.csv', header=True, index=True)
-full_journeys.to_csv('journeys_notcounted.csv', header = True, index = True)
+full_info.to_csv('journeys_notcounted_asa_theatre.csv', header=True, index=True)
+full_journeys.to_csv('journeys_notcounted_theatre.csv', header = True, index = True)
 
 
 
