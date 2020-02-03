@@ -42,16 +42,18 @@ def get_patient_journey(ptid, group):
             last_loc = loc
             # num = counts.get(loc, 1)
             # counts[loc] = num + 1
-            num = 0
-            loc_name = f"{loc}{num}"
+            #num = 0
+            #loc_name = f"{loc}{num}"
+            loc_name = f"{loc}"
             column_name = f"loc_{str(len(journey_row)).rjust(2, '0')}"
             journey_row[column_name] = loc_name
         if (not (loc in locations_not_needed)) and (loc != last_loc) and (i>1):
             last_loc = loc
             #num = counts.get(loc, 1)
             #counts[loc] = num + 1
-            num=0
-            loc_name = f"{loc}{num}"
+            #num=0
+            #loc_name = f"{loc}{num}"
+            loc_name = f"{loc}"
             column_name = f"loc_{str(len(journey_row)).rjust(2, '0')}"
             journey_row[column_name] = loc_name
 
