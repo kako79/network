@@ -26,7 +26,7 @@ theatre_patient_records.to_csv('transfers_all_theatre.csv', header=True, index=F
 transfers = theatre_patient_records
 
 
-locations_not_needed = ['XR', 'clinic','clinic ', 'PET', 'CT', 'echo', 'US', 'angio', 'TOE','NP', 'physio', 'recovery','endoscopy', 'AE', 'MRI']
+locations_not_needed = ['XR', 'clinic','clinic ', 'PET', 'CT', 'echo', 'US', 'angio', 'TOE','NP', 'physio', 'recovery','endoscopy', 'MRI']
 
 #longest_journey = maxLen
 
