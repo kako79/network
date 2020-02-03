@@ -18,8 +18,15 @@ transfers['combined_from'] = transfers['from_cat'] +  transfers['from']
 transfers['combined_to'] = transfers['to_cat'] + transfers['to']
 transfers = transfers.drop(['from','to'], axis=1) # we dont need these anymore
 
+#Select all the patients who at some point in their stay were in theatre
+wards = {'theatre'}
+theatre_patient_ids = set(transfers.loc[transfers['from_cat'].isin(wards)]['ptid'].unique())
+theatre_patient_records = transfers.loc[transfers['ptid'].isin(theatre_patient_ids)]
+theatre_patient_records.to_csv('transfers_all_theatre.csv', header=True, index=False)
+transfers = theatre_patient_records
 
-locations_not_needed = ['XR', 'clinic','clinic ', 'PET', 'CT', 'echo', 'US', 'angio', 'TOE','NP', 'physio', 'recovery','endoscopy', 'AE']
+
+locations_not_needed = ['XR', 'clinic','clinic ', 'PET', 'CT', 'echo', 'US', 'angio', 'TOE','NP', 'physio', 'recovery','endoscopy', 'AE', 'MRI']
 
 #longest_journey = maxLen
 
@@ -80,33 +87,6 @@ full_info.to_csv('journeys_notcounted_asa.csv', header=True, index=True)
 full_journeys.to_csv('journeys_notcounted.csv', header = True, index = True)
 
 
-#
-#for ptid, group in groups:
-#    journey = []
-#    numbers = []
-#    for row_index, row in group.iterrows():
-#        row_location = row['from_cat']
-#        if row_location in locations_not_needed:
-#            continue
-#        if row_location in journey:
-#            # print('here')
-#            number_loc = journey.count(row_location) + 1
-#            # print(number_loc)
-#        else:
-#            # print('second here')
-#            number_loc = 1
-#        numbers.append(number_loc)
-#        journey.append(row['from_cat'])
-#        if len(journey) > longest_journey:
-#            #print('long journey', len(journey))
-#            longest_journey = len(journey)
-#            print(longest_journey)
-#
-#    journey = journey + [0] * (maxLen - len(journey))
-#    numbers = numbers + [0] * (maxLen - len(numbers))
-#    full = [str(i) + str(j) for i, j in zip(journey, numbers)]
-#    df_journeys.append(full)
-    #print(full)
 
 
 
