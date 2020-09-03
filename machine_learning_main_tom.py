@@ -56,7 +56,8 @@ def select_entries_by_date(data, date_set):
     return entries
 
 
-def make_network_for_selected_days(selected_entries):
+def make_network_for_selected_days(selected_entries, counter):
+    filename = '_'+counter
     # returns a network for the entries given
     # count the number of times a specific transfer appears to get edge weight, need to have only the from, to columns
     transfer_counts = selected_entries.groupby(['from', 'to']).count()
@@ -66,6 +67,7 @@ def make_network_for_selected_days(selected_entries):
     # Get a list of tuples that contain the values from the rows.
     transfer_counts.rename(columns={"ptid": "weight"}, inplace=True)
     edge_weight_data = transfer_counts[['from', 'to', 'weight']]
+    edge_weight_data.to_csv('edges' + filename + '.csv', header=True, index=False)
     # unweighted_edge_data = transfer_counts[['from', 'to']]
     # sum_of_all_transfers = edge_weight_data['e_weight'].sum()
     weighted_edges = list(
@@ -226,6 +228,7 @@ def get_other_params(day_data, ws):
 
 # runs the analysis for one set of dates ie one window
 def get_data_for_window(data, d, window_size):
+    counter = d + window_size
     # print('window size', window_size)
     window_dates = {d - timedelta(days=i) for i in range(0, window_size)}
     window_date_strings = {get_transfer_day(wd) for wd in window_dates}
@@ -243,8 +246,10 @@ def get_data_for_window(data, d, window_size):
     if len(day_data_reduced) == 0:
         return dict()
 
-    nw = make_network_for_selected_days(day_data_reduced)
+    nw = make_network_for_selected_days(day_data_reduced, counter)
+
     nw_analytics = get_network_parameters(nw, window_size)
+
     other_params = get_other_params(day_data_reduced, window_size)
     # join the two lists together
     nw_analytics.update(other_params)
@@ -269,7 +274,7 @@ data_full['transfer_day'] = data_full['transfer_dt'].map(get_transfer_day)
 # get the list of dates to loop over
 unique_dates = pd.Series(data_full['transfer_day'].unique())
 dates_list = pd.to_datetime(unique_dates, format='%Y-%m-%d')
-
+dates_list = dates_list[:5]
 window_sizes = [1, 3, 7, 10]
 
 all_row_data = list()
