@@ -227,7 +227,7 @@ def get_other_params(day_data, ws):
 
 
 # runs the analysis for one set of dates ie one window
-def get_data_for_window(data, d, window_size):
+def get_data_for_window(data, d, window_size, i_count):
     # print('window size', window_size)
     window_dates = {d - timedelta(days=i) for i in range(0, window_size)}
     window_date_strings = {get_transfer_day(wd) for wd in window_dates}
@@ -245,7 +245,7 @@ def get_data_for_window(data, d, window_size):
     if len(day_data_reduced) == 0:
         return dict()
 
-    nw = make_network_for_selected_days(day_data_reduced, d,window_size)
+    nw = make_network_for_selected_days(day_data_reduced, i_count,window_size)
 
     nw_analytics = get_network_parameters(nw, window_size)
 
@@ -284,7 +284,7 @@ for d in dates_list:
 
     for m in window_sizes:
         # data_for_window[m] = [get_data_for_window(data_full, d, m) for d in dates_list['date']]
-        row_data.update(get_data_for_window(data_full, i_count, m))
+        row_data.update(get_data_for_window(data_full, d, m, i_count))
 
     if len(row_data) > 0:
         row_data['dt'] = d
