@@ -63,7 +63,7 @@ def make_network_for_selected_days(selected_entries, i_count,window_size):
     transfer_counts = selected_entries.groupby(['from', 'to']).count()
     # add the old index as a column - in the above the count became the index.
     transfer_counts = transfer_counts.reset_index()
-    transfer_counts = transfer_counts[transfer_counts['ptid'] > 1]
+    transfer_counts = transfer_counts[transfer_counts['ptid'] > 2]
     # Get a list of tuples that contain the values from the rows.
     transfer_counts.rename(columns={"ptid": "weight"}, inplace=True)
     edge_weight_data = transfer_counts[['from', 'to', 'weight']]
