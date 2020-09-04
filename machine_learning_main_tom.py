@@ -56,8 +56,8 @@ def select_entries_by_date(data, date_set):
     return entries
 
 
-def make_network_for_selected_days(selected_entries, counter):
-    filename = '_'+counter
+def make_network_for_selected_days(selected_entries, d,window_size):
+    filename = '_'+d+'_'+window_size
     # returns a network for the entries given
     # count the number of times a specific transfer appears to get edge weight, need to have only the from, to columns
     transfer_counts = selected_entries.groupby(['from', 'to']).count()
@@ -228,7 +228,6 @@ def get_other_params(day_data, ws):
 
 # runs the analysis for one set of dates ie one window
 def get_data_for_window(data, d, window_size):
-    counter = d + window_size
     # print('window size', window_size)
     window_dates = {d - timedelta(days=i) for i in range(0, window_size)}
     window_date_strings = {get_transfer_day(wd) for wd in window_dates}
@@ -246,7 +245,7 @@ def get_data_for_window(data, d, window_size):
     if len(day_data_reduced) == 0:
         return dict()
 
-    nw = make_network_for_selected_days(day_data_reduced, counter)
+    nw = make_network_for_selected_days(day_data_reduced, d,window_size)
 
     nw_analytics = get_network_parameters(nw, window_size)
 
@@ -275,7 +274,8 @@ data_full['transfer_day'] = data_full['transfer_dt'].map(get_transfer_day)
 unique_dates = pd.Series(data_full['transfer_day'].unique())
 dates_list = pd.to_datetime(unique_dates, format='%Y-%m-%d')
 dates_list = dates_list[:5]
-window_sizes = [1, 3, 7, 10]
+window_sizes = [1,3]
+#window_sizes = [1, 3, 7, 10]
 
 all_row_data = list()
 
