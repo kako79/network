@@ -57,7 +57,7 @@ def select_entries_by_date(data, date_set):
 
 
 def make_network_for_selected_days(selected_entries, i_count,window_size):
-    filename = '_'+i_count+'_'+window_size
+    filename = '_'+str(i_count)+'_'+str(window_size)
     # returns a network for the entries given
     # count the number of times a specific transfer appears to get edge weight, need to have only the from, to columns
     transfer_counts = selected_entries.groupby(['from', 'to']).count()
