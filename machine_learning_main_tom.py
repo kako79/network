@@ -56,8 +56,8 @@ def select_entries_by_date(data, date_set):
     return entries
 
 
-def make_network_for_selected_days(selected_entries, d,window_size):
-    filename = '_'+d+'_'+window_size
+def make_network_for_selected_days(selected_entries, i_count,window_size):
+    filename = '_'+i_count+'_'+window_size
     # returns a network for the entries given
     # count the number of times a specific transfer appears to get edge weight, need to have only the from, to columns
     transfer_counts = selected_entries.groupby(['from', 'to']).count()
@@ -278,17 +278,18 @@ window_sizes = [1,3]
 #window_sizes = [1, 3, 7, 10]
 
 all_row_data = list()
-
+i_count=0
 for d in dates_list:
     row_data = dict()
 
     for m in window_sizes:
         # data_for_window[m] = [get_data_for_window(data_full, d, m) for d in dates_list['date']]
-        row_data.update(get_data_for_window(data_full, d, m))
+        row_data.update(get_data_for_window(data_full, i_count, m))
 
     if len(row_data) > 0:
         row_data['dt'] = d
         all_row_data.append(row_data)
+    i_count=i_count+1
     # print(all_row_data[d])
 
 ML_data = pd.DataFrame(data=all_row_data)
