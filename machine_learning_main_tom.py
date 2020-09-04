@@ -273,8 +273,8 @@ data_full['transfer_day'] = data_full['transfer_dt'].map(get_transfer_day)
 # get the list of dates to loop over
 unique_dates = pd.Series(data_full['transfer_day'].unique())
 dates_list = pd.to_datetime(unique_dates, format='%Y-%m-%d')
-dates_list = dates_list[:5]
-window_sizes = [1]
+dates_list = dates_list[:90]
+window_sizes = [3,7]
 #window_sizes = [1, 3, 7, 10]
 
 all_row_data = list()
